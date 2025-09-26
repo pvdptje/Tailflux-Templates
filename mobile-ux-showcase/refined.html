@@ -1,0 +1,486 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX/UI Designer Portfolio | Mobile App Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 text-slate-800" x-data="{ mobileMenuOpen: false, activeSection: 'home' }">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300" 
+         :class="{ 'shadow-lg': window.scrollY > 10 }" 
+         x-init="window.onscroll = () => { 
+             let sections = ['home', 'work', 'about', 'process', 'contact'];
+             for (let section of sections) {
+                 if (document.getElementById(section) && window.scrollY >= document.getElementById(section).offsetTop - 100) {
+                     activeSection = section;
+                 }
+             }
+         }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold gradient-text">DesignPortfolio</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-slate-600 hover:text-orange-500 transition-colors duration-300 font-medium" 
+                       :class="{ 'text-orange-500': activeSection === 'home' }">Home</a>
+                    <a href="#work" class="text-slate-600 hover:text-orange-500 transition-colors duration-300 font-medium"
+                       :class="{ 'text-orange-500': activeSection === 'work' }">Work</a>
+                    <a href="#about" class="text-slate-600 hover:text-orange-500 transition-colors duration-300 font-medium"
+                       :class="{ 'text-orange-500': activeSection === 'about' }">About</a>
+                    <a href="#process" class="text-slate-600 hover:text-orange-500 transition-colors duration-300 font-medium"
+                       :class="{ 'text-orange-500': activeSection === 'process' }">Process</a>
+                    <a href="#contact" class="text-slate-600 hover:text-orange-500 transition-colors duration-300 font-medium"
+                       :class="{ 'text-orange-500': activeSection === 'contact' }">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-slate-600 hover:text-orange-500 transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden" x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform -translate-y-4"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 transform translate-y-0"
+             x-transition:leave-end="opacity-0 transform -translate-y-4">
+            <div class="px-4 pt-2 pb-4 space-y-2 bg-white/95 backdrop-blur-md">
+                <a href="#home" @click="mobileMenuOpen = false" class="block py-2 text-slate-600 hover:text-orange-500 transition-colors">Home</a>
+                <a href="#work" @click="mobileMenuOpen = false" class="block py-2 text-slate-600 hover:text-orange-500 transition-colors">Work</a>
+                <a href="#about" @click="mobileMenuOpen = false" class="block py-2 text-slate-600 hover:text-orange-500 transition-colors">About</a>
+                <a href="#process" @click="mobileMenuOpen = false" class="block py-2 text-slate-600 hover:text-orange-500 transition-colors">Process</a>
+                <a href="#contact" @click="mobileMenuOpen = false" class="block py-2 text-slate-600 hover:text-orange-500 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative py-20 bg-gradient-to-br from-neutral-50 via-white to-pink-50 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <div class="floating mb-8">
+                    <div class="w-24 h-24 bg-gradient-to-r from-orange-400 to-pink-400 rounded-full mx-auto flex items-center justify-center shadow-2xl">
+                        <i class="fas fa-mobile-alt text-3xl text-white"></i>
+                    </div>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+                    Crafting Exceptional<br>
+                    <span class="gradient-text">Mobile Experiences</span>
+                </h1>
+                <p class="text-xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    UX/UI Designer specializing in creating intuitive, beautiful mobile applications 
+                    that users love and businesses thrive on.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#work" class="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-xl hover:from-orange-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover-lift font-medium">
+                        <i class="fas fa-eye mr-2"></i>View My Work
+                    </a>
+                    <a href="#contact" class="border-2 border-slate-300 text-slate-700 px-8 py-4 rounded-xl hover:border-orange-500 hover:text-orange-600 transition-all duration-300 hover-lift font-medium">
+                        <i class="fas fa-paper-plane mr-2"></i>Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background Pattern -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+    </section>
+
+    <!-- Featured Work Section -->
+    <section id="work" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in" x-intersect="$el.classList.add('visible')">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Featured Mobile Projects</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg">A selection of mobile applications I've designed, focusing on user-centered design principles and business goals.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-slate-100 fade-in" 
+                     x-intersect="$el.classList.add('visible')" x-intersect:leave="$el.classList.remove('visible')">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1533234944761-2f5337579079?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmaW5hbmNlJTIwYXBwJTIwbW9iaWxlJTIwYmFua2luZyUyMGludGVyZmFjZXxlbnwwfDB8fHwxNzU4OTExNDIxfDA&ixlib=rb-4.1.0&q=80&w=1080')">
+                        <div class="w-full h-full bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">Finance</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">FinanceFlow App</h3>
+                        <p class="text-slate-600 mb-4">Personal finance management mobile application with intuitive budgeting tools.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">iOS</span>
+                            <span class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full">Android</span>
+                            <span class="bg-slate-100 text-slate-800 text-sm px-3 py-1 rounded-full">UX Research</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-slate-100 fade-in" 
+                     x-intersect="$el.classList.add('visible')" x-intersect:leave="$el.classList.remove('visible')">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1747224317356-6dd1a4a078fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwYXBwJTIwbWVkaWNhbCUyMG1vYmlsZSUyMGRlc2lnbnxlbnwwfDB8fHwxNzU4OTExNDI2fDA&ixlib=rb-4.1.0&q=80&w=1080')">
+                        <div class="w-full h-full bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">Healthcare</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">HealthTrack Pro</h3>
+                        <p class="text-slate-600 mb-4">Healthcare app for tracking patient vitals and medication schedules.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">iOS</span>
+                            <span class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full">Healthcare</span>
+                            <span class="bg-slate-100 text-slate-800 text-sm px-3 py-1 rounded-full">Accessibility</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-slate-100 fade-in" 
+                     x-intersect="$el.classList.add('visible')" x-intersect:leave="$el.classList.remove('visible')">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1695391533533-fcad0ac7b8ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlY28lMjBzdXN0YWluYWJsZSUyMHNob3BwaW5nJTIwYXBwJTIwbW9iaWxlfGVufDB8MHx8fDE3NTg5MTE0MzF8MA&ixlib=rb-4.1.0&q=80&w=1080')">
+                        <div class="w-full h-full bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">Eco</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">EcoShop Mobile</h3>
+                        <p class="text-slate-600 mb-4">Sustainable shopping app with carbon footprint tracking features.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">Android</span>
+                            <span class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full">E-commerce</span>
+                            <span class="bg-slate-100 text-slate-800 text-sm px-3 py-1 rounded-full">Sustainability</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gradient-to-br from-neutral-50 to-pink-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in" x-intersect="$el.classList.add('visible')">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">About Me</h2>
+                    <div class="flex items-center mb-6">
+                        <div class="w-20 h-20 rounded-full bg-cover bg-center mr-4 border-4 border-white shadow-lg" 
+                             style="background-image: url('https://images.unsplash.com/photo-1564518534518-e79657852a1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx1eCUyMHVpJTIwZGVzaWduZXIlMjBwb3J0cmFpdCUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzU4OTExNDExfDA&ixlib=rb-4.1.0&q=80&w=1080')"></div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-slate-900">Alex Morgan</h3>
+                            <p class="text-slate-600">Senior UX/UI Designer</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-4 leading-relaxed">
+                        With over 8 years of experience in UX/UI design, I specialize in creating mobile applications 
+                        that balance business objectives with user needs. My approach combines data-driven insights 
+                        with creative problem-solving.
+                    </p>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        I believe in designing products that are not only beautiful but also functional, accessible, 
+                        and delightful to use across all mobile platforms.
+                    </p>
+                    <div class="flex flex-wrap gap-6">
+                        <div class="text-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
+                            <div class="text-2xl font-bold gradient-text">50+</div>
+                            <div class="text-sm text-slate-600">Projects</div>
+                        </div>
+                        <div class="text-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
+                            <div class="text-2xl font-bold gradient-text">8+</div>
+                            <div class="text-sm text-slate-600">Years Experience</div>
+                        </div>
+                        <div class="text-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
+                            <div class="text-2xl font-bold gradient-text">100%</div>
+                            <div class="text-sm text-slate-600">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg fade-in" 
+                     x-intersect="$el.classList.add('visible')">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+                        <i class="fas fa-chart-line text-orange-500 mr-3"></i>Core Skills
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-medium">User Research</span>
+                                <span class="text-slate-600 font-semibold">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-pink-500 h-3 rounded-full skill-bar" 
+                                     x-data="{ width: '0%' }" 
+                                     x-init="setTimeout(() => width = '95%', 100)"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-medium">UI Design</span>
+                                <span class="text-slate-600 font-semibold">98%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-pink-500 h-3 rounded-full skill-bar" 
+                                     x-data="{ width: '0%' }" 
+                                     x-init="setTimeout(() => width = '98%', 300)"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-medium">Prototyping</span>
+                                <span class="text-slate-600 font-semibold">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-pink-500 h-3 rounded-full skill-bar" 
+                                     x-data="{ width: '0%' }" 
+                                     x-init="setTimeout(() => width = '92%', 500)"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-medium">Mobile Design</span>
+                                <span class="text-slate-600 font-semibold">96%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-pink-500 h-3 rounded-full skill-bar" 
+                                     x-data="{ width: '0%' }" 
+                                     x-init="setTimeout(() => width = '96%', 700)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section id="process" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in" x-intersect="$el.classList.add('visible')">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">My Design Process</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg">A structured approach to creating mobile experiences that deliver results.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center fade-in" x-intersect="$el.classList.add('visible')">
+                    <div class="w-20 h-20 bg-gradient-to-r from-orange-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg hover-lift">
+                        <i class="fas fa-search text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-3 text-lg">Discover</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Research and understand user needs and business goals through interviews and data analysis.</p>
+                </div>
+                <div class="text-center fade-in" x-intersect="$el.classList.add('visible')" x-intersect:delay="200">
+                    <div class="w-20 h-20 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg hover-lift">
+                        <i class="fas fa-pencil-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-3 text-lg">Define</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Synthesize findings and define design requirements, user flows, and information architecture.</p>
+                </div>
+                <div class="text-center fade-in" x-intersect="$el.classList.add('visible')" x-intersect:delay="400">
+                    <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg hover-lift">
+                        <i class="fas fa-palette text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-3 text-lg">Design</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Create wireframes, prototypes, and visual designs with a focus on mobile-first approach.</p>
+                </div>
+                <div class="text-center fade-in" x-intersect="$el.classList.add('visible')" x-intersect:delay="600">
+                    <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-green-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg hover-lift">
+                        <i class="fas fa-rocket text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-3 text-lg">Deliver</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Test, iterate, and hand off development-ready assets with comprehensive documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-pink-900 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Let's Create Something Amazing</h2>
+            <p class="text-slate-300 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
+                Ready to bring your mobile app idea to life? I'd love to hear about your project and discuss how we can work together to create an exceptional user experience.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="mailto:hello@portfolio.com" class="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-xl hover:from-orange-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover-lift font-medium">
+                    <i class="fas fa-envelope mr-2"></i>Get In Touch
+                </a>
+                <a href="tel:+15551234567" class="border-2 border-white/30 text-white px-8 py-4 rounded-xl hover:border-white hover:bg-white/10 transition-all duration-300 hover-lift font-medium">
+                    <i class="fas fa-phone mr-2"></i>Call Now
+                </a>
+            </div>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-slate-300">
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-envelope text-orange-400 text-xl mr-3"></i>
+                    <span>hello@portfolio.com</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-phone text-pink-400 text-xl mr-3"></i>
+                    <span>+1 (555) 123-4567</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-purple-400 text-xl mr-3"></i>
+                    <span>San Francisco, CA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 gradient-text">DesignPortfolio</h3>
+                    <p class="text-slate-400 leading-relaxed">Creating exceptional mobile experiences through thoughtful UX/UI design that drives business success.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-slate-400 hover:text-orange-400 transition-colors duration-300">
+                            <i class="fab fa-linkedin-in text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-pink-400 transition-colors duration-300">
+                            <i class="fab fa-dribbble text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-purple-400 transition-colors duration-300">
+                            <i class="fab fa-behance text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#work" class="hover:text-orange-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2"></i>Work
+                        </a></li>
+                        <li><a href="#about" class="hover:text-pink-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2"></i>About
+                        </a></li>
+                        <li><a href="#process" class="hover:text-purple-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2"></i>Process
+                        </a></li>
+                        <li><a href="#contact" class="hover:text-blue-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2"></i>Contact
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li class="flex items-center"><i class="fas fa-mobile-alt text-orange-400 mr-2"></i> Mobile App Design</li>
+                        <li class="flex items-center"><i class="fas fa-user-friends text-pink-400 mr-2"></i> UX Research</li>
+                        <li class="flex items-center"><i class="fas fa-palette text-purple-400 mr-2"></i> UI Design</li>
+                        <li class="flex items-center"><i class="fas fa-rocket text-blue-400 mr-2"></i> Prototyping</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Newsletter</h4>
+                    <p class="text-slate-400 mb-4">Get design insights and mobile trends delivered to your inbox.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="bg-slate-800 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 w-full">
+                        <button class="bg-gradient-to-r from-orange-500 to-pink-500 px-4 py-2 rounded-r-lg hover:from-orange-600 hover:to-pink-600 transition-colors duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 DesignPortfolio. All rights reserved. Crafted with <i class="fas fa-heart text-pink-400 mx-1"></i> for exceptional mobile experiences.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button x-data="{ show: false }" 
+            x-show="show" 
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform scale-90"
+            x-transition:enter-end="opacity-100 transform scale-100"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 transform scale-100"
+            x-transition:leave-end="opacity-0 transform scale-90"
+            class="fixed bottom-8 right-8 bg-gradient-to-r from-orange-500 to-pink-500 text-white p-3 rounded-full shadow-lg hover:from-orange-600 hover:to-pink-600 transition-all duration-300 z-40"
+            x-init="window.addEventListener('scroll', () => { show = window.scrollY > 300 })">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

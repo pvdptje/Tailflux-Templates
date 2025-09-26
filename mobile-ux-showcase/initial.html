@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX/UI Designer Portfolio | Mobile App Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-neutral-50 text-slate-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-xl font-semibold text-slate-900">DesignPortfolio</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#work" class="text-slate-600 hover:text-orange-500 transition-colors">Work</a>
+                    <a href="#about" class="text-slate-600 hover:text-orange-500 transition-colors">About</a>
+                    <a href="#process" class="text-slate-600 hover:text-orange-500 transition-colors">Process</a>
+                    <a href="#contact" class="text-slate-600 hover:text-orange-500 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-br from-neutral-50 to-pink-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6">
+                    Crafting Exceptional<br>
+                    <span class="text-orange-500">Mobile Experiences</span>
+                </h1>
+                <p class="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
+                    UX/UI Designer specializing in creating intuitive, beautiful mobile applications 
+                    that users love and businesses thrive on.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#work" class="bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition-colors">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="border border-slate-300 text-slate-700 px-8 py-3 rounded-lg hover:border-orange-500 transition-colors">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Work Section -->
+    <section id="work" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Featured Mobile Projects</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">A selection of mobile applications I've designed, focusing on user-centered design principles and business goals.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-neutral-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-orange-400 to-pink-400"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">FinanceFlow App</h3>
+                        <p class="text-slate-600 mb-4">Personal finance management mobile application with intuitive budgeting tools.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">iOS</span>
+                            <span class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full">Android</span>
+                            <span class="bg-slate-100 text-slate-800 text-sm px-3 py-1 rounded-full">UX Research</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-neutral-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-slate-400 to-neutral-400"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">HealthTrack Pro</h3>
+                        <p class="text-slate-600 mb-4">Healthcare app for tracking patient vitals and medication schedules.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">iOS</span>
+                            <span class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full">Healthcare</span>
+                            <span class="bg-slate-100 text-slate-800 text-sm px-3 py-1 rounded-full">Accessibility</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-neutral-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-pink-400 to-orange-400"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">EcoShop Mobile</h3>
+                        <p class="text-slate-600 mb-4">Sustainable shopping app with carbon footprint tracking features.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">Android</span>
+                            <span class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full">E-commerce</span>
+                            <span class="bg-slate-100 text-slate-800 text-sm px-3 py-1 rounded-full">Sustainability</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-neutral-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">About Me</h2>
+                    <p class="text-slate-600 mb-4">
+                        With over 8 years of experience in UX/UI design, I specialize in creating mobile applications 
+                        that balance business objectives with user needs. My approach combines data-driven insights 
+                        with creative problem-solving.
+                    </p>
+                    <p class="text-slate-600 mb-6">
+                        I believe in designing products that are not only beautiful but also functional, accessible, 
+                        and delightful to use across all mobile platforms.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-orange-500">50+</div>
+                            <div class="text-sm text-slate-600">Projects</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-pink-500">8+</div>
+                            <div class="text-sm text-slate-600">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-slate-600">100%</div>
+                            <div class="text-sm text-slate-600">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-100 to-pink-100 rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-4">Core Skills</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-700">User Research</span>
+                                <span class="text-slate-600">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-700">UI Design</span>
+                                <span class="text-slate-600">98%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                <div class="bg-pink-500 h-2 rounded-full" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-700">Prototyping</span>
+                                <span class="text-slate-600">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                <div class="bg-slate-600 h-2 rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section id="process" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">My Design Process</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">A structured approach to creating mobile experiences that deliver results.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-orange-600">1</span>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Discover</h3>
+                    <p class="text-slate-600 text-sm">Research and understand user needs and business goals.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-pink-600">2</span>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Define</h3>
+                    <p class="text-slate-600 text-sm">Synthesize findings and define design requirements.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-slate-600">3</span>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Design</h3>
+                    <p class="text-slate-600 text-sm">Create wireframes, prototypes, and visual designs.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-neutral-600">4</span>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Deliver</h3>
+                    <p class="text-slate-600 text-sm">Test, iterate, and hand off development-ready assets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-neutral-50 to-pink-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Let's Create Something Amazing</h2>
+            <p class="text-slate-600 mb-8 max-w-2xl mx-auto">
+                Ready to bring your mobile app idea to life? I'd love to hear about your project and discuss how we can work together.
+            </p>
+            <a href="mailto:hello@portfolio.com" class="bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition-colors inline-block">
+                Get In Touch
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">DesignPortfolio</h3>
+                    <p class="text-slate-400">Creating exceptional mobile experiences through thoughtful UX/UI design.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#work" class="hover:text-white transition-colors">Work</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#process" class="hover:text-white transition-colors">Process</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Dribbble</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Behance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li>hello@portfolio.com</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>Based in San Francisco</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 DesignPortfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
