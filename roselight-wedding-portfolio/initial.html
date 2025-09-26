@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elena Rose Photography | Wedding Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        emerald: {
+                            50: '#ecfdf5',
+                            400: '#34d399',
+                            600: '#059669',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            400: '#94a3b8',
+                            600: '#475569',
+                            800: '#1e293b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-2xl font-light text-rose-600">Elena Rose</span>
+                    <span class="ml-2 text-sm text-slate-400">Photography</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#portfolio" class="text-slate-600 hover:text-rose-500 transition-colors">Portfolio</a>
+                    <a href="#about" class="text-slate-600 hover:text-rose-500 transition-colors">About</a>
+                    <a href="#services" class="text-slate-600 hover:text-rose-500 transition-colors">Services</a>
+                    <a href="#contact" class="text-slate-600 hover:text-rose-500 transition-colors">Contact</a>
+                </div>
+                
+                <button class="md:hidden text-slate-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-emerald-50">
+        <div class="text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-light text-slate-800 mb-4">Capturing Love Stories</h1>
+            <p class="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">Specializing in authentic, emotional wedding photography that tells your unique story</p>
+            <div class="space-x-4">
+                <a href="#portfolio" class="bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-colors">View Portfolio</a>
+                <a href="#contact" class="border border-slate-300 text-slate-700 px-8 py-3 rounded-full hover:border-rose-300 hover:text-rose-600 transition-colors">Get in Touch</a>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-light text-slate-800 mb-4">Recent Work</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">A glimpse into the beautiful moments I've been privileged to capture</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Portfolio Item 1 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                         alt="Wedding couple in garden" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-end">
+                        <div class="p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <h3 class="text-xl font-semibold">Sarah & Michael</h3>
+                            <p class="text-rose-100">Garden Wedding</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 2 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                         alt="Beach wedding" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-end">
+                        <div class="p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <h3 class="text-xl font-semibold">Emma & James</h3>
+                            <p class="text-rose-100">Beach Ceremony</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 3 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                         alt="Traditional wedding" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-end">
+                        <div class="p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <h3 class="text-xl font-semibold">Lisa & David</h3>
+                            <p class="text-rose-100">Traditional Celebration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-light text-slate-800 mb-6">About Me</h2>
+                    <p class="text-slate-600 mb-4">
+                        With over 8 years of experience specializing in wedding photography, I believe that the most beautiful photos come from authentic moments. 
+                        My approach is unobtrusive yet attentive, capturing the raw emotions and fleeting glances that make your day uniquely yours.
+                    </p>
+                    <p class="text-slate-600 mb-8">
+                        Based in the heart of the city but available worldwide, I'm passionate about telling love stories through my lens. 
+                        Every couple has a unique journey, and I'm honored to be the one to preserve those precious memories.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-rose-500 text-white px-6 py-2 rounded-full text-sm">8+ Years Experience</div>
+                        <div class="bg-emerald-400 text-white px-6 py-2 rounded-full text-sm">200+ Weddings</div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                         alt="Elena Rose - Photographer" class="rounded-lg shadow-lg">
+                    <div class="absolute -bottom-6 -left-6 bg-rose-500 text-white p-6 rounded-lg shadow-lg">
+                        <div class="text-3xl font-light">Elena Rose</div>
+                        <div class="text-rose-100">Wedding Photographer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-light text-slate-800 mb-4">Services</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Tailored packages to capture every moment of your special day</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 p-8 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Essential Package</h3>
+                    <p class="text-slate-600 mb-4">6 hours of coverage, 300+ edited photos, online gallery</p>
+                    <div class="text-2xl font-light text-rose-500">$1,800</div>
+                </div>
+                
+                <div class="bg-rose-50 p-8 rounded-lg hover:shadow-lg transition-shadow border border-rose-100">
+                    <div class="w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Premium Package</h3>
+                    <p class="text-slate-600 mb-4">Full day coverage, 500+ edited photos, engagement session, album</p>
+                    <div class="text-2xl font-light text-rose-600">$3,200</div>
+                </div>
+                
+                <div class="bg-slate-50 p-8 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Destination Wedding</h3>
+                    <p class="text-slate-600 mb-4">Multi-day coverage, travel included, custom package</p>
+                    <div class="text-2xl font-light text-emerald-600">Starting at $5,000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-slate-100 to-rose-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-light text-slate-800 mb-4">Let's Create Magic Together</h2>
+                <p class="text-slate-600">Ready to capture your special day? Get in touch and let's discuss your vision.</p>
+            </div>
+            
+            <form class="bg-white rounded-lg shadow-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-slate-700 mb-2" for="name">Your Name</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-rose-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-2" for="email">Email Address</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-slate-700 mb-2" for="wedding-date">Wedding Date</label>
+                    <input type="date" id="wedding-date" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-rose-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-slate-700 mb-2" for="message">Your Message</label>
+                    <textarea id="message" rows="4" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-rose-500"></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-rose-500 text-white py-3 rounded-lg hover:bg-rose-600 transition-colors font-medium">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-light mb-4">Elena Rose</h3>
+                    <p class="text-slate-400">Capturing the beauty of your love story, one frame at a time.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#portfolio" class="hover:text-rose-300 transition-colors">Portfolio</a></li>
+                        <li><a href="#about" class="hover:text-rose-300 transition-colors">About</a></li>
+                       <li><a href="#services" class="hover:text-rose-300 transition-colors">Services</a></li>
+                        <li><a href="#contact" class="hover:text-rose-300 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li>Wedding Photography</li>
+                        <li>Engagement Sessions</li>
+                        <li>Destination Weddings</li>
+                        <li>Photo Albums</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-rose-300 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-rose-300 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-rose-300 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.042-3.441.219-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.094.113.108.212.08.326-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.748-1.378 0 0-.599 2.282-.744 2.84-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="mt-4 text-slate-400">
+                        <p>hello@elenarose.com</p>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 Elena Rose Photography. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
