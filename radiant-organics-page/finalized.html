@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureBloom Organics - Premium Skincare Collection</title>
+    <meta name="description" content="PureBloom Organics Radiant Glow Serum. Certified organic, cruelty-free skincare with rosehip oil, orange extract, and orchid complex for radiant hydration.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose': {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c'
+                        },
+                        'orange': {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c'
+                        },
+                        'zinc': {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46'
+                        },
+                        'purple': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(244, 63, 94, 0.3)' },
+                            '50%': { boxShadow: '0 0 30px rgba(244, 63, 94, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #f43f5e 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .product-image {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-700 font-sans" x-data="cart()">
+    <!-- Floating decorative elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-20 left-10 w-4 h-4 bg-rose-200 rounded-full opacity-30 floating-element"></div>
+        <div class="absolute top-40 right-20 w-6 h-6 bg-purple-200 rounded-full opacity-40 floating-element" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-32 left-20 w-3 h-3 bg-orange-200 rounded-full opacity-50 floating-element" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-sm bg-white/90 border-b border-zinc-100" x-data="{ mobileOpen: false }">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-r from-rose-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-105 transition">
+                        <i class="fas fa-leaf text-white text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">PureBloom Organics</span>
+                </a>
+                
+                <!-- Desktop nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-zinc-600 hover:text-rose-600 transition-colors duration-300 font-medium relative group">
+                        Products
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-zinc-600 hover:text-rose-600 transition-colors duration-300 font-medium relative group">
+                        About
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-zinc-600 hover:text-rose-600 transition-colors duration-300 font-medium relative group">
+                        Ingredients
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-zinc-600 hover:text-rose-600 transition-colors duration-300 font-medium relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-zinc-600 hover:text-rose-600 transition-transform duration-300 hover:scale-110" aria-label="Search">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button id="cartIcon" class="text-zinc-600 hover:text-rose-600 transition-transform duration-300 hover:scale-110 relative" aria-label="Cart">
+                        <i class="fas fa-shopping-bag text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" x-text="count"></span>
+                    </button>
+                    <button class="bg-gradient-to-r from-rose-500 to-purple-500 text-white px-4 py-2 rounded-full font-semibold hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-user mr-2"></i>Account
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-zinc-600 hover:text-rose-600 transition-colors" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen.toString()" aria-controls="mobileNav" aria-label="Toggle navigation">
+                    <i class="fas fa-bars text-xl" x-show="!mobileOpen"></i>
+                    <i class="fas fa-times text-xl" x-show="mobileOpen"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="md:hidden bg-white/95 border-t border-zinc-100" x-show="mobileOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2">
+            <div class="px-6 py-4 space-y-3">
+                <a href="#" class="block text-zinc-700 hover:text-rose-600 font-medium">Products</a>
+                <a href="#" class="block text-zinc-700 hover:text-rose-600 font-medium">About</a>
+                <a href="#" class="block text-zinc-700 hover:text-rose-600 font-medium">Ingredients</a>
+                <a href="#" class="block text-zinc-700 hover:text-rose-600 font-medium">Contact</a>
+                <div class="flex items-center space-x-4 pt-3">
+                    <button class="text-zinc-600 hover:text-rose-600" aria-label="Search">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="cartIconMobile" class="text-zinc-600 hover:text-rose-600 relative" aria-label="Cart">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span class="absolute -top-2 -right-3 bg-rose-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center" x-text="count"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Product Section -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Product Images -->
+            <div x-data="{ activeImage: 1 }" class="space-y-6">
+                <div class="bg-white rounded-3xl shadow-2xl p-8 product-image relative overflow-hidden">
+                    <div class="absolute inset-0 pointer-events-none rounded-3xl" style="background: radial-gradient(1000px 200px at 10% 10%, rgba(244,63,94,0.06), transparent), radial-gradient(800px 200px at 90% 90%, rgba(168,85,247,0.06), transparent);"></div>
+                    <img x-show="activeImage === 1" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform scale-95" 
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         src="https://images.unsplash.com/photo-1677735476292-0fc57ab097b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                         alt="Radiant Glow Serum bottle minimalist" class="w-full h-96 object-contain rounded-2xl" loading="eager" decoding="async">
+                    <img x-show="activeImage === 2" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform scale-95" 
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         src="https://images.unsplash.com/photo-1718632167650-c6a11c429cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                         alt="Botanical ingredients and droppers flat lay" class="w-full h-96 object-contain rounded-2xl" loading="lazy" decoding="async">
+                    <img x-show="activeImage === 3" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform scale-95" 
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         src="https://images.unsplash.com/photo-1565212705409-0548cdb673d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                         alt="Glowing natural skin close-up results" class="w-full h-96 object-cover rounded-2xl" loading="lazy" decoding="async">
+                </div>
+                <div class="flex space-x-4 justify-center">
+                    <button @click="activeImage = 1" 
+                            :class="activeImage === 1 ? 'ring-4 ring-rose-500 transform scale-105 animate-pulse-glow' : 'hover:scale-105'"
+                            class="w-24 h-24 bg-white rounded-xl shadow-lg border-2 border-zinc-100 overflow-hidden transition-all duration-300" aria-label="View product image 1">
+                        <img src="https://images.unsplash.com/photo-1677735476292-0fc57ab097b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" 
+                             alt="Product view bottle" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    </button>
+                    <button @click="activeImage = 2" 
+                            :class="activeImage === 2 ? 'ring-4 ring-rose-500 transform scale-105 animate-pulse-glow' : 'hover:scale-105'"
+                            class="w-24 h-24 bg-white rounded-xl shadow-lg border-2 border-zinc-100 overflow-hidden transition-all duration-300" aria-label="View product image 2">
+                        <img src="https://images.unsplash.com/photo-1718632167650-c6a11c429cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" 
+                             alt="Ingredients flat lay" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    </button>
+                    <button @click="activeImage = 3" 
+                            :class="activeImage === 3 ? 'ring-4 ring-rose-500 transform scale-105 animate-pulse-glow' : 'hover:scale-105'"
+                            class="w-24 h-24 bg-white rounded-xl shadow-lg border-2 border-zinc-100 overflow-hidden transition-all duration-300" aria-label="View product image 3">
+                        <img src="https://images.unsplash.com/photo-1565212705409-0548cdb673d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" 
+                             alt="Results glowing skin" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="space-y-8 animate-slide-up">
+                <div>
+                    <span class="inline-block px-4 py-2 bg-gradient-to-r from-orange-400 to-rose-500 text-white rounded-full text-sm font-semibold shadow-lg">
+                        <i class="fas fa-crown mr-2"></i>Best Seller
+                    </span>
+                    <h1 class="text-5xl font-bold text-zinc-800 mt-4 leading-tight">Radiant Glow <span class="gradient-text">Serum</span></h1>
+                    <p class="text-2xl text-rose-600 font-bold mt-3 flex items-center">
+                        $68.00
+                        <span class="ml-3 text-sm line-through text-zinc-400">$85.00</span>
+                        <span class="ml-2 px-2 py-1 bg-rose-100 text-rose-600 text-xs rounded-full">Save 20%</span>
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <p class="text-zinc-600 leading-relaxed text-lg">
+                        Experience the ultimate fusion of nature and science. Our premium organic serum combines 
+                        <span class="text-rose-600 font-semibold">rosehip oil</span>, <span class="text-orange-600 font-semibold">orange extract</span>, and 
+                        <span class="text-purple-600 font-semibold">purple orchid</span> to deliver unparalleled hydration and radiance. 
+                        Certified organic and cruelty-free.
+                    </p>
+                    
+                    <div class="flex items-center space-x-6 text-sm">
+                        <div class="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                            <div class="flex text-amber-400 mr-2" aria-label="Rating 4.8 out of 5">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="font-semibold">4.8</span>
+                            <span class="text-zinc-400 ml-1">(256 reviews)</span>
+                        </div>
+                        <div class="flex items-center text-green-600 bg-green-50 px-3 py-2 rounded-full">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span class="font-semibold">In Stock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Options -->
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-zinc-700 mb-3">Size</label>
+                        <div class="flex space-x-3">
+                            <button class="px-6 py-3 border-2 border-zinc-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition-all duration-300 font-medium">
+                                30ml
+                            </button>
+                            <button class="px-6 py-3 border-2 border-rose-500 bg-rose-50 text-rose-600 rounded-xl font-medium transform scale-105 shadow-lg">
+                                50ml
+                            </button>
+                            <button class="px-6 py-3 border-2 border-zinc-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition-all duration-300 font-medium">
+                                100ml
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4" x-data="{ qty: 1 }">
+                        <div class="flex items-center border-2 border-zinc-200 rounded-xl overflow-hidden">
+                            <button class="px-4 py-3 text-zinc-600 hover:text-rose-600 hover:bg-rose-50 transition-colors" @click="qty = Math.max(1, qty - 1)" aria-label="Decrease quantity">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="px-6 py-3 border-x border-zinc-200 font-semibold min-w-[3rem] text-center" x-text="qty"></span>
+                            <button class="px-4 py-3 text-zinc-600 hover:text-rose-600 hover:bg-rose-50 transition-colors" @click="qty = Math.min(10, qty + 1)" aria-label="Increase quantity">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <button class="flex-1 bg-gradient-to-r from-rose-500 to-purple-500 text-white py-4 px-8 rounded-xl font-bold hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center"
+                                @click="addToCart();"
+                                aria-label="Add to cart">
+                            <i class="fas fa-shopping-cart mr-3"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="grid grid-cols-2 gap-6 pt-6 border-t border-zinc-200">
+                    <div class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center shadow-md">
+                            <i class="fas fa-leaf text-rose-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-zinc-800">Certified Organic</span>
+                            <span class="text-sm text-zinc-500">100% Natural</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center shadow-md">
+                            <i class="fas fa-heart text-purple-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-zinc-800">Cruelty Free</span>
+                            <span class="text-sm text-zinc-500">Never Tested</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center shadow-md">
+                            <i class="fas fa-recycle text-green-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-zinc-800">Eco-Friendly</span>
+                            <span class="text-sm text-zinc-500">Sustainable Packaging</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center shadow-md">
+                            <i class="fas fa-shield-alt text-blue-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-zinc-800">Dermatologist</span>
+                            <span class="text-sm text-zinc-500">Tested & Approved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details Tabs -->
+        <div class="mt-20">
+            <div x-data="{ activeTab: 'description' }" class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                <div class="border-b border-zinc-200">
+                    <nav class="flex overflow-x-auto px-8 scrollbar-hide" aria-label="Product details tabs">
+                        <button @click="activeTab = 'description'" 
+                                :class="activeTab === 'description' ? 'text-rose-600 border-rose-600' : 'text-zinc-500 border-transparent'"
+                                class="py-6 px-4 border-b-2 font-semibold text-base whitespace-nowrap transition-all duration-300 hover:text-rose-500">
+                            <i class="fas fa-file-alt mr-2"></i>Description
+                        </button>
+                        <button @click="activeTab = 'ingredients'" 
+                                :class="activeTab === 'ingredients' ? 'text-rose-600 border-rose-600' : 'text-zinc-500 border-transparent'"
+                                class="py-6 px-4 border-b-2 font-semibold text-base whitespace-nowrap transition-all duration-300 hover:text-rose-500">
+                            <i class="fas fa-flask mr-2"></i>Ingredients
+                        </button>
+                        <button @click="activeTab = 'reviews'" 
+                                :class="activeTab === 'reviews' ? 'text-rose-600 border-rose-600' : 'text-zinc-500 border-transparent'"
+                                class="py-6 px-4 border-b-2 font-semibold text-base whitespace-nowrap transition-all duration-300 hover:text-rose-500">
+                            <i class="fas fa-star mr-2"></i>Reviews
+                        </button>
+                        <button @click="activeTab = 'usage'" 
+                                :class="activeTab === 'usage' ? 'text-rose-600 border-rose-600' : 'text-zinc-500 border-transparent'"
+                                class="py-6 px-4 border-b-2 font-semibold text-base whitespace-nowrap transition-all duration-300 hover:text-rose-500">
+                            <i class="fas fa-hand-holding-heart mr-2"></i>How to Use
+                        </button>
+                    </nav>
+                </div>
+                
+                <div class="p-8">
+                    <div x-show="activeTab === 'description'" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                        <h3 class="text-2xl font-bold text-zinc-800">Transform Your Skin Naturally</h3>
+                        <p class="text-zinc-600 leading-relaxed text-lg">
+                            Our Radiant Glow Serum is meticulously formulated with the purest organic ingredients to deliver 
+                            visible results within weeks. The unique synergistic blend of rose, orange, and purple orchid 
+                            extracts works harmoniously to deeply hydrate, brighten, and protect your skin's natural barrier.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-6 mt-6">
+                            <div class="flex items-start space-x-4 p-4 bg-rose-50 rounded-xl">
+                                <i class="fas fa-tint text-rose-500 text-xl mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold text-zinc-800">Deep Hydration</h4>
+                                    <p class="text-zinc-600 text-sm">72-hour moisture retention</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-4 bg-purple-50 rounded-xl">
+                                <i class="fas fa-sun text-purple-500 text-xl mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold text-zinc-800">Brightening Effect</h4>
+                                    <p class="text-zinc-600 text-sm">Reduces dark spots & uneven tone</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="activeTab === 'ingredients'" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                        <h3 class="text-2xl font-bold text-zinc-800">Pure & Potent Ingredients</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                                    <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-seedling text-rose-500"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold text-zinc-800">Organic Rosehip Oil</span>
+                                        <p class="text-sm text-zinc-500">Rich in Vitamin A & C</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-lemon text-orange-500"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold text-zinc-800">Cold-Pressed Orange Extract</span>
+                                        <p class="text-sm text-zinc-500">Natural brightening agent</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-spa text-purple-500"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold text-zinc-800">Purple Orchid Complex</span>
+                                        <p class="text-sm text-zinc-500">Antioxidant protection</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-shield-virus text-blue-500"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold text-zinc-800">Vitamin E + Zinc PCA</span>
+                                        <p class="text-sm text-zinc-500">Skin barrier support</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="activeTab === 'reviews'" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-8">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-2xl font-bold text-zinc-800">Customer Reviews</h3>
+                            <button class="bg-rose-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-rose-600 transition-colors">
+                                <i class="fas fa-pen mr-2"></i>Write Review
+                            </button>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4 p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <div class="w-14 h-14 bg-gradient-to-r from-orange-400 to-rose-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    SM
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center justify-between mb-2">
+                                        <span class="font-semibold text-zinc-800">Sarah M.</span>
+                                        <span class="text-sm text-zinc-400">2 weeks ago</span>
+                                    </div>
+                                    <div class="flex text-amber-400 mb-2" aria-label="5 star rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <p class="text-zinc-600">This serum has completely transformed my skincare routine. My skin has never looked more radiant and healthy! The glow is real and lasts all day.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <div class="w-14 h-14 bg-gradient-to-r from-purple-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    JT
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center justify-between mb-2">
+                                        <span class="font-semibold text-zinc-800">Jessica T.</span>
+                                        <span class="text-sm text-zinc-400">1 month ago</span>
+                                    </div>
+                                    <div class="flex text-amber-400 mb-2" aria-label="4.5 star rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <p class="text-zinc-600">As someone with sensitive skin, I'm always cautious about new products. This serum is gentle yet effective. No irritation, just beautiful results!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-show="activeTab === 'usage'" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                        <h3 class="text-2xl font-bold text-zinc-800">How to Use for Best Results</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center p-6 bg-white rounded-2xl shadow-lg">
+                                <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-hand-holding-water text-rose-500 text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold text-zinc-800 mb-2">Step 1: Cleanse</h4>
+                                <p class="text-zinc-600 text-sm">Start with clean, dry skin in the morning and evening</p>
+                            </div>
+                            <div class="text-center p-6 bg-white rounded-2xl shadow-lg">
+                                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-tint text-purple-500 text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold text-zinc-800 mb-2">Step 2: Apply</h4>
+                                <p class="text-zinc-600 text-sm">Dispense 2-3 drops and gently massage into face and neck</p>
+                            </div>
+                            <div class="text-center p-6 bg-white rounded-2xl shadow-lg">
+                                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-sun text-orange-500 text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold text-zinc-800 mb-2">Step 3: Protect</h4>
+                                <p class="text-zinc-600 text-sm">Follow with moisturizer and SPF during daytime use</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Newsletter Section -->
+    <section class="bg-gradient-to-r from-rose-50 to-purple-50 py-16 mt-20 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-gradient-to-tr from-rose-200/40 to-purple-200/40 blur-2xl"></div>
+        <div class="container mx-auto px-6 text-center relative">
+            <h2 class="text-3xl font-bold text-zinc-800 mb-4">Join the PureBloom Family</h2>
+            <p class="text-zinc-600 text-lg max-w-2xl mx-auto mb-8">
+                Subscribe to our newsletter and receive exclusive offers, skincare tips, and early access to new products.
+            </p>
+            <form class="max-w-md mx-auto flex" onsubmit="event.preventDefault();">
+                <label for="email" class="sr-only">Email address</label>
+                <input id="email" type="email" placeholder="Enter your email" required class="px-6 py-4 border-0 rounded-l-2xl flex-1 focus:outline-none focus:ring-2 focus:ring-rose-500" autocomplete="email">
+                <button class="bg-gradient-to-r from-rose-500 to-purple-500 text-white px-8 py-4 rounded-r-2xl font-semibold hover:opacity-90 transition-opacity transform hover:scale-105">
+                    Subscribe <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </form>
+            <p class="text-xs text-zinc-500 mt-3">We care about your data. Read our <a href="#" class="text-rose-600 hover:underline">Privacy Policy</a>.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-zinc-200">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-rose-500 to-purple-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-lg"></i>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">PureBloom</span>
+                    </div>
+                    <p class="text-zinc-600 text-sm mb-4">Premium organic skincare for radiant, healthy skin that glows from within.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center hover:bg-rose-500 hover:text-white transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center hover:bg-rose-500 hover:text-white transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center hover:bg-rose-500 hover:text-white transition-colors" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-zinc-800 mb-4 text-lg">Quick Links</h3>
+                    <ul class="space-y-3 text-zinc-600">
+                        <li><a href="#" class="hover:text-rose-600 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Shop All Products</a></li>
+                        <li><a href="#" class="hover:text-rose-600 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>About Us</a></li>
+                        <li><a href="#" class="hover:text-rose-600 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Shipping & Returns</a></li>
+                        <li><a href="#" class="hover:text-rose-600 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-zinc-800 mb-4 text-lg">Contact</h3>
+                    <ul class="space-y-3 text-zinc-600">
+                        <li class="flex items-center"><i class="fas fa-envelope text-rose-500 mr-3"></i>hello@purebloom.com</li>
+                        <li class="flex items-center"><i class="fas fa-phone text-rose-500 mr-3"></i>+1 (555) 123-4567</li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt text-rose-500 mr-3"></i>123 Nature Way, Organic City</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-zinc-800 mb-4 text-lg">Certifications</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-3 rounded-lg text-center">
+                            <i class="fas fa-leaf text-green-500 text-2xl mb-2"></i>
+                            <span class="text-xs font-semibold text-green-600">USDA Organic</span>
+                        </div>
+                        <div class="bg-purple-50 p-3 rounded-lg text-center">
+                            <i class="fas fa-heart text-purple-500 text-2xl mb-2"></i>
+                            <span class="text-xs font-semibold text-purple-600">Cruelty Free</span>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-lg text-center">
+                            <i class="fas fa-recycle text-blue-500 text-2xl mb-2"></i>
+                            <span class="text-xs font-semibold text-blue-600">Eco-Friendly</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg text-center">
+                            <i class="fas fa-award text-amber-500 text-2xl mb-2"></i>
+                            <span class="text-xs font-semibold text-amber-600">Award Winning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-zinc-200 mt-8 pt-8 text-center text-sm text-zinc-500">
+                <p>&copy; 2024 PureBloom Organics. All rights reserved. | <a href="#" class="hover:text-rose-600 transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-rose-600 transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-rose-500 to-purple-500 text-white rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 z-40 hidden" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+
+        // Alpine cart component
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cart', () => ({
+                count: 3,
+                addToCart() {
+                    this.count++;
+                    const cartButton = document.getElementById('cartIcon') || document.getElementById('cartIconMobile');
+                    if (cartButton) {
+                        cartButton.classList.add('animate-bounce');
+                        setTimeout(() => cartButton.classList.remove('animate-bounce'), 600);
+                    }
+                    this.showNotification('Added to cart!');
+                },
+                showNotification(message) {
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed top-20 right-8 bg-green-500 text-white px-6 py-3 rounded-lg shadow-2xl z-50 transform translate-x-full transition-transform duration-300';
+                    notification.setAttribute('role', 'status');
+                    notification.innerHTML = `
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>${message}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => notification.classList.remove('translate-x-full'), 50);
+                    setTimeout(() => {
+                        notification.classList.add('translate-x-full');
+                        setTimeout(() => notification.remove(), 300);
+                    }, 2500);
+                }
+            }));
+        });
+    </script>
+</body>
+</html>
