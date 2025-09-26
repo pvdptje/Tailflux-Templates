@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenuOpen: false, searchOpen: false }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVogue | Sustainable Fashion Collection</title>
+    <meta name="description" content="EcoVogue blends timeless style with ethically sourced materials. Explore our sustainable fashion collection designed for people and planet.">
+    <meta name="theme-color" content="#0d9488">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+
+        /* Custom animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out both; }
+        .reveal { opacity: 0; transform: translateY(20px); }
+        .reveal.revealed { opacity: 1; transform: translateY(0); transition: opacity .7s ease, transform .7s ease; }
+
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: saturate(160%) blur(8px);
+        }
+
+        .focus-ring:focus-visible {
+            outline: 3px solid rgba(13, 148, 136, 0.5);
+            outline-offset: 2px;
+        }
+
+        .shimmer {
+            position: relative; overflow: hidden;
+        }
+        .shimmer::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.35) 40%, rgba(255,255,255,0) 60%);
+            transform: translateX(-100%); animation: shimmer 2.4s infinite;
+        }
+        @keyframes shimmer { to { transform: translateX(100%); } }
+
+        @keyframes floatY { 0% { transform: translateY(0);} 50% { transform: translateY(-8px);} 100%{ transform: translateY(0);} }
+        .float { animation: floatY 6s ease-in-out infinite; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-fade-in-up, .reveal, .hover-lift, .shimmer::after, .float {
+                animation: none !important; transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-800">
+    <!-- Announcement Bar -->
+    <div class="w-full bg-teal-600 text-white text-sm">
+        <div class="container mx-auto px-6 py-2 flex items-center justify-center space-x-2">
+            <i class="fas fa-truck text-white/90"></i>
+            <span>Free shipping on orders over $75 • 30-day easy returns</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass border-b border-neutral-200 sticky top-0 z-50" id="siteHeader">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold heading-font text-teal-700 flex items-center focus-ring rounded">
+                    <i class="fas fa-leaf mr-2"></i>
+                    <span class="tracking-tight">EcoVogue</span>
+                </a>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center space-x-2">
+                    <button @click="searchOpen = true" aria-label="Open search" class="p-2 text-neutral-600 hover:bg-teal-50 rounded-full transition">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle menu" class="p-2 text-neutral-600 hover:bg-teal-50 rounded-full transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-neutral-700 hover:text-teal-700 transition-colors duration-300 font-medium relative group">
+                        Collection
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-neutral-700 hover:text-teal-700 transition-colors duration-300 font-medium relative group">
+                        Sustainability
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-neutral-700 hover:text-teal-700 transition-colors duration-300 font-medium relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-neutral-700 hover:text-teal-700 transition-colors duration-300 font-medium relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-3">
+                    <button @click="searchOpen = true" aria-label="Open search" class="p-2 hover:bg-teal-50 rounded-full transition-colors duration-300">
+                        <i class="fas fa-search text-neutral-600 hover:text-teal-600"></i>
+                    </button>
+                    <button class="p-2 hover:bg-teal-50 rounded-full transition-colors duration-300 relative" aria-label="Open cart">
+                        <i class="fas fa-shopping-bag text-neutral-600 hover:text-teal-600"></i>
+                        <span class="absolute -top-1 -right-1 bg-yellow-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-2"
+                 class="md:hidden mt-4 space-y-4 pb-4">
+                <a href="#" class="block py-2 text-neutral-700 hover:text-teal-700 font-medium">Collection</a>
+                <a href="#" class="block py-2 text-neutral-700 hover:text-teal-700 font-medium">Sustainability</a>
+                <a href="#" class="block py-2 text-neutral-700 hover:text-teal-700 font-medium">About</a>
+                <a href="#" class="block py-2 text-neutral-700 hover:text-teal-700 font-medium">Contact</a>
+                <div class="flex space-x-4 pt-2">
+                    <button @click="searchOpen = true" aria-label="Open search" class="p-2 hover:bg-teal-50 rounded-full">
+                        <i class="fas fa-search text-neutral-700"></i>
+                    </button>
+                    <button class="p-2 hover:bg-teal-50 rounded-full relative" aria-label="Open cart">
+                        <i class="fas fa-shopping-bag text-neutral-700"></i>
+                        <span class="absolute -top-1 -right-1 bg-yellow-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Dialog -->
+    <div x-show="searchOpen" x-transition.opacity class="fixed inset-0 z-[60] bg-black/50 flex items-start md:items-center justify-center p-6" aria-modal="true" role="dialog" aria-label="Search">
+        <div @click.outside="searchOpen = false" class="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="flex items-center px-4 sm:px-6 py-4 border-b">
+                <i class="fas fa-search text-neutral-500 mr-3"></i>
+                <input type="text" autofocus placeholder="Search EcoVogue" class="w-full focus:outline-none text-neutral-800 placeholder-neutral-400">
+                <button @click="searchOpen = false" class="p-2 text-neutral-500 hover:text-neutral-700" aria-label="Close search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="px-4 sm:px-6 py-3 text-sm text-neutral-500">
+                Tip: Try “organic cotton dress” or “hemp shirt”
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-teal-50 to-green-50 py-16 md:py-20 overflow-hidden">
+        <!-- subtle dots -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWY1ZjQiIGZpbGwtb3BhY2l0eT0iMC40Ij48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-10 items-center">
+                <div class="max-w-2xl">
+                    <span class="inline-flex items-center px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium mb-6 shadow-sm shimmer">
+                        <i class="fas fa-star mr-2"></i>New Collection
+                    </span>
+                    <h1 class="text-4xl md:text-6xl font-bold heading-font text-neutral-800 mb-6 leading-tight animate-fade-in-up">
+                        Sustainable <span class="gradient-text">Elegance</span> Redefined
+                    </h1>
+                    <p class="text-lg md:text-xl text-neutral-600 mb-8 leading-relaxed reveal" data-delay="100">
+                        Discover our latest collection crafted from ethically sourced materials with timeless design and modern comfort.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 reveal" data-delay="150">
+                        <button class="bg-teal-600 text-white px-8 py-4 rounded-xl hover:bg-teal-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl flex items-center justify-center focus-ring">
+                            <i class="fas fa-shopping-bag mr-2"></i>Shop Collection
+                        </button>
+                        <button class="border-2 border-teal-600 text-teal-700 px-8 py-4 rounded-xl hover:bg-teal-50 transition-all duration-300 font-medium flex items-center justify-center focus-ring">
+                            <i class="fas fa-info-circle mr-2"></i>Learn More
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-6 mt-8 text-sm text-neutral-600 reveal" data-delay="200">
+                        <div class="flex items-center gap-2"><i class="fas fa-recycle text-teal-600"></i><span>Recycled packaging</span></div>
+                        <div class="hidden sm:flex items-center gap-2"><i class="fas fa-leaf text-teal-600"></i><span>Carbon neutral</span></div>
+                        <div class="hidden md:flex items-center gap-2"><i class="fas fa-hand-holding-heart text-teal-600"></i><span>Fair trade</span></div>
+                    </div>
+                </div>
+                <!-- Hero Image -->
+                <div class="relative">
+                    <div class="absolute -top-6 -left-6 w-28 h-28 bg-teal-200/40 rounded-full blur-2xl float"></div>
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-green-200/40 rounded-full blur-2xl float" style="animation-delay:1s"></div>
+                    <div class="overflow-hidden rounded-3xl shadow-2xl border border-white/60 reveal" data-delay="150">
+                        <img src="https://images.unsplash.com/photo-1645071735544-056054d2450c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXN0YWluYWJsZSUyMGZhc2hpb24lMjBtb2RlbCUyMG5hdHVyZSUyMG91dGRvb3J8ZW58MHwwfHx8MTc1ODkwMTA0MHww&ixlib=rb-4.1.0&q=80&w=1600"
+                             alt="Model wearing sustainable fashion outdoors"
+                             class="w-full h-[340px] md:h-[460px] object-cover"
+                             loading="eager" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold heading-font text-neutral-800 mb-4 reveal">Why Choose Sustainable Fashion?</h2>
+                <p class="text-neutral-600 max-w-2xl mx-auto text-lg reveal" data-delay="100">Our commitment to sustainability goes beyond materials - it's a promise to people and planet.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-white to-teal-50 hover-lift border border-teal-100 reveal" data-delay="100">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg ring-8 ring-green-50">
+                        <i class="fas fa-hand-holding-heart text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Ethically Sourced</h3>
+                    <p class="text-neutral-600 leading-relaxed">All materials are responsibly sourced with fair labor practices and transparent supply chains.</p>
+                </div>
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-white to-yellow-50 hover-lift border border-yellow-100 reveal" data-delay="150">
+                    <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg ring-8 ring-yellow-50">
+                        <i class="fas fa-award text-3xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Premium Quality</h3>
+                    <p class="text-neutral-600 leading-relaxed">Crafted with attention to detail using high-quality sustainable materials that last for years.</p>
+                </div>
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-white to-green-50 hover-lift border border-green-100 reveal" data-delay="200">
+                    <div class="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg ring-8 ring-teal-50">
+                        <i class="fas fa-infinity text-3xl text-teal-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Timeless Design</h3>
+                    <p class="text-neutral-600 leading-relaxed">Classic styles that transcend trends, reducing the need for frequent replacements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Preview -->
+    <section class="py-16 bg-neutral-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold heading-font text-neutral-800 mb-4 reveal">The New Collection</h2>
+                <p class="text-neutral-600 text-lg reveal" data-delay="100">Explore our carefully curated pieces that blend style with sustainability.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover-lift group border border-neutral-100 reveal" data-delay="100">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1757581831865-0b6a1f58c350?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxvcmdhbmljJTIwY290dG9uJTIwZHJlc3MlMjBzdHVkaW98ZW58MHwwfHx8MTc1ODkwMTA0MHww&ixlib=rb-4.1.0&q=80&w=1200"
+                             alt="Organic cotton midi dress in studio"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                             loading="lazy" decoding="async" sizes="(min-width: 768px) 33vw, 100vw">
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-yellow-500 text-white text-xs rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i>Bestseller
+                            </span>
+                        </div>
+                        <button class="absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 transition rounded-xl bg-white/90 backdrop-blur text-neutral-800 py-2 text-sm font-medium shadow-md">
+                            Quick view
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-semibold">Organic Cotton Dress</h3>
+                            <div class="flex items-center text-yellow-500" aria-label="Rating 4.8 out of 5">
+                                <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star-half-alt ml-1"></i>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 mb-4">Elegant midi dress made from 100% organic cotton.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-teal-600">$89.99</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded-full bg-emerald-700 border"></span>
+                                <span class="w-4 h-4 rounded-full bg-neutral-800 border"></span>
+                                <span class="w-4 h-4 rounded-full bg-amber-600 border"></span>
+                            </div>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-105 shadow-md">
+                                <i class="fas fa-plus mr-1"></i>Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover-lift group border border-neutral-100 reveal" data-delay="150">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1666358085449-a10a39f33942?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoZW1wJTIwYmxlbmQlMjBzaGlydCUyMHN1c3RhaW5hYmxlJTIwbWluaW1hbHxlbnwwfDB8fHwxNzU4OTAxMDQxfDA&ixlib=rb-4.1.0&q=80&w=1200"
+                             alt="Hemp blend shirt neatly folded"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                             loading="lazy" decoding="async" sizes="(min-width: 768px) 33vw, 100vw">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-semibold">Hemp Blend Shirt</h3>
+                            <div class="flex items-center text-yellow-500" aria-label="Rating 4.6 out of 5">
+                                <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="far fa-star ml-1"></i>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 mb-4">Comfortable shirt made from sustainable hemp blend.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-teal-600">$64.99</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded-full bg-sky-700 border"></span>
+                                <span class="w-4 h-4 rounded-full bg-lime-700 border"></span>
+                            </div>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-105 shadow-md">
+                                <i class="fas fa-plus mr-1"></i>Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover-lift group border border-neutral-100 reveal" data-delay="200">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1730566578598-4fee7f986c51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiYW1ib28lMjBmaWJlciUyMHNjYXJmJTIwc3VzdGFpbmFibGUlMjBmYXNoaW9ufGVufDB8MHx8fDE3NTg5MDAwOTV8MA&ixlib=rb-4.1.0&q=80&w=1200"
+                             alt="Soft bamboo fiber scarf"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                             loading="lazy" decoding="async" sizes="(min-width: 768px) 33vw, 100vw">
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-green-500 text-white text-xs rounded-full shadow-lg">
+                                <i class="fas fa-leaf mr-1"></i>Eco-Friendly
+                            </span>
+                        </div>
+                        <button class="absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 transition rounded-xl bg-white/90 backdrop-blur text-neutral-800 py-2 text-sm font-medium shadow-md">
+                            Quick view
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-semibold">Bamboo Fiber Scarf</h3>
+                            <div class="flex items-center text-yellow-500" aria-label="Rating 4.7 out of 5">
+                                <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="far fa-star ml-1"></i>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 mb-4">Soft and sustainable scarf made from bamboo fibers.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-teal-600">$42.99</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded-full bg-rose-600 border"></span>
+                                <span class="w-4 h-4 rounded-full bg-neutral-800 border"></span>
+                            </div>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-105 shadow-md">
+                                <i class="fas fa-plus mr-1"></i>Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button class="border-2 border-teal-600 text-teal-700 px-8 py-3 rounded-lg hover:bg-teal-50 transition-all duration-300 font-medium reveal" data-delay="100">
+                    View Full Collection <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability Stats -->
+    <section class="py-16 bg-teal-600 text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="reveal" data-delay="50">
+                    <div class="text-4xl font-bold heading-font mb-2 counter" data-target="98" aria-label="Ninety eight percent">0%</div>
+                    <p class="text-teal-100">Organic Materials</p>
+                </div>
+                <div class="reveal" data-delay="100">
+                    <div class="text-4xl font-bold heading-font mb-2 counter" data-target="50" data-suffix="+">0</div>
+                    <p class="text-teal-100">Ethical Partners</p>
+                </div>
+                <div class="reveal" data-delay="150">
+                    <div class="text-4xl font-bold heading-font mb-2 counter" data-target="2.5" data-decimals="1" data-suffix="M">0</div>
+                    <p class="text-teal-100">Liters Water Saved</p>
+                </div>
+                <div class="reveal" data-delay="200">
+                    <div class="text-4xl font-bold heading-font mb-2 counter" data-target="100" data-suffix="%">0%</div>
+                    <p class="text-teal-100">Carbon Neutral</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="relative py-16 bg-gradient-to-r from-teal-50 to-green-50 overflow-hidden">
+        <div class="absolute inset-0 opacity-15 pointer-events-none" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1643286131725-5e0ad3b3ca02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXN0YWluYWJsZSUyMGZhc2hpb24lMjBmbGF0JTIwbGF5JTIwY2xvdGhpbmclMjBlY298ZW58MHwwfHx8MTc1ODkwMTA0Mnww&ixlib=rb-4.1.0&q=80&w=1600"
+                 alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10" x-data="{ email:'', sent:false }">
+            <div class="max-w-2xl mx-auto reveal">
+                <h2 class="text-3xl font-bold heading-font text-neutral-800 mb-4">Join Our Sustainable Journey</h2>
+                <p class="text-neutral-600 mb-8 text-lg">Subscribe to our newsletter for exclusive updates, sustainable fashion tips, and special offers.</p>
+                <form @submit.prevent="sent = true" class="max-w-md mx-auto">
+                    <div class="flex rounded-xl overflow-hidden shadow-lg bg-white">
+                        <label for="newsletter" class="sr-only">Email address</label>
+                        <input id="newsletter" type="email" x-model="email" required placeholder="Enter your email"
+                               class="flex-1 px-4 py-3 text-neutral-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                               autocomplete="email">
+                        <button type="submit" class="bg-teal-600 text-white px-6 py-3 font-medium hover:bg-teal-700 transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-paper-plane mr-2"></i>Subscribe
+                        </button>
+                    </div>
+                </form>
+                <p class="text-sm text-neutral-500 mt-4" x-show="!sent">No spam, unsubscribe at any time</p>
+                <div class="mt-4 text-teal-700 font-medium" x-show="sent" x-transition>
+                    <i class="fas fa-check-circle text-teal-600 mr-1"></i>Thanks! Please check your inbox to confirm.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-800 text-neutral-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="reveal">
+                    <div class="text-2xl font-bold heading-font text-white mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i>EcoVogue
+                    </div>
+                    <p class="text-neutral-400 mb-4">Sustainable fashion for a better tomorrow.</p>
+                    <div class="flex space-x-3">
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-teal-600 transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-teal-600 transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Pinterest" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-teal-600 transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal" data-delay="50">
+                    <h3 class="text-white font-semibold mb-4 text-lg">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Bestsellers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Sale</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>All Collections</a></li>
+                    </ul>
+                </div>
+                <div class="reveal" data-delay="100">
+                    <h3 class="text-white font-semibold mb-4 text-lg">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Sustainability</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Careers</a></li>
+                    </ul>
+                </div>
+                <div class="reveal" data-delay="150">
+                    <h3 class="text-white font-semibold mb-4 text-lg">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Shipping Info</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Returns</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Size Guide</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-neutral-700 mt-8 pt-8 text-center text-neutral-400">
+                <p>&copy; 2024 EcoVogue. All rights reserved. <span class="text-teal-400">Made with <i class="fas fa-heart text-red-400"></i> for our planet</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" class="fixed bottom-6 right-6 bg-teal-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-110 hidden z-50 focus-ring" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Back to top functionality
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            const header = document.getElementById('siteHeader');
+            if (window.scrollY > 300) { backToTop.classList.remove('hidden'); } else { backToTop.classList.add('hidden'); }
+            header.classList.toggle('border-b', window.scrollY > 5);
+            header.classList.toggle('shadow-sm', window.scrollY > 5);
+        });
+
+        // Search dialog shortcuts
+        document.addEventListener('keydown', (e) => {
+            const isSlash = e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey;
+            if (isSlash) {
+                e.preventDefault();
+                const root = document.documentElement.__x.$data ?? window.Alpine?.closestData?.(document.body);
+                if (root) root.searchOpen = true;
+            }
+            if (e.key === 'Escape') {
+                const root = document.documentElement.__x.$data ?? window.Alpine?.closestData?.(document.body);
+                if (root) root.searchOpen = false;
+            }
+        });
+
+        // Reveal on scroll
+        const revealObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const delay = parseInt(el.dataset.delay || '0', 10);
+                    setTimeout(() => el.classList.add('revealed'), delay);
+                    obs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Counters
+        const counterObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseFloat(el.dataset.target || '0');
+                    const decimals = parseInt(el.dataset.decimals || '0', 10);
+                    const suffix = el.dataset.suffix || '';
+                    let start = 0, startTime = null;
+                    const duration = 1200;
+
+                    function tick(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const progress = Math.min((timestamp - startTime) / duration, 1);
+                        const value = (start + (target - start) * progress).toFixed(decimals);
+                        el.textContent = decimals > 0 ? value + suffix : Math.round(value) + suffix;
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                    obs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+    </script>
+</body>
+</html>

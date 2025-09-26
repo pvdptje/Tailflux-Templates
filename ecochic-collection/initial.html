@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVogue | Sustainable Fashion Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-800">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold heading-font text-teal-600">EcoVogue</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-neutral-600 hover:text-teal-600 transition-colors">Collection</a>
+                    <a href="#" class="text-neutral-600 hover:text-teal-600 transition-colors">Sustainability</a>
+                    <a href="#" class="text-neutral-600 hover:text-teal-600 transition-colors">About</a>
+                    <a href="#" class="text-neutral-600 hover:text-teal-600 transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2">
+                        <svg class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button class="p-2">
+                        <svg class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-teal-50 to-green-50 py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl">
+                <span class="inline-block px-4 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium mb-4">New Collection</span>
+                <h1 class="text-5xl md:text-6xl font-bold heading-font text-neutral-800 mb-6">Sustainable Elegance Redefined</h1>
+                <p class="text-xl text-neutral-600 mb-8">Discover our latest collection crafted from ethically sourced materials with timeless design and modern comfort.</p>
+                <div class="flex space-x-4">
+                    <button class="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition-colors font-medium">Shop Collection</button>
+                    <button class="border border-teal-600 text-teal-600 px-8 py-3 rounded-lg hover:bg-teal-50 transition-colors font-medium">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold heading-font text-neutral-800 mb-4">Why Choose Sustainable Fashion?</h2>
+                <p class="text-neutral-600 max-w-2xl mx-auto">Our commitment to sustainability goes beyond materials - it's a promise to people and planet.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Ethically Sourced</h3>
+                    <p class="text-neutral-600">All materials are responsibly sourced with fair labor practices and transparent supply chains.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Premium Quality</h3>
+                    <p class="text-neutral-600">Crafted with attention to detail using high-quality sustainable materials that last for years.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Timeless Design</h3>
+                    <p class="text-neutral-600">Classic styles that transcend trends, reducing the need for frequent replacements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Preview -->
+    <section class="py-16 bg-neutral-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold heading-font text-neutral-800 mb-4">The New Collection</h2>
+                <p class="text-neutral-600">Explore our carefully curated pieces that blend style with sustainability.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-gradient-to-br from-teal-100 to-green-100"></div>
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full mb-2">Bestseller</span>
+                        <h3 class="text-xl font-semibold mb-2">Organic Cotton Dress</h3>
+                        <p class="text-neutral-600 mb-4">Elegant midi dress made from 100% organic cotton.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-teal-600">$89.99</span>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-gradient-to-br from-green-100 to-yellow-100"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Hemp Blend Shirt</h3>
+                        <p class="text-neutral-600 mb-4">Comfortable shirt made from sustainable hemp blend.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-teal-600">$64.99</span>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-gradient-to-br from-yellow-100 to-teal-100"></div>
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full mb-2">Eco-Friendly</span>
+                        <h3 class="text-xl font-semibold mb-2">Bamboo Fiber Scarf</h3>
+                        <p class="text-neutral-600 mb-4">Soft and sustainable scarf made from bamboo fibers.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-teal-600">$42.99</span>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-teal-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold heading-font mb-4">Join Our Sustainable Journey</h2>
+            <p class="text-teal-100 mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for exclusive updates, sustainable fashion tips, and special offers.</p>
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-l-lg text-neutral-800 focus:outline-none">
+                <button class="bg-yellow-500 text-neutral-800 px-6 py-3 rounded-r-lg font-medium hover:bg-yellow-400 transition-colors">Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-800 text-neutral-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold heading-font text-white mb-4">EcoVogue</div>
+                    <p class="text-neutral-400">Sustainable fashion for a better tomorrow.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Bestsellers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Sale</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Sustainability</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">...</svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">...</svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-neutral-700 mt-8 pt-8 text-center text-neutral-400">
+                <p>&copy; 2024 EcoVogue. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
