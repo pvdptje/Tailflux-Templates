@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Pro Gaming PC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lime: {
+                            50: '#f7fee7',
+                            100: '#ecfccb',
+                            500: '#84cc16',
+                            600: '#65a30d',
+                        },
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            500: '#ec4899',
+                            600: '#db2777',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            300: '#d6d3d1',
+                            500: '#78716c',
+                            700: '#44403c',
+                            900: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-stone-900 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-stone-900">NexusPC</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium">Products</a>
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium">Build Guide</a>
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium">Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Product Images -->
+            <div>
+                <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-6 mb-4">
+                    <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Nexus Pro Gaming PC" 
+                         class="w-full h-80 object-cover rounded-lg">
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-2 cursor-pointer hover:border-fuchsia-300">
+                        <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                             alt="PC Side View" 
+                             class="w-full h-20 object-cover rounded">
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-2 cursor-pointer hover:border-fuchsia-300">
+                        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                             alt="PC Front View" 
+                             class="w-full h-20 object-cover rounded">
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-2 cursor-pointer hover:border-fuchsia-300">
+                        <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                             alt="PC Interior" 
+                             class="w-full h-20 object-cover rounded">
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-2 cursor-pointer hover:border-fuchsia-300">
+                        <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                             alt="PC Setup" 
+                             class="w-full h-20 object-cover rounded">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div>
+                <div class="mb-6">
+                    <span class="inline-block bg-lime-100 text-lime-600 text-xs font-medium px-2.5 py-0.5 rounded-full mb-2">In Stock</span>
+                    <h1 class="text-3xl font-bold text-stone-900 mb-2">Nexus Pro Gaming PC</h1>
+                    <p class="text-2xl font-semibold text-fuchsia-600 mb-4">$2,499.99</p>
+                    <p class="text-stone-600 mb-6">Experience unparalleled gaming performance with our flagship custom-built gaming PC. Designed for competitive gamers and content creators who demand the best.</p>
+                </div>
+
+                <!-- Specifications -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-stone-900 mb-3">Key Specifications</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600">Processor</span>
+                            <span class="font-medium">Intel Core i9-13900K</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600">Graphics Card</span>
+                            <span class="font-medium">NVIDIA RTX 4080 16GB</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600">RAM</span>
+                            <span class="font-medium">32GB DDR5 6000MHz</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600">Storage</span>
+                            <span class="font-medium">2TB NVMe SSD + 4TB HDD</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-stone-600">Cooling</span>
+                            <span class="font-medium">Liquid Cooling System</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customization Options -->
+                <div class="mb-6" x-data="{ selectedColor: 'stone' }">
+                    <h3 class="text-lg font-semibold text-stone-900 mb-3">Case Color</h3>
+                    <div class="flex space-x-3 mb-4">
+                        <button @click="selectedColor = 'stone'" 
+                                :class="selectedColor === 'stone' ? 'ring-2 ring-fuchsia-500' : ''"
+                                class="w-8 h-8 bg-stone-500 rounded-full focus:outline-none"></button>
+                        <button @click="selectedColor = 'pink'" 
+                                :class="selectedColor === 'pink' ? 'ring-2 ring-fuchsia-500' : ''"
+                                class="w-8 h-8 bg-pink-500 rounded-full focus:outline-none"></button>
+                        <button @click="selectedColor = 'fuchsia'" 
+                                :class="selectedColor === 'fuchsia' ? 'ring-2 ring-fuchsia-500' : ''"
+                                class="w-8 h-8 bg-fuchsia-500 rounded-full focus:outline-none"></button>
+                    </div>
+                </div>
+
+                <!-- Add to Cart -->
+                <div class="mb-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center border border-stone-200 rounded-lg">
+                            <button class="px-4 py-2 text-stone-600 hover:bg-stone-50">-</button>
+                            <span class="px-4 py-2">1</span>
+                            <button class="px-4 py-2 text-stone-600 hover:bg-stone-50">+</button>
+                        </div>
+                        <button class="flex-1 bg-fuchsia-600 text-white py-2 px-6 rounded-lg hover:bg-fuchsia-700 transition duration-200 font-medium">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-6">
+                    <h3 class="text-lg font-semibold text-stone-900 mb-4">Premium Features</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-lime-600">✓</span>
+                            </div>
+                            <span class="text-sm text-stone-600">RGB Lighting</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-lime-600">✓</span>
+                            </div>
+                            <span class="text-sm text-stone-600">Wi-Fi 6E</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-lime-600">✓</span>
+                            </div>
+                            <span class="text-sm text-stone-600">2-Year Warranty</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-lime-600">✓</span>
+                            </div>
+                            <span class="text-sm text-stone-600">Free Assembly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info Sections -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-6">
+                <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-pink-600 text-xl">⚡</span>
+                </div>
+                <h3 class="font-semibold text-stone-900 mb-2">High Performance</h3>
+                <p class="text-stone-600 text-sm">Optimized for 4K gaming and professional content creation workloads.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-6">
+                <div class="w-12 h-12 bg-fuchsia-100 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-fuchsia-600 text-xl">🔧</span>
+                </div>
+                <h3 class="font-semibold text-stone-900 mb-2">Easy Upgrades</h3>
+                <p class="text-stone-600 text-sm">Modular design allows for simple future upgrades and maintenance.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-6">
+                <div class="w-12 h-12 bg-lime-100 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-lime-600 text-xl">🛡️</span>
+                </div>
+                <h3 class="font-semibold text-stone-900 mb-2">Premium Support</h3>
+                <p class="text-stone-600 text-sm">24/7 technical support and comprehensive warranty coverage.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-white font-semibold mb-4">NexusPC</h4>
+                    <p class="text-sm">Building the future of gaming, one custom PC at a time.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">Gaming PCs</a></li>
+                        <li><a href="#" class="hover:text-white">Workstations</a></li>
+                        <li><a href="#" class="hover:text-white">Components</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white">Warranty</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Newsletter</h4>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-3 py-2 bg-stone-800 text-white rounded-l-lg text-sm focus:outline-none focus:ring-1 focus:ring-fuchsia-500">
+                        <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-r-lg text-sm hover:bg-fuchsia-700">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-sm text-center">
+                <p>&copy; 2024 NexusPC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

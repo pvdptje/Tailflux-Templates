@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Pro Gaming PC - Ultimate Gaming Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lime: {
+                            50: '#f7fee7',
+                            100: '#ecfccb',
+                            500: '#84cc16',
+                            600: '#65a30d',
+                        },
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            500: '#ec4899',
+                            600: '#db2777',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            300: '#d6d3d1',
+                            500: '#78716c',
+                            700: '#44403c',
+                            900: '#1c1917',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #d946ef 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-stone-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-stone-900 gradient-text">NexusPC</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Products</a>
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Build Guide</a>
+                        <a href="#" class="text-stone-500 hover:text-stone-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Support</a>
+                        <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-fuchsia-700 transition duration-200 font-medium">
+                            <i class="fas fa-shopping-cart mr-2"></i>Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-stone-500 hover:text-stone-900">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Product Images -->
+            <div x-data="{ activeImage: 0 }">
+                <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 mb-6 hover-lift">
+                    <img x-bind:src="['https://images.unsplash.com/photo-1638493880865-8b187fb28415?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', 
+                                      'https://images.unsplash.com/photo-1522920192563-6df902920a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                                      'https://images.unsplash.com/photo-1566929104462-71f1b8293134?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                                      'https://images.unsplash.com/photo-1624841971466-1e2b679f4a9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'][activeImage]" 
+                         alt="Nexus Pro Gaming PC" 
+                         class="w-full h-80 object-cover rounded-lg transition-opacity duration-300">
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <template x-for="(img, index) in ['https://images.unsplash.com/photo-1638493880865-8b187fb28415?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', 
+                                                     'https://images.unsplash.com/photo-1522920192563-6df902920a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
+                                                     'https://images.unsplash.com/photo-1566929104462-71f1b8293134?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
+                                                     'https://images.unsplash.com/photo-1624841971466-1e2b679f4a9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80']" 
+                             :key="index">
+                        <div @click="activeImage = index" 
+                             :class="activeImage === index ? 'border-fuchsia-500 ring-2 ring-fuchsia-200' : 'border-stone-100'"
+                             class="bg-white rounded-lg shadow-sm border p-2 cursor-pointer transition-all duration-200 hover:border-fuchsia-300 hover-lift">
+                            <img :src="img" 
+                                 :alt="['RGB Setup', 'Interior Components', 'Front View', 'Side View'][index]" 
+                                 class="w-full h-20 object-cover rounded">
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="animate-fade-in">
+                <div class="mb-6">
+                    <span class="inline-block bg-lime-100 text-lime-600 text-xs font-medium px-2.5 py-0.5 rounded-full mb-2 animate-pulse-slow">
+                        <i class="fas fa-bolt mr-1"></i>In Stock - Ready to Ship
+                    </span>
+                    <h1 class="text-3xl font-bold text-stone-900 mb-2">Nexus Pro Gaming PC</h1>
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-amber-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-stone-500 text-sm ml-2">4.7 (128 reviews)</span>
+                    </div>
+                    <p class="text-2xl font-semibold text-fuchsia-600 mb-4">$2,499.99</p>
+                    <p class="text-stone-600 mb-6 leading-relaxed">Experience unparalleled gaming performance with our flagship custom-built gaming PC. Designed for competitive gamers and content creators who demand the best. Featuring cutting-edge components and stunning RGB aesthetics.</p>
+                </div>
+
+                <!-- Specifications -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-stone-900 mb-3 flex items-center">
+                        <i class="fas fa-microchip text-fuchsia-500 mr-2"></i>Key Specifications
+                    </h3>
+                    <div class="space-y-2 bg-white rounded-lg p-4 shadow-sm border border-stone-100">
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600 flex items-center">
+                                <i class="fas fa-brain text-lime-500 mr-2"></i>Processor
+                            </span>
+                            <span class="font-medium">Intel Core i9-13900K</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600 flex items-center">
+                                <i class="fas fa-gamepad text-pink-500 mr-2"></i>Graphics Card
+                            </span>
+                            <span class="font-medium">NVIDIA RTX 4080 16GB</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600 flex items-center">
+                                <i class="fas fa-memory text-fuchsia-500 mr-2"></i>RAM
+                            </span>
+                            <span class="font-medium">32GB DDR5 6000MHz</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span class="text-stone-600 flex items-center">
+                                <i class="fas fa-hdd text-amber-500 mr-2"></i>Storage
+                            </span>
+                            <span class="font-medium">2TB NVMe SSD + 4TB HDD</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-stone-600 flex items-center">
+                                <i class="fas fa-fan text-blue-500 mr-2"></i>Cooling
+                            </span>
+                            <span class="font-medium">Liquid Cooling System</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customization Options -->
+                <div class="mb-6" x-data="{ selectedColor: 'stone' }">
+                    <h3 class="text-lg font-semibold text-stone-900 mb-3 flex items-center">
+                        <i class="fas fa-palette text-fuchsia-500 mr-2"></i>Case Color
+                    </h3>
+                    <div class="flex space-x-3 mb-4">
+                        <button @click="selectedColor = 'stone'" 
+                                :class="selectedColor === 'stone' ? 'ring-2 ring-fuchsia-500 scale-110' : ''"
+                                class="w-10 h-10 bg-stone-500 rounded-full focus:outline-none transition-all duration-200 hover:scale-105 shadow-md">
+                            <span class="sr-only">Stone Gray</span>
+                        </button>
+                        <button @click="selectedColor = 'pink'" 
+                                :class="selectedColor === 'pink' ? 'ring-2 ring-fuchsia-500 scale-110' : ''"
+                                class="w-10 h-10 bg-pink-500 rounded-full focus:outline-none transition-all duration-200 hover:scale-105 shadow-md">
+                            <span class="sr-only">Pink</span>
+                        </button>
+                        <button @click="selectedColor = 'fuchsia'" 
+                                :class="selectedColor === 'fuchsia' ? 'ring-2 ring-fuchsia-500 scale-110' : ''"
+                                class="w-10 h-10 bg-fuchsia-500 rounded-full focus:outline-none transition-all duration-200 hover:scale-105 shadow-md">
+                            <span class="sr-only">Fuchsia</span>
+                        </button>
+                    </div>
+                    <p class="text-sm text-stone-500" x-text="'Selected: ' + (selectedColor === 'stone' ? 'Stone Gray' : selectedColor === 'pink' ? 'Neon Pink' : 'Electric Fuchsia')"></p>
+                </div>
+
+                <!-- Add to Cart -->
+                <div class="mb-6" x-data="{ quantity: 1 }">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center border border-stone-200 rounded-lg bg-white">
+                            <button @click="quantity > 1 ? quantity-- : quantity" 
+                                    class="px-4 py-3 text-stone-600 hover:bg-stone-50 transition-colors duration-200">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="px-4 py-2 font-medium" x-text="quantity"></span>
+                            <button @click="quantity++" 
+                                    class="px-4 py-3 text-stone-600 hover:bg-stone-50 transition-colors duration-200">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <button class="flex-1 bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white py-3 px-6 rounded-lg hover:from-fuchsia-700 hover:to-pink-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-shopping-cart mr-2"></i>Add to Cart - $<span x-text="(2499.99 * quantity).toFixed(2)"></span>
+                        </button>
+                    </div>
+                    <div class="mt-3 flex items-center text-sm text-stone-500">
+                        <i class="fas fa-shipping-fast text-lime-500 mr-2"></i>
+                        Free shipping & returns • 2-year warranty included
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift">
+                    <h3 class="text-lg font-semibold text-stone-900 mb-4 flex items-center">
+                        <i class="fas fa-star text-amber-500 mr-2"></i>Premium Features
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-center p-2 rounded-lg hover:bg-stone-50 transition-colors duration-200">
+                            <div class="w-10 h-10 bg-gradient-to-r from-fuchsia-100 to-pink-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-lightbulb text-fuchsia-600"></i>
+                            </div>
+                            <span class="text-sm text-stone-600 font-medium">Custom RGB Lighting</span>
+                        </div>
+                        <div class="flex items-center p-2 rounded-lg hover:bg-stone-50 transition-colors duration-200">
+                            <div class="w-10 h-10 bg-gradient-to-r from-lime-100 to-emerald-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-wifi text-lime-600"></i>
+                            </div>
+                            <span class="text-sm text-stone-600 font-medium">Wi-Fi 6E + Bluetooth 5.3</span>
+                        </div>
+                        <div class="flex items-center p-2 rounded-lg hover:bg-stone-50 transition-colors duration-200">
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-shield-alt text-blue-600"></i>
+                            </div>
+                            <span class="text-sm text-stone-600 font-medium">2-Year Premium Warranty</span>
+                        </div>
+                        <div class="flex items-center p-2 rounded-lg hover:bg-stone-50 transition-colors duration-200">
+                            <div class="w-10 h-10 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-tools text-amber-600"></i>
+                            </div>
+                            <span class="text-sm text-stone-600 font-medium">Professional Assembly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info Sections -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift transition-all duration-300">
+                <div class="w-12 h-12 bg-gradient-to-r from-pink-100 to-rose-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-bolt text-pink-600 text-xl"></i>
+                </div>
+                <h3 class="font-semibold text-stone-900 mb-2">High Performance</h3>
+                <p class="text-stone-600 text-sm leading-relaxed">Optimized for 4K gaming at 144Hz+ and professional content creation workloads with seamless multitasking.</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift transition-all duration-300">
+                <div class="w-12 h-12 bg-gradient-to-r from-fuchsia-100 to-purple-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-puzzle-piece text-fuchsia-600 text-xl"></i>
+                </div>
+                <h3 class="font-semibold text-stone-900 mb-2">Easy Upgrades</h3>
+                <p class="text-stone-600 text-sm leading-relaxed">Modular design with tool-less access allows for simple future upgrades and maintenance.</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift transition-all duration-300">
+                <div class="w-12 h-12 bg-gradient-to-r from-lime-100 to-green-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-headset text-lime-600 text-xl"></i>
+                </div>
+                <h3 class="font-semibold text-stone-900 mb-2">Premium Support</h3>
+                <p class="text-stone-600 text-sm leading-relaxed">24/7 technical support and comprehensive 2-year warranty with on-site service options.</p>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="mt-12 bg-gradient-to-r from-fuchsia-50 to-pink-50 rounded-2xl p-8">
+            <h2 class="text-2xl font-bold text-stone-900 text-center mb-8">Performance Benchmarks</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-fuchsia-600 mb-2">240+</div>
+                    <div class="text-stone-600 text-sm">FPS in 1440p Gaming</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-pink-600 mb-2">8K</div>
+                    <div class="text-stone-600 text-sm">Video Editing Ready</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-lime-600 mb-2">5.8GHz</div>
+                    <div class="text-stone-600 text-sm">Boost Clock Speed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2">RTX</div>
+                    <div class="text-stone-600 text-sm">Ray Tracing Enabled</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold text-stone-900 text-center mb-8">What Gamers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            AJ
+                        </div>
+                        <div>
+                            <div class="font-semibold">Alex Johnson</div>
+                            <div class="text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 text-sm italic">"This PC handles everything I throw at it. The RGB lighting is stunning and performance is incredible!"</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-lime-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            SM
+                        </div>
+                        <div>
+                            <div class="font-semibold">Sarah Miller</div>
+                            <div class="text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 text-sm italic">"Perfect for both gaming and streaming. The build quality is exceptional and customer support was amazing."</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-6 hover-lift">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            MK
+                        </div>
+                        <div>
+                            <div class="font-semibold">Mike Chen</div>
+                            <div class="text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 text-sm italic">"Upgraded from my old setup and the difference is night and day. Worth every penny for serious gamers."</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4 gradient-text">NexusPC</h4>
+                    <p class="text-sm mb-4 leading-relaxed">Building the future of gaming, one custom PC at a time. Premium performance meets stunning design.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">
+                            <i class="fab fa-discord text-lg"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">
+                            <i class="fab fa-youtube text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-500"></i>Gaming PCs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-500"></i>Workstations</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-500"></i>Components</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-500"></i>Accessories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-lime-500"></i>Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-lime-500"></i>Warranty</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-lime-500"></i>FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-lime-500"></i>Build Guides</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Newsletter</h4>
+                    <p class="text-sm mb-3">Get the latest updates on new products and exclusive offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 bg-stone-800 text-white rounded-l-lg text-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition-all duration-200">
+                        <button class="bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white px-4 py-2 rounded-r-lg text-sm hover:from-fuchsia-700 hover:to-pink-700 transition-all duration-200 font-medium">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-sm text-center">
+                <p>&copy; 2024 NexusPC. All rights reserved. | <a href="#" class="hover:text-white transition-colors duration-200">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors duration-200">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-200 animate-bounce-slow">
+            <i class="fas fa-comments text-xl"></i>
+        </button>
+    </div>
+</body>
+</html>
