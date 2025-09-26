@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Mission & Values | Non-Profit Organization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800" x-data="{ mobileMenuOpen: false }">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-sky-700 flex items-center space-x-2">
+                    <i class="fas fa-hands-helping text-sky-600"></i>
+                    <span>NonProfitOrg</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-zinc-600 hover:text-sky-600 transition-all duration-300 hover:scale-105">Home</a>
+                    <a href="#" class="text-sky-600 font-medium relative group">
+                        Mission & Values
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-sky-600 transform scale-x-100 transition-transform duration-300"></span>
+                    </a>
+                    <a href="#" class="text-zinc-600 hover:text-sky-600 transition-all duration-300 hover:scale-105">Programs</a>
+                    <a href="#" class="text-zinc-600 hover:text-sky-600 transition-all duration-300 hover:scale-105">Get Involved</a>
+                    <a href="#" class="text-zinc-600 hover:text-sky-600 transition-all duration-300 hover:scale-105">Contact</a>
+                </div>
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-zinc-600 p-2 rounded-lg hover:bg-zinc-100 transition-colors">
+                    <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>
+                    <i class="fas fa-times text-xl" x-show="mobileMenuOpen" x-cloak></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-cloak class="md:hidden mt-4 space-y-4 pb-4 border-t border-zinc-100 pt-4">
+                <a href="#" class="block text-zinc-600 hover:text-sky-600 transition-colors py-2">Home</a>
+                <a href="#" class="block text-sky-600 font-medium py-2">Mission & Values</a>
+                <a href="#" class="block text-zinc-600 hover:text-sky-600 transition-colors py-2">Programs</a>
+                <a href="#" class="block text-zinc-600 hover:text-sky-600 transition-colors py-2">Get Involved</a>
+                <a href="#" class="block text-zinc-600 hover:text-sky-600 transition-colors py-2">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-r from-sky-50 to-purple-50 py-20">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWY1ZjkiIGZpbGwtb3BhY2l0eT0iMC40Ij48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="fade-in" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                <h1 class="text-4xl md:text-6xl font-bold text-zinc-900 mb-6 leading-tight">
+                    Our <span class="gradient-text">Mission & Values</span>
+                </h1>
+                <p class="text-xl text-zinc-600 max-w-3xl mx-auto leading-relaxed">
+                    Guided by our core principles, we work tirelessly to create positive change in our community and beyond.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-white relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-50/50"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                    <h2 class="text-4xl font-bold text-sky-800 mb-6">Our Mission</h2>
+                    <p class="text-zinc-700 text-lg leading-relaxed mb-6">
+                        To empower communities through sustainable initiatives that promote education, health, and economic development, 
+                        creating lasting positive impact for generations to come.
+                    </p>
+                    <p class="text-zinc-600 leading-relaxed">
+                        Since our founding in 2010, we have been committed to addressing the root causes of social challenges 
+                        through collaborative partnerships and evidence-based solutions.
+                    </p>
+                </div>
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100 shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-green-200 rounded-full -mr-16 -mt-16 opacity-20"></div>
+                        <div class="text-green-600 mb-6">
+                            <i class="fas fa-chart-line text-4xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-green-800 mb-4">Our Impact</h3>
+                        <ul class="space-y-3 text-green-700">
+                            <li class="flex items-center text-lg">
+                                <span class="w-3 h-3 bg-green-500 rounded-full mr-4 animate-pulse"></span>
+                                <span class="font-semibold">50,000+</span> lives transformed
+                            </li>
+                            <li class="flex items-center text-lg">
+                                <span class="w-3 h-3 bg-green-500 rounded-full mr-4 animate-pulse"></span>
+                                <span class="font-semibold">15 countries</span> reached
+                            </li>
+                            <li class="flex items-center text-lg">
+                                <span class="w-3 h-3 bg-green-500 rounded-full mr-4 animate-pulse"></span>
+                                <span class="font-semibold">95%</span> program success rate
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-gradient-to-b from-zinc-50 to-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                <h2 class="text-4xl font-bold text-sky-800 mb-4">Our Core Values</h2>
+                <p class="text-zinc-600 text-lg max-w-2xl mx-auto">
+                    These principles guide every decision we make and every action we take in pursuit of our mission.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-users text-2xl text-purple-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-purple-800 mb-4">Community First</h3>
+                        <p class="text-zinc-600 leading-relaxed">
+                            We prioritize the needs and voices of the communities we serve, ensuring our programs are culturally relevant and locally driven.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-shield-alt text-2xl text-green-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-green-800 mb-4">Integrity</h3>
+                        <p class="text-zinc-600 leading-relaxed">
+                            We maintain the highest ethical standards in all our operations, ensuring transparency and accountability to our stakeholders.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-sky-100 to-sky-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-eye text-2xl text-sky-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-sky-800 mb-4">Transparency</h3>
+                        <p class="text-zinc-600 leading-relaxed">
+                            We believe in open communication and regularly share our progress, challenges, and financial information with our supporters.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-lightbulb text-2xl text-purple-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-purple-800 mb-4">Innovation</h3>
+                        <p class="text-zinc-600 leading-relaxed">
+                            We continuously seek creative solutions to complex problems, embracing new technologies and methodologies to maximize our impact.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 5 -->
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-leaf text-2xl text-green-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-green-800 mb-4">Sustainability</h3>
+                        <p class="text-zinc-600 leading-relaxed">
+                            Our programs are designed for long-term success, ensuring that positive changes continue to benefit communities for years to come.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 6 -->
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-sky-100 to-sky-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-handshake text-2xl text-sky-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-sky-800 mb-4">Collaboration</h3>
+                        <p class="text-zinc-600 leading-relaxed">
+                            We believe in the power of partnerships and work closely with local organizations, governments, and communities to achieve shared goals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                <h2 class="text-4xl font-bold text-sky-800 mb-4">Our Global Community</h2>
+                <p class="text-zinc-600 text-lg max-w-2xl mx-auto">
+                    Meet the diverse team and communities that make our mission possible across the globe.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                    <div class="rounded-2xl overflow-hidden shadow-lg group">
+                        <img src="https://images.unsplash.com/photo-1623412912058-4e4552dbc10d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBlbXBvd2VybWVudCUyMGRpdmVyc2UlMjBwZW9wbGV8ZW58MHwwfHx8MTc1ODg3MDk4MXww&ixlib=rb-4.1.0&q=80&w=1080" alt="Community empowerment" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="p-6 bg-white">
+                            <h3 class="text-xl font-semibold text-sky-800 mb-2">Community Empowerment</h3>
+                            <p class="text-zinc-600">Building strong, self-sufficient communities through education and resources.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="rounded-2xl overflow-hidden shadow-lg group">
+                        <img src="https://images.unsplash.com/photo-1758270705518-b61b40527e76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwY29sbGFib3JhdGlvbiUyMGRpdmVyc2UlMjBncm91cCUyMHdvcmtpbmclMjB0b2dldGhlcnxlbnwwfDB8fHwxNzU4ODcwOTg2fDA" alt="Team collaboration" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="p-6 bg-white">
+                            <h3 class="text-xl font-semibold text-sky-800 mb-2">Global Collaboration</h3>
+                            <p class="text-zinc-600">Working together across borders to create meaningful change.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in hover-lift" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }" x-intersect.threshold.0.1="visible = true">
+                    <div class="rounded-2xl overflow-hidden shadow-lg group">
+                        <img src="https://images.unsplash.com/photo-1630068846062-3ffe78aa5049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHRvZ2V0aGVyJTIwdW5pdHklMjBjb21tdW5pdHklMjBzdXBwb3J0fGVufDB8MHx8fDE3NTg4NzA5OTN8MA" alt="Unity and support" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="p-6 bg-white">
+                            <h3 class="text-xl font-semibold text-sky-800 mb-2">Unity in Action</h3>
+                            <p class="text-zinc-600">Coming together to support those in need with compassion and care.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-r from-sky-600 to-purple-600 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWY1ZjkiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-10"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="fade-in" x-data="{ visible: false }" x-intersect="visible = true" :class="{ 'visible': visible }">
+                <h2 class="text-4xl font-bold mb-6">Join Us in Making a Difference</h2>
+                <p class="text-sky-100 text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Together, we can create lasting change. Learn how you can support our mission and become part of our global community.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-white text-sky-600 px-8 py-4 rounded-xl font-semibold hover:bg-sky-50 transition-all duration-300 hover:scale-105 shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Get Involved</span>
+                    </button>
+                    <button class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Learn More</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-900 text-zinc-200 py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-zinc-800 to-zinc-900"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center space-x-2">
+                        <i class="fas fa-hands-helping text-sky-400"></i>
+                        <span>NonProfitOrg</span>
+                    </h3>
+                    <p class="text-zinc-400 leading-relaxed">
+                        Creating positive change through sustainable community development initiatives since 2010.
+                    </p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-zinc-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-zinc-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-zinc-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-zinc-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-lg">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-zinc-400 hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Home</span></a></li>
+                        <li><a href="#" class="text-zinc-400 hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>About Us</span></a></li>
+                        <li><a href="#" class="text-zinc-400 hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Our Programs</span></a></li>
+                        <li><a href="#" class="text-zinc-400 hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Get Involved</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-lg">Contact</h4>
+                    <address class="text-zinc-400 not-italic space-y-2">
+                        <p class="flex items-center space-x-2"><i class="fas fa-map-marker-alt text-sky-400"></i><span>123 Charity Street</span></p>
+                        <p class="flex items-center space-x-2"><i class="fas fa-city text-sky-400"></i><span>City, State 12345</span></p>
+                        <p class="flex items-center space-x-2"><i class="fas fa-envelope text-sky-400"></i><span>info@nonprofit.org</span></p>
+                        <p class="flex items-center space-x-2"><i class="fas fa-phone text-sky-400"></i><span>(555) 123-4567</span></p>
+                    </address>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-lg">Stay Connected</h4>
+                    <p class="text-zinc-400 mb-4">Subscribe to our newsletter for updates</p>
+                    <div class="flex rounded-lg overflow-hidden shadow-lg">
+                        <input type="email" placeholder="Your email" class="px-4 py-3 bg-zinc-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 flex-grow">
+                        <button class="bg-sky-600 text-white px-6 py-3 hover:bg-sky-700 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-zinc-700 pt-8 text-center text-zinc-500">
+                <p>&copy; 2024 NonProfitOrg. All rights reserved. | <a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
