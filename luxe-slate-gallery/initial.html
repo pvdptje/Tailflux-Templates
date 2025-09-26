@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Interior Design Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="{ activeFilter: 'all' }" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="heading-font text-4xl md:text-5xl font-bold text-slate-800 mb-4">Interior Design Portfolio</h1>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto">Discover our curated collection of elegant spaces that transform houses into homes</p>
+        </header>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button 
+                @click="activeFilter = 'all'" 
+                :class="activeFilter === 'all' ? 'bg-fuchsia-600 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+                All Projects
+            </button>
+            <button 
+                @click="activeFilter = 'residential'" 
+                :class="activeFilter === 'residential' ? 'bg-fuchsia-600 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+                Residential
+            </button>
+            <button 
+                @click="activeFilter = 'commercial'" 
+                :class="activeFilter === 'commercial' ? 'bg-fuchsia-600 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+                Commercial
+            </button>
+            <button 
+                @click="activeFilter = 'luxury'" 
+                :class="activeFilter === 'luxury' ? 'bg-fuchsia-600 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+                Luxury
+            </button>
+        </div>
+
+        <!-- Project Gallery -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project 1 -->
+            <div 
+                x-show="activeFilter === 'all' || activeFilter === 'residential'" 
+                class="project-card bg-white rounded-xl shadow-sm overflow-hidden"
+            >
+                <div class="relative h-64 bg-gradient-to-br from-pink-50 to-fuchsia-50">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <span class="absolute top-4 right-4 bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full text-sm">Residential</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="heading-font text-xl font-semibold text-slate-800 mb-2">Modern Urban Apartment</h3>
+                    <p class="text-slate-600 mb-4">A contemporary living space designed for young professionals in the heart of the city.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-medium">Completed: 2023</span>
+                        <button class="text-fuchsia-600 hover:text-fuchsia-700 transition-colors">View Details →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div 
+                x-show="activeFilter === 'all' || activeFilter === 'commercial'" 
+                class="project-card bg-white rounded-xl shadow-sm overflow-hidden"
+            >
+                <div class="relative h-64 bg-gradient-to-br from-slate-50 to-gray-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <span class="absolute top-4 right-4 bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Commercial</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="heading-font text-xl font-semibold text-slate-800 mb-2">Boutique Hotel Lobby</h3>
+                    <p class="text-slate-600 mb-4">Elegant and welcoming entrance space for a luxury boutique hotel downtown.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-medium">Completed: 2023</span>
+                        <button class="text-fuchsia-600 hover:text-fuchsia-700 transition-colors">View Details →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div 
+                x-show="activeFilter === 'all' || activeFilter === 'luxury'" 
+                class="project-card bg-white rounded-xl shadow-sm overflow-hidden"
+            >
+                <div class="relative h-64 bg-gradient-to-br from-pink-50 to-fuchsia-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <span class="absolute top-4 right-4 bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm">Luxury</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="heading-font text-xl font-semibold text-slate-800 mb-2">Seaside Villa Retreat</h3>
+                    <p class="text-slate-600 mb-4">A luxurious coastal property featuring panoramic ocean views and premium finishes.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-medium">Completed: 2022</span>
+                        <button class="text-fuchsia-600 hover:text-fuchsia-700 transition-colors">View Details →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div 
+                x-show="activeFilter === 'all' || activeFilter === 'residential'" 
+                class="project-card bg-white rounded-xl shadow-sm overflow-hidden"
+            >
+                <div class="relative h-64 bg-gradient-to-br from-gray-50 to-slate-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <span class="absolute top-4 right-4 bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full text-sm">Residential</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="heading-font text-xl font-semibold text-slate-800 mb-2">Family Townhouse Renovation</h3>
+                    <p class="text-slate-600 mb-4">Complete transformation of a traditional townhouse into a modern family home.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-medium">Completed: 2022</span>
+                        <button class="text-fuchsia-600 hover:text-fuchsia-700 transition-colors">View Details →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div 
+                x-show="activeFilter === 'all' || activeFilter === 'commercial'" 
+                class="project-card bg-white rounded-xl shadow-sm overflow-hidden"
+            >
+                <div class="relative h-64 bg-gradient-to-br from-pink-50 to-fuchsia-50">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <span class="absolute top-4 right-4 bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Commercial</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="heading-font text-xl font-semibold text-slate-800 mb-2">Creative Agency Office</h3>
+                    <p class="text-slate-600 mb-4">Innovative workspace designed to inspire creativity and collaboration.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-medium">Completed: 2023</span>
+                        <button class="text-fuchsia-600 hover:text-fuchsia-700 transition-colors">View Details →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div 
+                x-show="activeFilter === 'all' || activeFilter === 'luxury'" 
+                class="project-card bg-white rounded-xl shadow-sm overflow-hidden"
+            >
+                <div class="relative h-64 bg-gradient-to-br from-slate-50 to-gray-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <span class="absolute top-4 right-4 bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm">Luxury</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="heading-font text-xl font-semibold text-slate-800 mb-2">Penthouse Sky Garden</h3>
+                    <p class="text-slate-600 mb-4">Exclusive rooftop living space with integrated indoor-outdoor design.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-medium">Completed: 2023</span>
+                        <button class="text-fuchsia-600 hover:text-fuchsia-700 transition-colors">View Details →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center mt-16 bg-gradient-to-r from-pink-50 to-fuchsia-50 rounded-2xl p-12">
+            <h2 class="heading-font text-3xl font-bold text-slate-800 mb-4">Ready to Transform Your Space?</h2>
+            <p class="text-slate-600 mb-8 max-w-2xl mx-auto">Let's collaborate to create an interior that reflects your style and enhances your lifestyle.</p>
+            <button class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white px-8 py-3 rounded-full transition-all duration-300 hover:shadow-lg">
+                Schedule a Consultation
+            </button>
+        </div>
+    </div>
+</body>
+</html>
