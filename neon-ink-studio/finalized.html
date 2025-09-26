@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ink Master - Professional Tattoo Artist</title>
+    <meta name="description" content="InkMaster Tattoo Studio – custom tattoos, cover-ups, and restoration. Book a session with a master artist focused on clean, safe, and meaningful designs.">
+    <meta name="theme-color" content="#0f172a">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tattoo-orange': '#FF6B35',
+                        'tattoo-pink': '#EC4899',
+                        'tattoo-blue': '#3B82F6',
+                        'tattoo-cyan': '#06B6D4',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'fade-in-up': 'fadeInUp .8s ease-out both'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%': { boxShadow: '0 0 20px rgba(255, 107, 53, 0.35)' },
+                            '100%': { boxShadow: '0 0 30px rgba(255, 107, 53, 0.8)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(16px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        @media (max-width: 767px) {
+            .parallax { background-attachment: scroll; }
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF6B35, #EC4899, #3B82F6, #06B6D4);
+            background-size: 300% 300%;
+            animation: gradient 8s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans scroll-smooth">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] bg-gray-800 text-white px-4 py-2 rounded-lg">Skip to content</a>
+
+    <!-- Top progress bar -->
+    <div id="scrollProgress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-tattoo-orange via-tattoo-pink to-tattoo-cyan w-0 z-[60] transition-[width] duration-150 ease-linear"></div>
+
+    <!-- Navigation -->
+    <nav x-data="{ open: false, scrolled: false }" x-init="
+        window.addEventListener('scroll', () => { scrolled = window.scrollY > 12 })
+    " :class="scrolled ? 'bg-gray-800/95 shadow-lg' : 'bg-gray-800/90'"
+         class="backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold gradient-text bg-clip-text text-transparent inline-flex items-center">
+                        <i class="fas fa-palette mr-2"></i>InkMaster
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobileMenu"
+                            class="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan rounded-md p-2">
+                        <span x-show="!open"><i class="fas fa-bars text-xl"></i></span>
+                        <span x-show="open"><i class="fas fa-xmark text-xl"></i></span>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="#portfolio" class="hover:text-tattoo-cyan transition-all duration-300 transform hover:scale-110 flex items-center group">
+                        <i class="fas fa-images mr-2"></i><span class="relative">Portfolio<span class="block h-0.5 bg-tattoo-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span></span>
+                    </a>
+                    <a href="#about" class="hover:text-tattoo-cyan transition-all duration-300 transform hover:scale-110 flex items-center group">
+                        <i class="fas fa-user mr-2"></i><span class="relative">About<span class="block h-0.5 bg-tattoo-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span></span>
+                    </a>
+                    <a href="#booking" class="hover:text-tattoo-cyan transition-all duration-300 transform hover:scale-110 flex items-center group">
+                        <i class="fas fa-calendar-alt mr-2"></i><span class="relative">Booking<span class="block h-0.5 bg-tattoo-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span></span>
+                    </a>
+                    <a href="#contact" class="hover:text-tattoo-cyan transition-all duration-300 transform hover:scale-110 flex items-center group">
+                        <i class="fas fa-envelope mr-2"></i><span class="relative">Contact<span class="block h-0.5 bg-tattoo-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span></span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" x-show="open" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95" class="md:hidden bg-gray-700 rounded-lg mt-2 p-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#portfolio" @click="open = false" class="hover:text-tattoo-cyan transition-colors flex items-center">
+                        <i class="fas fa-images mr-3"></i>Portfolio
+                    </a>
+                    <a href="#about" @click="open = false" class="hover:text-tattoo-cyan transition-colors flex items-center">
+                        <i class="fas fa-user mr-3"></i>About
+                    </a>
+                    <a href="#booking" @click="open = false" class="hover:text-tattoo-cyan transition-colors flex items-center">
+                        <i class="fas fa-calendar-alt mr-3"></i>Booking
+                    </a>
+                    <a href="#contact" @click="open = false" class="hover:text-tattoo-cyan transition-colors flex items-center">
+                        <i class="fas fa-envelope mr-3"></i>Contact
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center parallax" style="background-image: url('https://images.unsplash.com/photo-1704861766110-d0d82c955ced?auto=format&fit=crop&w=1600&q=80')">
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/60 to-gray-900/80"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+                <div class="animate-float mb-8">
+                    <i class="fas fa-palette text-6xl md:text-8xl text-tattoo-orange opacity-90 drop-shadow-[0_8px_20px_rgba(255,107,53,0.35)]"></i>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                    <span class="gradient-text bg-clip-text text-transparent">
+                        Eternal Art
+                    </span>
+                    <br>
+                    <span class="text-white bg-black/30 backdrop-blur-sm px-4 py-2 rounded-lg inline-block mt-2">On Your Skin</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 bg-black/30 backdrop-blur-sm px-6 py-4 rounded-lg">
+                    Professional tattoo artistry with a passion for creating meaningful, custom designs
+                </p>
+                <div class="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row justify-center">
+                    <a href="#booking" class="bg-gradient-to-r from-tattoo-orange to-tattoo-pink px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-tattoo-pink/30 transition-all duration-300 transform hover:scale-105 animate-pulse-glow flex items-center justify-center">
+                        <i class="fas fa-calendar-plus mr-2"></i>Book Your Session
+                    </a>
+                    <a href="#portfolio" class="border-2 border-tattoo-cyan text-tattoo-cyan px-8 py-4 rounded-full font-semibold hover:bg-tattoo-cyan hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-eye mr-2"></i>View Portfolio
+                    </a>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <i class="fas fa-chevron-down text-2xl text-tattoo-cyan"></i>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative">
+                        <div class="absolute -inset-2 rounded-3xl bg-gradient-to-r from-tattoo-orange/30 via-tattoo-pink/30 to-tattoo-cyan/30 blur-xl"></div>
+                        <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                            <img src="https://images.unsplash.com/photo-1604374376934-2df6fad6519b?auto=format&fit=crop&w=1200&q=80" alt="InkMaster studio with artist at work" class="w-full h-96 object-cover" loading="lazy">
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-r from-tattoo-orange to-tattoo-pink rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-award text-3xl text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-4xl font-bold mb-6">
+                            <span class="gradient-text bg-clip-text text-transparent">
+                                Master Artist
+                            </span>
+                        </h2>
+                        <p class="text-gray-300 text-lg mb-6">
+                            With over 10 years of experience in the tattoo industry, I specialize in creating custom designs that tell your unique story. Every piece is crafted with precision, creativity, and a deep understanding of anatomy and aesthetics.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-tattoo-cyan rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shield-heart text-white"></i>
+                                </div>
+                                <span class="font-semibold">Sterile Environment</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-tattoo-pink rounded-full flex items-center justify-center">
+                                    <i class="fas fa-palette text-white"></i>
+                                </div>
+                                <span class="font-semibold">Custom Designs</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-tattoo-orange rounded-full flex items-center justify-center">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                                <span class="font-semibold">10+ Years Experience</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-tattoo-blue rounded-full flex items-center justify-center">
+                                    <i class="fas fa-heart text-white"></i>
+                                </div>
+                                <span class="font-semibold">Client Focused</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center text-tattoo-cyan hover:text-tattoo-blue transition-colors font-semibold">
+                            <i class="fas fa-arrow-right mr-2"></i> Learn More About My Process
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section with Lightbox -->
+        <section id="portfolio" x-data="{
+                lightboxOpen: false,
+                current: { src: '', title: '', caption: '' },
+                open(item) { this.current = item; this.lightboxOpen = true; document.body.classList.add('overflow-hidden') },
+                close() { this.lightboxOpen = false; document.body.classList.remove('overflow-hidden') }
+            }" class="py-20 bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-4">
+                    <span class="gradient-text bg-clip-text text-transparent">
+                        Featured Work
+                    </span>
+                </h2>
+                <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">Explore my diverse portfolio showcasing various styles and techniques, from realistic portraits to vibrant watercolor designs.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Portfolio Item 1 -->
+                    <div class="group relative overflow-hidden rounded-2xl bg-gray-800 transform hover:scale-105 transition-all duration-500">
+                        <div class="relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1654133536181-3b310679ab15?auto=format&fit=crop&w=900&q=80" alt="Black and grey realism full sleeve" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                            <button @click="open({ src: 'https://images.unsplash.com/photo-1654133536181-3b310679ab15?auto=format&fit=crop&w=1600&q=80', title: 'Realistic Sleeve', caption: 'Detailed black and gray realism with perfect shading' })"
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 w-full text-left">
+                                <div>
+                                    <h3 class="text-white font-bold text-xl mb-2">Realistic Sleeve</h3>
+                                    <p class="text-gray-300">Detailed black and gray realism with perfect shading</p>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-tattoo-cyan font-semibold">Full Sleeve</span>
+                                <span class="text-gray-400">40+ Hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 2 -->
+                    <div class="group relative overflow-hidden rounded-2xl bg-gray-800 transform hover:scale-105 transition-all duration-500">
+                        <div class="relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1599308264063-1557561b08fe?auto=format&fit=crop&w=900&q=80" alt="Geometric watercolor back piece" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                            <button @click="open({ src: 'https://images.unsplash.com/photo-1599308264063-1557561b08fe?auto=format&fit=crop&w=1600&q=80', title: 'Geometric Watercolor', caption: 'Modern geometric patterns with vibrant watercolor effects' })"
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 w-full text-left">
+                                <div>
+                                    <h3 class="text-white font-bold text-xl mb-2">Geometric Watercolor</h3>
+                                    <p class="text-gray-300">Modern geometric patterns with vibrant watercolor effects</p>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-tattoo-pink font-semibold">Back Piece</span>
+                                <span class="text-gray-400">25 Hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 3 -->
+                    <div class="group relative overflow-hidden rounded-2xl bg-gray-800 transform hover:scale-105 transition-all duration-500">
+                        <div class="relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1722633197462-a517682eeda6?auto=format&fit=crop&w=900&q=80" alt="Traditional Japanese koi and waves" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                            <button @click="open({ src: 'https://images.unsplash.com/photo-1722633197462-a517682eeda6?auto=format&fit=crop&w=1600&q=80', title: 'Traditional Japanese', caption: 'Classic Japanese motifs with bold lines and rich colors' })"
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 w-full text-left">
+                                <div>
+                                    <h3 class="text-white font-bold text-xl mb-2">Traditional Japanese</h3>
+                                    <p class="text-gray-300">Classic Japanese motifs with bold lines and rich colors</p>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-tattoo-orange font-semibold">Leg Sleeve</span>
+                                <span class="text-gray-400">35 Hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#booking" class="inline-flex items-center bg-gradient-to-r from-tattoo-cyan to-tattoo-blue text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-tattoo-cyan/30 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-wand-magic-sparkles mr-2"></i>Start Your Custom Design
+                    </a>
+                </div>
+            </div>
+
+            <!-- Lightbox Modal -->
+            <div x-show="lightboxOpen" x-transition class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" @keydown.escape.window="close()" @click.self="close()" aria-modal="true" role="dialog">
+                <div class="relative max-w-5xl w-full">
+                    <button @click="close()" class="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                    <img :src="current.src" :alt="current.title" class="w-full max-h-[80vh] object-contain rounded-xl ring-1 ring-white/10">
+                    <div class="mt-4 flex items-start justify-between gap-4">
+                        <div>
+                            <h3 class="text-xl font-semibold" x-text="current.title"></h3>
+                            <p class="text-gray-300" x-text="current.caption"></p>
+                        </div>
+                        <a :href="current.src" target="_blank" rel="noopener" class="text-tattoo-cyan hover:text-white inline-flex items-center">
+                            <i class="fas fa-arrow-up-right-from-square mr-2"></i>Open original
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-20 bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-12">
+                    <span class="gradient-text bg-clip-text text-transparent">Client Love</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 hover:border-tattoo-cyan/40 transition-colors">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=60" alt="Client Sarah" class="w-12 h-12 rounded-full object-cover mr-3" loading="lazy">
+                            <div>
+                                <p class="font-semibold">Sarah K.</p>
+                                <div class="text-tattoo-orange">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300">Incredible attention to detail. The design process was collaborative and the final piece is a dream!</p>
+                    </div>
+                    <div class="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 hover:border-tattoo-pink/40 transition-colors">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=60" alt="Client Mike" class="w-12 h-12 rounded-full object-cover mr-3" loading="lazy">
+                            <div>
+                                <p class="font-semibold">Mike R.</p>
+                                <div class="text-tattoo-orange">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300">Clean studio, great vibes, and an artist who truly listens. Couldn’t be happier with my sleeve.</p>
+                    </div>
+                    <div class="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 hover:border-tattoo-cyan/40 transition-colors">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=120&q=60" alt="Client Aisha" class="w-12 h-12 rounded-full object-cover mr-3" loading="lazy">
+                            <div>
+                                <p class="font-semibold">Aisha N.</p>
+                                <div class="text-tattoo-orange">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300">From concept to aftercare, the experience was top-notch. Highly recommend for custom work.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Form Section -->
+        <section id="booking" class="relative py-20 bg-gray-800 parallax" style="background-image: url('https://images.unsplash.com/photo-1650783756081-f235c2c76b6a?auto=format&fit=crop&w=1600&q=80')">
+            <div class="absolute inset-0 bg-gray-900/80"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-4">
+                    <span class="gradient-text bg-clip-text text-transparent">
+                        Book Your Session
+                    </span>
+                </h2>
+                <p class="text-gray-300 text-center mb-12">Ready to bring your vision to life? Fill out the form below and I'll get back to you within 24 hours.</p>
+                
+                <div x-data="{
+                    name: '',
+                    email: '',
+                    phone: '',
+                    tattooType: '',
+                    placement: '',
+                    size: '',
+                    description: '',
+                    date: '',
+                    isSubmitting: false,
+                    success: false,
+                    submitForm() {
+                        this.isSubmitting = true;
+                        setTimeout(() => {
+                            this.isSubmitting = false;
+                            this.success = true;
+                            // Reset form
+                            this.name = '';
+                            this.email = '';
+                            this.phone = '';
+                            this.tattooType = '';
+                            this.placement = '';
+                            this.size = '';
+                            this.description = '';
+                            this.date = '';
+                            setTimeout(() => this.success = false, 4000);
+                        }, 1500);
+                    }
+                }" class="bg-gray-900/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-gray-700">
+                    <div x-show="success" x-transition class="mb-6 rounded-lg bg-emerald-600/20 text-emerald-200 border border-emerald-500/40 p-4">
+                        <i class="fa-solid fa-circle-check mr-2"></i>
+                        Booking request submitted! We'll contact you within 24 hours to discuss your design.
+                    </div>
+                    <form @submit.prevent="submitForm" class="space-y-6" aria-live="polite">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-user mr-2"></i>Full Name
+                                </label>
+                                <input type="text" x-model="name" required 
+                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300"
+                                    placeholder="Your full name" autocomplete="name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-envelope mr-2"></i>Email
+                                </label>
+                                <input type="email" x-model="email" required 
+                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300"
+                                    placeholder="your.email@example.com" autocomplete="email">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-phone mr-2"></i>Phone Number
+                                </label>
+                                <input type="tel" x-model="phone" required 
+                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300"
+                                    placeholder="(555) 123-4567" autocomplete="tel">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-calendar-day mr-2"></i>Preferred Date
+                                </label>
+                                <input type="date" x-model="date" required 
+                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-paint-brush mr-2"></i>Tattoo Style
+                                </label>
+                                <select x-model="tattooType" required 
+                                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300">
+                                    <option value="">Select Style</option>
+                                    <option value="traditional">Traditional</option>
+                                    <option value="realism">Realism</option>
+                                    <option value="geometric">Geometric</option>
+                                    <option value="watercolor">Watercolor</option>
+                                    <option value="japanese">Japanese</option>
+                                    <option value="custom">Custom Design</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>Placement
+                                </label>
+                                <select x-model="placement" required 
+                                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300">
+                                    <option value="">Select Placement</option>
+                                    <option value="arm">Arm</option>
+                                    <option value="leg">Leg</option>
+                                    <option value="chest">Chest</option>
+                                    <option value="back">Back</option>
+                                    <option value="hand">Hand</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-ruler-combined mr-2"></i>Size
+                                </label>
+                                <select x-model="size" required 
+                                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300">
+                                    <option value="">Select Size</option>
+                                    <option value="small">Small (under 3 inches)</option>
+                                    <option value="medium">Medium (3-6 inches)</option>
+                                    <option value="large">Large (6+ inches)</option>
+                                    <option value="sleeve">Full Sleeve</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-lightbulb mr-2"></i>Tattoo Description
+                            </label>
+                            <textarea x-model="description" rows="4" required 
+                                      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent transition-all duration-300"
+                                      placeholder="Describe your tattoo idea, include any references or specific elements you'd like..."></textarea>
+                        </div>
+                        
+                        <button type="submit" :disabled="isSubmitting"
+                                class="w-full bg-gradient-to-r from-tattoo-orange to-tattoo-pink text-white font-semibold py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-tattoo-pink/30 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                            <i class="fas fa-spinner fa-spin mr-2" x-show="isSubmitting" aria-hidden="true"></i>
+                            <span x-show="!isSubmitting">
+                                <i class="fas fa-paper-plane mr-2"></i>Submit Booking Request
+                            </span>
+                            <span x-show="isSubmitting">Processing...</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-20 bg-gray-900">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-10">
+                    <span class="gradient-text bg-clip-text text-transparent">Frequently Asked Questions</span>
+                </h2>
+                <div class="space-y-4">
+                    <div x-data="{ open: false }" class="border border-gray-700 rounded-xl bg-gray-800/60">
+                        <button @click="open = !open" class="w-full text-left px-6 py-4 flex items-center justify-between">
+                            <span class="font-semibold">How should I prepare for my session?</span>
+                            <i :class="open ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 pb-6 text-gray-300">
+                            Get a good night’s sleep, stay hydrated, avoid alcohol for 24 hours, and eat a full meal before your appointment.
+                        </div>
+                    </div>
+                    <div x-data="{ open: false }" class="border border-gray-700 rounded-xl bg-gray-800/60">
+                        <button @click="open = !open" class="w-full text-left px-6 py-4 flex items-center justify-between">
+                            <span class="font-semibold">Do you offer consultations?</span>
+                            <i :class="open ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 pb-6 text-gray-300">
+                            Yes, consultations are free and help us align on style, placement, and size. Bring references if you have them.
+                        </div>
+                    </div>
+                    <div x-data="{ open: false }" class="border border-gray-700 rounded-xl bg-gray-800/60">
+                        <button @click="open = !open" class="w-full text-left px-6 py-4 flex items-center justify-between">
+                            <span class="font-semibold">What about aftercare?</span>
+                            <i :class="open ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 pb-6 text-gray-300">
+                            You’ll receive detailed aftercare instructions. Generally, keep the tattoo clean, moisturized, and out of direct sun.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-12">
+                    <span class="gradient-text bg-clip-text text-transparent">
+                        Get In Touch
+                    </span>
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="text-center p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 border border-gray-700/60">
+                        <div class="w-16 h-16 bg-tattoo-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-map-marker-alt text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Visit Our Studio</h3>
+                        <p class="text-gray-400">123 Ink Street<br>Art City, AC 12345</p>
+                    </div>
+                    
+                    <div class="text-center p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 border border-gray-700/60">
+                        <div class="w-16 h-16 bg-tattoo-pink rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone-alt text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Call Us</h3>
+                        <p class="text-gray-400">(555) 123-INKY<br><a href="mailto:info@inkmaster.com" class="hover:text-tattoo-cyan">info@inkmaster.com</a></p>
+                    </div>
+                    
+                    <div class="text-center p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 border border-gray-700/60">
+                        <div class="w-16 h-16 bg-tattoo-orange rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Studio Hours</h3>
+                        <p class="text-gray-400">Tue - Sat: 10AM - 7PM<br>Sun - Mon: Closed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-12 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-bold gradient-text bg-clip-text text-transparent inline-flex items-center">
+                        <i class="fas fa-palette mr-2"></i>InkMaster
+                    </span>
+                    <p class="text-gray-400 mt-4">Creating meaningful art that lasts a lifetime. Professional tattoo services with a focus on custom designs and client satisfaction.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-tattoo-cyan transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-tattoo-blue transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#" aria-label="TikTok" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-tattoo-pink transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-tiktok text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <div class="space-y-2">
+                        <a href="#portfolio" class="block text-gray-400 hover:text-tattoo-cyan transition-colors">Portfolio</a>
+                        <a href="#about" class="block text-gray-400 hover:text-tattoo-cyan transition-colors">About</a>
+                        <a href="#booking" class="block text-gray-400 hover:text-tattoo-cyan transition-colors">Booking</a>
+                        <a href="#contact" class="block text-gray-400 hover:text-tattoo-cyan transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Services</h3>
+                    <div class="space-y-2">
+                        <span class="block text-gray-400">Custom Tattoos</span>
+                        <span class="block text-gray-400">Cover-up Work</span>
+                        <span class="block text-gray-400">Tattoo Restoration</span>
+                        <span class="block text-gray-400">Consultations</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p><span id="year"></span> InkMaster Tattoo Studio. All rights reserved. | <a href="#" class="hover:text-tattoo-cyan transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-tattoo-cyan transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" aria-label="Back to top" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-tattoo-orange to-tattoo-pink rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 hidden z-50 flex items-center justify-center">
+        <i class="fas fa-chevron-up text-white"></i>
+    </button>
+
+    <script>
+        // Dynamic year
+        document.getElementById('year').textContent = `© ${new Date().getFullYear()}`;
+
+        // Scroll progress bar
+        const progressBar = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / height) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        // Back to top button functionality
+        window.addEventListener('scroll', () => {
+            const backToTop = document.getElementById('backToTop');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

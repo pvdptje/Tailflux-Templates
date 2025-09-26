@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ink Master - Professional Tattoo Artist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tattoo-orange': '#FF6B35',
+                        'tattoo-pink': '#EC4899',
+                        'tattoo-blue': '#3B82F6',
+                        'tattoo-cyan': '#06B6D4',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/90 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-tattoo-orange to-tattoo-pink bg-clip-text text-transparent">
+                        InkMaster
+                    </span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#portfolio" class="hover:text-tattoo-cyan transition-colors">Portfolio</a>
+                    <a href="#about" class="hover:text-tattoo-cyan transition-colors">About</a>
+                    <a href="#booking" class="hover:text-tattoo-cyan transition-colors">Booking</a>
+                    <a href="#contact" class="hover:text-tattoo-cyan transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-tattoo-orange via-tattoo-pink to-tattoo-blue bg-clip-text text-transparent">
+                    Eternal Art
+                </span>
+                <br>
+                <span class="text-white">On Your Skin</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                Professional tattoo artistry with a passion for creating meaningful, custom designs
+            </p>
+            <a href="#booking" class="bg-gradient-to-r from-tattoo-orange to-tattoo-pink px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-tattoo-pink/30 transition-all">
+                Book Your Session
+            </a>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <span class="bg-gradient-to-r from-tattoo-cyan to-tattoo-blue bg-clip-text text-transparent">
+                    Featured Work
+                </span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Portfolio Item 1 -->
+                <div class="group relative overflow-hidden rounded-lg bg-gray-700">
+                    <img src="https://images.unsplash.com/photo-1612536057832-2ff7ead58194?w=400" alt="Tattoo Art" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white font-semibold">Custom Sleeve Design</h3>
+                    </div>
+                </div>
+                <!-- Portfolio Item 2 -->
+                <div class="group relative overflow-hidden rounded-lg bg-gray-700">
+                    <img src="https://images.unsplash.com/photo-1609621838384-1c0f4c4f1088?w=400" alt="Tattoo Art" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white font-semibold">Geometric Patterns</h3>
+                    </div>
+                </div>
+                <!-- Portfolio Item 3 -->
+                <div class="group relative overflow-hidden rounded-lg bg-gray-700">
+                    <img src="https://images.unsplash.com/photo-1571687949925-64d1bb9d80e3?w=400" alt="Tattoo Art" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white font-semibold">Watercolor Style</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section id="booking" class="py-20 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <span class="bg-gradient-to-r from-tattoo-orange to-tattoo-pink bg-clip-text text-transparent">
+                    Book Your Session
+                </span>
+            </h2>
+            
+            <div x-data="{
+                name: '',
+                email: '',
+                phone: '',
+                tattooType: '',
+                placement: '',
+                size: '',
+                description: '',
+                date: '',
+                submitForm() {
+                    // Form submission logic would go here
+                    alert('Booking request submitted! We\\'ll contact you soon.');
+                }
+            }" class="bg-gray-800 rounded-2xl p-8 shadow-2xl">
+                <form @submit.prevent="submitForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                            <input type="text" x-model="name" required 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                            <input type="email" x-model="email" required 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+                            <input type="tel" x-model="phone" required 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Preferred Date</label>
+                            <input type="date" x-model="date" required 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Tattoo Style</label>
+                            <select x-model="tattooType" required 
+                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                                <option value="">Select Style</option>
+                                <option value="traditional">Traditional</option>
+                                <option value="realism">Realism</option>
+                                <option value="geometric">Geometric</option>
+                                <option value="watercolor">Watercolor</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="custom">Custom Design</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Placement</label>
+                            <select x-model="placement" required 
+                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                                <option value="">Select Placement</option>
+                                <option value="arm">Arm</option>
+                                <option value="leg">Leg</option>
+                                <option value="chest">Chest</option>
+                                <option value="back">Back</option>
+                                <option value="hand">Hand</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Size</label>
+                            <select x-model="size" required 
+                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent">
+                                <option value="">Select Size</option>
+                                <option value="small">Small (under 3 inches)</option>
+                                <option value="medium">Medium (3-6 inches)</option>
+                                <option value="large">Large (6+ inches)</option>
+                                <option value="sleeve">Full Sleeve</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Tattoo Description</label>
+                        <textarea x-model="description" rows="4" required 
+                                  class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tattoo-cyan focus:border-transparent"
+                                  placeholder="Describe your tattoo idea, include any references or specific elements you'd like..."></textarea>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-tattoo-orange to-tattoo-pink text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-tattoo-pink/30 transition-all duration-300">
+                        Submit Booking Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-tattoo-orange to-tattoo-pink bg-clip-text text-transparent">
+                        InkMaster
+                    </span>
+                    <p class="text-gray-400 mt-4">Creating meaningful art that lasts a lifetime. Professional tattoo services with a focus on custom designs and client satisfaction.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Contact Info</h3>
+                    <p class="text-gray-400">123 Ink Street</p>
+                    <p class="text-gray-400">Art City, AC 12345</p>
+                    <p class="text-gray-400">(555) 123-INKY</p>
+                    <p class="text-gray-400">info@inkmaster.com</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Studio Hours</h3>
+                    <p class="text-gray-400">Tuesday - Saturday: 10AM - 7PM</p>
+                    <p class="text-gray-400">Sunday - Monday: Closed</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-tattoo-cyan hover:text-tattoo-blue transition-colors">Instagram</a>
+                        <a href="#" class="text-tattoo-cyan hover:text-tattoo-blue transition-colors">Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 InkMaster Tattoo Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
