@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmmaker Video Gallery</title>
+    <meta name="description" content="Cinematic portfolio video gallery featuring commercials, documentaries, and short films.">
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        fuchsia: {
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .video-card {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        .video-card:hover {
+            transform: translateY(-8px);
+        }
+        .play-button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.15), inset 0 0 0 2px rgba(255,255,255,0.25);
+        }
+        .play-button:hover {
+            transform: scale(1.07);
+            box-shadow: 0 16px 36px rgba(255, 255, 255, 0.25), inset 0 0 0 2px rgba(255,255,255,0.35);
+        }
+        .category-filter {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .category-filter::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .category-filter.active::after {
+            width: 80%;
+        }
+        .glass {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-violet-50 min-h-screen text-slate-800 selection:bg-violet-600 selection:text-white">
+    <div x-data="galleryApp()" x-init="init()" class="container mx-auto px-4 py-8">
+        <!-- Decorative Background -->
+        <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-violet-200 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse" style="animation-delay: .4s"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-200 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse" style="animation-delay: 1s"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-fuchsia-200 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse" style="animation-delay: .7s"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="mb-10 md:mb-16 animate-slide-up sticky top-0 z-30">
+            <div class="glass bg-white/70 rounded-2xl px-5 md:px-8 py-5 shadow-md border border-white/40">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                    <div class="flex items-center gap-3">
+                        <div class="relative">
+                            <span class="absolute -inset-1 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-30 blur"></span>
+                            <div class="relative grid place-items-center w-12 h-12 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white shadow-lg">
+                                <i class="fa-solid fa-clapperboard text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight">Cinematic Portfolio</h1>
+                            <p class="text-slate-600 text-sm hidden sm:block">Visual stories that move people</p>
+                        </div>
+                    </div>
+                    <div class="flex-1 max-w-xl w-full">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input x-model="search"
+                                   type="search"
+                                   placeholder="Search projects (title, description)..."
+                                   class="w-full pl-11 pr-12 py-3 rounded-xl bg-white/70 border border-slate-200/60 focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500/50 placeholder:text-slate-400 shadow-inner">
+                            <button @click="search=''"
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-100/70 focus:outline-none focus:ring-2 focus:ring-violet-500/40">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex items-center gap-3">
+                        <a href="#contact" class="px-4 py-2 rounded-xl bg-white/80 border border-slate-200 text-violet-700 font-semibold hover:shadow-md transition">
+                            <i class="fa-regular fa-envelope mr-2"></i>Contact
+                        </a>
+                        <a href="#reel" class="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold shadow-md hover:shadow-lg transition">
+                            <i class="fa-solid fa-play mr-2"></i>Watch Reel
+                        </a>
+                    </div>
+                </div>
+                <p class="mt-5 text-slate-600 text-base md:text-lg leading-relaxed text-center md:text-left">Showcasing a collection of visual stories and creative projects that capture moments, emotions, and narratives.</p>
+                <div class="mt-4 flex justify-center md:justify-start space-x-4 text-violet-500">
+                    <i class="fas fa-film text-xl md:text-2xl" title="Film"></i>
+                    <i class="fas fa-camera text-xl md:text-2xl" title="Camera"></i>
+                    <i class="fas fa-video text-xl md:text-2xl" title="Video"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8 md:mb-12 sticky top-[88px] z-20 transition-all duration-300"
+             :class="isScrolled ? 'bg-white/80 backdrop-blur-md rounded-2xl shadow-lg py-3 px-4 -mx-2 md:px-6 md:-mx-4' : ''">
+            <button @click="selectedCategory = 'all'"
+                :class="selectedCategory === 'all' ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-5 md:px-6 py-2.5 md:py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-violet-500/40">
+                <i class="fas fa-th-large mr-2"></i>All Projects
+            </button>
+            <button @click="selectedCategory = 'commercial'"
+                :class="selectedCategory === 'commercial' ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-5 md:px-6 py-2.5 md:py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                <i class="fas fa-shopping-bag mr-2"></i>Commercial
+            </button>
+            <button @click="selectedCategory = 'documentary'"
+                :class="selectedCategory === 'documentary' ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-5 md:px-6 py-2.5 md:py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40">
+                <i class="fas fa-book-open mr-2"></i>Documentary
+            </button>
+            <button @click="selectedCategory = 'short-film'"
+                :class="selectedCategory === 'short-film' ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-5 md:px-6 py-2.5 md:py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-violet-600/40">
+                <i class="fas fa-theater-masks mr-2"></i>Short Film
+            </button>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+             x-show="true"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform scale-95"
+             x-transition:enter-end="opacity-100 transform scale-100">
+
+            <!-- Video Card 1 -->
+            <div
+                data-title="Brand Campaign 2024"
+                data-desc="A visually stunning commercial showcasing innovative product design and brand storytelling."
+                x-show="(selectedCategory === 'all' || selectedCategory === 'commercial') && matchesSearch($el)"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="group video-card bg-white/90 glass rounded-2xl shadow-xl overflow-hidden border border-white/40">
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1595406236320-a9aa2a54a00e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwdmlkZW8lMjBhZHZlcnRpc2VtZW50JTIwY2luZW1hdGljJTIwbGlnaHRpbmclMjBwcm9kdWN0JTIwc2hvdHxlbnwwfDB8fHwxNzU4OTEzODU4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=S6OSYUlvJxo"
+                         alt="Brand Campaign 2024"
+                         loading="lazy" decoding="async"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-90"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button @click="openModal({
+                                    title: 'Brand Campaign 2024',
+                                    category: 'Commercial',
+                                    duration: '3:45',
+                                    views: '2.4K',
+                                    image: 'https://images.unsplash.com/photo-1595406236320-a9aa2a54a00e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwdmlkZW8lMjBhZHZlcnRpc2VtZW50JTIwY2luZW1hdGljJTIwbGlnaHRpbmclMjBwcm9kdWN0JTIwc2hvdHxlbnwwfDB8fHwxNzU4OTEzODU4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=S6OSYUlvJxo',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="play-button bg-white/20 glass rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/60"
+                                aria-label="Play Brand Campaign 2024">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
+                            <i class="fa-solid fa-bag-shopping mr-1"></i> Commercial
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">3:45</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Brand Campaign 2024</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">A visually stunning commercial showcasing innovative product design and brand storytelling.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">2.4K views</span>
+                        </div>
+                        <button @click="openModal({
+                                    title: 'Brand Campaign 2024',
+                                    category: 'Commercial',
+                                    duration: '3:45',
+                                    views: '2.4K',
+                                    image: 'https://images.unsplash.com/photo-1595406236320-a9aa2a54a00e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwdmlkZW8lMjBhZHZlcnRpc2VtZW50JTIwY2luZW1hdGljJTIwbGlnaHRpbmclMjBwcm9kdWN0JTIwc2hvdHxlbnwwfDB8fHwxNzU4OTEzODU4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=S6OSYUlvJxo',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 2 -->
+            <div
+                data-title="Urban Stories"
+                data-desc="Exploring the hidden narratives of city life through intimate portraits and authentic storytelling."
+                x-show="(selectedCategory === 'all' || selectedCategory === 'documentary') && matchesSearch($el)"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="group video-card bg-white/90 glass rounded-2xl shadow-xl overflow-hidden border border-white/40">
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1603620197052-2900903493dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkb2N1bWVudGFyeSUyMGZpbG1tYWtpbmclMjB1cmJhbiUyMHN0b3JpZXMlMjBjaXR5JTIwbGlmZSUyMHBvcnRyYWl0fGVufDB8MHx8fDE3NTg5MTM4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=bL7CRsrlULY"
+                         alt="Urban Stories documentary"
+                         loading="lazy" decoding="async"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button @click="openModal({
+                                    title: 'Urban Stories',
+                                    category: 'Documentary',
+                                    duration: '22:15',
+                                    views: '5.7K',
+                                    image: 'https://images.unsplash.com/photo-1603620197052-2900903493dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkb2N1bWVudGFyeSUyMGZpbG1tYWtpbmclMjB1cmJhbiUyMHN0b3JpZXMlMjBjaXR5JTIwbGlmZSUyMHBvcnRyYWl0fGVufDB8MHx8fDE3NTg5MTM4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=bL7CRsrlULY',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="play-button bg-white/20 glass rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/60"
+                                aria-label="Play Urban Stories">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
+                            <i class="fa-solid fa-circle-nodes mr-1"></i> Documentary
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">22:15</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Urban Stories</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Exploring the hidden narratives of city life through intimate portraits and authentic storytelling.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">5.7K views</span>
+                        </div>
+                        <button @click="openModal({
+                                    title: 'Urban Stories',
+                                    category: 'Documentary',
+                                    duration: '22:15',
+                                    views: '5.7K',
+                                    image: 'https://images.unsplash.com/photo-1603620197052-2900903493dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkb2N1bWVudGFyeSUyMGZpbG1tYWtpbmclMjB1cmJhbiUyMHN0b3JpZXMlMjBjaXR5JTIwbGlmZSUyMHBvcnRyYWl0fGVufDB8MHx8fDE3NTg5MTM4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=bL7CRsrlULY',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 3 -->
+            <div
+                data-title="Echoes of Silence"
+                data-desc="A poetic exploration of memory and loss in a quiet coastal town, capturing raw human emotions."
+                x-show="(selectedCategory === 'all' || selectedCategory === 'short-film') && matchesSearch($el)"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="group video-card bg-white/90 glass rounded-2xl shadow-xl overflow-hidden border border-white/40">
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1614815685162-bdbd311a195b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaG9ydCUyMGZpbG0lMjBjaW5lbWF0aWMlMjBzdGlsbHMlMjBtb29keSUyMGxhbmRzY2FwZXxlbnwwfDB8fHwxNzU4OTEzODU5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=z2HJWsPM0OM"
+                         alt="Echoes of Silence short film"
+                         loading="lazy" decoding="async"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button @click="openModal({
+                                    title: 'Echoes of Silence',
+                                    category: 'Short Film',
+                                    duration: '15:30',
+                                    views: '3.8K',
+                                    image: 'https://images.unsplash.com/photo-1614815685162-bdbd311a195b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaG9ydCUyMGZpbG0lMjBjaW5lbWF0aWMlMjBzdGlsbHMlMjBtb29keSUyMGxhbmRzY2FwZXxlbnwwfDB8fHwxNzU4OTEzODU5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=z2HJWsPM0OM',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="play-button bg-white/20 glass rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/60"
+                                aria-label="Play Echoes of Silence">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4 flex gap-2">
+                        <span class="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
+                            <i class="fa-solid fa-masks-theater mr-1"></i> Short Film
+                        </span>
+                        <span class="bg-amber-500/90 text-white px-2.5 py-1.5 rounded-full text-xs font-semibold shadow">
+                            <i class="fa-solid fa-award mr-1"></i> Award Winner
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">15:30</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Echoes of Silence</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">A poetic exploration of memory and loss in a quiet coastal town, capturing raw human emotions.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">3.8K views</span>
+                        </div>
+                        <button @click="openModal({
+                                    title: 'Echoes of Silence',
+                                    category: 'Short Film',
+                                    duration: '15:30',
+                                    views: '3.8K',
+                                    image: 'https://images.unsplash.com/photo-1614815685162-bdbd311a195b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaG9ydCUyMGZpbG0lMjBjaW5lbWF0aWMlMjBzdGlsbHMlMjBtb29keSUyMGxhbmRzY2FwZXxlbnwwfDB8fHwxNzU4OTEzODU5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=z2HJWsPM0OM',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 4 -->
+            <div
+                data-title="Fashion Forward"
+                data-desc="Dynamic fashion campaign featuring emerging designers and models in urban landscapes."
+                x-show="(selectedCategory === 'all' || selectedCategory === 'commercial') && matchesSearch($el)"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="group video-card bg-white/90 glass rounded-2xl shadow-xl overflow-hidden border border-white/40">
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1610719885572-e032f944dcf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwdmlkZW8lMjBjb21tZXJjaWFsJTIwcnVud2F5JTIwc3R1ZGlvJTIwbGlnaHR8ZW58MHwwfHx8MTc1ODkxMzg1OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=lJE9ltkvnD0"
+                         alt="Fashion Forward commercial"
+                         loading="lazy" decoding="async"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button @click="openModal({
+                                    title: 'Fashion Forward',
+                                    category: 'Commercial',
+                                    duration: '2:20',
+                                    views: '4.2K',
+                                    image: 'https://images.unsplash.com/photo-1610719885572-e032f944dcf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwdmlkZW8lMjBjb21tZXJjaWFsJTIwcnVud2F5JTIwc3R1ZGlvJTIwbGlnaHR8ZW58MHwwfHx8MTc1ODkxMzg1OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=lJE9ltkvnD0',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="play-button bg-white/20 glass rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/60"
+                                aria-label="Play Fashion Forward">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
+                            <i class="fa-solid fa-bag-shopping mr-1"></i> Commercial
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">2:20</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Fashion Forward</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Dynamic fashion campaign featuring emerging designers and models in urban landscapes.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">4.2K views</span>
+                        </div>
+                        <button @click="openModal({
+                                    title: 'Fashion Forward',
+                                    category: 'Commercial',
+                                    duration: '2:20',
+                                    views: '4.2K',
+                                    image: 'https://images.unsplash.com/photo-1610719885572-e032f944dcf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwdmlkZW8lMjBjb21tZXJjaWFsJTIwcnVud2F5JTIwc3R1ZGlvJTIwbGlnaHR8ZW58MHwwfHx8MTc1ODkxMzg1OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=lJE9ltkvnD0',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 5 -->
+            <div
+                data-title="Artisan's Touch"
+                data-desc="Documenting traditional craftsmanship and its relevance in the modern digital world."
+                x-show="(selectedCategory === 'all' || selectedCategory === 'documentary') && matchesSearch($el)"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="group video-card bg-white/90 glass rounded-2xl shadow-xl overflow-hidden border border-white/40">
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1660796334912-8ce8e9c2cff0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY3JhZnRzbWFuc2hpcCUyMGRvY3VtZW50YXJ5JTIwd29ya3Nob3AlMjBoYW5kc3xlbnwwfDB8fHwxNzU4OTEzODYwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rgSLzr82Kd8"
+                         alt="Artisan's Touch documentary"
+                         loading="lazy" decoding="async"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button @click="openModal({
+                                    title: 'Artisan\\'s Touch',
+                                    category: 'Documentary',
+                                    duration: '18:45',
+                                    views: '6.1K',
+                                    image: 'https://images.unsplash.com/photo-1660796334912-8ce8e9c2cff0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY3JhZnRzbWFuc2hpcCUyMGRvY3VtZW50YXJ5JTIwd29ya3Nob3AlMjBoYW5kc3xlbnwwfDB8fHwxNzU4OTEzODYwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rgSLzr82Kd8',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="play-button bg-white/20 glass rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/60"
+                                aria-label="Play Artisan's Touch">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
+                            <i class="fa-solid fa-circle-nodes mr-1"></i> Documentary
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">18:45</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Artisan's Touch</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Documenting traditional craftsmanship and its relevance in the modern digital world.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">6.1K views</span>
+                        </div>
+                        <button @click="openModal({
+                                    title: 'Artisan\\'s Touch',
+                                    category: 'Documentary',
+                                    duration: '18:45',
+                                    views: '6.1K',
+                                    image: 'https://images.unsplash.com/photo-1660796334912-8ce8e9c2cff0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY3JhZnRzbWFuc2hpcCUyMGRvY3VtZW50YXJ5JTIwd29ya3Nob3AlMjBoYW5kc3xlbnwwfDB8fHwxNzU4OTEzODYwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rgSLzr82Kd8',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 6 -->
+            <div
+                data-title="Midnight Train"
+                data-desc="A suspenseful journey through unexpected encounters and life-changing revelations."
+                x-show="(selectedCategory === 'all' || selectedCategory === 'short-film') && matchesSearch($el)"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="group video-card bg-white/90 glass rounded-2xl shadow-xl overflow-hidden border border-white/40">
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1647510139804-b29ca1596a94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0cmFpbiUyMGpvdXJuZXklMjBjaW5lbWF0aWMlMjBuaWdodCUyMHN0YXRpb258ZW58MHwwfHx8MTc1ODkxMzg2MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=_3p4elRQxNw"
+                         alt="Midnight Train short film"
+                         loading="lazy" decoding="async"
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button @click="openModal({
+                                    title: 'Midnight Train',
+                                    category: 'Short Film',
+                                    duration: '12:10',
+                                    views: '3.2K',
+                                    image: 'https://images.unsplash.com/photo-1647510139804-b29ca1596a94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0cmFpbiUyMGpvdXJuZXklMjBjaW5lbWF0aWMlMjBuaWdodCUyMHN0YXRpb258ZW58MHwwfHx8MTc1ODkxMzg2MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=_3p4elRQxNw',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="play-button bg-white/20 glass rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/60"
+                                aria-label="Play Midnight Train">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold shadow-lg">
+                            <i class="fa-solid fa-masks-theater mr-1"></i> Short Film
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">12:10</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Midnight Train</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">A suspenseful journey through unexpected encounters and life-changing revelations.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">3.2K views</span>
+                        </div>
+                        <button @click="openModal({
+                                    title: 'Midnight Train',
+                                    category: 'Short Film',
+                                    duration: '12:10',
+                                    views: '3.2K',
+                                    image: 'https://images.unsplash.com/photo-1647510139804-b29ca1596a94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0cmFpbiUyMGpvdXJuZXklMjBjaW5lbWF0aWMlMjBuaWdodCUyMHN0YXRpb258ZW58MHwwfHx8MTc1ODkxMzg2MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=_3p4elRQxNw',
+                                    video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+                                })"
+                                class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button @click="notify('No more projects to load yet. Check back soon!')"
+                    class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-8 py-3 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold animate-pulse-glow focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                <i class="fas fa-plus mr-2"></i>Load More Projects
+            </button>
+        </div>
+
+        <!-- Toast Notification -->
+        <div x-show="toast.show" x-transition
+             class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+            <div class="glass bg-white/90 shadow-xl border border-white/50 rounded-xl px-4 py-3 text-slate-700 flex items-center gap-3">
+                <i :class="toast.type === 'info' ? 'fa-solid fa-circle-info text-violet-600' : 'fa-solid fa-check text-teal-600'"></i>
+                <span class="text-sm font-medium" x-text="toast.message"></span>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div x-show="modalOpen"
+             x-transition.opacity
+             class="fixed inset-0 z-50">
+            <div class="absolute inset-0 bg-slate-900/70 backdrop-blur-sm" @click="closeModal()" aria-hidden="true"></div>
+            <div class="relative mx-auto mt-12 md:mt-16 max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-white/50"
+                 @keydown.escape.window="closeModal()" role="dialog" aria-modal="true" :aria-label="modal.title">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+                    <div class="md:col-span-2 bg-black">
+                        <video x-ref="video" :poster="modal.image" :src="modal.video"
+                               class="w-full h-full max-h-[70vh] object-contain bg-black"
+                               controls playsinline></video>
+                    </div>
+                    <div class="p-6 md:p-7 flex flex-col gap-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <span class="inline-block text-xs font-semibold text-white px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 shadow">
+                                    <i class="fa-solid fa-clapperboard mr-1"></i>
+                                    <span x-text="modal.category"></span>
+                                </span>
+                                <h3 class="text-xl md:text-2xl font-extrabold mt-2" x-text="modal.title"></h3>
+                            </div>
+                            <button @click="closeModal()" class="text-slate-500 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500/40" aria-label="Close">
+                                <i class="fa-solid fa-xmark text-xl"></i>
+                            </button>
+                        </div>
+                        <p class="text-slate-600 text-sm">Duration: <span class="font-semibold" x-text="modal.duration"></span></p>
+                        <div class="flex items-center gap-4 text-slate-500">
+                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-eye"></i><span x-text="modal.views + ' views'"></span></span>
+                            <button @click="share()"
+                                    class="inline-flex items-center gap-2 text-violet-700 font-semibold hover:text-violet-800">
+                                <i class="fa-solid fa-share-nodes"></i> Share
+                            </button>
+                        </div>
+                        <div class="mt-auto">
+                            <button @click="$refs.video && $refs.video.play()"
+                                    class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-5 py-3 rounded-xl hover:shadow-lg transition font-semibold">
+                                <i class="fa-solid fa-circle-play mr-2"></i>Play
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll To Top -->
+        <button x-show="isScrolled"
+                @click="scrollToTop()"
+                class="fixed bottom-6 right-6 z-40 rounded-full p-3 shadow-lg bg-white/90 border border-slate-200 hover:shadow-xl transition text-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500/40"
+                aria-label="Scroll to top">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+
+        <!-- Footer -->
+        <footer id="contact" class="text-center mt-20 pt-16 border-t border-slate-200/50 relative">
+            <div class="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-gradient-to-b from-transparent to-white/50"></div>
+            <div class="max-w-4xl mx-auto relative">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Let's Create Something Amazing Together</h3>
+                <p class="text-slate-600 text-lg mb-8">Ready to bring your vision to life? Get in touch to discuss your next project.</p>
+
+                <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-8">
+                    <a href="mailto:hello@example.com" class="bg-white/80 glass px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-violet-600 border border-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-500/40">
+                        <i class="fas fa-envelope mr-2"></i>Contact Me
+                    </a>
+                    <a href="#" class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40">
+                        <i class="fas fa-calendar mr-2"></i>Schedule Call
+                    </a>
+                </div>
+
+                <div class="flex justify-center space-x-8 text-2xl mb-6">
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110" aria-label="Vimeo">
+                        <i class="fab fa-vimeo-v"></i>
+                    </a>
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+
+                <p class="text-slate-500 text-sm">© 2024 Cinematic Portfolio. Crafted with passion and precision.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Alpine App
+        function galleryApp() {
+            return {
+                selectedCategory: 'all',
+                isScrolled: false,
+                search: '',
+                modalOpen: false,
+                modal: { title: '', category: '', duration: '', views: '', image: '', video: '' },
+                toast: { show: false, message: '', type: 'info' },
+                init() {
+                    window.addEventListener('scroll', () => { this.isScrolled = window.scrollY > 50 });
+                },
+                matchesSearch(el) {
+                    if (!this.search) return true;
+                    const text = ((el.dataset.title || '') + ' ' + (el.dataset.desc || '')).toLowerCase();
+                    return text.includes(this.search.toLowerCase());
+                },
+                openModal(data) {
+                    this.modal = { ...data };
+                    this.modalOpen = true;
+                    this.$nextTick(() => {
+                        const v = this.$refs.video;
+                        if (v) { try { v.pause(); v.currentTime = 0; } catch(e){} }
+                    });
+                },
+                closeModal() {
+                    const v = this.$refs.video;
+                    if (v) { try { v.pause(); } catch(e){} }
+                    this.modalOpen = false;
+                },
+                notify(message, type = 'info') {
+                    this.toast = { show: true, message, type };
+                    setTimeout(() => this.toast.show = false, 2200);
+                },
+                async share() {
+                    const shareData = {
+                        title: this.modal.title,
+                        text: `${this.modal.title} — ${this.modal.category}`,
+                        url: window.location.href
+                    };
+                    try {
+                        if (navigator.share) {
+                            await navigator.share(shareData);
+                            this.notify('Shared successfully!', 'success');
+                        } else {
+                            await navigator.clipboard.writeText(shareData.url);
+                            this.notify('Link copied to clipboard', 'success');
+                        }
+                    } catch (e) {
+                        this.notify('Unable to share right now');
+                    }
+                },
+                scrollToTop() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Intersection observer for subtle entrance animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

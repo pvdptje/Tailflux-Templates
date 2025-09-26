@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmmaker Video Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        fuchsia: {
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <div x-data="{ selectedCategory: 'all' }" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-violet-700 mb-4">Cinematic Portfolio</h1>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto">Showcasing a collection of visual stories and creative projects</p>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <button 
+                @click="selectedCategory = 'all'" 
+                :class="selectedCategory === 'all' ? 'bg-violet-500 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg"
+            >
+                All Projects
+            </button>
+            <button 
+                @click="selectedCategory = 'commercial'" 
+                :class="selectedCategory === 'commercial' ? 'bg-fuchsia-500 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg"
+            >
+                Commercial
+            </button>
+            <button 
+                @click="selectedCategory = 'documentary'" 
+                :class="selectedCategory === 'documentary' ? 'bg-teal-500 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg"
+            >
+                Documentary
+            </button>
+            <button 
+                @click="selectedCategory = 'short-film'" 
+                :class="selectedCategory === 'short-film' ? 'bg-violet-600 text-white' : 'bg-white text-slate-700 border border-slate-200'"
+                class="px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg"
+            >
+                Short Film
+            </button>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Video Card 1 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'commercial'" 
+                class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+                <div class="relative pt-[56.25%] bg-slate-200">
+                    <!-- Video Thumbnail Placeholder -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium">Commercial</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Brand Campaign 2024</h3>
+                    <p class="text-slate-600 mb-4">A visually stunning commercial showcasing innovative product design.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-500">3:45 min</span>
+                        <button class="bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition-colors">
+                            Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 2 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'documentary'" 
+                class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+                <div class="relative pt-[56.25%] bg-slate-200">
+                    <div class="absolute inset-0 bg-gradient-to-br from-teal-400 to-violet-500 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">Documentary</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Urban Stories</h3>
+                    <p class="text-slate-600 mb-4">Exploring the hidden narratives of city life through intimate portraits.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-500">22:15 min</span>
+                        <button class="bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition-colors">
+                            Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 3 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'short-film'" 
+                class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+                <div class="relative pt-[56.25%] bg-slate-200">
+                    <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-400 to-violet-600 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-violet-600 text-white px-3 py-1 rounded-full text-sm font-medium">Short Film</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Echoes of Silence</h3>
+                    <p class="text-slate-600 mb-4">A poetic exploration of memory and loss in a quiet coastal town.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-500">15:30 min</span>
+                        <button class="bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition-colors">
+                            Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Video Cards -->
+            <!-- Video Card 4 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'commercial'" 
+                class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+                <div class="relative pt-[56.25%] bg-slate-200">
+                    <div class="absolute inset-0 bg-gradient-to-br from-violet-300 to-fuchsia-400 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium">Commercial</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Fashion Forward</h3>
+                    <p class="text-slate-600 mb-4">Dynamic fashion campaign featuring emerging designers and models.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-500">2:20 min</span>
+                        <button class="bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition-colors">
+                            Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 5 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'documentary'" 
+                class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+                <div class="relative pt-[56.25%] bg-slate-200">
+                    <div class="absolute inset-0 bg-gradient-to-br from-teal-300 to-violet-400 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">Documentary</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Artisan's Touch</h3>
+                    <p class="text-slate-600 mb-4">Documenting traditional craftsmanship in the modern world.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-500">18:45 min</span>
+                        <button class="bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition-colors">
+                            Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 6 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'short-film'" 
+                class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+                <div class="relative pt-[56.25%] bg-slate-200">
+                    <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-300 to-teal-400 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-violet-600 text-white px-3 py-1 rounded-full text-sm font-medium">Short Film</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Midnight Train</h3>
+                    <p class="text-slate-600 mb-4">A suspenseful journey through unexpected encounters and revelations.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-500">12:10 min</span>
+                        <button class="bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition-colors">
+                            Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 pt-8 border-t border-slate-200">
+            <p class="text-slate-600">© 2024 Cinematic Portfolio. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-violet-600 hover:text-violet-700 transition-colors">Contact</a>
+                <a href="#" class="text-violet-600 hover:text-violet-700 transition-colors">About</a>
+                <a href="#" class="text-violet-600 hover:text-violet-700 transition-colors">Instagram</a>
+                <a href="#" class="text-violet-600 hover:text-violet-700 transition-colors">Vimeo</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

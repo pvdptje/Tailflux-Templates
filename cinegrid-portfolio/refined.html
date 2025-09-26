@@ -1,0 +1,485 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmmaker Video Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        fuchsia: {
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .video-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .video-card:hover {
+            transform: translateY(-8px);
+        }
+        .play-button {
+            transition: all 0.3s ease;
+        }
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        .category-filter {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .category-filter::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .category-filter.active::after {
+            width: 80%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-violet-50 min-h-screen">
+    <div x-data="{ selectedCategory: 'all', isScrolled: false }" 
+         x-init="window.addEventListener('scroll', () => { isScrolled = window.scrollY > 50 })" 
+         class="container mx-auto px-4 py-8">
+        
+        <!-- Animated Background Elements -->
+        <div class="fixed inset-0 -z-10 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-violet-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-1000"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-fuchsia-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-500"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="text-center mb-16 animate-slide-up">
+            <div class="inline-block relative">
+                <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent mb-4 relative z-10">
+                    Cinematic Portfolio
+                </h1>
+                <div class="absolute -inset-1 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-lg blur opacity-30"></div>
+            </div>
+            <p class="text-slate-600 text-xl max-w-3xl mx-auto leading-relaxed">
+                Showcasing a collection of visual stories and creative projects that capture moments, emotions, and narratives
+            </p>
+            <div class="mt-6 flex justify-center space-x-4 text-violet-500">
+                <i class="fas fa-film text-2xl"></i>
+                <i class="fas fa-camera text-2xl"></i>
+                <i class="fas fa-video text-2xl"></i>
+            </div>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 sticky top-4 z-20 transition-all duration-300" 
+             :class="isScrolled ? 'bg-white/80 backdrop-blur-md rounded-2xl shadow-lg py-3 px-6 -mx-4' : ''">
+            <button 
+                @click="selectedCategory = 'all'" 
+                :class="selectedCategory === 'all' ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
+            >
+                <i class="fas fa-th-large mr-2"></i>All Projects
+            </button>
+            <button 
+                @click="selectedCategory = 'commercial'" 
+                :class="selectedCategory === 'commercial' ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
+            >
+                <i class="fas fa-shopping-bag mr-2"></i>Commercial
+            </button>
+            <button 
+                @click="selectedCategory = 'documentary'" 
+                :class="selectedCategory === 'documentary' ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
+            >
+                <i class="fas fa-book-open mr-2"></i>Documentary
+            </button>
+            <button 
+                @click="selectedCategory = 'short-film'" 
+                :class="selectedCategory === 'short-film' ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg scale-105 category-filter active' : 'bg-white/80 text-slate-700 border border-slate-200/50 category-filter'"
+                class="px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
+            >
+                <i class="fas fa-theater-masks mr-2"></i>Short Film
+            </button>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
+             x-show="true" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform scale-95"
+             x-transition:enter-end="opacity-100 transform scale-100">
+            
+            <!-- Video Card 1 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'commercial'" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="video-card bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
+            >
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1683090988500-6ebee3eae187?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwdmlkZW8lMjBhZHZlcnRpc2VtZW50fGVufDB8MHx8fDE3NTg5MTI0MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=a185ZgRrfmo" 
+                         alt="Brand Campaign 2024" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="play-button bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">Commercial</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">3:45</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Brand Campaign 2024</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">A visually stunning commercial showcasing innovative product design and brand storytelling.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">2.4K views</span>
+                        </div>
+                        <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 2 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'documentary'" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="video-card bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
+            >
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1613324295610-00b422bfc618?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkb2N1bWVudGFyeSUyMGZpbG1tYWtpbmd8ZW58MHwwfHx8MTc1ODkxMjQwNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=SF3DKVd1AwY" 
+                         alt="Urban Stories" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="play-button bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">Documentary</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">22:15</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Urban Stories</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Exploring the hidden narratives of city life through intimate portraits and authentic storytelling.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">5.7K views</span>
+                        </div>
+                        <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 3 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'short-film'" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="video-card bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
+            >
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaG9ydCUyMGZpbG0lMjBjaW5lbWF8ZW58MHwwfHx8MTc1ODkxMjQxMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=q8P8YoR6erg" 
+                         alt="Echoes of Silence" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="play-button bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">Short Film</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">15:30</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Echoes of Silence</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">A poetic exploration of memory and loss in a quiet coastal town, capturing raw human emotions.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">3.8K views</span>
+                        </div>
+                        <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 4 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'commercial'" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="video-card bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
+            >
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1758613655736-16757bdd953b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwdmlkZW8lMjBjb21tZXJjaWFsfGVufDB8MHx8fDE3NTg5MTI0MTZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=nt8u7hhlFtg" 
+                         alt="Fashion Forward" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="play-button bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">Commercial</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">2:20</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Fashion Forward</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Dynamic fashion campaign featuring emerging designers and models in urban landscapes.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">4.2K views</span>
+                        </div>
+                        <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 5 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'documentary'" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="video-card bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
+            >
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1660796334912-8ce8e9c2cff0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwY3JhZnRzbWFuc2hpcCUyMGRvY3VtZW50YXJ5fGVufDB8MHx8fDE3NTg5MTI0MjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rgSLzr82Kd8" 
+                         alt="Artisan's Touch" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="play-button bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">Documentary</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">18:45</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Artisan's Touch</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Documenting traditional craftsmanship and its relevance in the modern digital world.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">6.1K views</span>
+                        </div>
+                        <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 6 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'short-film'" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translateY-10"
+                x-transition:enter-end="opacity-100 transform translateY-0"
+                class="video-card bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
+            >
+                <div class="relative pt-[56.25%] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1748075256983-5a4631ab8553?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0cmFpbiUyMGpvdXJuZXklMjBjaW5lbWF0aWN8ZW58MHwwfHx8MTc1ODkxMjQyNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=cyYoz49MRJs" 
+                         alt="Midnight Train" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="play-button bg-white/20 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center border-2 border-white/30 hover:bg-white/30">
+                            <i class="fas fa-play text-white text-2xl ml-1"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">Short Film</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-clock"></i>
+                        <span class="text-sm font-medium">12:10</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Midnight Train</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">A suspenseful journey through unexpected encounters and life-changing revelations.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2 text-slate-500">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">3.2K views</span>
+                        </div>
+                        <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold">
+                            <i class="fas fa-play mr-2"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-8 py-3 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold animate-pulse-glow">
+                <i class="fas fa-plus mr-2"></i>Load More Projects
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-20 pt-12 border-t border-slate-200/50">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6">Let's Create Something Amazing Together</h3>
+                <p class="text-slate-600 text-lg mb-8">Ready to bring your vision to life? Get in touch to discuss your next project.</p>
+                
+                <div class="flex flex-wrap justify-center gap-6 mb-8">
+                    <a href="#" class="bg-white/80 backdrop-blur-sm px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-violet-600 border border-violet-200">
+                        <i class="fas fa-envelope mr-2"></i>Contact Me
+                    </a>
+                    <a href="#" class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
+                        <i class="fas fa-calendar mr-2"></i>Schedule Call
+                    </a>
+                </div>
+
+                <div class="flex justify-center space-x-8 text-2xl mb-6">
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-vimeo-v"></i>
+                    </a>
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="text-violet-600 hover:text-violet-700 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+
+                <p class="text-slate-500 text-sm">© 2024 Cinematic Portfolio. Crafted with passion and precision.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all video cards
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
