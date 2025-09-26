@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Relations | RetailCorp Inc.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: '#10b981',
+                        teal: '#0d9488',
+                        cyan: '#06b6d4',
+                        rose: '#f43f5e'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(16, 185, 129, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px rgba(16, 185, 129, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #10b981, #06b6d4, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/90 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-cyan to-green rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-sm"></i>
+                    </div>
+                    <span class="text-cyan font-bold text-xl tracking-tight">RetailCorp</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-green hover:text-green-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-home text-sm"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="text-teal hover:text-teal-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-chart-bar text-sm"></i>
+                        <span>Financials</span>
+                    </a>
+                    <a href="#" class="text-cyan hover:text-cyan-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-newspaper text-sm"></i>
+                        <span>News</span>
+                    </a>
+                    <a href="#" class="text-rose hover:text-rose-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-envelope text-sm"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+                <button class="md:hidden text-gray-400 hover:text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1758813240178-19ef760ded2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjb3Jwb3JhdGUlMjBvZmZpY2UlMjBidWlsZGluZ3xlbnwwfDB8fHwxNzU4ODMyOTc4fDA&ixlib=rb-4.1.0&q=80&w=1080')] bg-cover bg-center opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in gradient-text">
+                Investor Relations
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed animate-slide-up">
+                Driving sustainable growth through innovative retail solutions and strategic market expansion.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 animate-slide-up">
+                <button class="bg-green hover:bg-green-600 text-white px-8 py-4 rounded-xl transition-all duration-300 hover-lift font-semibold flex items-center justify-center space-x-2">
+                    <i class="fas fa-chart-line"></i>
+                    <span>View Latest Earnings</span>
+                </button>
+                <button class="border-2 border-cyan text-cyan hover:bg-cyan hover:text-white px-8 py-4 rounded-xl transition-all duration-300 hover-lift font-semibold flex items-center justify-center space-x-2">
+                    <i class="fas fa-download"></i>
+                    <span>Download Reports</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics -->
+    <section class="py-20 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-gray-900"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold mb-16 text-center animate-fade-in">
+                Key Financial <span class="gradient-text">Metrics</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Metric 1 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl text-center hover-lift border border-gray-700/50 animate-slide-up">
+                    <div class="w-16 h-16 bg-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-dollar-sign text-green text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-green mb-3">$4.2B</div>
+                    <div class="text-gray-400 text-lg">Quarterly Revenue</div>
+                    <div class="text-green text-sm mt-3 flex items-center justify-center space-x-1">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12.4% YoY</span>
+                    </div>
+                </div>
+                <!-- Metric 2 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl text-center hover-lift border border-gray-700/50 animate-slide-up" style="animation-delay: 0.1s">
+                    <div class="w-16 h-16 bg-teal/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chart-pie text-teal text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-teal mb-3">$0.89</div>
+                    <div class="text-gray-400 text-lg">EPS (Diluted)</div>
+                    <div class="text-green text-sm mt-3 flex items-center justify-center space-x-1">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>8.5% YoY</span>
+                    </div>
+                </div>
+                <!-- Metric 3 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl text-center hover-lift border border-gray-700/50 animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="w-16 h-16 bg-cyan/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-percentage text-cyan text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-cyan mb-3">18.3%</div>
+                    <div class="text-gray-400 text-lg">Gross Margin</div>
+                    <div class="text-green text-sm mt-3 flex items-center justify-center space-x-1">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>2.1% YoY</span>
+                    </div>
+                </div>
+                <!-- Metric 4 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl text-center hover-lift border border-gray-700/50 animate-slide-up" style="animation-delay: 0.3s">
+                    <div class="w-16 h-16 bg-rose/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-store text-rose text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-rose mb-3">156</div>
+                    <div class="text-gray-400 text-lg">New Stores</div>
+                    <div class="text-green text-sm mt-3">This Quarter</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stock Performance -->
+    <section class="py-20 bg-gradient-to-br from-gray-800 to-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618044733300-9472054094ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdG9jayUyMG1hcmtldCUyMHRyYWRpbmclMjBkYXRhJTIwY2hhcnRzfGVufDB8MHx8fDE3NTg4MzQ4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080')] bg-cover bg-center opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold mb-16 text-center animate-fade-in">
+                Stock <span class="gradient-text">Performance</span>
+            </h2>
+            <div class="bg-gray-900/80 backdrop-blur-md rounded-2xl p-8 border border-gray-700/50 hover-lift">
+                <!-- Enhanced stock chart -->
+                <div class="h-80 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl mb-8 p-6 border border-gray-700/30">
+                    <div class="flex items-end justify-between h-full space-x-2">
+                        <!-- Animated chart bars -->
+                        <div class="w-full h-48 bg-gradient-to-t from-green/30 to-green/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-green h-3/4 rounded-t-lg animate-pulse-glow"></div>
+                        </div>
+                        <div class="w-full h-56 bg-gradient-to-t from-green/30 to-green/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-green h-4/5 rounded-t-lg animate-pulse-glow" style="animation-delay: 0.2s"></div>
+                        </div>
+                        <div class="w-full h-64 bg-gradient-to-t from-green/30 to-green/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-green h-full rounded-t-lg animate-pulse-glow" style="animation-delay: 0.4s"></div>
+                        </div>
+                        <div class="w-full h-72 bg-gradient-to-t from-cyan/30 to-cyan/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-cyan h-5/6 rounded-t-lg animate-pulse-glow" style="animation-delay: 0.6s"></div>
+                        </div>
+                        <div class="w-full h-80 bg-gradient-to-t from-cyan/30 to-cyan/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-cyan h-full rounded-t-lg animate-pulse-glow" style="animation-delay: 0.8s"></div>
+                        </div>
+                        <div class="w-full h-68 bg-gradient-to-t from-rose/30 to-rose/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-rose h-3/4 rounded-t-lg animate-pulse-glow" style="animation-delay: 1.0s"></div>
+                        </div>
+                        <div class="w-full h-60 bg-gradient-to-t from-rose/30 to-rose/10 rounded-t-lg flex items-end">
+                            <div class="w-full bg-rose h-2/3 rounded-t-lg animate-pulse-glow" style="animation-delay: 1.2s"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover-lift">
+                        <div class="text-gray-400 text-sm uppercase tracking-wide mb-2">Current Price</div>
+                        <div class="text-3xl font-bold text-green">$45.67</div>
+                        <div class="text-green text-sm mt-2 flex items-center justify-center space-x-1">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+2.34% Today</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover-lift">
+                        <div class="text-gray-400 text-sm uppercase tracking-wide mb-2">Market Cap</div>
+                        <div class="text-3xl font-bold text-teal">$68.2B</div>
+                        <div class="text-green text-sm mt-2">NASDAQ: RTC</div>
+                    </div>
+                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover-lift">
+                        <div class="text-gray-400 text-sm uppercase tracking-wide mb-2">52W High</div>
+                        <div class="text-3xl font-bold text-cyan">$48.92</div>
+                        <div class="text-cyan text-sm mt-2">+7.1% from current</div>
+                    </div>
+                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover-lift">
+                        <div class="text-gray-400 text-sm uppercase tracking-wide mb-2">52W Low</div>
+                        <div class="text-3xl font-bold text-rose">$32.15</div>
+                        <div class="text-rose text-sm mt-2">-29.5% from current</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News -->
+    <section class="py-20 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-950"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold mb-16 text-center animate-fade-in">
+                Latest <span class="gradient-text">News & Events</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- News Item 1 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-lift border border-gray-700/50 animate-slide-up">
+                    <div class="h-48 bg-gradient-to-r from-green to-teal relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">Q3 Earnings</span>
+                        </div>
+                    </div>
+                    <div class="p6">
+                        <span class="text-teal text-sm font-semibold flex items-center space-x-1">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Nov 15, 2024</span>
+                        </span>
+                        <h3 class="text-xl font-bold mt-3 mb-4 leading-tight">Record Quarterly Results Exceed Expectations</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Strong performance driven by digital transformation initiatives and successful international market expansion strategies.</p>
+                        <button class="text-cyan hover:text-cyan-300 transition-all duration-300 flex items-center space-x-2 group">
+                            <span>Read Full Report</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- News Item 2 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-lift border border-gray-700/50 animate-slide-up" style="animation-delay: 0.1s">
+                    <div class="h-48 bg-gradient-to-r from-cyan to-blue-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">Sustainability</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-teal text-sm font-semibold flex items-center space-x-1">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Oct 28, 2024</span>
+                        </span>
+                        <h3 class="text-xl font-bold mt-3 mb-4 leading-tight">Ambitious ESG Initiatives Launched</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Commitment to carbon neutrality by 2030 backed by $500M strategic investment in renewable energy and sustainable operations.</p>
+                        <button class="text-cyan hover:text-cyan-300 transition-all duration-300 flex items-center space-x-2 group">
+                            <span>Learn More</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- News Item 3 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-lift border border-gray-700/50 animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="h-48 bg-gradient-to-r from-rose to-purple-600 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">Expansion</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-teal text-sm font-semibold flex items-center space-x-1">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Sep 12, 2024</span>
+                        </span>
+                        <h3 class="text-xl font-bold mt-3 mb-4 leading-tight">European Market Entry Strategy</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Strategic partnership announced for expansion into key European markets with projected 25% revenue growth in first year.</p>
+                        <button class="text-cyan hover:text-cyan-300 transition-all duration-300 flex items-center space-x-2 group">
+                            <span>Explore Strategy</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button class="border-2 border-cyan text-cyan hover:bg-cyan hover:text-white px-8 py-3 rounded-xl transition-all duration-300 font-semibold flex items-center justify-center space-x-2 mx-auto">
+                    <i class="fas fa-newspaper"></i>
+                    <span>View All News & Events</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-800 to-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1758518730083-4c12527b6742?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHRlYW0lMjBtZWV0aW5nJTIwY29ycG9yYXRlfGVufDB8MHx8fDE3NTg4MzQ4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080')] bg-cover bg-center opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold mb-16 text-center animate-fade-in">
+                Executive <span class="gradient-text">Leadership</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover-lift">
+                    <div class="w-24 h-24 bg-gradient-to-r from-green to-cyan rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Sarah Chen</h3>
+                    <p class="text-cyan mb-4">Chief Executive Officer</p>
+                    <p class="text-gray-400 text-sm">20+ years in retail leadership, driving innovation and global expansion.</p>
+                </div>
+                <div class="text-center bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover-lift">
+                    <div class="w-24 h-24 bg-gradient-to-r from-teal to-cyan rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marcus Rodriguez</h3>
+                    <p class="text-cyan mb-4">Chief Financial Officer</p>
+                    <p class="text-gray-400 text-sm">Financial strategist with expertise in public markets and M&A.</p>
+                </div>
+                <div class="text-center bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover-lift">
+                    <div class="w-24 h-24 bg-gradient-to-r from-rose to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-lightbulb text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Dr. Elena Petrova</h3>
+                    <p class="text-cyan mb-4">Chief Innovation Officer</p>
+                    <p class="text-gray-400 text-sm">Digital transformation leader with PhD in AI and machine learning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/90 backdrop-blur-md border-t border-gray-700 py-16 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-r from-cyan to-green rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <span class="text-cyan font-bold text-2xl">RetailCorp</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Leading the future of retail through innovation, sustainability, and strategic growth. 
+                        NASDAQ: RTC | Founded 1998
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-cyan rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-green rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-teal text-lg">Investor Resources</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                            <span>Financial Reports</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                            <span>SEC Filings</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                            <span>Stock Information</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                            <span>Investor Presentations</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-green text-lg">Contact</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-green"></i>
+                            <span>investor@retailcorp.com</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-green"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-map-marker-alt text-green"></i>
+                            <span>123 Commerce St, New York, NY</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-rose text-lg">Subscribe</h4>
+                    <p class="text-gray-400 mb-4 text-sm">Stay updated with our latest investor news and reports.</p>
+                    <div class="flex mb-4">
+                        <input type="email" placeholder="Email address" class="bg-gray-700 px-4 py-3 rounded-l-lg flex-1 border border-gray-600 focus:border-cyan focus:outline-none transition-colors">
+                        <button class="bg-rose hover:bg-rose-600 px-4 py-3 rounded-r-lg transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-500 text-xs">By subscribing, you agree to our Privacy Policy</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2024 RetailCorp Inc. All rights reserved. | <a href="#" class="hover:text-cyan transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-cyan transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-cyan hover:bg-cyan-600 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 hover:scale-110 z-50">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add scroll event listener for back to top button
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.querySelector('button[onclick="scrollToTop()"]');
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        // Initialize back to top button state
+        document.querySelector('button[onclick="scrollToTop()"]').classList.add('opacity-0', 'invisible');
+    </script>
+</body>
+</html>

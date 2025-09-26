@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Relations | RetailCorp Inc.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: '#10b981',
+                        teal: '#0d9488',
+                        cyan: '#06b6d4',
+                        rose: '#f43f5e'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-cyan font-bold text-xl">RetailCorp</span>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <a href="#" class="text-green hover:text-green-300 transition-colors">Home</a>
+                    <a href="#" class="text-teal hover:text-teal-300 transition-colors">Financials</a>
+                    <a href="#" class="text-cyan hover:text-cyan-300 transition-colors">News</a>
+                    <a href="#" class="text-rose hover:text-rose-300 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-gray-800 to-gray-900 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Investor Relations</h1>
+            <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Driving sustainable growth through innovative retail solutions and strategic market expansion.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-green hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors">
+                    View Latest Earnings
+                </button>
+                <button class="border border-cyan text-cyan hover:bg-cyan hover:text-white px-6 py-3 rounded-lg transition-colors">
+                    Download Reports
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">Key Financial Metrics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Metric 1 -->
+                <div class="bg-gray-800 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-green mb-2">$4.2B</div>
+                    <div class="text-gray-400">Quarterly Revenue</div>
+                    <div class="text-green text-sm mt-2">↑ 12.4% YoY</div>
+                </div>
+                <!-- Metric 2 -->
+                <div class="bg-gray-800 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-teal mb-2">$0.89</div>
+                    <div class="text-gray-400">EPS (Diluted)</div>
+                    <div class="text-green text-sm mt-2">↑ 8.5% YoY</div>
+                </div>
+                <!-- Metric 3 -->
+                <div class="bg-gray-800 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-cyan mb-2">18.3%</div>
+                    <div class="text-gray-400">Gross Margin</div>
+                    <div class="text-green text-sm mt-2">↑ 2.1% YoY</div>
+                </div>
+                <!-- Metric 4 -->
+                <div class="bg-gray-800 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-rose mb-2">156</div>
+                    <div class="text-gray-400">New Stores</div>
+                    <div class="text-green text-sm mt-2">This Quarter</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stock Performance -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">Stock Performance</h2>
+            <div class="bg-gray-900 rounded-lg p-8">
+                <!-- Simplified stock chart placeholder -->
+                <div class="h-64 bg-gradient-to-r from-green/20 to-cyan/20 rounded-lg mb-6 flex items-end justify-between p-4">
+                    <!-- Chart bars -->
+                    <div class="w-4 bg-green h-16 rounded-t"></div>
+                    <div class="w-4 bg-green h-24 rounded-t"></div>
+                    <div class="w-4 bg-green h-32 rounded-t"></div>
+                    <div class="w-4 bg-cyan h-40 rounded-t"></div>
+                    <div class="w-4 bg-cyan h-48 rounded-t"></div>
+                    <div class="w-4 bg-rose h-36 rounded-t"></div>
+                    <div class="w-4 bg-rose h-28 rounded-t"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div>
+                        <div class="text-gray-400">Current Price</div>
+                        <div class="text-2xl font-bold text-green">$45.67</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-400">Today's Change</div>
+                        <div class="text-2xl font-bold text-green">+2.34%</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-400">52W High</div>
+                        <div class="text-2xl font-bold text-cyan">$48.92</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-400">52W Low</div>
+                        <div class="text-2xl font-bold text-rose">$32.15</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">Latest News & Events</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- News Item 1 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden">
+                    <div class="h-2 bg-green"></div>
+                    <div class="p-6">
+                        <span class="text-teal text-sm">Q3 Earnings</span>
+                        <h3 class="text-xl font-bold mt-2 mb-3">Record Quarterly Results</h3>
+                        <p class="text-gray-400 mb-4">Strong performance driven by digital transformation and international expansion.</p>
+                        <button class="text-cyan hover:text-cyan-300 transition-colors">Read More →</button>
+                    </div>
+                </div>
+                <!-- News Item 2 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden">
+                    <div class="h-2 bg-cyan"></div>
+                    <div class="p-6">
+                        <span class="text-teal text-sm">Sustainability</span>
+                        <h3 class="text-xl font-bold mt-2 mb-3">New ESG Initiatives</h3>
+                        <p class="text-gray-400 mb-4">Commitment to carbon neutrality by 2030 with $500M investment.</p>
+                        <button class="text-cyan hover:text-cyan-300 transition-colors">Read More →</button>
+                    </div>
+                </div>
+                <!-- News Item 3 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden">
+                    <div class="h-2 bg-rose"></div>
+                    <div class="p-6">
+                        <span class="text-teal text-sm">Expansion</span>
+                        <h3 class="text-xl font-bold mt-2 mb-3">European Market Entry</h3>
+                        <p class="text-gray-400 mb-4">Strategic partnership announced for expansion into key European markets.</p>
+                        <button class="text-cyan hover:text-cyan-300 transition-colors">Read More →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-cyan">RetailCorp Inc.</h3>
+                    <p class="text-gray-400">NASDAQ: RTC</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-teal">Investor Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Financial Reports</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">SEC Filings</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Stock Information</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-green">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>investor@retailcorp.com</li>
+                        <li>+1 (555) 123-4567</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-rose">Subscribe</h4>
+                    <div class="flex">
+                        <input type="email" placeholder="Email address" class="bg-gray-700 px-4 py-2 rounded-l-lg flex-1">
+                        <button class="bg-rose hover:bg-rose-600 px-4 py-2 rounded-r-lg transition-colors">→</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2024 RetailCorp Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
