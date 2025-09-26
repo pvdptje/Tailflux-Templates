@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Animation Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-indigo-600 bg-clip-text text-transparent">
+                    AnimStudio
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#work" class="text-stone-600 hover:text-cyan-500 transition-colors">Work</a>
+                    <a href="#about" class="text-stone-600 hover:text-indigo-500 transition-colors">About</a>
+                    <a href="#services" class="text-stone-600 hover:text-fuchsia-500 transition-colors">Services</a>
+                    <a href="#contact" class="text-stone-600 hover:text-cyan-500 transition-colors">Contact</a>
+                </div>
+                <button class="md:hidden text-stone-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-50 via-white to-cyan-50">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 bg-clip-text text-transparent">
+                    Bringing Stories
+                </span>
+                <br>
+                <span class="text-stone-700">to Life in 3D</span>
+            </h1>
+            <p class="text-xl text-stone-600 mb-8 max-w-2xl mx-auto">
+                Creating immersive 3D animations that captivate audiences and push the boundaries of digital storytelling.
+            </p>
+            <div class="flex gap-4 justify-center">
+                <button class="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all">
+                    View Portfolio
+                </button>
+                <button class="border border-stone-300 text-stone-600 px-8 py-3 rounded-full font-semibold hover:border-cyan-300 transition-colors">
+                    Get in Touch
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-10 animate-bounce">
+            <svg class="w-6 h-6 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="work" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-stone-800 mb-4">Featured Work</h2>
+                <p class="text-stone-600 text-lg">A showcase of recent 3D animation projects</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="aspect-video bg-gradient-to-br from-cyan-100 to-indigo-100 flex items-center justify-center">
+                        <div class="text-6xl opacity-20">🎬</div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <div>
+                            <h3 class="text-white font-bold text-xl mb-2">Cosmic Journey</h3>
+                            <p class="text-stone-200">Space exploration animation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="aspect-video bg-gradient-to-br from-fuchsia-100 to-cyan-100 flex items-center justify-center">
+                        <div class="text-6xl opacity-20">🐉</div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <div>
+                            <h3 class="text-white font-bold text-xl mb-2">Mythical Creatures</h3>
+                            <p class="text-stone-200">Fantasy character animation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="aspect-video bg-gradient-to-br from-indigo-100 to-fuchsia-100 flex items-center justify-center">
+                        <div class="text-6xl opacity-20">🏙️</div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <div>
+                            <h3 class="text-white font-bold text-xl mb-2">Urban Dreams</h3>
+                            <p class="text-stone-200">Cityscape animation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold text-stone-800 mb-6">About the Animator</h2>
+                    <p class="text-stone-600 mb-6">
+                        With over 8 years of experience in the 3D animation industry, I specialize in creating compelling 
+                        visual stories that resonate with audiences. My passion lies in blending technical expertise with 
+                        artistic vision to bring ideas to life.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-cyan-500 rounded-full mr-3"></div>
+                            <span class="text-stone-700">Character Animation & Rigging</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-indigo-500 rounded-full mr-3"></div>
+                            <span class="text-stone-700">Visual Effects & Simulation</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-fuchsia-500 rounded-full mr-3"></div>
+                            <span class="text-stone-700">Motion Graphics & Title Sequences</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-2xl p-8 text-white">
+                        <div class="text-6xl mb-4">🎨</div>
+                        <h3 class="text-2xl font-bold mb-4">Creative Process</h3>
+                        <p class="opacity-90">
+                            Every project begins with understanding the story, followed by meticulous planning, 
+                            creative execution, and final polishing to ensure perfection.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-stone-800 mb-6">Let's Create Something Amazing</h2>
+            <p class="text-stone-600 mb-8 text-lg">
+                Ready to bring your vision to life? Get in touch to discuss your next project.
+            </p>
+            <button class="bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all">
+                Start a Project
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent mb-4">
+                        AnimStudio
+                    </div>
+                    <p class="text-stone-400">
+                        Creating breathtaking 3D animations that tell stories and inspire audiences worldwide.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#work" class="hover:text-cyan-400 transition-colors">Portfolio</a></li>
+                        <li><a href="#about" class="hover:text-indigo-400 transition-colors">About</a></li>
+                        <li><a href="#services" class="hover:text-fuchsia-400 transition-colors">Services</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-cyan-600 transition-colors">
+                            <span class="text-white">in</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                            <span class="text-white">ig</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                            <span class="text-white">tw</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-800 mt-8 pt-8 text-center text-stone-500">
+                <p>&copy; 2024 AnimStudio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
