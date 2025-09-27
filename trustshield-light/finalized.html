@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ open2faInfo:false, openDevices:false }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Information - FinTech App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a'
+                        },
+                        sky: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7'
+                        },
+                        purple: {
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+        }
+        .security-shield {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .card-hover, .animate-slide-up, .animate-fade-in, .animate-pulse-slow {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-slate-800">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-slate-800 focus:px-3 focus:py-2 focus:rounded-md focus:ring-2 focus:ring-sky-500">Skip to content</a>
+
+    <!-- Background Pattern -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1724204401208-6349fc373543?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGN5YmVyJTIwc2VjdXJpdHklMjBuZXR3b3JrJTIwYmx1ZSUyMGJhY2tncm91bmQlMjBtaW5pbWFsfGVufDB8MHx8fDE3NTg5Njk2OTR8MA&ixlib=rb-4.1.0&q=80&w=1600'); background-size: cover; background-position: center;"></div>
+    </div>
+
+    <main id="main" class="relative max-w-6xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-12 text-center animate-fade-in" role="banner">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-lg mb-4 ring-1 ring-slate-200/70">
+                <i class="fas fa-shield-alt text-2xl security-shield" aria-hidden="true"></i>
+                <span class="sr-only">Security Center</span>
+            </div>
+            <h1 class="text-4xl font-bold text-slate-900 tracking-tight mb-3">Security Center</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Advanced protection for your financial data and transactions with enterprise-grade security</p>
+
+            <!-- Decorative shield image on larger screens -->
+            <div class="hidden md:flex justify-center mt-6">
+                <img src="https://images.unsplash.com/photo-1680055196833-c2965de0caec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaGllbGQlMjBpY29uJTIwM2QlMjByZW5kZXIlMjBtaW5pbWFsJTIwYmx1ZSUyMHB1cnBsZXxlbnwwfDB8fHwxNzU4OTY5Njk3fDA&ixlib=rb-4.1.0&q=80&w=640" alt="3D shield illustration" class="w-40 h-40 object-cover rounded-2xl shadow-md ring-1 ring-slate-200/70">
+            </div>
+        </header>
+
+        <!-- Security Status Card -->
+        <section class="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-8 mb-10 card-hover animate-slide-up" aria-labelledby="security-status">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-sky-500 to-purple-500 rounded-full flex items-center justify-center mr-4 text-white" aria-hidden="true">
+                        <i class="fas fa-check text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 id="security-status" class="text-2xl font-bold text-slate-900">Security Status</h2>
+                        <p class="text-slate-500">Last updated: Just now</p>
+                    </div>
+                </div>
+                <span class="inline-flex items-center bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg animate-pulse-slow" aria-live="polite">
+                    <i class="fas fa-shield-check mr-2" aria-hidden="true"></i>
+                    All Systems Secure
+                </span>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center p-6 bg-slate-50 rounded-xl border border-slate-100 card-hover">
+                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner ring-1 ring-sky-200/60" aria-hidden="true">
+                        <i class="fas fa-lock text-sky-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2 text-lg">Account Protection</h3>
+                    <p class="text-sm text-slate-500 mb-3">Multi-factor authentication enabled</p>
+                    <div class="w-full bg-slate-200 rounded-full h-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95">
+                        <div class="bg-green-500 h-2 rounded-full w-[95%]"></div>
+                    </div>
+                </div>
+                
+                <div class="text-center p-6 bg-slate-50 rounded-xl border border-slate-100 card-hover">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner ring-1 ring-purple-200/60" aria-hidden="true">
+                        <i class="fas fa-key text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2 text-lg">Data Encryption</h3>
+                    <p class="text-sm text-slate-500 mb-3">Bank-level 256-bit encryption</p>
+                    <div class="w-full bg-slate-200 rounded-full h-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+                        <div class="bg-purple-500 h-2 rounded-full w-full"></div>
+                    </div>
+                </div>
+                
+                <div class="text-center p-6 bg-slate-50 rounded-xl border border-slate-100 card-hover">
+                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner ring-1 ring-sky-200/60" aria-hidden="true">
+                        <i class="fas fa-eye text-sky-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2 text-lg">Activity Monitoring</h3>
+                    <p class="text-sm text-slate-500 mb-3">Real-time transaction monitoring</p>
+                    <div class="w-full bg-slate-200 rounded-full h-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="90">
+                        <div class="bg-blue-500 h-2 rounded-full w-[90%]"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Features Grid -->
+        <section class="grid lg:grid-cols-2 gap-8 mb-10">
+            <!-- Left Column -->
+            <div class="space-y-6">
+                <div class="relative overflow-hidden bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 card-hover animate-slide-up" style="animation-delay: 0.1s">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center mr-4 text-white" aria-hidden="true">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-slate-900">Two-Factor Authentication</h3>
+                            <p class="text-slate-600 mt-1">Add an extra layer of security to your account</p>
+                        </div>
+                        <!-- Decorative image -->
+                        <img src="https://images.unsplash.com/photo-1750043158403-6347fd388451?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0d28lMjBmYWN0b3IlMjBhdXRoZW50aWNhdGlvbiUyMHNtYXJ0cGhvbmUlMjBhcHAlMjBpbGx1c3RyYXRpb258ZW58MHwwfHx8MTc1ODk2OTY5NHww&ixlib=rb-4.1.0&q=80&w=480" alt="Two-factor authentication app" class="hidden md:block w-28 h-20 object-cover rounded-lg ml-4 ring-1 ring-slate-200/70">
+                    </div>
+                    <p class="text-slate-600 mb-6">We recommend using an authenticator app for maximum security. Get instant notifications for login attempts.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button data-loading class="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                            <i class="fas fa-shield-alt mr-2" aria-hidden="true"></i>Enable 2FA
+                        </button>
+                        <button @click="open2faInfo=true" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 card-hover animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-sky-600 rounded-full flex items-center justify-center mr-4 text-white" aria-hidden="true">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Password Management</h3>
+                            <div class="flex items-center mt-1">
+                                <span class="text-sm text-slate-500">Last changed: 15 days ago</span>
+                                <span class="ml-2 bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Due soon</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-6">We recommend changing your password regularly for optimal security. Use our password strength analyzer.</p>
+                    <button data-loading class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                        <i class="fas fa-sync-alt mr-2" aria-hidden="true"></i>Change Password
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-6">
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 card-hover animate-slide-up" style="animation-delay: 0.3s">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center mr-4 text-white" aria-hidden="true">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Recent Security Activity</h3>
+                            <p class="text-slate-600 mt-1">Monitor your account access and changes</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3" aria-hidden="true">
+                                    <i class="fas fa-laptop text-green-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-900">Login from new device</p>
+                                    <p class="text-xs text-slate-500">Today at 14:23 • Chrome, Windows</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-check mr-1" aria-hidden="true"></i>Verified
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3" aria-hidden="true">
+                                    <i class="fas fa-key text-blue-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-900">Password changed</p>
+                                    <p class="text-xs text-slate-500">15 days ago</p>
+                                </div>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-check-circle mr-1" aria-hidden="true"></i>Completed
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden bg-white rounded-2xl shadow-lg border border-slate-200/60 p-6 card-hover animate-slide-up" style="animation-delay: 0.4s">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-sky-600 rounded-full flex items-center justify-center mr-4 text-white" aria-hidden="true">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-slate-900">Connected Devices</h3>
+                            <p class="text-slate-600 mt-1">3 active devices</p>
+                        </div>
+                        <!-- Decorative image -->
+                        <img src="https://images.unsplash.com/photo-1703589535872-93c3b0f96ba3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkZXZpY2UlMjBzZWN1cml0eSUyMGxhcHRvcCUyMGxvY2slMjBtb2Rlcm4lMjB3b3Jrc3BhY2V8ZW58MHwwfHx8MTc1ODk2OTY5NXww&ixlib=rb-4.1.0&q=80&w=480" alt="Secured laptop on a desk" class="hidden md:block w-28 h-20 object-cover rounded-lg ml-4 ring-1 ring-slate-200/70">
+                    </div>
+                    <p class="text-slate-600 mb-6">Manage devices that have access to your account. Review and remove unfamiliar devices.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button @click="openDevices=true" class="bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+                            <i class="fas fa-list mr-2" aria-hidden="true"></i>View Devices
+                        </button>
+                        <button class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400">
+                            <i class="fas fa-plus mr-2" aria-hidden="true"></i>Add Device
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Tips -->
+        <section class="bg-white rounded-2xl shadow-lg border border-slate-200/60 p-8 card-hover animate-slide-up" style="animation-delay: 0.5s" aria-labelledby="best-practices">
+            <div class="text-center mb-8">
+                <h3 id="best-practices" class="text-2xl font-bold text-slate-900 mb-2">Security Best Practices</h3>
+                <p class="text-slate-600">Follow these guidelines to keep your account secure</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-sky-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-white" aria-hidden="true">
+                        <i class="fas fa-lock text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Strong Passwords</h4>
+                    <p class="text-sm text-slate-500">Use unique passwords across services</p>
+                </div>
+                
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-white" aria-hidden="true">
+                        <i class="fas fa-fingerprint text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Biometric Auth</h4>
+                    <p class="text-sm text-slate-500">Enable fingerprint or face recognition</p>
+                </div>
+                
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-sky-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-white" aria-hidden="true">
+                        <i class="fas fa-chart-line text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Activity Monitoring</h4>
+                    <p class="text-sm text-slate-500">Regularly review login activity</p>
+                </div>
+                
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-white" aria-hidden="true">
+                        <i class="fas fa-sync-alt text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Regular Updates</h4>
+                    <p class="text-sm text-slate-500">Keep app updated for latest patches</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Actions -->
+        <section class="relative mt-10 rounded-2xl shadow-lg border border-red-200 bg-gradient-to-r from-red-50 to-orange-50 p-8 animate-slide-up overflow-hidden" style="animation-delay: 0.6s" aria-labelledby="emergency-actions">
+            <!-- Decorative support image -->
+            <img src="https://images.unsplash.com/photo-1592348283763-78f2ca1e1866?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzZWN1cml0eSUyMHRlYW0lMjBzdXBwb3J0JTIwaGVscCUyMGNlbnRlcnxlbnwwfDB8fHwxNzU4OTY5Njk2fDA&ixlib=rb-4.1.0&q=80&w=800" alt="" aria-hidden="true" class="hidden md:block absolute right-0 top-0 h-full w-1/3 object-cover opacity-20">
+            <div class="flex items-center mb-6 relative">
+                <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mr-4 text-white" aria-hidden="true">
+                    <i class="fas fa-exclamation-triangle text-xl"></i>
+                </div>
+                <div>
+                    <h3 id="emergency-actions" class="text-2xl font-bold text-slate-900">Emergency Actions</h3>
+                    <p class="text-slate-700">Take immediate action if you suspect unauthorized access</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <button data-loading class="bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex items-center justify-center">
+                    <i class="fas fa-ban mr-3 text-lg" aria-hidden="true"></i>
+                    Freeze Account
+                </button>
+                <button data-loading class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 flex items-center justify-center">
+                    <i class="fas fa-phone-alt mr-3 text-lg" aria-hidden="true"></i>
+                    Contact Support
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-slate-500 text-sm">
+            <p>© 2024 FinTech Security. All rights reserved. Your security is our priority.</p>
+            <p class="mt-2">Need help? <a href="#" class="text-sky-600 hover:text-sky-700 font-medium">Contact our security team</a></p>
+        </footer>
+    </main>
+
+    <!-- 2FA Learn More Modal -->
+    <div x-show="open2faInfo" x-transition.opacity class="fixed inset-0 z-40 flex items-center justify-center p-4" aria-labelledby="modal-2fa-title" role="dialog" aria-modal="true">
+        <div @click="open2faInfo=false" class="absolute inset-0 bg-slate-900/50"></div>
+        <div x-show="open2faInfo" x-transition.scale class="relative bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 ring-1 ring-slate-200">
+            <div class="flex items-start">
+                <div class="w-10 h-10 bg-sky-600 rounded-full flex items-center justify-center mr-3 text-white" aria-hidden="true">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div>
+                    <h4 id="modal-2fa-title" class="text-xl font-semibold text-slate-900">About Two-Factor Authentication</h4>
+                    <p class="text-slate-600 mt-1">Use an authenticator app (TOTP) for the strongest protection. 2FA helps prevent unauthorized access even if your password is compromised.</p>
+                </div>
+            </div>
+            <div class="mt-4 grid sm:grid-cols-2 gap-3">
+                <a href="#" class="inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400">
+                    <i class="fa-brands fa-google mr-2" aria-hidden="true"></i>Google Authenticator
+                </a>
+                <a href="#" class="inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400">
+                    <i class="fa-brands fa-microsoft mr-2" aria-hidden="true"></i>Microsoft Authenticator
+                </a>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button @click="open2faInfo=false" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400">Close</button>
+                <button data-loading class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Enable 2FA</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Devices Slide-over -->
+    <div x-show="openDevices" class="fixed inset-0 z-40" aria-labelledby="devices-title" role="dialog" aria-modal="true">
+        <div @click="openDevices=false" x-transition.opacity class="absolute inset-0 bg-slate-900/50"></div>
+        <aside x-show="openDevices" x-transition:enter="transform transition ease-out duration-200" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl ring-1 ring-slate-200 p-6 overflow-y-auto">
+            <div class="flex items-center justify-between mb-4">
+                <h4 id="devices-title" class="text-xl font-semibold text-slate-900">Your Devices</h4>
+                <button @click="openDevices=false" class="p-2 rounded-full hover:bg-slate-100 text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-400" aria-label="Close panel">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="text-slate-600 mb-4">Review devices that have recently accessed your account.</p>
+            <ul class="space-y-3">
+                <li class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center mr-3" aria-hidden="true">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-slate-900">MacBook Pro • Safari</p>
+                            <p class="text-xs text-slate-500">San Francisco, USA • Active now</p>
+                        </div>
+                    </div>
+                    <button class="text-slate-600 hover:text-slate-900 px-3 py-1 rounded-md hover:bg-slate-100">Sign out</button>
+                </li>
+                <li class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mr-3" aria-hidden="true">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-slate-900">Pixel 7 • App</p>
+                            <p class="text-xs text-slate-500">Los Angeles, USA • 2 hours ago</p>
+                        </div>
+                    </div>
+                    <button class="text-slate-600 hover:text-slate-900 px-3 py-1 rounded-md hover:bg-slate-100">Remove</button>
+                </li>
+                <li class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mr-3" aria-hidden="true">
+                            <i class="fas fa-tablet-alt"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-slate-900">iPad Air • App</p>
+                            <p class="text-xs text-slate-500">New York, USA • Yesterday</p>
+                        </div>
+                    </div>
+                    <button class="text-slate-600 hover:text-slate-900 px-3 py-1 rounded-md hover:bg-slate-100">Remove</button>
+                </li>
+            </ul>
+            <div class="mt-6 rounded-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1608411197659-136d2926de6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkYXRhJTIwZW5jcnlwdGlvbiUyMGFic3RyYWN0JTIwbG9ja3xlbnwwfDB8fHwxNzU4OTY5Njk2fDA&ixlib=rb-4.1.0&q=80&w=800" alt="Abstract encryption lock" class="w-full h-32 object-cover">
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Card hover handled via CSS; add a subtle "lift" on keyboard focus
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.addEventListener('focusin', () => card.classList.add('ring-2', 'ring-sky-200'));
+                card.addEventListener('focusout', () => card.classList.remove('ring-2', 'ring-sky-200'));
+            });
+
+            // Button loading state for any button with data-loading
+            const loadingButtons = document.querySelectorAll('button[data-loading]');
+            loadingButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const originalHTML = this.innerHTML;
+                    this.setAttribute('aria-busy', 'true');
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2" aria-hidden="true"></i>Processing...';
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                        this.disabled = false;
+                        this.removeAttribute('aria-busy');
+                    }, 1500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
