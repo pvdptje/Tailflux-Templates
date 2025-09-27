@@ -1,0 +1,639 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Yoga Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .schedule-cell {
+            transition: all 0.2s ease;
+        }
+
+        .schedule-cell:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800" x-data="{ mobileMenuOpen: false, activeTab: 'all' }">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <span class="heading-font text-2xl font-semibold gradient-text">Serenity Yoga</span>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-stone-700 hover:text-pink-500 transition-colors p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors font-medium relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors font-medium relative group">
+                        Classes
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors font-medium relative group">
+                        Teachers
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors font-medium relative group">
+                        About
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors font-medium relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all group-hover:w-full"></span>
+                    </a>
+                    <button class="bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white px-6 py-2 rounded-full transition-all duration-300 hover-lift shadow-lg">
+                        <i class="fas fa-calendar-check mr-2"></i>Book Class
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                 x-transition:enter-end="opacity-100 transform translate-y-0" 
+                 x-transition:leave="transition ease-in duration-200" 
+                 x-transition:leave-start="opacity-100 transform translate-y-0" 
+                 x-transition:leave-end="opacity-0 transform -translate-y-4" 
+                 class="md:hidden bg-white border-t border-stone-200 py-4 space-y-4">
+                <a href="#" class="block text-stone-700 hover:text-pink-500 transition-colors font-medium py-2">Home</a>
+                <a href="#" class="block text-stone-700 hover:text-pink-500 transition-colors font-medium py-2">Classes</a>
+                <a href="#" class="block text-stone-700 hover:text-pink-500 transition-colors font-medium py-2">Teachers</a>
+                <a href="#" class="block text-stone-700 hover:text-pink-500 transition-colors font-medium py-2">About</a>
+                <a href="#" class="block text-stone-700 hover:text-pink-500 transition-colors font-medium py-2">Contact</a>
+                <button class="w-full bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white px-6 py-3 rounded-full transition-all duration-300">
+                    <i class="fas fa-calendar-check mr-2"></i>Book Class
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-blue-50 via-white to-pink-50 py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgwKSI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyMTUsMjE1LDIxNSwwLjEpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+')] opacity-50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+                <div>
+                    <div class="inline-flex items-center bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-stone-600 mb-6 shadow-sm">
+                        <i class="fas fa-leaf text-lime-500 mr-2"></i>
+                        <span>Transform Your Life Through Yoga</span>
+                    </div>
+                    <h1 class="heading-font text-5xl md:text-6xl font-bold text-stone-800 mb-6 leading-tight">
+                        Find Your <span class="gradient-text">Inner Peace</span> Through Yoga
+                    </h1>
+                    <p class="text-lg text-stone-600 mb-8 leading-relaxed">
+                        Join our welcoming community and discover the transformative power of yoga. 
+                        From beginner to advanced, we have classes designed to meet you where you are.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button class="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white px-8 py-4 rounded-full transition-all duration-300 hover-lift shadow-lg group">
+                            <i class="fas fa-play-circle mr-2 group-hover:scale-110 transition-transform"></i>Start Your Journey
+                        </button>
+                        <button class="border-2 border-blue-500 text-blue-500 hover:bg-blue-50 px-8 py-4 rounded-full transition-all duration-300 hover-lift group">
+                            <i class="fas fa-calendar-alt mr-2 group-hover:scale-110 transition-transform"></i>View Schedule
+                        </button>
+                    </div>
+                    <div class="flex items-center mt-8 space-x-6 text-stone-500">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-lime-500 mr-2"></i>
+                            <span>Expert Instructors</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-lime-500 mr-2"></i>
+                            <span>All Levels Welcome</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 hover-lift transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1687783615494-b4a1f1af8b58?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Peaceful yoga studio interior" class="rounded-2xl w-full h-80 object-cover shadow-lg">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-lime-100 rounded-2xl p-6 shadow-xl transform -rotate-2 hover-lift transition-all duration-300">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-lime-600">50+</div>
+                            <div class="text-stone-600 font-medium">Classes Weekly</div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -right-6 bg-pink-100 rounded-2xl p-6 shadow-xl transform rotate-2 hover-lift transition-all duration-300">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-pink-600">100+</div>
+                            <div class="text-stone-600 font-medium">Happy Members</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="heading-font text-4xl font-bold text-stone-800 mb-4">Why Choose Serenity Yoga?</h2>
+                <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+                    Experience the difference with our holistic approach to yoga and wellness
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-stone-50 rounded-2xl p-8 hover-lift transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-4">Community Focused</h3>
+                    <p class="text-stone-600">Join a supportive community that grows together in practice and mindfulness.</p>
+                </div>
+
+                <div class="bg-stone-50 rounded-2xl p-8 hover-lift transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-graduation-cap text-pink-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-4">Expert Instructors</h3>
+                    <p class="text-stone-600">Learn from certified instructors with years of experience and passion for teaching.</p>
+                </div>
+
+                <div class="bg-stone-50 rounded-2xl p-8 hover-lift transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-lime-100 to-lime-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-spa text-lime-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-4">Holistic Wellness</h3>
+                    <p class="text-stone-600">Beyond physical practice, we focus on mental and spiritual well-being.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Class Schedule -->
+    <section class="py-20 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="heading-font text-4xl font-bold text-stone-800 mb-4">Class Schedule</h2>
+                <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+                    Browse our diverse range of yoga classes designed to meet your needs and schedule
+                </p>
+            </div>
+
+            <!-- Schedule Navigation -->
+            <div class="flex justify-center mb-12">
+                <div class="bg-stone-100 rounded-full p-1 inline-flex flex-wrap justify-center gap-2">
+                    <button @click="activeTab = 'all'" 
+                            :class="activeTab === 'all' ? 'bg-white shadow-lg text-blue-600' : 'text-stone-600 hover:text-blue-600'" 
+                            class="px-6 py-3 rounded-full transition-all duration-300 font-medium">
+                        <i class="fas fa-th-large mr-2"></i>All Classes
+                    </button>
+                    <button @click="activeTab = 'morning'" 
+                            :class="activeTab === 'morning' ? 'bg-white shadow-lg text-blue-600' : 'text-stone-600 hover:text-blue-600'" 
+                            class="px-6 py-3 rounded-full transition-all duration-300 font-medium">
+                        <i class="fas fa-sun mr-2"></i>Morning
+                    </button>
+                    <button @click="activeTab = 'afternoon'" 
+                            :class="activeTab === 'afternoon' ? 'bg-white shadow-lg text-blue-600' : 'text-stone-600 hover:text-blue-600'" 
+                            class="px-6 py-3 rounded-full transition-all duration-300 font-medium">
+                        <i class="fas fa-cloud-sun mr-2"></i>Afternoon
+                    </button>
+                    <button @click="activeTab = 'evening'" 
+                            :class="activeTab === 'evening' ? 'bg-white shadow-lg text-blue-600' : 'text-stone-600 hover:text-blue-600'" 
+                            class="px-6 py-3 rounded-full transition-all duration-300 font-medium">
+                        <i class="fas fa-moon mr-2"></i>Evening
+                    </button>
+                </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-7 gap-px bg-stone-200">
+                    <!-- Header -->
+                    <div class="bg-stone-800 p-6 font-semibold text-white hidden md:block"></div>
+                    <div class="bg-stone-800 p-6 font-semibold text-white text-center">Monday</div>
+                    <div class="bg-stone-800 p-6 font-semibold text-white text-center">Tuesday</div>
+                    <div class="bg-stone-800 p-6 font-semibold text-white text-center">Wednesday</div>
+                    <div class="bg-stone-800 p-6 font-semibold text-white text-center">Thursday</div>
+                    <div class="bg-stone-800 p-6font-semibold text-white text-center">Friday</div>
+                    <div class="bg-stone-800 p-6 font-semibold text-white text-center">Saturday</div>
+
+                    <!-- Time Slots -->
+                    <div class="bg-stone-50 p-4 font-medium text-stone-600 flex items-center">
+                        <i class="fas fa-sun text-yellow-500 mr-2"></i>6:00 AM
+                    </div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-blue-700">Vinyasa Flow</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Sarah M.
+                        </div>
+                        <div class="text-xs text-pink-500 mt-1 bg-pink-100 px-2 py-1 rounded-full inline-block">Beginner</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-blue-700">Vinyasa Flow</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Sarah M.
+                        </div>
+                        <div class="text-xs text-pink-500 mt-1 bg-pink-100 px-2 py-1 rounded-full inline-block">Beginner</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-blue-700">Vinyasa Flow</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Sarah M.
+                        </div>
+                        <div class="text-xs text-pink-500 mt-1 bg-pink-100 px-2 py-1 rounded-full inline-block">Beginner</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-stone-50 p-4 font-medium text-stone-600 flex items-center">
+                        <i class="fas fa-cloud-sun text-orange-500 mr-2"></i>8:00 AM
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Hatha Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Michael T.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">Intermediate</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Hatha Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Michael T.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">Intermediate</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Hatha Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Michael T.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">Intermediate</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-stone-50 p-4 font-medium text-stone-600 flex items-center">
+                        <i class="fas fa-sun text-yellow-500 mr-2"></i>10:00 AM
+                    </div>
+                    <div class="bg-lime-50 p-4 border-l-4 border-lime-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-lime-700">Yin Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Jessica L.
+                        </div>
+                        <div class="text-xs text-blue-500 mt-1 bg-blue-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-lime-50 p-4 border-l-4 border-lime-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-lime-700">Yin Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Jessica L.
+                        </div>
+                        <div class="text-xs text-blue-500 mt-1 bg-blue-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-lime-50 p-4 border-l-4 border-lime-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-lime-700">Yin Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Jessica L.
+                        </div>
+                        <div class="text-xs text-blue-500 mt-1 bg-blue-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-stone-50 p-4 font-medium text-stone-600 flex items-center">
+                        <i class="fas fa-cloud text-blue-400 mr-2"></i>4:00 PM
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-blue-700">Power Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>David K.
+                        </div>
+                        <div class="text-xs text-pink-500 mt-1 bg-pink-100 px-2 py-1 rounded-full inline-block">Advanced</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-blue-700">Power Yoga</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>David K.
+                        </div>
+                        <div class="text-xs text-pink-500 mt-1 bg-pink-100 px-2 py-1 rounded-full inline-block">Advanced</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-stone-50 p-4 font-medium text-stone-600 flex items-center">
+                        <i class="fas fa-moon text-purple-400 mr-2"></i>6:00 PM
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Emma R.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Emma R.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Emma R.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Emma R.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400 schedule-cell cursor-pointer">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600 flex items-center">
+                            <i class="fas fa-user text-stone-400 mr-1"></i>Emma R.
+                        </div>
+                        <div class="text-xs text-lime-600 mt-1 bg-lime-100 px-2 py-1 rounded-full inline-block">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teachers Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="heading-font text-4xl font-bold text-stone-800 mb-4">Meet Our Instructors</h2>
+                <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+                    Learn from our team of passionate and certified yoga instructors
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 mx-auto bg-gradient-to-br from-blue-100 to-blue-200 rounded-full overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1758599879792-d6d5d4e3289c?ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Sarah M. - Yoga Instructor" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Sarah M.</h3>
+                    <p class="text-blue-600 font-medium mb-3">Vinyasa Flow Specialist</p>
+                    <p class="text-stone-600 text-sm">500+ hours certified with 8 years teaching experience</p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 mx-auto bg-gradient-to-br from-pink-100 to-pink-200 rounded-full overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1652347141247-5788de175766?ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Michael T. - Yoga Instructor" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-pink-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Michael T.</h3>
+                    <p class="text-pink-600 font-medium mb-3">Hatha Yoga Expert</p>
+                    <p class="text-stone-600 text-sm">Specializing in alignment and therapeutic yoga practices</p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 mx-auto bg-gradient-to-br from-lime-100 to-lime-200 rounded-full overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300">
+                            <img src="https://images.unsplash.com/photo-1645652367526-a0ecb717650a?ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Jessica L. - Yoga Instructor" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-lime-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Jessica L.</h3>
+                    <p class="text-lime-600 font-medium mb-3">Yin & Meditation Guide</p>
+                    <p class="text-stone-600 text-sm">Focus on mindfulness and deep relaxation techniques</p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 mx-auto bg-gradient-to-br from-purple-100 to-purple-200 rounded-full overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300">
+                            <div class="w-full h-full bg-purple-300 flex items-center justify-center">
+                                <i class="fas fa-user text-purple-600 text-4xl"></i>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">David K.</h3>
+                    <p class="text-purple-600 font-medium mb-3">Power Yoga Instructor</p>
+                    <p class="text-stone-600 text-sm">Dynamic flows for strength and endurance building</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgwKSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1LDAuMSkiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=)] opacity-20"></div>
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="heading-font text-4xl md:text-5xl font-bold text-white mb-6">Ready to Begin Your Yoga Journey?</h2>
+            <p class="text-xl text-blue-50 mb-8 leading-relaxed">
+                Join our community today and experience the life-changing benefits of regular yoga practice
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-stone-50 transition-all duration-300 hover-lift shadow-lg group">
+                    <i class="fas fa-calendar-plus mr-2 group-hover:scale-110 transition-transform"></i>Book Your First Class
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white/10 transition-all duration-300 hover-lift group">
+                    <i class="fas fa-phone mr-2 group-hover:scale-110 transition-transform"></i>Free Consultation
+                </button>
+            </div>
+            <div class="mt-8 flex justify-center space-x-6 text-white/80">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>No Experience Needed</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>First Class Free</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="heading-font text-2xl font-semibold text-white mb-4">Serenity Yoga</div>
+                    <p class="text-stone-400 mb-6">Find your balance, peace, and strength through the practice of yoga.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-pink-500 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4 text-lg">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Classes
+                        </a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Schedule
+                        </a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Teachers
+                        </a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Membership
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4 text-lg">Contact Info</h3>
+                    <ul class="space-y-3 text-stone-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-400 mr-3"></i>
+                            <span>123 Yoga Street, Mindful City, MC 12345</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-pink-400 mr-3"></i>
+                            <span>info@serenityyoga.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-lime-400 mr-3"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-purple-400 mr-3"></i>
+                            <span>Mon-Sun: 6:00 AM - 9:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4 text-lg">Newsletter</h3>
+                    <p class="text-stone-400 mb-4">Subscribe for yoga tips and special offers</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="bg-stone-800 px-4 py-3 rounded-l-lg flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button class="bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 px-6 py-3 rounded-r-lg text-white transition-all duration-300 hover-lift">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-800 pt-8 text-center text-stone-400">
+                <p>&copy; 2024 Serenity Yoga Studio. All rights reserved. | Designed with <i class="fas fa-heart text-pink-400 mx-1"></i> for mindful living</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-blue-500 to-pink-500 text-white rounded-full shadow-lg hover-lift transition-all duration-300 opacity-0 invisible z-50">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Back to top button functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.remove('opacity-100', 'visible');
+                backToTop.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        // Add fade-in animation to elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

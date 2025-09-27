@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Yoga Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <span class="heading-font text-2xl font-semibold text-blue-600">Serenity Yoga</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors">Home</a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors">Classes</a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors">Teachers</a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors">About</a>
+                    <a href="#" class="text-stone-700 hover:text-pink-500 transition-colors">Contact</a>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-colors">
+                    Book Class
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-blue-50 to-pink-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="heading-font text-5xl font-bold text-stone-800 mb-6">
+                        Find Your Inner Peace Through Yoga
+                    </h1>
+                    <p class="text-lg text-stone-600 mb-8">
+                        Join our welcoming community and discover the transformative power of yoga. 
+                        From beginner to advanced, we have classes for every level.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full transition-colors">
+                            Start Your Journey
+                        </button>
+                        <button class="border-2 border-blue-500 text-blue-500 hover:bg-blue-50 px-8 py-3 rounded-full transition-colors">
+                            View Schedule
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white rounded-2xl shadow-lg p-8 transform rotate-2">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Yoga practice" class="rounded-lg w-full h-80 object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-lime-100 rounded-2xl p-6 shadow-lg transform -rotate-2">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-lime-600">50+</div>
+                            <div class="text-stone-600">Classes Weekly</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Class Schedule -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-4xl font-bold text-stone-800 mb-4">Class Schedule</h2>
+                <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+                    Browse our diverse range of yoga classes designed to meet your needs and schedule
+                </p>
+            </div>
+
+            <!-- Schedule Navigation -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-stone-100 rounded-full p-1 inline-flex">
+                    <button class="px-6 py-2 rounded-full bg-white shadow-sm text-blue-600 font-medium">All Classes</button>
+                    <button class="px-6 py-2 rounded-full text-stone-600 hover:text-blue-600 transition-colors">Morning</button>
+                    <button class="px-6 py-2 rounded-full text-stone-600 hover:text-blue-600 transition-colors">Afternoon</button>
+                    <button class="px-6 py-2 rounded-full text-stone-600 hover:text-blue-600 transition-colors">Evening</button>
+                </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="bg-stone-50 rounded-2xl shadow-sm overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-7 gap-px bg-stone-200">
+                    <!-- Header -->
+                    <div class="bg-white p-6 font-semibold text-stone-700"></div>
+                    <div class="bg-white p-6 font-semibold text-stone-700 text-center">Monday</div>
+                    <div class="bg-white p-6 font-semibold text-stone-700 text-center">Tuesday</div>
+                    <div class="bg-white p-6 font-semibold text-stone-700 text-center">Wednesday</div>
+                    <div class="bg-white p-6 font-semibold text-stone-700 text-center">Thursday</div>
+                    <div class="bg-white p-6 font-semibold text-stone-700 text-center">Friday</div>
+                    <div class="bg-white p-6 font-semibold text-stone-700 text-center">Saturday</div>
+
+                    <!-- Time Slots -->
+                    <div class="bg-white p-4 font-medium text-stone-600">6:00 AM</div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400">
+                        <div class="font-semibold text-blue-700">Vinyasa Flow</div>
+                        <div class="text-sm text-stone-600">Sarah M.</div>
+                        <div class="text-xs text-pink-500 mt-1">Beginner</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400">
+                        <div class="font-semibold text-blue-700">Vinyasa Flow</div>
+                        <div class="text-sm text-stone-600">Sarah M.</div>
+                        <div class="text-xs text-pink-500 mt-1">Beginner</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400">
+                        <div class="font-semibold text-blue-700">Vinyasa Flow</div>
+                        <div class="text-sm text-stone-600">Sarah M.</div>
+                        <div class="text-xs text-pink-500 mt-1">Beginner</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-white p-4 font-medium text-stone-600">8:00 AM</div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Hatha Yoga</div>
+                        <div class="text-sm text-stone-600">Michael T.</div>
+                        <div class="text-xs text-lime-600 mt-1">Intermediate</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Hatha Yoga</div>
+                        <div class="text-sm text-stone-600">Michael T.</div>
+                        <div class="text-xs text-lime-600 mt-1">Intermediate</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Hatha Yoga</div>
+                        <div class="text-sm text-stone-600">Michael T.</div>
+                        <div class="text-xs text-lime-600 mt-1">Intermediate</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-white p-4 font-medium text-stone-600">10:00 AM</div>
+                    <div class="bg-lime-50 p-4 border-l-4 border-lime-400">
+                        <div class="font-semibold text-lime-700">Yin Yoga</div>
+                        <div class="text-sm text-stone-600">Jessica L.</div>
+                        <div class="text-xs text-blue-500 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-lime-50 p-4 border-l-4 border-lime-400">
+                        <div class="font-semibold text-lime-700">Yin Yoga</div>
+                        <div class="text-sm text-stone-600">Jessica L.</div>
+                        <div class="text-xs text-blue-500 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-lime-50 p-4 border-l-4 border-lime-400">
+                        <div class="font-semibold text-lime-700">Yin Yoga</div>
+                        <div class="text-sm text-stone-600">Jessica L.</div>
+                        <div class="text-xs text-blue-500 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-white p-4 font-medium text-stone-600">4:00 PM</div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400">
+                        <div class="font-semibold text-blue-700">Power Yoga</div>
+                        <div class="text-sm text-stone-600">David K.</div>
+                        <div class="text-xs text-pink-500 mt-1">Advanced</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-blue-50 p-4 border-l-4 border-blue-400">
+                        <div class="font-semibold text-blue-700">Power Yoga</div>
+                        <div class="text-sm text-stone-600">David K.</div>
+                        <div class="text-xs text-pink-500 mt-1">Advanced</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                    <div class="bg-white p-4"></div>
+
+                    <div class="bg-white p-4 font-medium text-stone-600">6:00 PM</div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600">Emma R.</div>
+                        <div class="text-xs text-lime-600 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600">Emma R.</div>
+                        <div class="text-xs text-lime-600 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600">Emma R.</div>
+                        <div class="text-xs text-lime-600 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600">Emma R.</div>
+                        <div class="text-xs text-lime-600 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 border-l-4 border-pink-400">
+                        <div class="font-semibold text-pink-700">Restorative</div>
+                        <div class="text-sm text-stone-600">Emma R.</div>
+                        <div class="text-xs text-lime-600 mt-1">All Levels</div>
+                    </div>
+                    <div class="bg-white p-4"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-500 to-pink-500">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="heading-font text-4xl font-bold text-white mb-6">Ready to Begin Your Yoga Journey?</h2>
+            <p class="text-xl text-blue-50 mb-8">
+                Join our community today and experience the benefits of regular yoga practice
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-stone-50 transition-colors">
+                    Book Your First Class
+                </button>
+                <button class="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white/10 transition-colors">
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-stone-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="heading-font text-2xl font-semibold text-white mb-4">Serenity Yoga</div>
+                    <p class="text-stone-400">Find your balance, peace, and strength through the practice of yoga.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Classes</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Schedule</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Teachers</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Membership</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Contact</h3>
+                    <ul class="space-y-2 text-stone-400">
+                        <li>123 Yoga Street</li>
+                        <li>Mindful City, MC 12345</li>
+                        <li>info@serenityyoga.com</li>
+                        <li>(555) 123-4567</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Newsletter</h3>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="bg-stone-700 px-4 py-2 rounded-l-lg flex-1">
+                        <button class="bg-lime-500 hover:bg-lime-600 px-4 py-2 rounded-r-lg text-white transition-colors">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-center text-stone-400">
+                <p>&copy; 2024 Serenity Yoga Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
