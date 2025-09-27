@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Counseling Services | Serenity Counseling Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-red': '#dc2626',
+                        'brand-sky': '#0ea5e9',
+                        'brand-lime': '#84cc16',
+                        'brand-blue': '#2563eb'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .service-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #0ea5e9;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1590181491468-6c7a0741c172?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjYWxtJTIwcGVhY2VmdWwlMjBuYXR1cmUlMjBsYW5kc2NhcGUlMjB0aGVyYXB5JTIwY291bnNlbGluZ3xlbnwwfDB8fHwxNzU4OTY5MTIyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=sDo2jRekmvM');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 dark" x-data="{ mobileMenuOpen: false }">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/95 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-brand-sky flex items-center gap-2">
+                            <i class="fas fa-heart text-brand-sky"></i>
+                            Serenity Counseling Center
+                        </h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="#" class="nav-link text-white px-3 py-2 text-sm font-medium">
+                            Services
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-brand-sky"></span>
+                        </a>
+                        <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Therapists</a>
+                        <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-brand-blue hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-calendar-check mr-2"></i>Book Consultation
+                    </button>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-300 hover:text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95" class="md:hidden bg-gray-800/95 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md">Home</a>
+                <a href="#" class="block px-3 py-2 text-white bg-gray-700/50 rounded-md">Services</a>
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md">Therapists</a>
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md">Contact</a>
+                <a href="#" class="block px-3 py-2 bg-brand-blue text-white rounded-md text-center">
+                    <i class="fas fa-calendar-check mr-2"></i>Book Consultation
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg py-20 md:py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-800/60"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="animate-slide-up">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Professional Mental Health <span class="text-brand-sky">Services</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    Comprehensive counseling services tailored to your unique needs. Our licensed professionals are here to support your mental wellness journey.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="bg-brand-blue hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
+                        <i class="fas fa-play-circle mr-2"></i>Start Your Journey
+                    </button>
+                    <button class="border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:bg-white/10">
+                        <i class="fas fa-phone-alt mr-2"></i>Call Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-900"></div>
+    </header>
+
+    <!-- Services Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div class="text-center mb-12 animate-fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Comprehensive Services</h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Professional counseling services designed to meet your unique mental health needs</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Individual Therapy -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-sky hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-sky to-blue-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-user text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-sky transition-colors">Individual Therapy</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">One-on-one sessions with licensed therapists to address personal challenges and promote mental wellness.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Anxiety & Depression</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Trauma & PTSD</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Stress Management</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Self-esteem Issues</li>
+                </ul>
+                <button class="text-brand-sky hover:text-sky-300 font-medium flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Couples Counseling -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-lime hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-lime to-green-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-heart text-2xl text-gray-900"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-lime transition-colors">Couples Counseling</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Strengthen your relationship through guided sessions that improve communication and resolve conflicts.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3"></i>Communication Skills</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3"></i>Conflict Resolution</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3"></i>Intimacy Issues</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3"></i>Pre-marital Counseling</li>
+                </ul>
+                <button class="text-brand-lime hover:text-lime-300 font-medium flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Family Therapy -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-red hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-red to-red-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-home text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-red transition-colors">Family Therapy</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Improve family dynamics and build healthier relationships through structured family sessions.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Parenting Support</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Blended Families</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Adolescent Issues</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Family Conflict</li>
+                </ul>
+                <button class="text-brand-red hover:text-red-300 font-medium flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Group Therapy -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-blue hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-indigo-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-users text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-blue transition-colors">Group Therapy</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Share experiences and gain support in a safe, structured group environment led by experienced therapists.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3"></i>Support Groups</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3"></i>Skill-building Workshops</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3"></i>Process Groups</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3"></i>Specialty Groups</li>
+                </ul>
+                <button class="text-brand-blue hover:text-blue-300 font-medium flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Telehealth Services -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-sky hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-sky to-cyan-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-video text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-sky transition-colors">Telehealth Services</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Access professional counseling from the comfort of your home through secure video sessions.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Video Sessions</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Secure Platform</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Flexible Scheduling</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3"></i>Remote Access</li>
+                </ul>
+                <button class="text-brand-sky hover:text-sky-300 font-medium flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Crisis Intervention -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-red hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-red to-pink-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-exclamation-triangle text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-red transition-colors">Crisis Intervention</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Immediate support and intervention services for urgent mental health situations and emergencies.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>24/7 Hotline</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Emergency Sessions</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Safety Planning</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3"></i>Resource Connection</li>
+                </ul>
+                <button class="text-brand-red hover:text-red-300 font-medium flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Stats Section -->
+    <section class="bg-gray-800/50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="animate-pulse-slow">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-sky mb-2">500+</div>
+                    <div class="text-gray-300">Clients Helped</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 0.5s;">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-lime mb-2">15+</div>
+                    <div class="text-gray-300">Years Experience</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 1s;">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-red mb-2">98%</div>
+                    <div class="text-gray-300">Satisfaction Rate</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 1.5s;">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-blue mb-2">24/7</div>
+                    <div class="text-gray-300">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-gray-800 to-gray-900 py-16 md:py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1758273241078-8eec353836be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVyYXBpc3QlMjBjb3Vuc2VsaW5nJTIwc2Vzc2lvbiUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzU4OTY5MTI3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rG5elqddGzo')] bg-cover bg-center opacity-10"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Begin Your Journey?</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Take the first step toward better mental health. Our compassionate team is here to support you every step of the way.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="bg-brand-blue hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center">
+                    <i class="fas fa-calendar-plus mr-3"></i>Schedule Consultation
+                </button>
+                <button class="border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:bg-white/10 flex items-center">
+                    <i class="fas fa-phone-alt mr-3"></i>Call Now: (555) 123-HELP
+                </button>
+            </div>
+            <div class="mt-8 flex justify-center space-x-6 text-gray-400">
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt text-brand-sky mr-2"></i>
+                    <span>100% Confidential</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock text-brand-lime mr-2"></i>
+                    <span>Flexible Scheduling</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-user-md text-brand-red mr-2"></i>
+                    <span>Licensed Professionals</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-heart text-brand-sky mr-2"></i>
+                        Serenity Counseling Center
+                    </h3>
+                    <p class="text-gray-400 mb-4">Providing compassionate mental health services since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4 text-white">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Our Team</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Services</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4 text-white">Contact</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt text-brand-sky mr-3"></i>123 Wellness Street</li>
+                        <li class="flex items-center"><i class="fas fa-city text-brand-sky mr-3"></i>City, State 12345</li>
+                        <li class="flex items-center"><i class="fas fa-phone text-brand-sky mr-3"></i>(555) 123-HELP</li>
+                        <li class="flex items-center"><i class="fas fa-envelope text-brand-sky mr-3"></i>info@serenitycc.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4 text-white">Emergency</h4>
+                    <p class="text-gray-400 mb-4">If you're in crisis, call our 24/7 hotline:</p>
+                    <p class="text-brand-red font-bold text-xl mb-4 flex items-center">
+                        <i class="fas fa-phone-volume mr-3"></i>(555) 911-HELP
+                    </p>
+                    <p class="text-sm text-gray-500">Available 24 hours, 7 days a week</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Serenity Counseling Center. All rights reserved. | <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="bg-brand-red hover:bg-red-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 animate-pulse-slow">
+            <i class="fas fa-phone text-xl"></i>
+        </button>
+    </div>
+</body>
+</html>

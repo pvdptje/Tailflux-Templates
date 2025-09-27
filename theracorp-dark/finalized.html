@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Serenity Counseling Center offers professional mental health counseling services: individual therapy, couples counseling, family therapy, group therapy, telehealth, and crisis intervention. Compassionate care tailored to your needs.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Counseling Services | Serenity Counseling Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-red': '#dc2626',
+                        'brand-sky': '#0ea5e9',
+                        'brand-lime': '#84cc16',
+                        'brand-blue': '#2563eb'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'bounce-slow': 'bounce 2.5s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    },
+                    boxShadow: {
+                        'glow-sky': '0 10px 30px -10px rgba(14,165,233,0.45)',
+                        'glow-blue': '0 10px 30px -10px rgba(37,99,235,0.45)',
+                        'glow-red': '0 10px 30px -10px rgba(220,38,38,0.45)',
+                        'glow-lime': '0 10px 30px -10px rgba(132,204,22,0.45)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .service-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #0ea5e9;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.72)), url('https://images.unsplash.com/photo-1590181491468-6c7a0741c172?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjYWxtJTIwcGVhY2VmdWwlMjBuYXR1cmUlMjBsYW5kc2NhcGUlMjB0aGVyYXB5JTIwY291bnNlbGluZ3xlbnwwfDB8fHwxNzU4OTY5MTIyfDA&ixlib=rb-4.1.0&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) { .hero-bg { background-attachment: scroll; } }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 dark" x-data="{ mobileMenuOpen: false, isModalOpen: false, showFABPanel: false, navbarSolid: false }" @scroll.window="navbarSolid = window.scrollY > 8">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-brand-sky text-white px-4 py-2 rounded-md">Skip to content</a>
+
+    <!-- Navigation -->
+    <nav class="bg-gray-800/90 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 transition-shadow" :class="navbarSolid ? 'shadow-xl' : ''" role="navigation" aria-label="Primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-brand-sky rounded-md" aria-label="Serenity Counseling Center Home">
+                        <h1 class="text-xl font-bold text-brand-sky flex items-center gap-2">
+                            <i class="fas fa-heart text-brand-sky" aria-hidden="true"></i>
+                            Serenity Counseling Center
+                        </h1>
+                    </a>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="#services" class="nav-link text-white px-3 py-2 text-sm font-medium">Services</a>
+                        <a href="#testimonials" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Therapists</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button @click="isModalOpen = true" class="bg-brand-blue hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg shadow-glow-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue focus:ring-offset-gray-900">
+                        <i class="fas fa-calendar-check mr-2" aria-hidden="true"></i>Book Consultation
+                    </button>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen" class="md:hidden text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-sky rounded-md p-2" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95" class="md:hidden bg-gray-800/95 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md">Home</a>
+                <a href="#services" class="block px-3 py-2 text-white bg-gray-700/50 rounded-md">Services</a>
+                <a href="#testimonials" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md">Therapists</a>
+                <a href="#contact" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md">Contact</a>
+                <a href="tel:+15551234357" class="block px-3 py-2 bg-brand-blue text-white rounded-md text-center">
+                    <i class="fas fa-calendar-check mr-2" aria-hidden="true"></i>Book Consultation
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg py-20 md:py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-800/60"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="animate-slide-up">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Professional Mental Health <span class="text-brand-sky">Services</span>
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-200/95 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    Compassionate counseling tailored to your unique needs. Our licensed professionals are here to support your mental wellness journey.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button @click="isModalOpen = true" class="bg-brand-blue hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 transform hover:scale-105 shadow-xl shadow-glow-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue focus:ring-offset-gray-900">
+                        <i class="fas fa-play-circle mr-2" aria-hidden="true"></i>Start Your Journey
+                    </button>
+                    <a href="tel:+15551234357" class="border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-gray-900">
+                        <i class="fas fa-phone-alt mr-2" aria-hidden="true"></i>Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-900 pointer-events-none"></div>
+        <a href="#services" class="absolute left-1/2 -translate-x-1/2 bottom-4 text-gray-200/70 hover:text-white transition-colors hidden md:inline-flex items-center gap-2">
+            <i class="fas fa-chevron-down animate-bounce-slow" aria-hidden="true"></i>
+            <span class="text-sm">Explore Services</span>
+        </a>
+    </header>
+
+    <!-- Services Grid -->
+    <main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div id="services" class="text-center mb-12 animate-fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Comprehensive Services</h2>
+            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">Professional counseling services designed to meet your unique mental health needs</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Individual Therapy -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-sky hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-sky to-blue-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-glow-sky">
+                    <i class="fas fa-user text-2xl text-white" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-sky transition-colors">Individual Therapy</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">One-on-one sessions with licensed therapists to address personal challenges and promote mental wellness.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Anxiety & Depression</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Trauma & PTSD</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Stress Management</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Self-esteem Issues</li>
+                </ul>
+                <a href="#" class="text-brand-sky hover:text-sky-300 font-medium inline-flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <!-- Couples Counseling -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-lime hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-lime to-green-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-glow-lime">
+                    <i class="fas fa-heart text-2xl text-gray-900" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-lime transition-colors">Couples Counseling</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Strengthen your relationship through guided sessions that improve communication and resolve conflicts.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3" aria-hidden="true"></i>Communication Skills</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3" aria-hidden="true"></i>Conflict Resolution</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3" aria-hidden="true"></i>Intimacy Issues</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-lime mr-3" aria-hidden="true"></i>Pre-marital Counseling</li>
+                </ul>
+                <a href="#" class="text-brand-lime hover:text-lime-300 font-medium inline-flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <!-- Family Therapy -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-red hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-red to-red-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-glow-red">
+                    <i class="fas fa-home text-2xl text-white" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-red transition-colors">Family Therapy</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Improve family dynamics and build healthier relationships through structured family sessions.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Parenting Support</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Blended Families</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Adolescent Issues</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Family Conflict</li>
+                </ul>
+                <a href="#" class="text-brand-red hover:text-red-300 font-medium inline-flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <!-- Group Therapy -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-blue hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-indigo-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-glow-blue">
+                    <i class="fas fa-users text-2xl text-white" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-blue transition-colors">Group Therapy</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Share experiences and gain support in a safe, structured group environment led by experienced therapists.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3" aria-hidden="true"></i>Support Groups</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3" aria-hidden="true"></i>Skill-building Workshops</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3" aria-hidden="true"></i>Process Groups</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-blue mr-3" aria-hidden="true"></i>Specialty Groups</li>
+                </ul>
+                <a href="#" class="text-brand-blue hover:text-blue-300 font-medium inline-flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <!-- Telehealth Services -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-sky hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-sky to-cyan-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-glow-sky">
+                    <i class="fas fa-video text-2xl text-white" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-sky transition-colors">Telehealth Services</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Access professional counseling from the comfort of your home through secure video sessions.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Video Sessions</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Secure Platform</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Flexible Scheduling</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-sky mr-3" aria-hidden="true"></i>Remote Access</li>
+                </ul>
+                <a href="#" class="text-brand-sky hover:text-sky-300 font-medium inline-flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <!-- Crisis Intervention -->
+            <div class="service-card bg-gray-800 rounded-xl p-8 border-l-4 border-brand-red hover:shadow-2xl transition-all duration-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-red to-pink-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-glow-red">
+                    <i class="fas fa-exclamation-triangle text-2xl text-white" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 group-hover:text-brand-red transition-colors">Crisis Intervention</h3>
+                <p class="text-gray-300 mb-6 leading-relaxed">Immediate support and intervention services for urgent mental health situations and emergencies.</p>
+                <ul class="text-gray-400 space-y-3 mb-6">
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>24/7 Hotline</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Emergency Sessions</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Safety Planning</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brand-red mr-3" aria-hidden="true"></i>Resource Connection</li>
+                </ul>
+                <a href="#" class="text-brand-red hover:text-red-300 font-medium inline-flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Stats Section -->
+    <section class="bg-gray-800/50 py-16" x-data="{
+        started:false,
+        observe(el){
+            const io = new IntersectionObserver((e)=>{ if(e[0].isIntersecting && !this.started){ this.started = true; this.run(); io.disconnect(); }},{threshold:0.3});
+            io.observe(el);
+        },
+        run(){
+            const animate = (el, to, dur=1800)=>{
+                const start = performance.now(); const from = 0;
+                const step = (t)=>{ const p = Math.min((t-start)/dur, 1); el.textContent = Math.floor(from + (to-from)*p).toLocaleString(); if(p<1) requestAnimationFrame(step); };
+                requestAnimationFrame(step);
+            };
+            animate(this.$refs.clients, 500);
+            animate(this.$refs.years, 15);
+            animate(this.$refs.rate, 98);
+        }
+    }" x-init="observe($el)">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="animate-pulse-slow">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-sky mb-2"><span x-ref="clients">0</span>+</div>
+                    <div class="text-gray-300">Clients Helped</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 0.5s;">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-lime mb-2"><span x-ref="years">0</span>+</div>
+                    <div class="text-gray-300">Years Experience</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 1s;">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-red mb-2"><span x-ref="rate">0</span>%</div>
+                    <div class="text-gray-300">Satisfaction Rate</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 1.5s;">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-blue mb-2">24/7</div>
+                    <div class="text-gray-300">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Slider -->
+    <section id="testimonials" class="py-16 md:py-20 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Stories of Healing</h2>
+                <p class="text-lg text-gray-300">Real experiences from clients on their path to wellness</p>
+            </div>
+            <div x-data="{
+                idx: 0,
+                items: [
+                    { quote: 'Serenity Counseling helped me find balance and tools to manage anxiety. I feel like myself again.', name: 'Alex M.', role: 'Individual Therapy' },
+                    { quote: 'Our therapist guided us through communication exercises that changed our relationship.', name: 'Jordan & Sam', role: 'Couples Counseling' },
+                    { quote: 'The group sessions provided a safe space to share and grow together.', name: 'Taylor R.', role: 'Group Therapy' }
+                ],
+                next(){ this.idx = (this.idx + 1) % this.items.length },
+                prev(){ this.idx = (this.idx - 1 + this.items.length) % this.items.length },
+                autoplay: null
+            }" x-init="autoplay = setInterval(() => next(), 6000)" @mouseenter="clearInterval(autoplay)" @mouseleave="autoplay = setInterval(() => next(), 6000)" class="relative">
+                <div class="overflow-hidden">
+                    <template x-for="(t, i) in items" :key="i">
+                        <div x-show="idx === i" x-transition.opacity x-transition.duration.500 class="bg-gray-800/60 border border-gray-700 rounded-2xl p-8 md:p-10 mx-auto max-w-3xl text-center">
+                            <i class="fas fa-quote-left text-brand-sky text-3xl mb-4" aria-hidden="true"></i>
+                            <p class="text-xl text-gray-200 leading-relaxed" x-text="t.quote"></p>
+                            <div class="mt-6">
+                                <div class="flex items-center justify-center gap-3">
+                                    <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-brand-sky to-brand-blue text-white font-semibold">
+                                        <span x-text="t.name.split(' ').map(n=>n[0]).slice(0,2).join('')"></span>
+                                    </span>
+                                    <div class="text-left">
+                                        <div class="font-semibold" x-text="t.name"></div>
+                                        <div class="text-sm text-gray-400" x-text="t.role"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-brand-lime" aria-label="5 star rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="flex items-center justify-center gap-3 mt-6">
+                    <button @click="prev" class="p-2 rounded-full border border-gray-700 hover:border-white text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-brand-sky" aria-label="Previous testimonial">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <template x-for="(t, i) in items" :key="'dot-' + i">
+                        <button @click="idx = i" class="w-2.5 h-2.5 rounded-full transition-all" :class="idx===i ? 'bg-brand-sky w-6' : 'bg-gray-600 hover:bg-gray-500'" :aria-label="`Show testimonial ${i+1}`"></button>
+                    </template>
+                    <button @click="next" class="p-2 rounded-full border border-gray-700 hover:border-white text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-brand-sky" aria-label="Next testimonial">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 md:py-20 bg-gray-800/40">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">Frequently Asked Questions</h2>
+                <p class="text-lg text-gray-300">Answers to common questions about our services and process</p>
+            </div>
+            <div class="space-y-4">
+                <details class="group bg-gray-800 border border-gray-700 rounded-xl p-5">
+                    <summary class="flex items-center justify-between cursor-pointer text-left list-none">
+                        <span class="font-medium text-white">Do you accept insurance?</span>
+                        <i class="fas fa-plus text-gray-400 group-open:hidden"></i>
+                        <i class="fas fa-minus text-gray-400 hidden group-open:inline"></i>
+                    </summary>
+                    <div class="mt-3 text-gray-300">We provide superbills for out-of-network reimbursement and can guide you on using HSA/FSA benefits. Contact us to discuss your specific plan.</div>
+                </details>
+                <details class="group bg-gray-800 border border-gray-700 rounded-xl p-5">
+                    <summary class="flex items-center justify-between cursor-pointer text-left list-none">
+                        <span class="font-medium text-white">How long is a typical session?</span>
+                        <i class="fas fa-plus text-gray-400 group-open:hidden"></i>
+                        <i class="fas fa-minus text-gray-400 hidden group-open:inline"></i>
+                    </summary>
+                    <div class="mt-3 text-gray-300">Most sessions are 50 minutes. Extended sessions are available upon request.</div>
+                </details>
+                <details class="group bg-gray-800 border border-gray-700 rounded-xl p-5">
+                    <summary class="flex items-center justify-between cursor-pointer text-left list-none">
+                        <span class="font-medium text-white">Do you offer telehealth?</span>
+                        <i class="fas fa-plus text-gray-400 group-open:hidden"></i>
+                        <i class="fas fa-minus text-gray-400 hidden group-open:inline"></i>
+                    </summary>
+                    <div class="mt-3 text-gray-300">Yes. We offer secure video sessions so you can receive care from home.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-gray-800 to-gray-900 py-16 md:py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1758273241078-8eec353836be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVyYXBpc3QlMjBjb3Vuc2VsaW5nJTIwc2Vzc2lvbiUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzU4OTY5MTI3fDA&ixlib=rb-4.1.0&q=80&w=1600')] bg-cover bg-center opacity-10"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Begin Your Journey?</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Take the first step toward better mental health. Our compassionate team is here to support you every step of the way.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button @click="isModalOpen = true" class="bg-brand-blue hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 transform hover:scale-105 shadow-xl shadow-glow-blue flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue focus:ring-offset-gray-900">
+                    <i class="fas fa-calendar-plus mr-3" aria-hidden="true"></i>Schedule Consultation
+                </button>
+                <a id="contact" href="tel:+15551234357" class="border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:bg-white/10 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-gray-900">
+                    <i class="fas fa-phone-alt mr-3" aria-hidden="true"></i>Call Now: (555) 123-HELP
+                </a>
+            </div>
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-6 text-gray-400">
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-shield-alt text-brand-sky mr-2" aria-hidden="true"></i>
+                    <span>100% Confidential</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-clock text-brand-lime mr-2" aria-hidden="true"></i>
+                    <span>Flexible Scheduling</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-user-md text-brand-red mr-2" aria-hidden="true"></i>
+                    <span>Licensed Professionals</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-heart text-brand-sky mr-2" aria-hidden="true"></i>
+                        Serenity Counseling Center
+                    </h3>
+                    <p class="text-gray-400 mb-4">Providing compassionate mental health services since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook text-xl" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors" aria-label="Twitter">
+                            <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin text-xl" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-sky transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xl" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4 text-white">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Our Team</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Services</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4 text-white">Contact</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt text-brand-sky mr-3" aria-hidden="true"></i>123 Wellness Street</li>
+                        <li class="flex items-center"><i class="fas fa-city text-brand-sky mr-3" aria-hidden="true"></i>City, State 12345</li>
+                        <li class="flex items-center"><i class="fas fa-phone text-brand-sky mr-3" aria-hidden="true"></i><a href="tel:+15551234357" class="hover:text-white">(555) 123-HELP</a></li>
+                        <li class="flex items-center"><i class="fas fa-envelope text-brand-sky mr-3" aria-hidden="true"></i><a href="mailto:info@serenitycc.com" class="hover:text-white">info@serenitycc.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4 text-white">Emergency</h4>
+                    <p class="text-gray-400 mb-4">If you're in crisis, call our 24/7 hotline:</p>
+                    <p class="text-brand-red font-bold text-xl mb-4 flex items-center">
+                        <i class="fas fa-phone-volume mr-3" aria-hidden="true"></i><a href="tel:+15559114357" class="hover:text-red-300">(555) 911-HELP</a>
+                    </p>
+                    <p class="text-sm text-gray-500">Available 24 hours, 7 days a week</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Serenity Counseling Center. All rights reserved. | <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Appointment Modal -->
+    <div x-show="isModalOpen" x-transition.opacity class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div @click="isModalOpen=false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+                <h3 class="text-xl font-semibold"><i class="fas fa-calendar-plus text-brand-sky mr-2" aria-hidden="true"></i>Book a Consultation</h3>
+                <button @click="isModalOpen=false" class="text-gray-400 hover:text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-sky" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <form action="#" method="post" class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="sm:col-span-1">
+                    <label for="name" class="block text-sm text-gray-300 mb-1">Full Name</label>
+                    <input id="name" name="name" type="text" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="Jane Doe">
+                </div>
+                <div class="sm:col-span-1">
+                    <label for="phone" class="block text-sm text-gray-300 mb-1">Phone</label>
+                    <input id="phone" name="phone" type="tel" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="(555) 123-HELP">
+                </div>
+                <div class="sm:col-span-1">
+                    <label for="email" class="block text-sm text-gray-300 mb-1">Email</label>
+                    <input id="email" name="email" type="email" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="you@example.com">
+                </div>
+                <div class="sm:col-span-1">
+                    <label for="service" class="block text-sm text-gray-300 mb-1">Service</label>
+                    <select id="service" name="service" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-brand-sky">
+                        <option>Individual Therapy</option>
+                        <option>Couples Counseling</option>
+                        <option>Family Therapy</option>
+                        <option>Group Therapy</option>
+                        <option>Telehealth</option>
+                        <option>Crisis Intervention</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="message" class="block text-sm text-gray-300 mb-1">Message</label>
+                    <textarea id="message" name="message" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="Share a little about what you’re looking for..."></textarea>
+                </div>
+                <div class="sm:col-span-2 flex items-center justify-between">
+                    <div class="text-xs text-gray-400 flex items-center">
+                        <i class="fas fa-lock mr-2 text-brand-sky" aria-hidden="true"></i> Your information is encrypted and confidential.
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="button" @click="isModalOpen=false" class="px-4 py-2 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-sky">Cancel</button>
+                        <button type="submit" class="px-5 py-2 rounded-lg bg-brand-blue hover:bg-blue-700 text-white shadow-lg shadow-glow-blue transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-brand-blue">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Action Button with Panel -->
+    <div class="fixed bottom-6 right-6 z-50" x-data>
+        <div class="relative">
+            <div x-show="showFABPanel" x-transition.opacity x-transition.duration.200 class="absolute bottom-16 right-0 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl w-56 overflow-hidden">
+                <a href="tel:+15551234357" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 transition-colors">
+                    <span class="w-9 h-9 rounded-full bg-brand-red/20 text-brand-red flex items-center justify-center"><i class="fas fa-phone" aria-hidden="true"></i></span>
+                    <div>
+                        <div class="font-medium">Call Now</div>
+                        <div class="text-xs text-gray-400">(555) 123-HELP</div>
+                    </div>
+                </a>
+                <a href="mailto:info@serenitycc.com" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 transition-colors">
+                    <span class="w-9 h-9 rounded-full bg-brand-sky/20 text-brand-sky flex items-center justify-center"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                    <div>
+                        <div class="font-medium">Email Us</div>
+                        <div class="text-xs text-gray-400">info@serenitycc.com</div>
+                    </div>
+                </a>
+                <button @click="isModalOpen = true; showFABPanel=false" class="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-gray-800 transition-colors">
+                    <span class="w-9 h-9 rounded-full bg-brand-blue/20 text-brand-blue flex items-center justify-center"><i class="fas fa-calendar-plus" aria-hidden="true"></i></span>
+                    <div>
+                        <div class="font-medium">Book Consultation</div>
+                        <div class="text-xs text-gray-400">Schedule online</div>
+                    </div>
+                </button>
+            </div>
+            <button @click="showFABPanel = !showFABPanel" class="bg-brand-red hover:bg-red-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500" :aria-expanded="showFABPanel.toString()" aria-controls="fab-panel" aria-label="Quick contact">
+                <i class="fas fa-phone text-xl" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
