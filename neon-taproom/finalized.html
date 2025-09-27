@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Hops Brewing Co.</title>
+    <meta name="description" content="Dark Hops Brewing Co. — Artisan craft beer brewed in small batches. Explore our rotating tap list, events, and book a brewery tour.">
+    <meta name="theme-color" content="#111827">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .beer-card {
+            transform: translateY(0);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .beer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.18);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(76, 29, 149, 0.35) 50%, rgba(17, 24, 39, 0.85) 100%),
+                        url('https://images.unsplash.com/photo-1610711279204-3d6f0ba5b732?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjcmFmdCUyMGJlZXIlMjBicmV3ZXJ5JTIwaW50ZXJpb3IlMjBkYXJrJTIwbW9kZXJuJTIwYmFyJTIwbmVvbnxlbnwwfDB8fHwxNzU4OTQ5MDA3fDA&ixlib=rb-4.1.0&q=80&w=1920') center/cover;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+            .floating { animation: none; }
+        }
+        /* Reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(18px); transition: all .6s ease; }
+        .reveal.reveal-active { opacity: 1; transform: translateY(0); }
+        /* Subtle gradient ring */
+        .ring-gradient {
+            position: absolute; inset: -2px; border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(139,92,246,.35), rgba(59,130,246,.25));
+            filter: blur(10px); opacity: 0; transition: .3s ease;
+        }
+        .beer-card:hover .ring-gradient { opacity: 1; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen" x-data="{ mobileMenuOpen: false, modalOpen: false }">
+    <!-- Scroll progress -->
+    <div class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 z-[60]" id="scrollProgress" style="width:0;"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-gray-800/95 backdrop-blur-md border-b border-purple-900/30 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="#home" class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
+                        <i class="fas fa-beer text-white text-sm" aria-hidden="true"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold gradient-text">Dark Hops</h1>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" data-target="home" class="nav-link text-purple-300 hover:text-purple-200 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#about" data-target="about" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#visit" data-target="visit" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Visit</a>
+                        <a href="#events" data-target="events" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Events</a>
+                        <button @click="modalOpen = true" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow">
+                            Book a Tour
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-300 hover:text-white focus:outline-none" :aria-expanded="mobileMenuOpen.toString()" aria-controls="mobileMenu" aria-label="Toggle navigation">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" 
+                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150" 
+                 x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                 id="mobileMenu"
+                 class="md:hidden absolute top-16 left-0 right-0 bg-gray-800/95 backdrop-blur-md border-t border-purple-900/30">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#home" @click="mobileMenuOpen=false" class="block text-purple-300 hover:text-purple-200 px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="#about" @click="mobileMenuOpen=false" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">About</a>
+                    <a href="#visit" @click="mobileMenuOpen=false" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">Visit</a>
+                    <a href="#events" @click="mobileMenuOpen=false" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">Events</a>
+                    <button @click="modalOpen = true; mobileMenuOpen=false" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-full text-base font-medium mt-4 transition-all duration-300">
+                        Book a Tour
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero-bg py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/40"></div>
+
+        <!-- Decorative orbs -->
+        <div class="pointer-events-none absolute -top-16 -right-16 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-16 -left-16 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="relative inline-block mb-8">
+                <span class="absolute -inset-3 rounded-full bg-gradient-to-r from-purple-500/30 to-indigo-500/30 blur-xl"></span>
+                <img loading="lazy" src="https://images.unsplash.com/photo-1739272136496-3581023c472c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiZWVyJTIwZ2xhc3MlMjBwb3VyJTIwZm9hbSUyMGdvbGRlbiUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8MHx8fDE3NTg5NDkwMDh8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                     alt="Golden craft beer pour with rich foam" class="floating w-44 h-44 md:w-52 md:h-52 mx-auto rounded-full object-cover border-4 border-purple-500/30 shadow-2xl">
+            </div>
+            <h2 class="text-5xl md:text-7xl font-bold mb-6 gradient-text">Artisan Craft Beer</h2>
+            <p class="text-xl md:text-2xl text-purple-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+                Handcrafted in small batches with passion and precision. Experience the perfect pour.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#taps" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center justify-center" aria-label="Explore our beers">
+                    Explore Our Beers <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#visit" class="border-2 border-purple-500 text-purple-300 hover:bg-purple-500/10 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center" aria-label="Visit our brewery">
+                    <i class="fas fa-map-marker-alt mr-2"></i> Visit Us
+                </a>
+            </div>
+        </div>
+
+        <!-- Wave divider -->
+        <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+            <path fill="#111827" d="M0,64L48,53.3C96,43,192,21,288,26.7C384,32,480,64,576,80C672,96,768,96,864,85.3C960,75,1056,53,1152,58.7C1248,64,1344,96,1392,112L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"/>
+        </svg>
+    </header>
+
+    <!-- Current Taps Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div id="taps" class="text-center mb-12 reveal">
+            <div class="inline-flex items-center bg-purple-900/20 text-purple-300 px-4 py-2 rounded-full mb-4">
+                <i class="fas fa-beer mr-2" aria-hidden="true"></i>
+                <span class="text-sm font-medium">FRESH FROM THE TAPS</span>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-bold gradient-text mb-4">On Tap Now</h3>
+            <p class="text-purple-300 text-lg max-w-2xl mx-auto">Fresh from our brewery to your glass. Rotating selection of handcrafted excellence.</p>
+        </div>
+
+        <!-- Filters -->
+        <div x-data="{ filter: 'All' }" class="reveal">
+            <div class="flex flex-wrap gap-2 justify-center mb-10">
+                <template x-for="tab in ['All','IPA','Stout','Pale Ale','Sour','Lager','Imperial']" :key="tab">
+                    <button @click="filter = tab"
+                        :class="filter===tab ? 'bg-purple-600 text-white' : 'bg-gray-800/60 text-gray-300 hover:bg-gray-700/60'"
+                        class="px-4 py-2 rounded-full text-sm font-medium transition-all shadow-sm">
+                        <span x-text="tab"></span>
+                    </button>
+                </template>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Beer Card 1 -->
+                <div x-show="filter==='All' || filter==='IPA'" class="beer-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6 hover:border-purple-500/50 transition-all duration-300 group relative reveal" style="display: block;">
+                    <span class="ring-gradient"></span>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-blue-900/50 text-blue-300 text-xs px-3 py-1.5 rounded-full font-medium">IPA</span>
+                        <span class="text-red-400 font-semibold flex items-center">
+                            <i class="fas fa-fire mr-1" aria-hidden="true"></i> 6.8% ABV
+                        </span>
+                    </div>
+                    <h4 class="text-xl font-bold text-indigo-300 mb-3 group-hover:text-indigo-200 transition-colors">Cosmic Haze IPA</h4>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">A hazy IPA bursting with tropical notes of mango, passionfruit, and a hint of citrus. Cloudy appearance with a smooth, juicy finish.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-purple-300 flex items-center">
+                            <i class="fas fa-balance-scale mr-1" aria-hidden="true"></i> 64 IBU
+                        </span>
+                        <span class="text-blue-300 font-medium">Pint: $7 | Flight: $3</span>
+                    </div>
+                </div>
+
+                <!-- Beer Card 2 -->
+                <div x-show="filter==='All' || filter==='Stout'" class="beer-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6 hover:border-purple-500/50 transition-all duration-300 group relative reveal" style="display: block;">
+                    <span class="ring-gradient"></span>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-red-900/50 text-red-300 text-xs px-3 py-1.5 rounded-full font-medium">Stout</span>
+                        <span class="text-red-400 font-semibold flex items-center">
+                            <i class="fas fa-fire mr-1" aria-hidden="true"></i> 8.2% ABV
+                        </span>
+                    </div>
+                    <h4 class="text-xl font-bold text-indigo-300 mb-3 group-hover:text-indigo-200 transition-colors">Midnight Velvet Stout</h4>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Rich, creamy stout with notes of dark chocolate, coffee, and vanilla bean. Velvety smooth with a luxurious mouthfeel.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-purple-300 flex items-center">
+                            <i class="fas fa-balance-scale mr-1" aria-hidden="true"></i> 38 IBU
+                        </span>
+                        <span class="text-blue-300 font-medium">Pint: $8 | Flight: $4</span>
+                    </div>
+                </div>
+
+                <!-- Beer Card 3 -->
+                <div x-show="filter==='All' || filter==='Pale Ale'" class="beer-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6 hover:border-purple-500/50 transition-all duration-300 group relative reveal" style="display: block;">
+                    <span class="ring-gradient"></span>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-indigo-900/50 text-indigo-300 text-xs px-3 py-1.5 rounded-full font-medium">Pale Ale</span>
+                        <span class="text-red-400 font-semibold flex items-center">
+                            <i class="fas fa-fire mr-1" aria-hidden="true"></i> 5.6% ABV
+                        </span>
+                    </div>
+                    <h4 class="text-xl font-bold text-indigo-300 mb-3 group-hover:text-indigo-200 transition-colors">Purple Horizon Pale</h4>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Crisp and refreshing with balanced hop character and a clean finish. Perfect for any occasion.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-purple-300 flex items-center">
+                            <i class="fas fa-balance-scale mr-1" aria-hidden="true"></i> 45 IBU
+                        </span>
+                        <span class="text-blue-300 font-medium">Pint: $6 | Flight: $3</span>
+                    </div>
+                </div>
+
+                <!-- Beer Card 4 -->
+                <div x-show="filter==='All' || filter==='Sour'" class="beer-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6 hover:border-purple-500/50 transition-all duration-300 group relative reveal" style="display: block;">
+                    <span class="ring-gradient"></span>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-purple-900/50 text-purple-300 text-xs px-3 py-1.5 rounded-full font-medium">Sour</span>
+                        <span class="text-red-400 font-semibold flex items-center">
+                            <i class="fas fa-fire mr-1" aria-hidden="true"></i> 4.9% ABV
+                        </span>
+                    </div>
+                    <h4 class="text-xl font-bold text-indigo-300 mb-3 group-hover:text-indigo-200 transition-colors">Berry Moon Sour</h4>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Tart and fruity with mixed berries and a subtle wheat backbone. Refreshingly crisp with a beautiful pink hue.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-purple-300 flex items-center">
+                            <i class="fas fa-balance-scale mr-1" aria-hidden="true"></i> 12 IBU
+                        </span>
+                        <span class="text-blue-300 font-medium">Pint: $7 | Flight: $3</span>
+                    </div>
+                </div>
+
+                <!-- Beer Card 5 -->
+                <div x-show="filter==='All' || filter==='Lager'" class="beer-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6 hover:border-purple-500/50 transition-all duration-300 group relative reveal" style="display: block;">
+                    <span class="ring-gradient"></span>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-blue-900/50 text-blue-300 text-xs px-3 py-1.5 rounded-full font-medium">Lager</span>
+                        <span class="text-red-400 font-semibold flex items-center">
+                            <i class="fas fa-fire mr-1" aria-hidden="true"></i> 5.0% ABV
+                        </span>
+                    </div>
+                    <h4 class="text-xl font-bold text-indigo-300 mb-3 group-hover:text-indigo-200 transition-colors">Crystal Stream Lager</h4>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Clean, crisp lager with a smooth finish and subtle noble hop aroma. Exceptionally drinkable.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-purple-300 flex items-center">
+                            <i class="fas fa-balance-scale mr-1" aria-hidden="true"></i> 22 IBU
+                        </span>
+                        <span class="text-blue-300 font-medium">Pint: $6 | Flight: $3</span>
+                    </div>
+                </div>
+
+                <!-- Beer Card 6 -->
+                <div x-show="filter==='All' || filter==='Imperial'" class="beer-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6 hover:border-purple-500/50 transition-all duration-300 group relative reveal" style="display: block;">
+                    <span class="ring-gradient"></span>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-red-900/50 text-red-300 text-xs px-3 py-1.5 rounded-full font-medium">Imperial</span>
+                        <span class="text-red-400 font-semibold flex items-center">
+                            <i class="fas fa-fire mr-1" aria-hidden="true"></i> 10.5% ABV
+                        </span>
+                    </div>
+                    <h4 class="text-xl font-bold text-indigo-300 mb-3 group-hover:text-indigo-200 transition-colors">Double Nebula DIPA</h4>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Bold double IPA with intense hop flavors and a robust malt foundation. Not for the faint of heart.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-purple-300 flex items-center">
+                            <i class="fas fa-balance-scale mr-1" aria-hidden="true"></i> 85 IBU
+                        </span>
+                        <span class="text-blue-300 font-medium">Pint: $9 | Flight: $4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brewery Showcase -->
+        <div id="about" class="mt-20 bg-gradient-to-r from-gray-800 to-purple-900/20 rounded-2xl p-8 md:p-12 reveal">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <div class="inline-flex items-center bg-purple-900/20 text-purple-300 px-3 py-1.5 rounded-full mb-3 text-xs font-medium">
+                        <i class="fas fa-info-circle mr-2" aria-hidden="true"></i> About Us
+                    </div>
+                    <h3 class="text-3xl font-bold text-indigo-300 mb-4">Our Brewery</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Nestled in the heart of Craft City, our state-of-the-art facility combines traditional brewing techniques with modern innovation. 
+                        Every batch is crafted with locally sourced ingredients and pure passion.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center text-sm text-purple-300">
+                            <i class="fas fa-clock mr-2" aria-hidden="true"></i> Small Batch Brewing
+                        </div>
+                        <div class="flex items-center text-sm text-blue-300">
+                            <i class="fas fa-leaf mr-2" aria-hidden="true"></i> Local Ingredients
+                        </div>
+                        <div class="flex items-center text-sm text-green-300">
+                            <i class="fas fa-recycle mr-2" aria-hidden="true"></i> Sustainable Practices
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1706888135871-8d12ac8c508c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxicmV3ZXJ5JTIwZXF1aXBtZW50JTIwc3RhaW5sZXNzJTIwc3RlZWwlMjB0YW5rcyUyMGNvcHBlcnxlbnwwfDB8fHwxNzU4OTQ5MDA4fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Stainless steel brewing tanks inside the brewery" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent rounded-xl"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Visit Section -->
+    <section id="visit" class="relative py-16 bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-8 items-center reveal">
+                <div class="lg:col-span-2">
+                    <h3 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Plan Your Visit</h3>
+                    <p class="text-gray-300 mb-6">Swing by our taproom for fresh pours, flights, and a peek behind the scenes. Family and dog friendly.</p>
+                    <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-800/40 border border-purple-900/30 rounded-xl p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marked-alt text-purple-400 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="text-sm text-gray-400">Address</p>
+                                    <p class="font-medium">123 Brewery Lane<br>Craft City, CC 12345</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800/40 border border-purple-900/30 rounded-xl p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="text-sm text-gray-400">Taproom Hours</p>
+                                    <p class="font-medium">Mon–Thu: 3pm–11pm<br>Fri–Sat: 12pm–1am • Sun: 12pm–10pm</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <a target="_blank" rel="noopener" href="https://maps.google.com/?q=123 Brewery Lane, Craft City, CC 12345" class="inline-flex items-center bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-full font-medium shadow transition">
+                            <i class="fas fa-directions mr-2"></i> Get Directions
+                        </a>
+                        <button @click="modalOpen = true" class="inline-flex items-center border-2 border-purple-500 text-purple-300 hover:bg-purple-500/10 px-6 py-3 rounded-full font-medium transition">
+                            <i class="fas fa-calendar-check mr-2"></i> Book a Tour
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-indigo-600/20 to-purple-600/20 blur-lg"></div>
+                    <div class="relative bg-gray-900/60 border border-purple-900/30 rounded-2xl p-5">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-utensils text-green-400 mr-3"></i>
+                            <p class="text-sm text-gray-300">Food trucks rotate Thu–Sun</p>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-dog text-yellow-400 mr-3"></i>
+                            <p class="text-sm text-gray-300">Dog friendly patio</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-music text-pink-400 mr-3"></i>
+                            <p class="text-sm text-gray-300">Live music Fridays</p>
+                        </div>
+                        <div class="mt-6 text-xs text-gray-500">Follow us on Instagram for daily updates.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="bg-gray-800/50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h3 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Upcoming Events</h3>
+                <p class="text-purple-300">Join us for unique experiences and special releases</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <article class="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-purple-900/30 hover:border-purple-500/50 overflow-hidden transition-all duration-300 reveal">
+                    <div class="h-40 w-full overflow-hidden">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1656320906878-68064343423c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxsaXZlJTIwamF6eiUyMHN0YWdlJTIwYmFyJTIwYXVkaWVuY2UlMjBsb3clMjBsaWdodHxlbnwwfDB8fHwxNzU4OTQ5MDA5fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Live jazz stage in a cozy bar" class="w-full h-full object-cover transform group-hover:scale-105 transition">
+                    </div>
+                    <div class="p-6">
+                        <div class="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs font-medium w-fit mb-4">Live Music</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Jazz & Brews Night</h4>
+                        <p class="text-gray-400 text-sm mb-4">Every Friday from 7-10pm featuring local jazz artists</p>
+                        <div class="flex items-center text-purple-300 text-sm">
+                            <i class="fas fa-calendar mr-2" aria-hidden="true"></i> Every Friday
+                        </div>
+                    </div>
+                </article>
+                <article class="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-purple-900/30 hover:border-purple-500/50 overflow-hidden transition-all duration-300 reveal">
+                    <div class="h-40 w-full overflow-hidden">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1731052037691-471af8065f01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiZWVyJTIwcmVsZWFzZSUyMHBhcnR5JTIwYnJld2VyeSUyMGNyb3dkJTIwY2hlZXJzfGVufDB8MHx8fDE3NTg5NDkwMTB8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Cheers at a brewery release party" class="w-full h-full object-cover transform group-hover:scale-105 transition">
+                    </div>
+                    <div class="p-6">
+                        <div class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs font-medium w-fit mb-4">Release</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Seasonal Release Party</h4>
+                        <p class="text-gray-400 text-sm mb-4">Celebrate our new autumn brew lineup</p>
+                        <div class="flex items-center text-purple-300 text-sm">
+                            <i class="fas fa-calendar mr-2" aria-hidden="true"></i> October 15th
+                        </div>
+                    </div>
+                </article>
+                <article class="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-purple-900/30 hover:border-purple-500/50 overflow-hidden transition-all duration-300 reveal">
+                    <div class="h-40 w-full overflow-hidden">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1599456942086-8430fb30fa00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxob21lYnJld2luZyUyMHdvcmtzaG9wJTIwY2xhc3MlMjBncmFpbnMlMjBob3BzfGVufDB8MHx8fDE3NTg5NDkwMTF8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Homebrewing grains and hops during a class" class="w-full h-full object-cover transform group-hover:scale-105 transition">
+                    </div>
+                    <div class="p-6">
+                        <div class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-xs font-medium w-fit mb-4">Workshop</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Brewing 101 Class</h4>
+                        <p class="text-gray-400 text-sm mb-4">Learn the art of craft brewing from our experts</p>
+                        <div class="flex items-center text-purple-300 text-sm">
+                            <i class="fas fa-calendar mr-2" aria-hidden="true"></i> November 5th
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-purple-900/30 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2 reveal">
+                    <a href="#home" class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-beer text-white text-sm" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-xl font-bold gradient-text">Dark Hops Brewing Co.</h4>
+                    </a>
+                    <p class="text-gray-400 text-sm mb-6 max-w-md">
+                        Crafting exceptional beers since 2015. Join us for a taste of perfection in every pour.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-300 transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-300 transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-300 transition-colors" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-300 transition-colors" aria-label="Untappd">
+                            <i class="fab fa-untappd"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h4 class="text-lg font-semibold text-purple-400 mb-4">Hours</h4>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <div class="flex justify-between">
+                            <span>Mon-Thu:</span>
+                            <span>3pm-11pm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Fri-Sat:</span>
+                            <span>12pm-1am</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Sunday:</span>
+                            <span>12pm-10pm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h4 class="text-lg font-semibold text-blue-400 mb-4">Contact</h4>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-purple-400" aria-hidden="true"></i>
+                            <span>123 Brewery Lane<br>Craft City, CC 12345</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-blue-400" aria-hidden="true"></i>
+                            <a class="hover:text-purple-300" href="mailto:info@darkhopsbrewing.com">info@darkhopsbrewing.com</a>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-green-400" aria-hidden="true"></i>
+                            <a class="hover:text-purple-300" href="tel:+15551232739">(555) 123-BREW</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 Dark Hops Brewing Co. All rights reserved. Crafted with <i class="fas fa-heart text-red-400" aria-hidden="true"></i> and fine hops.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 opacity-0 invisible" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Booking Modal -->
+    <div x-show="modalOpen" x-transition.opacity class="fixed inset-0 z-50 flex items-end md:items-center justify-center">
+        <div @click="modalOpen=false" class="absolute inset-0 bg-black/60"></div>
+        <div x-trap.noscroll="modalOpen" class="relative bg-gray-900 w-full md:max-w-lg rounded-t-2xl md:rounded-2xl border border-purple-900/40 shadow-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-indigo-600/10 to-purple-600/10 px-6 py-4 flex items-center justify-between">
+                <h3 class="text-xl font-semibold gradient-text">Book a Brewery Tour</h3>
+                <button @click="modalOpen=false" class="text-gray-400 hover:text-white" aria-label="Close booking form">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="p-6 space-y-4" onsubmit="event.preventDefault(); showToast('Tour request sent! We will confirm via email.');">
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Name</label>
+                        <input required type="text" class="w-full bg-gray-800/60 border border-purple-900/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Jane Doe">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Email</label>
+                        <input required type="email" class="w-full bg-gray-800/60 border border-purple-900/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="jane@email.com">
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Date</label>
+                        <input required type="date" class="w-full bg-gray-800/60 border border-purple-900/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Time</label>
+                        <select class="w-full bg-gray-800/60 border border-purple-900/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            <option>2:00 PM</option>
+                            <option>4:00 PM</option>
+                            <option>6:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Party Size</label>
+                        <input min="1" max="20" value="2" type="number" class="w-full bg-gray-800/60 border border-purple-900/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Notes</label>
+                    <textarea rows="3" class="w-full bg-gray-800/60 border border-purple-900/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Any special requests?"></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <p class="text-xs text-gray-500">By booking you agree to our policies.</p>
+                    <button type="submit" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow">
+                        Send Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-full border border-purple-900/40 shadow-lg opacity-0 pointer-events-none transition">
+        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+        <span id="toastMsg">Saved</span>
+    </div>
+
+    <script>
+        // Back to top button functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toast
+        function showToast(message) {
+            const t = document.getElementById('toast');
+            const m = document.getElementById('toastMsg');
+            m.textContent = message || 'Done';
+            t.classList.remove('opacity-0');
+            t.classList.add('opacity-100');
+            setTimeout(() => {
+                t.classList.add('opacity-0');
+                t.classList.remove('opacity-100');
+            }, 2500);
+        }
+
+        // Scroll handlers: back-to-top + progress + reveal + scrollspy
+        const backToTop = document.getElementById('backToTop');
+        const progress = document.getElementById('scrollProgress');
+
+        window.addEventListener('scroll', function() {
+            const y = window.scrollY || document.documentElement.scrollTop;
+            if (y > 300) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.remove('opacity-100', 'visible');
+                backToTop.classList.add('opacity-0', 'invisible');
+            }
+
+            // Progress
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (y / docHeight) * 100;
+            progress.style.width = scrolled + '%';
+        });
+
+        // Reveal on scroll
+        const revealEls = document.querySelectorAll('.reveal');
+        const revObs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-active');
+                    revObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => revObs.observe(el));
+
+        // Scrollspy for nav links
+        const sections = ['home','about','visit','events'].map(id => document.getElementById(id));
+        const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+        const spy = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(a => {
+                        a.classList.toggle('active', a.getAttribute('data-target') === id);
+                        if (a.classList.contains('active')) {
+                            a.classList.remove('text-gray-300');
+                            a.classList.add('text-purple-300');
+                        } else {
+                            a.classList.add('text-gray-300');
+                            a.classList.remove('text-purple-300');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.6 });
+        sections.forEach(s => s && spy.observe(s));
+    </script>
+</body>
+</html>
