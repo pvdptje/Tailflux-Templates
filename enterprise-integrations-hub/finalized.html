@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" x-data="integrationsApp()" @keydown.escape.window="closeAll()">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Integrations | Connect Your Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        },
+                        purple: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                        },
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                        },
+                        success: {
+                            100: '#dcfce7',
+                            600: '#16a34a'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                        'pop': 'pop 200ms ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        },
+                        pop: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .integration-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .integration-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+        }
+        .tab-active {
+            position: relative;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #a855f7, #e11d48);
+            border-radius: 2px;
+        }
+        .logo-container {
+            transition: transform 0.3s ease;
+        }
+        .integration-card:hover .logo-container {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen antialiased">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Toast -->
+        <div x-cloak x-show="toast.show" x-transition
+             class="fixed top-4 inset-x-0 flex justify-center z-50">
+            <div class="bg-white border border-stone-200 shadow-lg rounded-xl px-4 py-3 flex items-center gap-3 animate-pop">
+                <div class="w-8 h-8 rounded-full bg-success-100 text-success-600 flex items-center justify-center">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <p class="text-stone-800 text-sm" x-text="toast.message"></p>
+                <button class="ml-2 text-stone-400 hover:text-stone-600" @click="toast.show=false" aria-label="Close toast">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden rounded-2xl mb-12 bg-white border border-purple-100">
+            <div class="absolute inset-0 opacity-[0.06]">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1543746379-f19ae570d2bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYWFTJTIwaW50ZWdyYXRpb25zJTIwZGFzaGJvYXJkJTIwaWxsdXN0cmF0aW9uJTIwbWluaW1hbHxlbnwwfDB8fHwxNzU4OTcwMDU2fDA&ixlib=rb-4.1.0&q=80&w=1920')] bg-cover bg-center"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-50 via-white to-rose-50"></div>
+            </div>
+            <div class="relative px-6 sm:px-10 py-12 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-stone-900 mb-4 animate-fade-in">Integrations Hub</h1>
+                <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto mb-8">Connect your favorite tools and services to supercharge your CRM experience</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="flex items-center text-sm text-stone-600">
+                        <i class="fas fa-plug text-purple-600 mr-2"></i>
+                        <span><span x-text="availableCount() + connectedCount() + requestedCount()"></span> total integrations</span>
+                    </div>
+                    <div class="flex items-center text-sm text-stone-600">
+                        <i class="fas fa-bolt text-rose-600 mr-2"></i>
+                        <span>Instant setup</span>
+                    </div>
+                    <div class="flex items-center text-sm text-stone-600">
+                        <i class="fas fa-shield-alt text-green-600 mr-2"></i>
+                        <span>Enterprise security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 mb-8 animate-slide-up">
+            <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
+                <div class="relative flex-1 w-full lg:max-w-xl">
+                    <input 
+                        type="text" 
+                        x-model="searchQuery"
+                        placeholder="Search integrations by name, category, or description..." 
+                        class="w-full pl-12 pr-12 py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                        aria-label="Search integrations"
+                    >
+                    <i class="fas fa-search text-stone-400 absolute left-4 top-3.5"></i>
+                    <button x-show="searchQuery.length" x-cloak @click="searchQuery=''"
+                            class="absolute right-3 top-2.5 text-stone-400 hover:text-stone-600 transition"
+                            aria-label="Clear search">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <div class="flex gap-3 w-full lg:w-auto">
+                    <!-- Category Dropdown -->
+                    <div class="relative" @keydown.escape.stop="categoryOpen=false">
+                        <button @click="toggleCategory()" :aria-expanded="categoryOpen"
+                                class="w-full lg:w-auto px-4 py-3 text-stone-700 border border-stone-300 rounded-xl hover:bg-stone-50 transition-all duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-filter"></i>
+                            <span>Category</span>
+                            <span class="text-stone-400 text-sm" x-show="categoryFilter!=='all'" x-text="categoryFilter"></span>
+                            <i class="fa-solid fa-chevron-down text-xs ml-1 text-stone-400"></i>
+                        </button>
+                        <div x-cloak x-show="categoryOpen" @click.outside="categoryOpen=false"
+                             x-transition
+                             class="absolute z-20 mt-2 w-56 bg-white border border-stone-200 rounded-xl shadow-lg p-2">
+                            <button @click="setCategory('all')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-stone-50 flex items-center gap-2"
+                                    :class="{'bg-purple-50 text-purple-700': categoryFilter === 'all'}">
+                                <i class="fa-solid fa-layer-group"></i>
+                                All categories
+                            </button>
+                            <template x-for="cat in categories()" :key="cat">
+                                <button x-show="cat!=='all'" @click="setCategory(cat)" class="w-full text-left px-3 py-2 rounded-lg hover:bg-stone-50 capitalize"
+                                        :class="{'bg-purple-50 text-purple-700': categoryFilter === cat}" x-text="cat"></button>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- Sort Dropdown -->
+                    <div class="relative" @keydown.escape.stop="sortOpen=false">
+                        <button @click="toggleSort()" :aria-expanded="sortOpen"
+                                class="w-full lg:w-auto px-4 py-3 text-stone-700 border border-stone-300 rounded-xl hover:bg-stone-50 transition-all duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-sort"></i>
+                            <span>Sort by</span>
+                            <span class="text-stone-400 text-sm" x-text="sortLabel()"></span>
+                            <i class="fa-solid fa-chevron-down text-xs ml-1 text-stone-400"></i>
+                        </button>
+                        <div x-cloak x-show="sortOpen" @click.outside="sortOpen=false"
+                             x-transition
+                             class="absolute z-20 mt-2 w-48 bg-white border border-stone-200 rounded-xl shadow-lg p-2">
+                            <button @click="setSort('popular')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-stone-50"
+                                    :class="{'bg-purple-50 text-purple-700': sortBy === 'popular'}">
+                                Popular
+                            </button>
+                            <button @click="setSort('az')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-stone-50"
+                                    :class="{'bg-purple-50 text-purple-700': sortBy === 'az'}">
+                                A–Z
+                            </button>
+                            <button @click="setSort('za')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-stone-50"
+                                    :class="{'bg-purple-50 text-purple-700': sortBy === 'za'}">
+                                Z–A
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="border-b border-stone-200 mb-8">
+            <nav class="-mb-px flex space-x-8 overflow-x-auto pb-2" role="tablist" aria-label="Integration tabs">
+                <button 
+                    @click="activeTab = 'connected'"
+                    :class="activeTab === 'connected' ? 'text-purple-600 tab-active' : 'text-stone-500 hover:text-stone-700'"
+                    class="whitespace-nowrap py-3 px-1 font-medium text-sm transition-all duration-200 relative flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded"
+                    role="tab" :aria-selected="activeTab==='connected'">
+                    <i class="fas fa-link"></i>
+                    <span>Connected</span>
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full" x-text="connectedCount()"></span>
+                </button>
+                <button 
+                    @click="activeTab = 'available'"
+                    :class="activeTab === 'available' ? 'text-purple-600 tab-active' : 'text-stone-500 hover:text-stone-700'"
+                    class="whitespace-nowrap py-3 px-1 font-medium text-sm transition-all duration-200 relative flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded"
+                    role="tab" :aria-selected="activeTab==='available'">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Available</span>
+                    <span class="bg-stone-100 text-stone-700 text-xs px-2 py-1 rounded-full" x-text="availableCount()"></span>
+                </button>
+                <button 
+                    @click="activeTab = 'requested'"
+                    :class="activeTab === 'requested' ? 'text-purple-600 tab-active' : 'text-stone-500 hover:text-stone-700'"
+                    class="whitespace-nowrap py-3 px-1 font-medium text-sm transition-all duration-200 relative flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded"
+                    role="tab" :aria-selected="activeTab==='requested'">
+                    <i class="fas fa-clock"></i>
+                    <span>Requested</span>
+                    <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full" x-text="requestedCount()"></span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Connected Integrations -->
+        <div x-show="activeTab === 'connected'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" class="space-y-6">
+            <template x-for="integration in filteredConnected()" :key="integration.name">
+                <div class="integration-card bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:border-purple-200">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4 flex-1">
+                            <div class="logo-container w-14 h-14 bg-white rounded-xl border border-stone-200 flex items-center justify-center overflow-hidden shadow-sm">
+                                <img :src="integration.logo" :alt="integration.name + ' logo'" class="w-8 h-8 object-contain" loading="lazy">
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-1">
+                                    <h3 class="text-lg font-semibold text-stone-900" x-text="integration.name"></h3>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        Connected
+                                    </span>
+                                </div>
+                                <p class="text-stone-600 mb-2" x-text="integration.description"></p>
+                                <div class="flex flex-wrap items-center gap-4 text-sm text-stone-500">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-sync-alt"></i>
+                                        <span>Last sync: 2 hours ago</span>
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Active</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button class="text-rose-600 hover:text-rose-700 font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-rose-50 transition-all duration-200">
+                                <i class="fas fa-unlink"></i>
+                                Disconnect
+                            </button>
+                            <button class="text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-purple-50 transition-all duration-200">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div x-show="filteredConnected().length === 0" class="text-center py-10 text-stone-600">No connected integrations match your search.</div>
+        </div>
+
+        <!-- Available Integrations Grid -->
+        <div x-show="activeTab === 'available'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <template x-for="(integration, index) in filteredAvailable()" :key="integration.name">
+                <div class="integration-card bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:border-purple-200">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="logo-container w-12 h-12 rounded-xl border border-stone-200 bg-white flex items-center justify-center overflow-hidden shadow-sm">
+                            <template x-if="integration.logo">
+                                <img :src="integration.logo" :alt="integration.name + ' logo'" class="w-8 h-8 object-contain" loading="lazy">
+                            </template>
+                            <template x-if="!integration.logo">
+                                <span class="text-purple-600 font-bold text-lg" x-text="integration.name[0]"></span>
+                            </template>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-stone-900" x-text="integration.name"></h3>
+                            <p class="text-stone-600 text-sm" x-text="integration.description"></p>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 text-sm mb-4">Seamlessly integrate with your CRM workflow to enhance productivity and automation capabilities.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-stone-100 text-stone-700 capitalize" x-text="integration.category"></span>
+                        <div class="flex items-center text-yellow-400 text-sm" aria-label="Rating 4.5 out of 5">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <div x-data="{ connecting:false, done:false }" class="space-y-3">
+                        <button @click="connecting=true; setTimeout(()=>{connecting=false; done=true; $root.showToast(`${integration.name} connected successfully`);}, 1000)"
+                                class="w-full bg-purple-600 text-white py-2.5 px-4 rounded-xl hover:bg-purple-700 transition-all duration-200 font-medium flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
+                                :disabled="connecting || done">
+                            <template x-if="!connecting && !done">
+                                <i class="fas fa-plug group-hover:scale-110 transition-transform"></i>
+                            </template>
+                            <template x-if="connecting">
+                                <i class="fa-solid fa-spinner animate-spin"></i>
+                            </template>
+                            <template x-if="done">
+                                <i class="fa-solid fa-check"></i>
+                            </template>
+                            <span x-text="connecting ? 'Connecting...' : (done ? 'Connected' : 'Connect Integration')"></span>
+                        </button>
+                        <button class="w-full text-stone-700 hover:text-stone-900 font-medium text-sm flex items-center justify-center gap-2 px-4 py-2 rounded-lg hover:bg-stone-50 transition-all duration-200">
+                            <i class="fa-regular fa-circle-question"></i>
+                            Learn more
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Requested Integrations -->
+        <div x-show="activeTab === 'requested'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" class="space-y-6">
+            <template x-for="integration in filteredPending()" :key="integration.name">
+                <div class="integration-card bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:border-yellow-200">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4 flex-1">
+                            <div class="logo-container w-14 h-14 bg-white rounded-xl border border-stone-200 flex items-center justify-center overflow-hidden shadow-sm">
+                                <img :src="integration.logo" :alt="integration.name + ' logo'" class="w-8 h-8 object-contain" loading="lazy">
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-1">
+                                    <h3 class="text-lg font-semibold text-stone-900" x-text="integration.name"></h3>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200 animate-pulse-subtle">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        Pending Approval
+                                    </span>
+                                </div>
+                                <p class="text-stone-600 mb-2" x-text="integration.description"></p>
+                                <div class="flex items-center gap-4 text-sm text-stone-500">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Requested: 3 days ago</span>
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-user-clock"></i>
+                                        <span>Estimated: 2-5 days</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button class="text-rose-600 hover:text-rose-700 font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-rose-50 transition-all duration-200">
+                                <i class="fas fa-times-circle"></i>
+                                Cancel Request
+                            </button>
+                            <button class="text-stone-700 hover:text-stone-900 font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-stone-50 transition-all duration-200">
+                                <i class="fas fa-info-circle"></i>
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div x-show="filteredPending().length === 0" class="text-center py-10 text-stone-600">No requested integrations match your search.</div>
+        </div>
+
+        <!-- Empty State for Available -->
+        <div x-show="activeTab === 'available' && filteredAvailable().length === 0" x-cloak class="text-center py-12">
+            <div class="max-w-md mx-auto">
+                <div class="w-20 h-20 mx-auto mb-4 bg-stone-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-search text-stone-400 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-stone-900 mb-2">No integrations found</h3>
+                <p class="text-stone-600 mb-6">We couldn't find any integrations matching "<span x-text="searchQuery"></span>". Try different keywords or request a new integration.</p>
+                <button @click="openRequestModal()" class="bg-purple-600 text-white px-6 py-2.5 rounded-xl hover:bg-purple-700 transition-colors font-medium">
+                    Request Integration
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="mt-16 text-center animate-fade-in">
+            <div class="bg-white rounded-2xl p-8 border border-purple-100 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-purple-100/50"></div>
+                <div class="absolute -bottom-12 -left-8 w-56 h-56 rounded-full bg-rose-100/40"></div>
+                <div class="relative">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-600 to-rose-600 rounded-full flex items-center justify-center shadow-sm">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-stone-900 mb-2">Need a different integration?</h2>
+                    <p class="text-stone-600 mb-6 max-w-md mx-auto">Request a new integration and our team will consider adding it to our growing platform.</p>
+                    <button @click="openRequestModal()" class="bg-purple-600 text-white px-8 py-3 rounded-xl hover:bg-purple-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mx-auto">
+                        <i class="fas fa-plus"></i>
+                        Request New Integration
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <div class="fixed bottom-6 right-6 z-10 group">
+            <div class="absolute -top-10 right-0 opacity-0 group-hover:opacity-100 transition pointer-events-none">
+                <div class="bg-stone-800 text-white text-xs px-2 py-1 rounded shadow">Request integration</div>
+            </div>
+            <button @click="openRequestModal()" class="w-14 h-14 bg-gradient-to-r from-purple-600 to-rose-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center hover:scale-110 group focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500" aria-label="Request new integration">
+                <i class="fas fa-plus text-lg group-hover:rotate-90 transition-transform"></i>
+            </button>
+        </div>
+
+        <!-- Request Integration Modal -->
+        <div x-cloak x-show="requestModalOpen" x-transition.opacity class="fixed inset-0 z-40 flex items-center justify-center">
+            <div class="absolute inset-0 bg-stone-900/40" @click="requestModalOpen=false"></div>
+            <div x-show="requestModalOpen" x-transition
+                 class="relative bg-white w-full max-w-lg mx-4 rounded-2xl shadow-xl border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-stone-900">Request New Integration</h3>
+                    <button @click="requestModalOpen=false" class="text-stone-400 hover:text-stone-600" aria-label="Close modal">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                <form @submit.prevent="submitRequest">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Integration name</label>
+                            <input x-model="requestForm.name" type="text" required placeholder="e.g., Notion"
+                                   class="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Category</label>
+                            <select x-model="requestForm.category" required
+                                    class="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="">Select a category</option>
+                                <option value="crm">CRM</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="productivity">Productivity</option>
+                                <option value="communication">Communication</option>
+                                <option value="finance">Finance</option>
+                                <option value="automation">Automation</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Description (optional)</label>
+                            <textarea x-model="requestForm.description" rows="3" placeholder="What would you like this integration to do?"
+                                      class="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-end gap-3">
+                        <button type="button" @click="requestModalOpen=false"
+                                class="px-4 py-2 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-50 transition">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                class="px-5 py-2.5 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Submit request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function integrationsApp() {
+            return {
+                // UI state
+                activeTab: 'connected',
+                searchQuery: '',
+                categoryOpen: false,
+                sortOpen: false,
+                categoryFilter: 'all',
+                sortBy: 'popular',
+                requestModalOpen: false,
+                toast: { show: false, message: '' },
+
+                // Data
+                integrations: [
+                    { name: 'Google Workspace', description: 'Sync contacts, calendar, and emails', status: 'connected', category: 'productivity', logo: 'https://images.unsplash.com/photo-1704642602624-65486ccd2c17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxnb29nbGUlMjB3b3Jrc3BhY2UlMjBsb2dvfGVufDB8MHx8fDE3NTg5Njc5NTR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=KWXLymRjts4' },
+                    { name: 'Slack', description: 'Receive notifications and updates', status: 'connected', category: 'communication', logo: 'https://images.unsplash.com/photo-1660137340590-d48549625980?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzbGFjayUyMGxvZ298ZW58MHwwfHx8MTc1ODk2Nzk1OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=KtTRmZhPRjs' },
+                    { name: 'Zapier', description: 'Connect with 3000+ apps', status: 'connected', category: 'automation', logo: 'https://images.unsplash.com/photo-1637489981573-e45e9297cb21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx6YXBpZXIlMjBsb2dvfGVufDB8MHx8fDE3NTg5Njc5NjR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=hLTzAKUATgY' },
+                    { name: 'Asana', description: 'Project management integration', status: 'pending', category: 'productivity', logo: 'https://images.unsplash.com/photo-1750816204148-5d02aff367cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhc2FuYSUyMGxvZ298ZW58MHwwfHx8MTc1ODk2Nzk2OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=aVWDopfT5-w' },
+                    { name: 'HubSpot', description: 'Marketing automation sync', status: 'pending', category: 'marketing', logo: 'https://images.unsplash.com/photo-1708559348128-3cde89847e2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodWJzcG90JTIwbG9nb3xlbnwwfDB8fHwxNzU4OTY3OTc0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=dHRUmhPFm4s' }
+                ],
+                availableIntegrations: [
+                    { name: 'Salesforce', description: 'CRM data synchronization', category: 'crm', logo: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYWxlc2ZvcmNlJTIwbG9nbyUyMGljb24lMjBvbiUyMHdoaXRlfGVufDB8MHx8fDE3NTg5NzAwNTJ8MA&ixlib=rb-4.1.0&q=80&w=256&utm_source=TailFlux&photo_id=2LowviVHZ-E' },
+                    { name: 'Mailchimp', description: 'Email marketing automation', category: 'marketing', logo: 'https://images.unsplash.com/photo-1616117140277-26eccf1f3635?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxNYWlsY2hpbXAlMjBsb2dvJTIwaWNvbiUyMG9uJTIwd2hpdGV8ZW58MHwwfHx8MTc1ODk3MDA1M3ww&ixlib=rb-4.1.0&q=80&w=256&utm_source=TailFlux&photo_id=aK2HNt6EKAY' },
+                    { name: 'Trello', description: 'Project collaboration tools', category: 'productivity', logo: 'https://images.unsplash.com/photo-1636955903101-d6b4b926018c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUcmVsbG8lMjBsb2dvJTIwaWNvbiUyMG9uJTIwd2hpdGV8ZW58MHwwfHx8MTc1ODk3MDA1NHww&ixlib=rb-4.1.0&q=80&w=256&utm_source=TailFlux&photo_id=7K1_uSnNoy4' },
+                    { name: 'Zoom', description: 'Video conferencing integration', category: 'communication', logo: 'https://images.unsplash.com/photo-1632435499182-e436787ce107?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxab29tJTIwbG9nbyUyMGljb24lMjBvbiUyMHdoaXRlfGVufDB8MHx8fDE3NTg5NzAwNTR8MA&ixlib=rb-4.1.0&q=80&w=256&utm_source=TailFlux&photo_id=PNUoryUKi5g' },
+                    { name: 'Stripe', description: 'Payment processing', category: 'finance', logo: 'https://images.unsplash.com/photo-1514092135741-08b367214e27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTdHJpcGUlMjBsb2dvJTIwaWNvbiUyMG9uJTIwd2hpdGV8ZW58MHwwfHx8MTc1ODk3MDA1NXww&ixlib=rb-4.1.0&q=80&w=256&utm_source=TailFlux&photo_id=YDJ2DmpqAe0' },
+                    { name: 'QuickBooks', description: 'Accounting software sync', category: 'finance', logo: 'https://images.unsplash.com/photo-1639380416745-a74b18f23664?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxRdWlja0Jvb2tzJTIwbG9nbyUyMGljb24lMjBvbiUyMHdoaXRlfGVufDB8MHx8fDE3NTg5NzAwNTZ8MA&ixlib=rb-4.1.0&q=80&w=256&utm_source=TailFlux&photo_id=HixZTTkaOUc' }
+                ],
+
+                // Modal form
+                requestForm: { name: '', category: '', description: '' },
+
+                // Helpers
+                categories() {
+                    const set = new Set(this.availableIntegrations.map(i => i.category));
+                    return ['all', ...Array.from(set)];
+                },
+                sortLabel() {
+                    return this.sortBy === 'popular' ? 'Popular' : (this.sortBy === 'az' ? 'A–Z' : 'Z–A');
+                },
+                connectedCount() { return this.integrations.filter(i => i.status === 'connected').length },
+                availableCount() { return this.availableIntegrations.length },
+                requestedCount() { return this.integrations.filter(i => i.status === 'pending').length },
+
+                matchesSearch(item) {
+                    const q = this.searchQuery.trim().toLowerCase();
+                    if (!q) return true;
+                    return [item.name, item.description, item.category].some(v => (v || '').toLowerCase().includes(q));
+                },
+                filteredConnected() {
+                    return this.integrations.filter(i => i.status === 'connected' && this.matchesSearch(i));
+                },
+                filteredPending() {
+                    return this.integrations.filter(i => i.status === 'pending' && this.matchesSearch(i));
+                },
+                filteredAvailable() {
+                    let list = this.availableIntegrations.filter(i => this.matchesSearch(i));
+                    if (this.categoryFilter !== 'all') {
+                        list = list.filter(i => i.category === this.categoryFilter);
+                    }
+                    switch (this.sortBy) {
+                        case 'az': list = list.sort((a, b) => a.name.localeCompare(b.name)); break;
+                        case 'za': list = list.sort((a, b) => b.name.localeCompare(a.name)); break;
+                        default: break; // Popular (no-op for static demo)
+                    }
+                    return list;
+                },
+
+                // Dropdown controls
+                toggleCategory() { this.categoryOpen = !this.categoryOpen; this.sortOpen = false; },
+                toggleSort() { this.sortOpen = !this.sortOpen; this.categoryOpen = false; },
+                setCategory(cat) { this.categoryFilter = cat; this.categoryOpen = false; },
+                setSort(sort) { this.sortBy = sort; this.sortOpen = false; },
+
+                // Modal & Toast
+                openRequestModal() { this.requestModalOpen = true; },
+                closeAll() { this.categoryOpen = false; this.sortOpen = false; this.requestModalOpen = false; },
+                submitRequest() {
+                    this.requestModalOpen = false;
+                    const name = this.requestForm.name || 'Your integration';
+                    this.showToast(`${name} request submitted`);
+                    this.requestForm = { name: '', category: '', description: '' };
+                },
+                showToast(message) {
+                    this.toast.message = message;
+                    this.toast.show = true;
+                    setTimeout(() => this.toast.show = false, 2500);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
