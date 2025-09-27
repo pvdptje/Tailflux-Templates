@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rollin' Bites - Gourmet Food Truck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 to-blue-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"></div>
+                    <h1 class="text-2xl font-bold text-gray-800">Rollin' Bites</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#menu" class="text-gray-600 hover:text-cyan-500 font-medium">Menu</a>
+                    <a href="#schedule" class="text-gray-600 hover:text-lime-500 font-medium">Schedule</a>
+                    <a href="#locations" class="text-gray-600 hover:text-yellow-500 font-medium">Locations</a>
+                    <a href="#about" class="text-gray-600 hover:text-blue-500 font-medium">About</a>
+                </nav>
+                <button class="md:hidden text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold mb-4">Fresh Food on Wheels!</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Serving up delicious, gourmet street food across the city. Follow our schedule to find us!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-lime-400 text-gray-800 px-6 py-3 rounded-full font-bold hover:bg-lime-300 transition duration-300">
+                    View This Week's Menu
+                </button>
+                <button class="bg-yellow-400 text-gray-800 px-6 py-3 rounded-full font-bold hover:bg-yellow-300 transition duration-300">
+                    See Our Locations
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-8 bg-white rounded-t-full"></div>
+    </section>
+
+    <!-- Weekly Schedule -->
+    <section id="schedule" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">This Week's Schedule</h2>
+            
+            <div class="grid md:grid-cols-7 gap-4 max-w-6xl mx-auto">
+                <!-- Monday -->
+                <div class="bg-cyan-50 rounded-xl p-4 text-center border-2 border-cyan-200">
+                    <h3 class="font-bold text-cyan-600 mb-2">Monday</h3>
+                    <p class="text-sm text-gray-600">11AM - 2PM</p>
+                    <p class="font-medium mt-2">Downtown Plaza</p>
+                </div>
+                
+                <!-- Tuesday -->
+                <div class="bg-lime-50 rounded-xl p-4 text-center border-2 border-lime-200">
+                    <h3 class="font-bold text-lime-600 mb-2">Tuesday</h3>
+                    <p class="text-sm text-gray-600">11AM - 7PM</p>
+                    <p class="font-medium mt-2">Tech Park</p>
+                </div>
+                
+                <!-- Wednesday -->
+                <div class="bg-yellow-50 rounded-xl p-4 text-center border-2 border-yellow-200">
+                    <h3 class="font-bold text-yellow-600 mb-2">Wednesday</h3>
+                    <p class="text-sm text-gray-600">11AM - 8PM</p>
+                    <p class="font-medium mt-2">Riverside Market</p>
+                </div>
+                
+                <!-- Thursday -->
+                <div class="bg-blue-50 rounded-xl p-4 text-center border-2 border-blue-200">
+                    <h3 class="font-bold text-blue-600 mb-2">Thursday</h3>
+                    <p class="text-sm text-gray-600">11AM - 9PM</p>
+                    <p class="font-medium mt-2">City Center</p>
+                </div>
+                
+                <!-- Friday -->
+                <div class="bg-cyan-50 rounded-xl p-4 text-center border-2 border-cyan-200">
+                    <h3 class="font-bold text-cyan-600 mb-2">Friday</h3>
+                    <p class="text-sm text-gray-600">11AM - 10PM</p>
+                    <p class="font-medium mt-2">Music Festival</p>
+                </div>
+                
+                <!-- Saturday -->
+                <div class="bg-lime-50 rounded-xl p-4 text-center border-2 border-lime-200">
+                    <h3 class="font-bold text-lime-600 mb-2">Saturday</h3>
+                    <p class="text-sm text-gray-600">10AM - 10PM</p>
+                    <p class="font-medium mt-2">Farmers Market</p>
+                </div>
+                
+                <!-- Sunday -->
+                <div class="bg-yellow-50 rounded-xl p-4 text-center border-2 border-yellow-200">
+                    <h3 class="font-bold text-yellow-600 mb-2">Sunday</h3>
+                    <p class="text-sm text-gray-600">10AM - 6PM</p>
+                    <p class="font-medium mt-2">Park Picnic Area</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Map -->
+    <section id="locations" class="py-16 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Our Favorite Spots</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-6 max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-cyan-600">Popular Locations</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-cyan-400 rounded-full"></div>
+                                <span class="font-medium">Downtown Plaza</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-lime-400 rounded-full"></div>
+                                <span class="font-medium">Tech Park</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                <span class="font-medium">Riverside Market</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                                <span class="font-medium">City Center</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-100 rounded-lg p-4 flex items-center justify-center">
+                        <div class="text-center text-gray-500">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <p>Interactive Map Coming Soon!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specials Banner -->
+    <section class="py-8 bg-gradient-to-r from-yellow-400 to-lime-400">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">This Week's Special: Dragon Breath Tacos!</h3>
+            <p class="text-gray-700">Spicy grilled chicken, fresh slaw, and our signature dragon sauce. Only $8!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Rollin' Bites</h4>
+                    <p class="text-gray-400">Fresh, delicious food served with a smile from our bright orange truck!</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300">Instagram</a>
+                        <a href="#" class="text-blue-400 hover:text-blue-300">Facebook</a>
+                        <a href="#" class="text-lime-400 hover:text-lime-300">Twitter</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact</h4>
+                    <p class="text-gray-400">hello@rollinbites.com</p>
+                    <p class="text-gray-400">(555) 123-FOOD</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Rollin' Bites Food Truck. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rollin' Bites - Gourmet Food Truck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%), url('https://images.unsplash.com/photo-1549055683-41bef4ed27d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwZm9vZCUyMHRydWNrJTIwc3RyZWV0JTIwZm9vZHxlbnwwfDB8fHwxNzU4OTIzNTMyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=xt4Nj_S2iYs') center/cover;
+        }
+        .schedule-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        .schedule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 via-blue-50 to-emerald-50 min-h-screen" x-data="{ mobileMenuOpen: false }">
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-utensils text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">Rollin' Bites</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#menu" class="text-gray-700 hover:text-cyan-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-utensils text-sm"></i>
+                        <span>Menu</span>
+                    </a>
+                    <a href="#schedule" class="text-gray-700 hover:text-lime-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-calendar-alt text-sm"></i>
+                        <span>Schedule</span>
+                    </a>
+                    <a href="#locations" class="text-gray-700 hover:text-yellow-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-map-marker-alt text-sm"></i>
+                        <span>Locations</span>
+                    </a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-info-circle text-sm"></i>
+                        <span>About</span>
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>
+                    <i class="fas fa-times text-xl" x-show="mobileMenuOpen"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-3">
+                    <a href="#menu" class="text-gray-700 hover:text-cyan-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-utensils mr-2"></i>Menu
+                    </a>
+                    <a href="#schedule" class="text-gray-700 hover:text-lime-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-calendar-alt mr-2"></i>Schedule
+                    </a>
+                    <a href="#locations" class="text-gray-700 hover:text-yellow-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Locations
+                    </a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-info-circle mr-2"></i>About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="floating mb-6">
+                <i class="fas fa-truck text-6xl opacity-80"></i>
+            </div>
+            <h2 class="text-6xl font-black mb-6 leading-tight">Fresh Food<br><span class="gradient-text">On Wheels!</span></h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto leading-relaxed">Serving up delicious, gourmet street food across the city. Follow our schedule to find the tastiest bites in town!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-lime-400 text-gray-900 px-8 py-4 rounded-full font-bold hover:bg-lime-300 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2">
+                    <i class="fas fa-utensils"></i>
+                    <span>View This Week's Menu</span>
+                </button>
+                <button class="bg-white/20 backdrop-blur-sm text-white border-2 border-white/30 px-8 py-4 rounded-full font-bold hover:bg-white/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>See Our Locations</span>
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-12 bg-white rounded-t-3xl transform translate-y-1/2"></div>
+    </section>
+
+    <!-- Weekly Schedule -->
+    <section id="schedule" class="py-20 bg-white relative">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-lime-400 to-yellow-400"></div>
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-800 mb-4">This Week's Schedule</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Find us at these amazing locations throughout the week. Don't miss our daily specials!</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-7 gap-6 max-w-7xl mx-auto">
+                <!-- Monday -->
+                <div class="schedule-card bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-2xl p-6 text-center border-2 border-cyan-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-cyan-700 text-lg mb-2">Monday</h3>
+                    <p class="text-sm text-cyan-600 font-semibold mb-1">11AM - 2PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Downtown Plaza</p>
+                    <div class="mt-3 text-cyan-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Tuesday -->
+                <div class="schedule-card bg-gradient-to-br from-lime-50 to-lime-100 rounded-2xl p-6 text-center border-2 border-lime-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-lime-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-lime-700 text-lg mb-2">Tuesday</h3>
+                    <p class="text-sm text-lime-600 font-semibold mb-1">11AM - 7PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Tech Park</p>
+                    <div class="mt-3 text-lime-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Wednesday -->
+                <div class="schedule-card bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 text-center border-2 border-yellow-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-yellow-700 text-lg mb-2">Wednesday</h3>
+                    <p class="text-sm text-yellow-600 font-semibold mb-1">11AM - 8PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Riverside Market</p>
+                    <div class="mt-3 text-yellow-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Thursday -->
+                <div class="schedule-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border-2 border-blue-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-blue-700 text-lg mb-2">Thursday</h3>
+                    <p class="text-sm text-blue-600 font-semibold mb-1">11AM - 9PM</p>
+                    <p class="font-bold text-gray-800 mt-3">City Center</p>
+                    <div class="mt-3 text-blue-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Friday -->
+                <div class="schedule-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 text-center border-2 border-purple-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-purple-700 text-lg mb-2">Friday</h3>
+                    <p class="text-sm text-purple-600 font-semibold mb-1">11AM - 10PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Music Festival</p>
+                    <div class="mt-3 text-purple-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Saturday -->
+                <div class="schedule-card bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-6 text-center border-2 border-pink-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-pink-700 text-lg mb-2">Saturday</h3>
+                    <p class="text-sm text-pink-600 font-semibold mb-1">10AM - 10PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Farmers Market</p>
+                    <div class="mt-3 text-pink-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Sunday -->
+                <div class="schedule-card bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-6 text-center border-2 border-orange-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-orange-700 text-lg mb-2">Sunday</h3>
+                    <p class="text-sm text-orange-600 font-semibold mb-1">10AM - 6PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Park Picnic Area</p>
+                    <div class="mt-3 text-orange-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Map -->
+    <section id="locations" class="py-20 bg-gradient-to-br from-blue-50 via-cyan-50 to-emerald-50 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-800 mb-4">Our Favorite Spots</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Discover where you can find our bright orange food truck serving up deliciousness!</p>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-6xl mx-auto overflow-hidden">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-black mb-<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-6xl mx-auto overflow-hidden">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-black mb-6 gradient-text">Popular Locations</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-cyan-50 transition-all duration-300">
+                                <div class="w-4 h-4 bg-cyan-400 rounded-full shadow-lg"></div>
+                                <div>
+                                    <span class="font-bold text-gray-800">Downtown Plaza</span>
+                                    <p class="text-sm text-gray-600">Main Street & 5th Avenue</p>
+                                </div>
+                            </li>
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-lime-50 transition-all duration-300">
+                                <div class="w-4 h-4 bg-lime-400 rounded-full shadow-lg"></div>
+                                <div>
+                                    <span class="font-bold text-gray-800">Tech Park</span>
+                                    <p class="text-sm text-gray-600">Innovation Drive</p>
+                                </div>
+                            </li>
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-yellow-50 transition-all duration-300">
+                                <div class="w-4 h-4 bg-yellow-400 rounded-full shadow-lg"></div>
+                                <div>
+                                    <span class="font-bold text-gray-800">Riverside Market</span>
+                                    <p class="text-sm text-gray-600">Riverwalk Promenade</p>
+                                </div>
+                            </li>
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-blue-50 transition-all duration-300">
+                                <div class="w-4 h-4 bg-blue-400 rounded-full shadow-lg"></div>
+                                <div>
+                                    <span class="font-bold text-gray-800">City Center</span>
+                                    <p class="text-sm text-gray-600">Central Square</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl p-6 text-white overflow-hidden">
+                            <div class="absolute top-4 right-4">
+                                <i class="fas fa-map-marked-alt text-2xl text-cyan-400"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-4">Live Tracking</h4>
+                            <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-cyan-300 font-semibold">Current Location:</span>
+                                    <span class="text-lime-300 font-bold">Downtown Plaza</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-cyan-400 h-2 rounded-full w-3/4"></div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-truck-moving text-4xl text-yellow-400 mb-3 floating"></i>
+                                <p class="text-gray-300">Track our truck in real-time on our app!</p>
+                                <button class="mt-4 bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-2 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                    Download App
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specials Banner -->
+    <section class="py-12 bg-gradient-to-r from-yellow-400 via-orange-400 to-lime-400 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-fire text-3xl text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-black text-gray-900 mb-2">This Week's Special: Dragon Breath Tacos!</h3>
+                    <p class="text-gray-800 font-semibold">Spicy grilled chicken, fresh slaw, and our signature dragon sauce. Only $8!</p>
+                </div>
+                <button class="bg-white text-gray-900 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Order Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1686777092985-e524e0470f82?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmb29kJTIwdHJ1Y2slMjBpbnRlcmlvciUyMG1vZGVybiUyMGtpdGNoZW58ZW58MHwwfHx8MTc1ODkyMzU0Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=AHNSaRAqosM" 
+                         alt="Food Truck Interior" class="rounded-3xl shadow-2xl">
+                </div>
+                <div>
+                    <h2 class="text-4xl font-black text-gray-800 mb-6">Our Story</h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        Rollin' Bites started with a simple mission: bring gourmet street food to every corner of the city. 
+                        Our bright orange truck has become a local favorite, serving up creative dishes made with fresh, 
+                        locally-sourced ingredients.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-leaf text-cyan-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Fresh Ingredients</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-lime-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-heart text-lime-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Made with Love</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Fast Service</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-award text-blue-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Award Winning</span>
+                        </div>
+                    </div>
+                    <button class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-3 rounded-full font-bold hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Learn More About Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-utensils text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold gradient-text">Rollin' Bites</h4>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">Fresh, delicious food served with a smile from our bright orange truck! Follow us for daily specials and locations.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-cyan-400">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#menu" class="text-gray-400 hover:text-cyan-300 transition-colors">Menu</a></li>
+                        <li><a href="#schedule" class="text-gray-400 hover:text-lime-300 transition-colors">Schedule</a></li>
+                        <li><a href="#locations" class="text-gray-400 hover:text-yellow-300 transition-colors">Locations</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-blue-300 transition-colors">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-lime-400">Follow Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-cyan-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-lime-600 transition-colors">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Join our foodie community!</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-yellow-400">Contact</h4>
+                    <div class="space-y-2">
+                        <p class="text-gray-400 flex items-center space-x-2">
+                            <i class="fas fa-envelope text-cyan-400"></i>
+                            <span>hello@rollinbites.com</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-2">
+                            <i class="fas fa-phone text-lime-400"></i>
+                            <span>(555) 123-FOOD</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-2">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            <span>Find us on the streets!</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Rollin' Bites Food Truck. All rights reserved. Made with <i class="fas fa-heart text-red-400"></i> for food lovers everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="w-14 h-14 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-2xl flex items-center justify-center hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-110">
+            <i class="fas fa-utensils text-white text-xl"></i>
+        </button>
+    </div>
+</body>
+</html>

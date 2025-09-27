@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenuOpen: false, scrolled: false, fabOpen:false }" @scroll.window="scrolled = window.scrollY > 10">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rollin' Bites - Gourmet Food Truck</title>
+    <meta name="description" content="Rollin' Bites is a gourmet food truck serving fresh tacos, bowls, burgers and more. Find our weekly schedule, locations, and specials.">
+    <meta name="theme-color" content="#06b6d4">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.88) 0%, rgba(59, 130, 246, 0.88) 100%), url('https://images.unsplash.com/photo-1548496600-1ca5fd14a56a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwZm9vZCUyMHRydWNrJTIwbmlnaHQlMjBzdHJlZXQlMjBmb29kfGVufDB8MHx8fDE3NTg5MjQ5NTN8MA&ixlib=rb-4.1.0&q=80&w=1600&utm_source=TailFlux&photo_id=H1p0lqo8LfE') center/cover;
+        }
+
+        .schedule-card {
+            transition: all 0.35s ease;
+            transform: translateY(0);
+        }
+        .schedule-card:hover {
+            transform: translateY(-6px) rotate(-0.2deg);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.08);
+        }
+
+        .floating { animation: float 3.2s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tilt-card {
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+            border: 1px solid transparent;
+        }
+        .tilt-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 18px 35px -10px rgba(6,182,212,0.25), 0 8px 15px -8px rgba(59,130,246,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 via-blue-50 to-emerald-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 shadow-lg"
+            :class="scrolled ? 'shadow-xl' : 'shadow-lg'">
+        <div class="container mx-auto px-4" :class="scrolled ? 'py-2' : 'py-3'">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg transition-transform group-hover:rotate-6">
+                        <i class="fas fa-utensils text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">Rollin' Bites</h1>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#menu" class="text-gray-700 hover:text-cyan-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-utensils text-sm"></i>
+                        <span>Menu</span>
+                    </a>
+                    <a href="#schedule" class="text-gray-700 hover:text-lime-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-calendar-alt text-sm"></i>
+                        <span>Schedule</span>
+                    </a>
+                    <a href="#locations" class="text-gray-700 hover:text-yellow-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-map-marker-alt text-sm"></i>
+                        <span>Locations</span>
+                    </a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-500 font-medium transition-colors duration-300 flex items-center space-x-1">
+                        <i class="fas fa-info-circle text-sm"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="#order" class="hidden lg:inline-flex bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:from-cyan-600 hover:to-blue-600 shadow-md transition-all">
+                        Order Now
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>
+                    <i class="fas fa-times text-xl" x-show="mobileMenuOpen"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-3">
+                    <a href="#menu" @click="mobileMenuOpen=false" class="text-gray-700 hover:text-cyan-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-utensils mr-2"></i>Menu
+                    </a>
+                    <a href="#schedule" @click="mobileMenuOpen=false" class="text-gray-700 hover:text-lime-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-calendar-alt mr-2"></i>Schedule
+                    </a>
+                    <a href="#locations" @click="mobileMenuOpen=false" class="text-gray-700 hover:text-yellow-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Locations
+                    </a>
+                    <a href="#about" @click="mobileMenuOpen=false" class="text-gray-700 hover:text-blue-500 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-info-circle mr-2"></i>About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <!-- Decorative blobs -->
+        <div class="pointer-events-none absolute -top-10 -left-10 w-60 h-60 bg-cyan-400/30 rounded-full blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-10 -right-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="floating mb-6">
+                <i class="fas fa-truck text-6xl opacity-90"></i>
+            </div>
+            <h2 class="text-5xl sm:text-6xl font-black mb-6 leading-tight">Fresh Food<br><span class="gradient-text">On Wheels!</span></h2>
+            <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">Serving up delicious, gourmet street food across the city. Follow our schedule to find the tastiest bites in town!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#menu" class="bg-lime-400 text-gray-900 px-8 py-4 rounded-full font-bold hover:bg-lime-300 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2">
+                    <i class="fas fa-utensils"></i>
+                    <span>View This Week's Menu</span>
+                </a>
+                <a href="#locations" class="bg-white/20 backdrop-blur-sm text-white border-2 border-white/30 px-8 py-4 rounded-full font-bold hover:bg-white/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>See Our Locations</span>
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-12 bg-white rounded-t-3xl transform translate-y-1/2"></div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="container mx-auto px-4" x-data="{ filter: 'All' }">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-black text-gray-800 mb-4">Menu Highlights</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">From fiery tacos to fresh bowls, there’s something for everyone. Crafted daily with local ingredients.</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
+                <button @click="filter='All'" :class="filter==='All' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">All</button>
+                <button @click="filter='Tacos'" :class="filter==='Tacos' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">Tacos</button>
+                <button @click="filter='Burgers'" :class="filter==='Burgers' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">Burgers</button>
+                <button @click="filter='Bowls'" :class="filter==='Bowls' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">Bowls</button>
+                <button @click="filter='Fries'" :class="filter==='Fries' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">Fries</button>
+                <button @click="filter='Vegan'" :class="filter==='Vegan' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">Vegan</button>
+                <button @click="filter='Sweets'" :class="filter==='Sweets' ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors">Sweets</button>
+            </div>
+
+            <!-- Cards -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- Tacos -->
+                <div class="tilt-card rounded-2xl overflow-hidden bg-gradient-to-br from-cyan-50 to-white">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1656282448110-91c1ae885b3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjB0YWNvcyUyMGNsb3NlLXVwfGVufDB8MHx8fDE3NTg5MjQ5NTR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Bwr6Wr6YV4o" alt="Street tacos with fresh toppings" loading="lazy" class="w-full h-56 object-cover">
+                        <span class="absolute top-3 left-3 bg-yellow-400 text-gray-900 text-xs font-black px-3 py-1 rounded-full shadow">Popular</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-xl font-black text-gray-800">Dragon Breath Tacos</h3>
+                            <span class="text-lg font-extrabold text-cyan-600">$8</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Spicy grilled chicken, fresh slaw, and our signature dragon sauce.</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <a href="#order" class="px-4 py-2 rounded-full bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition">Add</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smash Burger -->
+                <div class="tilt-card rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-white" x-show="['All','Burgers'].includes(filter)">
+                    <img src="https://images.unsplash.com/photo-1603508102983-99b101395d1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzbWFzaCUyMGJ1cmdlciUyMGdvdXJtZXR8ZW58MHwwfHx8MTc1ODkyNDk1NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=BqH1t46q-78" alt="Gourmet smash burger with melted cheese" loading="lazy" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-xl font-black text-gray-800">Double Smash Burger</h3>
+                            <span class="text-lg font-extrabold text-cyan-600">$12</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Two smashed patties, melty cheddar, pickles, and secret sauce.</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <a href="#order" class="px-4 py-2 rounded-full bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition">Add</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Poke Bowl -->
+                <div class="tilt-card rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-50 to-white" x-show="['All','Bowls'].includes(filter)">
+                    <img src="https://images.unsplash.com/photo-1661257711676-79a0fc533569?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb2tlJTIwYm93bCUyMGNvbG9yZnVsfGVufDB8MHx8fDE3NTg5MjQ5NTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Be2IMDyTDII" alt="Colorful poke bowl with fresh ingredients" loading="lazy" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-xl font-black text-gray-800">Aloha Poke Bowl</h3>
+                            <span class="text-lg font-extrabold text-cyan-600">$11</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Sushi rice, marinated tuna, edamame, mango, and citrus ponzu.</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+                            </div>
+                            <a href="#order" class="px-4 py-2 rounded-full bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition">Add</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loaded Fries -->
+                <div class="tilt-card rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-50 to-white" x-show="['All','Fries'].includes(filter)">
+                    <img src="https://images.unsplash.com/photo-1674669520816-c3c5615dfe51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxsb2FkZWQlMjBmcmllcyUyMHN0cmVldCUyMGZvb2R8ZW58MHwwfHx8MTc1ODkyNDk1Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=qvQ6gMMhpKY" alt="Loaded fries topped with cheese and jalapeños" loading="lazy" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-xl font-black text-gray-800">Supreme Loaded Fries</h3>
+                            <span class="text-lg font-extrabold text-cyan-600">$9</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Crispy fries smothered in queso, jalapeños, pico, and crema.</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <a href="#order" class="px-4 py-2 rounded-full bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition">Add</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vegan Wrap -->
+                <div class="tilt-card rounded-2xl overflow-hidden bg-gradient-to-br from-lime-50 to-white" x-show="['All','Vegan'].includes(filter)">
+                    <img src="https://images.unsplash.com/photo-1662318183333-971ae1658e44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx2ZWdhbiUyMHdyYXAlMjBmcmVzaHxlbnwwfDB8fHwxNzU4OTI0OTU3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=0droyjvi8Sw" alt="Fresh vegan wrap with greens" loading="lazy" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-xl font-black text-gray-800">Garden Power Wrap</h3>
+                            <span class="text-lg font-extrabold text-cyan-600">$9</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Avocado, hummus, crisp veggies, and lemon tahini in a spinach wrap.</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <a href="#order" class="px-4 py-2 rounded-full bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition">Add</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Churros -->
+                <div class="tilt-card rounded-2xl overflow-hidden bg-gradient-to-br from-pink-50 to-white" x-show="['All','Sweets'].includes(filter)">
+                    <img src="https://images.unsplash.com/photo-1737681160050-70c2f24554f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjaHVycm9zJTIwY2lubmFtb24lMjBzdWdhcnxlbnwwfDB8fHwxNzU4OTI0OTU4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=ihIxwDgq2BQ" alt="Cinnamon sugar churros" loading="lazy" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-xl font-black text-gray-800">Crispy Churros</h3>
+                            <span class="text-lg font-extrabold text-cyan-600">$5</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Warm churros dusted with cinnamon sugar. Add chocolate dip!</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <a href="#order" class="px-4 py-2 rounded-full bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Schedule -->
+    <section id="schedule" class="py-20 bg-white relative">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-lime-400 to-yellow-400"></div>
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-800 mb-4">This Week's Schedule</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Find us at these amazing locations throughout the week. Don't miss our daily specials!</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-7 gap-6 max-w-7xl mx-auto">
+                <!-- Monday -->
+                <div class="schedule-card bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-2xl p-6 text-center border-2 border-cyan-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-cyan-700 text-lg mb-2">Monday</h3>
+                    <p class="text-sm text-cyan-600 font-semibold mb-1">11AM - 2PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Downtown Plaza</p>
+                    <div class="mt-3 text-cyan-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Tuesday -->
+                <div class="schedule-card bg-gradient-to-br from-lime-50 to-lime-100 rounded-2xl p-6 text-center border-2 border-lime-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-lime-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-lime-700 text-lg mb-2">Tuesday</h3>
+                    <p class="text-sm text-lime-600 font-semibold mb-1">11AM - 7PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Tech Park</p>
+                    <div class="mt-3 text-lime-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Wednesday -->
+                <div class="schedule-card bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 text-center border-2 border-yellow-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-yellow-700 text-lg mb-2">Wednesday</h3>
+                    <p class="text-sm text-yellow-600 font-semibold mb-1">11AM - 8PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Riverside Market</p>
+                    <div class="mt-3 text-yellow-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Thursday -->
+                <div class="schedule-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border-2 border-blue-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-blue-700 text-lg mb-2">Thursday</h3>
+                    <p class="text-sm text-blue-600 font-semibold mb-1">11AM - 9PM</p>
+                    <p class="font-bold text-gray-800 mt-3">City Center</p>
+                    <div class="mt-3 text-blue-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Friday -->
+                <div class="schedule-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 text-center border-2 border-purple-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-purple-700 text-lg mb-2">Friday</h3>
+                    <p class="text-sm text-purple-600 font-semibold mb-1">11AM - 10PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Music Festival</p>
+                    <div class="mt-3 text-purple-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Saturday -->
+                <div class="schedule-card bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-6 text-center border-2 border-pink-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-pink-700 text-lg mb-2">Saturday</h3>
+                    <p class="text-sm text-pink-600 font-semibold mb-1">10AM - 10PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Farmers Market</p>
+                    <div class="mt-3 text-pink-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Sunday -->
+                <div class="schedule-card bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-6 text-center border-2 border-orange-200/50 shadow-sm">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-calendar-day text-white"></i>
+                    </div>
+                    <h3 class="font-black text-orange-700 text-lg mb-2">Sunday</h3>
+                    <p class="text-sm text-orange-600 font-semibold mb-1">10AM - 6PM</p>
+                    <p class="font-bold text-gray-800 mt-3">Park Picnic Area</p>
+                    <div class="mt-3 text-orange-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Map -->
+    <section id="locations" class="py-20 bg-gradient-to-br from-blue-50 via-cyan-50 to-emerald-50 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-800 mb-4">Our Favorite Spots</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Discover where you can find our bright orange food truck serving up deliciousness!</p>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-6xl mx-auto overflow-hidden">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-black mb-6 gradient-text">Popular Locations</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-cyan-50 transition-all duration-300">
+                                <div class="relative">
+                                    <span class="w-3 h-3 bg-cyan-400 rounded-full shadow-lg block"></span>
+                                    <span class="absolute -inset-1 animate-ping rounded-full bg-cyan-300/40"></span>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-gray-800">Downtown Plaza</span>
+                                    <p class="text-sm text-gray-600">Main Street & 5th Avenue</p>
+                                </div>
+                            </li>
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-lime-50 transition-all duration-300">
+                                <span class="w-3 h-3 bg-lime-400 rounded-full shadow-lg block"></span>
+                                <div>
+                                    <span class="font-bold text-gray-800">Tech Park</span>
+                                    <p class="text-sm text-gray-600">Innovation Drive</p>
+                                </div>
+                            </li>
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-yellow-50 transition-all duration-300">
+                                <span class="w-3 h-3 bg-yellow-400 rounded-full shadow-lg block"></span>
+                                <div>
+                                    <span class="font-bold text-gray-800">Riverside Market</span>
+                                    <p class="text-sm text-gray-600">Riverwalk Promenade</p>
+                                </div>
+                            </li>
+                            <li class="flex items-center space-x-4 p-3 rounded-xl hover:bg-blue-50 transition-all duration-300">
+                                <span class="w-3 h-3 bg-blue-400 rounded-full shadow-lg block"></span>
+                                <div>
+                                    <span class="font-bold text-gray-800">City Center</span>
+                                    <p class="text-sm text-gray-600">Central Square</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl p-6 text-white overflow-hidden">
+                            <div class="absolute top-4 right-4">
+                                <i class="fas fa-map-marked-alt text-2xl text-cyan-400"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-4">Live Tracking</h4>
+                            <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-cyan-300 font-semibold">Current Location:</span>
+                                    <span class="text-lime-300 font-bold">Downtown Plaza</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-cyan-400 h-2 rounded-full w-3/4"></div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-truck-moving text-4xl text-yellow-400 mb-3 floating"></i>
+                                <p class="text-gray-300">Track our truck in real-time on our app!</p>
+                                <a href="#" class="mt-4 inline-flex items-center bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-2 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                    <i class="fa-brands fa-apple mr-2"></i> Download App
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specials Banner -->
+    <section class="py-12 bg-gradient-to-r from-yellow-400 via-orange-400 to-lime-400 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <!-- Tacos visual -->
+        <div class="hidden md:block absolute inset-y-0 right-0 w-1/3 opacity-25">
+            <img src="https://images.unsplash.com/photo-1656282448110-91c1ae885b3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjB0YWNvcyUyMGNsb3NlLXVwfGVufDB8MHx8fDE3NTg5MjQ5NTR8MA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=Bwr6Wr6YV4o" alt="Dragon Breath Tacos" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-fire text-3xl text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-black text-gray-900 mb-2">This Week's Special: Dragon Breath Tacos!</h3>
+                    <p class="text-gray-800 font-semibold">Spicy grilled chicken, fresh slaw, and our signature dragon sauce. Only $8!</p>
+                </div>
+                <a id="order" href="#menu" class="bg-white text-gray-900 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Order Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1727976823369-873f22442103?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmb29kJTIwdHJ1Y2slMjBpbnRlcmlvciUyMGtpdGNoZW4lMjBjaGVmJTIwY29va2luZ3xlbnwwfDB8fHwxNzU4OTI0OTU0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=aItjLaKP8Jg" 
+                         alt="Chef cooking inside the food truck kitchen" class="rounded-3xl shadow-2xl w-full object-cover">
+                    <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-800">Best Street Eats</p>
+                            <p class="text-xs text-gray-500">City Choice Awards</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-4xl font-black text-gray-800 mb-6">Our Story</h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        Rollin' Bites started with a simple mission: bring gourmet street food to every corner of the city. 
+                        Our bright orange truck has become a local favorite, serving up creative dishes made with fresh, 
+                        locally-sourced ingredients.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-leaf text-cyan-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Fresh Ingredients</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-lime-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-heart text-lime-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Made with Love</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Fast Service</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-award text-blue-600 text-xl"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Award Winning</span>
+                        </div>
+                    </div>
+                    <a href="#locations" class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-3 rounded-full font-bold hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center">
+                        Learn More About Us
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-utensils text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold gradient-text">Rollin' Bites</h4>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">Fresh, delicious food served with a smile from our bright orange truck! Follow us for daily specials and locations.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-cyan-400">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#menu" class="text-gray-400 hover:text-cyan-300 transition-colors">Menu</a></li>
+                        <li><a href="#schedule" class="text-gray-400 hover:text-lime-300 transition-colors">Schedule</a></li>
+                        <li><a href="#locations" class="text-gray-400 hover:text-yellow-300 transition-colors">Locations</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-blue-300 transition-colors">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-lime-400">Follow Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-cyan-600 transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-lime-600 transition-colors" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Join our foodie community!</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-yellow-400">Contact</h4>
+                    <div class="space-y-2">
+                        <p class="text-gray-400 flex items-center space-x-2">
+                            <i class="fas fa-envelope text-cyan-400"></i>
+                            <span>hello@rollinbites.com</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-2">
+                            <i class="fas fa-phone text-lime-400"></i>
+                            <span>(555) 123-FOOD</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-2">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            <span>Find us on the streets!</span>
+                        </p>
+                        <form class="mt-4 flex">
+                            <input type="email" placeholder="Get updates by email" class="w-full px-4 py-2 rounded-l-lg bg-gray-800 text-gray-200 placeholder-gray-400 outline-none focus:ring-2 focus:ring-cyan-500">
+                            <button type="submit" class="px-4 py-2 rounded-r-lg bg-cyan-500 hover:bg-cyan-600 font-semibold">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Rollin' Bites Food Truck. All rights reserved. Made with <i class="fas fa-heart text-red-400"></i> for food lovers everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50" x-data>
+        <div class="relative">
+            <div x-show="fabOpen" x-transition class="absolute bottom-16 right-0 flex flex-col items-end space-y-2 mb-2">
+                <a href="tel:+15551233663" class="flex items-center space-x-2 bg-white shadow-lg rounded-full px-4 py-2 hover:bg-gray-50">
+                    <i class="fas fa-phone text-lime-500"></i><span class="text-sm font-semibold text-gray-800">Call</span>
+                </a>
+                <a href="#menu" class="flex items-center space-x-2 bg-white shadow-lg rounded-full px-4 py-2 hover:bg-gray-50">
+                    <i class="fas fa-utensils text-cyan-500"></i><span class="text-sm font-semibold text-gray-800">Menu</span>
+                </a>
+                <a href="#locations" class="flex items-center space-x-2 bg-white shadow-lg rounded-full px-4 py-2 hover:bg-gray-50">
+                    <i class="fas fa-map-marker-alt text-yellow-500"></i><span class="text-sm font-semibold text-gray-800">Find Us</span>
+                </a>
+            </div>
+            <button @click="fabOpen = !fabOpen" class="w-14 h-14 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-2xl flex items-center justify-center hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-cyan-300">
+                <i class="fas fa-utensils text-white text-xl" x-show="!fabOpen"></i>
+                <i class="fas fa-times text-white text-xl" x-show="fabOpen"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
