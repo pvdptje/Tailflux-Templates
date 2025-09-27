@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape Architecture Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917'
+                        },
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a'
+                        },
+                        purple: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-neutral-800 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-teal-600">GreenScape Designs</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#work" class="text-neutral-600 hover:text-teal-600 transition-colors">Portfolio</a>
+                    <a href="#about" class="text-neutral-600 hover:text-teal-600 transition-colors">About</a>
+                    <a href="#services" class="text-neutral-600 hover:text-teal-600 transition-colors">Services</a>
+                    <a href="#contact" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-stone-100 to-teal-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-5xl font-bold text-neutral-800 mb-4">Transforming Spaces Through Nature</h1>
+                    <p class="text-xl text-neutral-600 mb-8">Creating sustainable, beautiful landscapes that harmonize with their environment and inspire connection.</p>
+                    <div class="flex space-x-4">
+                        <a href="#work" class="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors">View Portfolio</a>
+                        <a href="#contact" class="border-2 border-teal-600 text-teal-600 px-6 py-3 rounded-lg hover:bg-teal-600 hover:text-white transition-colors">Get in Touch</a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-purple-100 rounded-2xl p-8 transform rotate-3">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Landscape Design" 
+                             class="rounded-lg shadow-lg transform -rotate-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="work" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-neutral-800 mb-12">Featured Projects</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-stone-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1560717789-0ac7c58ac90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Urban Garden" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Urban Oasis Retreat</h3>
+                        <p class="text-neutral-600 mb-4">A sustainable urban garden transforming a city rooftop into a peaceful retreat.</p>
+                        <span class="inline-block bg-teal-100 text-teal-800 text-sm px-3 py-1 rounded-full">Residential</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-stone-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Public Park" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Community Harmony Park</h3>
+                        <p class="text-neutral-600 mb-4">A public space designed to foster community interaction and environmental education.</p>
+                        <span class="inline-block bg-purple-100 text-purple-800 text-sm px-3 py-1 rounded-full">Public Space</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-stone-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Commercial Landscape" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Corporate Wellness Garden</h3>
+                        <p class="text-neutral-600 mb-4">A therapeutic landscape promoting employee wellbeing and sustainable practices.</p>
+                        <span class="inline-block bg-stone-200 text-stone-800 text-sm px-3 py-1 rounded-full">Commercial</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Landscape Architect" 
+                         class="rounded-2xl shadow-lg">
+                </div>
+                <div>
+                    <h2 class="text-4xl font-bold text-neutral-800 mb-6">About Me</h2>
+                    <p class="text-lg text-neutral-600 mb-4">
+                        With over 15 years of experience in landscape architecture, I specialize in creating sustainable, 
+                        functional, and beautiful outdoor spaces that enhance both the environment and human experience.
+                    </p>
+                    <p class="text-lg text-neutral-600 mb-6">
+                        My approach combines ecological sensitivity with innovative design, ensuring each project 
+                        reflects its unique context while promoting biodiversity and sustainability.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-teal-500 rounded-full mr-3"></div>
+                            <span class="text-neutral-700">Sustainable Design</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
+                            <span class="text-neutral-700">Ecological Planning</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-teal-500 rounded-full mr-3"></div>
+                            <span class="text-neutral-700">Community Focus</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
+                            <span class="text-neutral-700">Innovative Solutions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-neutral-800 mb-12">Professional Services</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🌿</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-neutral-800 mb-3">Landscape Design</h3>
+                    <p class="text-neutral-600">Custom designs tailored to your space, needs, and environmental conditions.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">💧</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-neutral-800 mb-3">Sustainable Planning</h3>
+                    <p class="text-neutral-600">Eco-friendly solutions focusing on water conservation and native planting.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🏢</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-neutral-800 mb-3">Project Management</h3>
+                    <p class="text-neutral-600">Comprehensive oversight from concept to completion ensuring quality results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-teal-50 to-purple-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-neutral-800 mb-12">Let's Create Something Beautiful</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-2">Name</label>
+                            <input type="text" class="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Project Type</label>
+                        <select class="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option>Residential Garden</option>
+                            <option>Commercial Space</option>
+                            <option>Public Park</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Message</label>
+                        <textarea rows="4" class="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition-colors font-semibold">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">GreenScape Designs</h3>
+                    <p class="text-stone-300">Creating sustainable landscapes that inspire and endure.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <p class="text-stone-300">hello@greenscapedesigns.com</p>
+                    <p class="text-stone-300">+1 (555) 123-4567</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Follow</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-stone-300 hover:text-white transition-colors">Instagram</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition-colors">LinkedIn</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition-colors">Pinterest</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Location</h4>
+                    <p class="text-stone-300">123 Nature Way<br>Portland, OR 97205</p>
+                </div>
+            </div>
+            <div class="border-t border-stone-600 mt-8 pt-8 text-center text-stone-400">
+                <p>&copy; 2024 GreenScape Designs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
