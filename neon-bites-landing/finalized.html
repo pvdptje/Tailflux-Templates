@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlavorFuel - Gourmet Meal Prep Delivery</title>
+    <meta name="theme-color" content="#18181b">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                        },
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            200: '#f5d0fe',
+                            300: '#f0abfc',
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'slide-in': 'slide-in 0.5s ease-out forwards',
+                        'fade-in': 'fade-in 0.8s ease-out forwards'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        'pulse-glow': {
+                            '0%': { boxShadow: '0 0 20px rgba(236, 72, 153, 0.3)' },
+                            '100%': { boxShadow: '0 0 40px rgba(236, 72, 153, 0.6)' }
+                        },
+                        'slide-in': {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899 0%, #d946ef 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-float, .animate-pulse-glow, .animate-slide-in, .animate-fade-in { animation: none !important; }
+            * { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body class="bg-zinc-900 text-zinc-100 font-sans overflow-x-hidden" x-data="{ menuOpen:false }">
+    <!-- Navigation -->
+    <nav x-data="{ mobileMenuOpen: false }" class="bg-zinc-800/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-700/50 transition-shadow" id="siteNav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center space-x-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg" aria-label="FlavorFuel home">
+                    <div class="w-10 h-10 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full flex items-center justify-center shadow-lg animate-pulse-glow group-hover:scale-105 transition">
+                        <i class="fas fa-utensils text-white text-lg" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">FlavorFuel</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#how" class="hover:text-pink-400 transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg">
+                        <i class="fas fa-play-circle text-sm" aria-hidden="true"></i>
+                        <span>How It Works</span>
+                    </a>
+                    <a href="#plans" class="hover:text-pink-400 transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg">
+                        <i class="fas fa-utensils text-sm" aria-hidden="true"></i>
+                        <span>Meal Plans</span>
+                    </a>
+                    <a href="#plans" class="hover:text-pink-400 transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg">
+                        <i class="fas fa-tag text-sm" aria-hidden="true"></i>
+                        <span>Pricing</span>
+                    </a>
+                    <a href="#about" class="hover:text-pink-400 transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg">
+                        <i class="fas fa-info-circle text-sm" aria-hidden="true"></i>
+                        <span>About</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#cta" class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-6 py-3 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                        <i class="fas fa-rocket" aria-hidden="true"></i>
+                        <span>Get Started</span>
+                    </a>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen.toString()" aria-controls="mobileMenu" class="md:hidden text-zinc-300 p-2 rounded-lg hover:bg-zinc-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Toggle navigation menu">
+                        <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden py-4 border-t border-zinc-700/50 mt-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#how" class="hover:text-pink-400 transition-colors py-2 flex items-center space-x-3">
+                        <i class="fas fa-play-circle w-5" aria-hidden="true"></i>
+                        <span>How It Works</span>
+                    </a>
+                    <a href="#plans" class="hover:text-pink-400 transition-colors py-2 flex items-center space-x-3">
+                        <i class="fas fa-utensils w-5" aria-hidden="true"></i>
+                        <span>Meal Plans</span>
+                    </a>
+                    <a href="#plans" class="hover:text-pink-400 transition-colors py-2 flex items-center space-x-3">
+                        <i class="fas fa-tag w-5" aria-hidden="true"></i>
+                        <span>Pricing</span>
+                    </a>
+                    <a href="#about" class="hover:text-pink-400 transition-colors py-2 flex items-center space-x-3">
+                        <i class="fas fa-info-circle w-5" aria-hidden="true"></i>
+                        <span>About</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden min-h-screen flex items-center">
+        <div class="absolute inset-0 parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1581597096506-acefe678d02b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920');"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-violet-900/60 via-zinc-900/90 to-pink-900/60"></div>
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+            <div class="absolute top-40 right-10 w-72 h-72 bg-fuchsia-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/2 w-72 h-72 bg-violet-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <div class="inline-flex items-center space-x-2 bg-zinc-800/50 rounded-full px-4 py-2 mb-6 glass-effect">
+                        <i class="fas fa-star text-yellow-400" aria-hidden="true"></i>
+                        <span class="text-sm">Rated 4.9/5 by 2,000+ customers</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                        Fuel Your 
+                        <span class="gradient-text">Adventure</span>
+                        <br>With Every Bite
+                    </h1>
+                    <p class="text-zinc-300 text-xl mb-8 leading-relaxed">
+                        Gourmet meal prep delivered to your door. Healthy, delicious, and ready in minutes. 
+                        No cooking skills required! Experience restaurant-quality meals made simple.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <a href="#plans" class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                            <i class="fas fa-bolt group-hover:animate-bounce" aria-hidden="true"></i>
+                            <span>Choose Your Plan</span>
+                        </a>
+                        <a href="#how" class="border border-violet-500/50 text-violet-300 hover:bg-violet-900/30 px-8 py-4 rounded-full font-semibold transition-all glass-effect hover-lift flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                            <i class="fas fa-play-circle" aria-hidden="true"></i>
+                            <span>Watch Demo</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-6 text-zinc-400">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-green-400" aria-hidden="true"></i>
+                            <span>No commitment</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-shipping-fast text-blue-400" aria-hidden="true"></i>
+                            <span>Free delivery</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-leaf text-green-400" aria-hidden="true"></i>
+                            <span>100% fresh</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative animate-slide-in">
+                    <div class="relative">
+                        <div class="bg-gradient-to-br from-violet-600 to-pink-600 rounded-3xl p-2 shadow-2xl hover-lift">
+                            <img src="https://images.unsplash.com/photo-1616014709568-a985108e4f1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" 
+                                 alt="Gourmet salmon bowl with veggies" 
+                                 class="rounded-2xl w-full h-96 object-cover shadow-inner"
+                                 fetchpriority="high">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 bg-zinc-800/80 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-zinc-700/50 hover-lift">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-14 h-14 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <i class="fas fa-bolt text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-lg">Ready in 5 min</p>
+                                    <p class="text-zinc-400 text-sm">Heat & enjoy perfection</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-6 -right-6 bg-zinc-800/80 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-zinc-700/50 hover-lift">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-14 h-14 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                                    <i class="fas fa-heart text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-lg">Chef-Crafted</p>
+                                    <p class="text-zinc-400 text-sm">Restaurant quality</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-10 right-1/4 hidden md:block">
+                            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-pink-500/30 to-fuchsia-600/30 blur-xl"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="mt-16 flex justify-center">
+                <a href="#how" class="text-zinc-400 hover:text-pink-400 transition flex flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg" aria-label="Scroll to How It Works">
+                    <span class="text-xs mb-2">Scroll</span>
+                    <i class="fas fa-chevron-down animate-bounce" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-zinc-800/30 relative" id="features">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/50 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-5xl font-bold mb-6">Why FlavorFuel Stands Out</h2>
+                <p class="text-zinc-300 text-xl max-w-3xl mx-auto leading-relaxed">
+                    We've reimagined meal prep to make healthy eating exciting, convenient, and absolutely delicious
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-3xl p-8 hover-lift group animate-slide-in" style="animation-delay: 0.1s;">
+                    <div class="w-20 h-20 bg-gradient-to-r from-violet-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-bolt text-white text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Lightning Fast</h3>
+                    <p class="text-zinc-400 leading-relaxed">Meals ready in 5 minutes or less. Perfect for busy schedules and spontaneous cravings. No prep, no cleanup, just pure enjoyment.</p>
+                    <div class="mt-6 flex items-center text-pink-400">
+                        <span class="text-sm font-semibold">Learn more</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-3xl p-8 hover-lift group animate-slide-in" style="animation-delay: 0.2s;">
+                    <div class="w-20 h-20 bg-gradient-to-r from-pink-500 to-fuchsia-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-kitchen-set text-white text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Chef-Crafted Excellence</h3>
+                    <p class="text-zinc-400 leading-relaxed">Every recipe is designed by Michelin-trained chefs to maximize flavor and nutrition. Experience restaurant quality at home.</p>
+                    <div class="mt-6 flex items-center text-pink-400">
+                        <span class="text-sm font-semibold">Meet our chefs</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-3xl p-8 hover-lift group animate-slide-in" style="animation-delay: 0.3s;">
+                    <div class="w-20 h-20 bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-leaf text-white text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Fresh & Sustainable</h3>
+                    <p class="text-zinc-400 leading-relaxed">Locally sourced organic ingredients with eco-friendly packaging that loves our planet. Farm-to-table freshness guaranteed.</p>
+                    <div class="mt-6 flex items-center text-pink-400">
+                        <span class="text-sm font-semibold">Our sustainability</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 relative" id="how">
+        <div class="absolute inset-0 bg-gradient-to-r from-violet-900/10 to-pink-900/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6">How FlavorFuel Works</h2>
+                <p class="text-zinc-300 text-xl max-w-2xl mx-auto">Three simple steps to delicious, healthy eating</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center group animate-slide-in" style="animation-delay: 0.1s;">
+                    <div class="relative mb-6">
+                        <div class="w-24 h-24 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-mobile-alt text-white text-3xl" aria-hidden="true"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">1</div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Choose Your Plan</h3>
+                    <p class="text-zinc-400">Select from our flexible meal plans that fit your lifestyle and dietary preferences.</p>
+                </div>
+                
+                <div class="text-center group animate-slide-in relative" style="animation-delay: 0.2s;">
+                    <div class="relative mb-6">
+                        <div class="w-24 h-24 bg-gradient-to-r from-pink-500 to-fuchsia-500 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-truck text-white text-3xl" aria-hidden="true"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-10 h-10 bg-fuchsia-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">2</div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Fresh Delivery</h3>
+                    <p class="text-zinc-400">We deliver chef-prepared meals right to your door, packed with ice for freshness.</p>
+                    <!-- floating delivery preview -->
+                    <div class="hidden md:block absolute -right-8 -bottom-10 glass-effect rounded-2xl p-2 shadow-xl hover-lift">
+                        <img src="https://images.unsplash.com/photo-1631010231130-5c7828d9a3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Insulated meal delivery box" class="rounded-xl w-40 h-28 object-cover" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="text-center group animate-slide-in" style="animation-delay: 0.3s;">
+                    <div class="relative mb-6">
+                        <div class="w-24 h-24 bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-utensils text-white text-3xl" aria-hidden="true"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-10 h-10 bg-violet-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">3</div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Heat & Enjoy</h3>
+                    <p class="text-zinc-400">Ready in minutes! Heat your meal and savor restaurant-quality flavors at home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meal Plans Section -->
+    <section class="py-20 bg-zinc-800/30" id="plans">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6">Simple Plans, Amazing Meals</h2>
+                <p class="text-zinc-300 text-xl">Choose what works for your lifestyle</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="glass-effect rounded-3xl p-8 hover-lift group animate-slide-in" style="animation-delay: 0.1s;">
+                    <h3 class="text-2xl font-bold mb-4">Casual Fueler</h3>
+                    <div class="text-4xl font-bold mb-6">$49<span class="text-lg text-zinc-400">/week</span></div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-pink-500 mr-3" aria-hidden="true"></i>
+                            5 gourmet meals per week
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-pink-500 mr-3" aria-hidden="true"></i>
+                            Free standard delivery
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-pink-500 mr-3" aria-hidden="true"></i>
+                            Basic menu rotation
+                        </li>
+                        <li class="flex items-center text-zinc-400">
+                            <i class="fas fa-times-circle text-zinc-600 mr-3" aria-hidden="true"></i>
+                            Nutrition tracking
+                        </li>
+                    </ul>
+                    <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-4 rounded-xl font-semibold transition-all group-hover:scale-105 flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Start Casual plan">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <span>Start Casual</span>
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-br from-violet-600 to-pink-600 rounded-3xl p-8 transform scale-105 relative hover-lift animate-slide-in" style="animation-delay: 0.2s;">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-white text-zinc-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">MOST POPULAR</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Power Fueler</h3>
+                    <div class="text-4xl font-bold mb-6 text-white">$79<span class="text-lg text-zinc-200">/week</span></div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-zinc-100">
+                            <i class="fas fa-check-circle text-white mr-3" aria-hidden="true"></i>
+                            10 premium meals per week
+                        </li>
+                        <li class="flex items-center text-zinc-100">
+                            <i class="fas fa-check-circle text-white mr-3" aria-hidden="true"></i>
+                            Free express delivery
+                        </li>
+                        <li class="flex items-center text-zinc-100">
+                            <i class="fas fa-check-circle text-white mr-3" aria-hidden="true"></i>
+                            Full menu access
+                        </li>
+                        <li class="flex items-center text-zinc-100">
+                            <i class="fas fa-check-circle text-white mr-3" aria-hidden="true"></i>
+                            Advanced nutrition tracking
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white text-zinc-900 hover:bg-zinc-100 py-4 rounded-xl font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Choose Power Fueler plan">
+                        <i class="fas fa-bolt" aria-hidden="true"></i>
+                        <span>Go Power</span>
+                    </button>
+                </div>
+                
+                <div class="glass-effect rounded-3xl p-8 hover-lift group animate-slide-in" style="animation-delay: 0.3s;">
+                    <h3 class="text-2xl font-bold mb-4">Ultimate Fueler</h3>
+                    <div class="text-4xl font-bold mb-6">$129<span class="text-lg text-zinc-400">/week</span></div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-fuchsia-500 mr-3" aria-hidden="true"></i>
+                            20 chef's choice meals
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-fuchsia-500 mr-3" aria-hidden="true"></i>
+                            Priority same-day delivery
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-fuchsia-500 mr-3" aria-hidden="true"></i>
+                            Custom meal planning
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <i class="fas fa-check-circle text-fuchsia-500 mr-3" aria-hidden="true"></i>
+                            Personal dietitian support
+                        </li>
+                    </ul>
+                    <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-4 rounded-xl font-semibold transition-all group-hover:scale-105 flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Choose Ultimate Fueler plan">
+                        <i class="fas fa-crown" aria-hidden="true"></i>
+                        <span>Go Ultimate</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-zinc-900"></div>
+        <div class="absolute -right-24 -top-24 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute -left-24 -bottom-24 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="hover-lift">
+                    <div class="rounded-3xl overflow-hidden border border-zinc-700/50 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1659354218430-ac7f0b31e977?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="Chef plating a gourmet dish in the kitchen" class="w-full h-96 object-cover" loading="lazy">
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-5xl font-bold mb-6">Crafted by Chefs, Loved by You</h2>
+                    <p class="text-zinc-300 text-lg leading-relaxed mb-6">We’re a team of culinary experts on a mission to make better eating effortless. From sourcing local ingredients to crafting balanced recipes, every FlavorFuel meal is designed for taste, nutrition, and convenience.</p>
+                    <ul class="space-y-3 text-zinc-300">
+                        <li class="flex items-center"><i class="fas fa-seedling text-green-400 mr-3" aria-hidden="true"></i> Seasonal, organic produce whenever possible</li>
+                        <li class="flex items-center"><i class="fas fa-temperature-low text-blue-400 mr-3" aria-hidden="true"></i> Delivered chilled in recyclable packaging</li>
+                        <li class="flex items-center"><i class="fas fa-bowl-food text-pink-400 mr-3" aria-hidden="true"></i> Options for vegan, keto, and high-protein diets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-900/50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6">Loved by Foodies</h2>
+                <p class="text-zinc-300 text-xl">See what our customers are saying</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-3xl p-8 hover-lift animate-slide-in" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">SR</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-zinc-300 italic">"FlavorFuel has transformed my busy work life! The meals are restaurant-quality and ready in minutes. I've never eaten so well!"</p>
+                </div>
+                
+                <div class="glass-effect rounded-3xl p-8 hover-lift animate-slide-in" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">MJ</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold">Mike Rodriguez</h4>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-zinc-300 italic">"As a fitness enthusiast, I appreciate the nutritional balance. The protein-packed options keep me fueled for my workouts!"</p>
+                </div>
+                
+                <div class="glass-effect rounded-3xl p-8 hover-lift animate-slide-in" style="animation-delay: 0.3s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">EP</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold">Emily Parker</h4>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-zinc-300 italic">"The convenience is unmatched! No more grocery shopping or meal prep. Just delicious, healthy meals delivered weekly."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="py-20 bg-gradient-to-r from-violet-900/40 to-pink-900/40 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-violet-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-5xl font-bold mb-6">Ready to Transform Your Eating Habits?</h2>
+            <p class="text-zinc-300 text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of happy customers who have discovered the joy of stress-free, delicious eating. Your journey to better health starts here.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <a href="#plans" class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                    <i class="fas fa-rocket" aria-hidden="true"></i>
+                    <span>Start Your Journey</span>
+                </a>
+                <button @click="menuOpen = true" class="border border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold transition-all glass-effect hover-lift flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-haspopup="dialog" aria-controls="menuModal">
+                    <i class="fas fa-eye" aria-hidden="true"></i>
+                    <span>See Sample Menu</span>
+                </button>
+            </div>
+            <div class="flex items-center justify-center space-x-8 text-zinc-300 text-sm">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-green-400" aria-hidden="true"></i>
+                    <span>No commitment • Cancel anytime</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-truck text-blue-400" aria-hidden="true"></i>
+                    <span>Free delivery • Fresh guaranteed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-800 py-16 border-t border-zinc-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-utensils text-white" aria-hidden="true"></i>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">FlavorFuel</span>
+                    </div>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Delicious meals, delivered with love. Experience the future of convenient, healthy eating.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 bg-zinc-700 hover:bg-pink-500 rounded-full flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                            <i class="fab fa-instagram text-white" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 bg-zinc-700 hover:bg-blue-500 rounded-full flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                            <i class="fab fa-facebook-f text-white" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="TikTok" class="w-10 h-10 bg-zinc-700 hover:bg-pink-400 rounded-full flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                            <i class="fab fa-tiktok text-white" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-10 h-10 bg-zinc-700 hover:bg-blue-400 rounded-full flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                            <i class="fab fa-twitter text-white" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 flex items-center space-x-2">
+                        <i class="fas fa-building text-pink-400" aria-hidden="true"></i>
+                        <span>Company</span>
+                    </h4>
+                    <ul class="space-y-3 text-zinc-400">
+                        <li><a href="#about" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>About Us</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>Careers</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>Press</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>Blog</span>
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 flex items-center space-x-2">
+                        <i class="fas fa-life-ring text-pink-400" aria-hidden="true"></i>
+                        <span>Support</span>
+                    </h4>
+                    <ul class="space-y-3 text-zinc-400">
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>FAQ</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>Contact</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>Delivery Areas</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                            <span>Dietary Info</span>
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 flex items-center space-x-2">
+                        <i class="fas fa-envelope text-pink-400" aria-hidden="true"></i>
+                        <span>Newsletter</span>
+                    </h4>
+                    <p class="text-zinc-400 mb-4">Get the latest recipes and exclusive offers delivered to your inbox.</p>
+                    <form class="flex space-x-2" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+                        <label for="email" class="sr-only">Email</label>
+                        <input id="email" type="email" placeholder="Your email" class="flex-1 bg-zinc-700 border border-zinc-600 rounded-lg px-4 py-2 text-white placeholder-zinc-400 focus:outline-none focus:border-pink-500 transition-colors" required>
+                        <button class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-4 rounded-lg transition-all transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Subscribe">
+                            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-zinc-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-zinc-500 text-sm mb-4 md:mb-0 flex items-center space-x-2">
+                    <i class="fas fa-heart text-pink-500" aria-hidden="true"></i>
+                    <span>© 2024 FlavorFuel. Made with love for food lovers everywhere.</span>
+                </p>
+                <div class="flex space-x-6 text-sm text-zinc-500">
+                    <a href="#" class="hover:text-pink-400 transition-colors flex items-center space-x-1">
+                        <i class="fas fa-shield-alt text-xs" aria-hidden="true"></i>
+                        <span>Privacy Policy</span>
+                    </a>
+                    <a href="#" class="hover:text-pink-400 transition-colors flex items-center space-x-1">
+                        <i class="fas fa-file-contract text-xs" aria-hidden="true"></i>
+                        <span>Terms of Service</span>
+                    </a>
+                    <a href="#" class="hover:text-pink-400 transition-colors flex items-center space-x-1">
+                        <i class="fas fa-cookie text-xs" aria-hidden="true"></i>
+                        <span>Cookie Policy</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating CTA Button (Mobile) -->
+    <div class="fixed bottom-6 right-6 md:hidden z-40">
+        <button @click="menuOpen = true" class="bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110 animate-pulse-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Open sample menu">
+            <i class="fas fa-utensils text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-6 left-6 z-40 w-12 h-12 bg-zinc-800/80 backdrop-blur-md border border-zinc-700/50 rounded-full flex items-center justify-center text-zinc-300 hover:text-pink-400 transition-all transform hover:scale-110 opacity-0 invisible transition-opacity duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Sample Menu Modal -->
+    <div x-show="menuOpen" x-transition.opacity x-cloak id="menuModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div @click="menuOpen=false" class="absolute inset-0 bg-zinc-900/80 backdrop-blur-sm"></div>
+        <div class="relative max-w-4xl w-full bg-zinc-900 rounded-3xl border border-zinc-700/60 shadow-2xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-700/60">
+                <h3 class="text-xl font-semibold">Sample Menu</h3>
+                <button @click="menuOpen=false" class="text-zinc-400 hover:text-white p-2 rounded-lg hover:bg-zinc-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500" aria-label="Close sample menu">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="group hover-lift">
+                        <div class="rounded-2xl overflow-hidden border border-zinc-700/60">
+                            <img src="https://images.unsplash.com/photo-1616014709568-a985108e4f1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Grilled salmon bowl with veggies" class="w-full h-44 object-cover" loading="lazy">
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-semibold">Citrus Glazed Salmon Bowl</h4>
+                            <p class="text-zinc-400 text-sm">Brown rice, roasted veggies, sesame miso dressing</p>
+                        </div>
+                    </div>
+                    <div class="group hover-lift">
+                        <div class="rounded-2xl overflow-hidden border border-zinc-700/60">
+                            <img src="https://images.unsplash.com/photo-1585325701981-7104a305aa69?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Steak with asparagus and mashed potatoes" class="w-full h-44 object-cover" loading="lazy">
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-semibold">Herb-Crusted Steak Plate</h4>
+                            <p class="text-zinc-400 text-sm">Asparagus, garlic mash, peppercorn jus</p>
+                        </div>
+                    </div>
+                    <div class="group hover-lift">
+                        <div class="rounded-2xl overflow-hidden border border-zinc-700/60">
+                            <img src="https://images.unsplash.com/photo-1705347925706-d4097457c2ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Vegan buddha bowl with colorful ingredients" class="w-full h-44 object-cover" loading="lazy">
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="font-semibold">Rainbow Buddha Bowl (Vegan)</h4>
+                            <p class="text-zinc-400 text-sm">Quinoa, chickpeas, avocado, tahini lemon</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center justify-between gap-4">
+                    <div class="flex items-center text-zinc-400 text-sm">
+                        <img src="https://images.unsplash.com/photo-1448935852404-7a38bb46f5b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=128" alt="Fresh herbs and vegetables" class="w-10 h-10 rounded-full object-cover border border-zinc-700/60 mr-3" loading="lazy">
+                        <span>Fresh, seasonal ingredients</span>
+                    </div>
+                    <a href="#plans" @click="menuOpen=false" class="inline-flex items-center bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-5 py-2.5 rounded-full font-semibold transition-all hover:scale-105 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500">
+                        Pick a Plan
+                        <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Sticky nav shadow on scroll + back to top visibility
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            const nav = document.getElementById('siteNav');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.remove('opacity-100', 'visible');
+                backToTop.classList.add('opacity-0', 'invisible');
+            }
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-slide-in, .animate-fade-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>

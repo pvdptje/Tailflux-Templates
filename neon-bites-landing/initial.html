@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlavorFuel - Gourmet Meal Prep Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                        },
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            200: '#f5d0fe',
+                            300: '#f0abfc',
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-900 text-zinc-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-zinc-800/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full"></div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-fuchsia-500 bg-clip-text text-transparent">FlavorFuel</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-pink-400 transition-colors">How It Works</a>
+                    <a href="#" class="hover:text-pink-400 transition-colors">Meal Plans</a>
+                    <a href="#" class="hover:text-pink-400 transition-colors">Pricing</a>
+                    <a href="#" class="hover:text-pink-400 transition-colors">About</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-6 py-2 rounded-full font-semibold transition-all transform hover:scale-105">
+                        Get Started
+                    </button>
+                    <button class="md:hidden text-zinc-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-violet-900/20 to-pink-900/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+                        Fuel Your 
+                        <span class="bg-gradient-to-r from-pink-400 to-fuchsia-500 bg-clip-text text-transparent">Adventure</span>
+                        <br>With Every Bite
+                    </h1>
+                    <p class="text-zinc-300 text-lg mt-6 mb-8">
+                        Gourmet meal prep delivered to your door. Healthy, delicious, and ready in minutes. 
+                        No cooking skills required!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105">
+                            Choose Your Plan
+                        </button>
+                        <button class="border border-violet-500 text-violet-300 hover:bg-violet-900/50 px-8 py-3 rounded-full font-semibold transition-all">
+                            How It Works
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-violet-600 to-pink-600 rounded-2xl p-1">
+                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Delicious meal prep" 
+                             class="rounded-2xl w-full h-80 object-cover">
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 bg-zinc-800 rounded-2xl p-4 shadow-2xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full flex items-center justify-center">
+                                <span class="text-2xl">🍴</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Ready in 5 min</p>
+                                <p class="text-zinc-400 text-sm">Heat & enjoy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-zinc-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Why FlavorFuel?</h2>
+                <p class="text-zinc-300 text-lg max-w-2xl mx-auto">
+                    We make healthy eating exciting, convenient, and absolutely delicious
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-800 rounded-2xl p-6 hover:transform hover:scale-105 transition-all duration-300 border border-zinc-700">
+                    <div class="w-14 h-14 bg-gradient-to-r from-violet-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
+                        <span class="text-2xl">🚀</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Lightning Fast</h3>
+                    <p class="text-zinc-400">Meals ready in 5 minutes or less. Perfect for busy schedules and spontaneous cravings.</p>
+                </div>
+                
+                <div class="bg-zinc-800 rounded-2xl p-6 hover:transform hover:scale-105 transition-all duration-300 border border-zinc-700">
+                    <div class="w-14 h-14 bg-gradient-to-r from-pink-500 to-fuchsia-500 rounded-xl flex items-center justify-center mb-4">
+                        <span class="text-2xl">👨‍🍳</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Chef-Crafted</h3>
+                    <p class="text-zinc-400">Every recipe is designed by professional chefs to maximize flavor and nutrition.</p>
+                </div>
+                
+                <div class="bg-zinc-800 rounded-2xl p-6 hover:transform hover:scale-105 transition-all duration-300 border border-zinc-700">
+                    <div class="w-14 h-14 bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-xl flex items-center justify-center mb-4">
+                        <span class="text-2xl">🌱</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Fresh & Sustainable</h3>
+                    <p class="text-zinc-400">Locally sourced ingredients with eco-friendly packaging that loves our planet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meal Plans Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Simple Plans, Amazing Meals</h2>
+                <p class="text-zinc-300 text-lg">Choose what works for your lifestyle</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-zinc-800 rounded-2xl p-8 border-2 border-zinc-700 hover:border-pink-500 transition-all">
+                    <h3 class="text-2xl font-bold mb-4">Casual Fueler</h3>
+                    <div class="text-3xl font-bold mb-6">$49<span class="text-lg text-zinc-400">/week</span></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
+                            5 meals per week
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
+                            Free delivery
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
+                            Basic menu access
+                        </li>
+                    </ul>
+                    <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-full font-semibold transition-colors">
+                        Start Casual
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-br from-violet-600 to-pink-600 rounded-2xl p-8 transform scale-105 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-fuchsia-500 text-white px-4 py-1 rounded-full text-sm font-semibold">MOST POPULAR</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Power Fueler</h3>
+                    <div class="text-3xl font-bold mb-6">$79<span class="text-lg text-zinc-200">/week</span></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-zinc-100">
+                            <span class="w-2 h-2 bg-white rounded-full mr-3"></span>
+                            10 meals per week
+                        </li>
+                        <li class="flex items-center text-zinc-100">
+                            <span class="w-2 h-2 bg-white rounded-full mr-3"></span>
+                            Free premium delivery
+                        </li>
+                        <li class="flex items-center text-zinc-100">
+                            <span class="w-2 h-2 bg-white rounded-full mr-3"></span>
+                            Full menu access
+                        </li>
+                        <li class="flex items-center text-zinc-100">
+                            <span class="w-2 h-2 bg-white rounded-full mr-3"></span>
+                            Nutrition tracking
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white text-zinc-900 hover:bg-zinc-100 py-3 rounded-full font-semibold transition-colors">
+                        Go Power
+                    </button>
+                </div>
+                
+                <div class="bg-zinc-800 rounded-2xl p-8 border-2 border-zinc-700 hover:border-fuchsia-500 transition-all">
+                    <h3 class="text-2xl font-bold mb-4">Ultimate Fueler</h3>
+                    <div class="text-3xl font-bold mb-6">$129<span class="text-lg text-zinc-400">/week</span></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-fuchsia-500 rounded-full mr-3"></span>
+                            20 meals per week
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-fuchsia-500 rounded-full mr-3"></span>
+                            Priority delivery
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-fuchsia-500 rounded-full mr-3"></span>
+                            Custom meal plans
+                        </li>
+                        <li class="flex items-center text-zinc-300">
+                            <span class="w-2 h-2 bg-fuchsia-500 rounded-full mr-3"></span>
+                            Dietitian support
+                        </li>
+                    </ul>
+                    <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-full font-semibold transition-colors">
+                        Go Ultimate
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-violet-900/30 to-pink-900/30">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-6">Ready to Transform Your Eating Habits?</h2>
+            <p class="text-zinc-300 text-lg mb-8 max-w-2xl mx-auto">
+                Join thousands of happy customers who have discovered the joy of stress-free, delicious eating.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105">
+                    Start Your Journey
+                </button>
+                <button class="border border-white/30 text-white hover:bg-white/10 px-8 py-3 rounded-full font-semibold transition-all">
+                    See Sample Menu
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-fuchsia-600 rounded-full"></div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-fuchsia-500 bg-clip-text text-transparent">FlavorFuel</span>
+                    </div>
+                    <p class="text-zinc-400">Delicious meals, delivered with love.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-zinc-400">
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-zinc-400">
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">Contact</a></<li><a href="#" class="hover:text-pink-400 transition-colors">Delivery Areas</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">Dietary Info</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-zinc-400">
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">Facebook</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors">TikTok</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-zinc-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-zinc-500 text-sm mb-4 md:mb-0">© 2024 FlavorFuel. All rights reserved.</p>
+                <div class="flex space-x-6 text-sm text-zinc-500">
+                    <a href="#" class="hover:text-pink-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-pink-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-pink-400 transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating CTA Button (Mobile) -->
+    <div class="fixed bottom-6 right-6 md:hidden z-40">
+        <button class="bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110">
+            <span class="text-2xl">🍴</span>
+        </button>
+    </div>
+
+</body>
+</html>
