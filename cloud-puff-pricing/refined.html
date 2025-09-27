@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudyBox - Simple Cloud Storage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Comic Neue', cursive;
+        }
+        .floating-clouds {
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-clouds:nth-child(2) {
+            animation-delay: 2s;
+        }
+        .floating-clouds:nth-child(3) {
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b, #84cc16);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-100 border-b-4 border-yellow-300 sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-lime-400 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                        <span class="text-3xl">☁️</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-stone-800">Cloudy<span class="gradient-text">Box</span></h1>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-stone-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-stone-600 hover:text-stone-900 font-medium transition-colors duration-200 relative group">
+                        Features
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-lime-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-stone-600 hover:text-stone-900 font-medium transition-colors duration-200 relative group">
+                        About
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-lime-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-stone-600 hover:text-stone-900 font-medium transition-colors duration-200 relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-lime-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+                <button class="hidden md:block bg-lime-400 hover:bg-lime-500 text-stone-900 font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
+                    <i class="fas fa-cloud-upload-alt mr-2"></i>Sign Up Free
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden mt-4 space-y-4 bg-white rounded-lg p-4 shadow-lg">
+                <a href="#" class="block text-stone-700 hover:text-stone-900 font-medium py-2 border-b border-gray-100">Features</a>
+                <a href="#" class="block text-stone-700 hover:text-stone-900 font-medium py-2 border-b border-gray-100">About</a>
+                <a href="#" class="block text-stone-700 hover:text-stone-900 font-medium py-2 border-b border-gray-100">Contact</a>
+                <button class="w-full bg-lime-400 hover:bg-lime-500 text-stone-900 font-bold py-3 rounded-full transition duration-200 mt-2">
+                    Sign Up Free
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-yellow-50 via-white to-lime-50 py-20 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute top-10 left-10 floating-clouds opacity-20">
+            <i class="fas fa-cloud text-6xl text-blue-300"></i>
+        </div>
+        <div class="absolute top-20 right-20 floating-clouds opacity-30">
+            <i class="fas fa-cloud text-4xl text-blue-200"></i>
+        </div>
+        <div class="absolute bottom-10 left-1/3 floating-clouds opacity-25">
+            <i class="fas fa-cloud text-5xl text-green-200"></i>
+        </div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-5xl md:text-6xl font-bold text-stone-800 mb-6 leading-tight">
+                    Simple, Playful <span class="gradient-text">Cloud Storage</span>
+                </h2>
+                <p class="text-xl md:text-2xl text-stone-600 mb-10 leading-relaxed">
+                    Store your files in the fluffiest clouds around! Secure, fast, and fun to use with enterprise-grade reliability.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="bg-lime-400 hover:bg-lime-500 text-stone-900 font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-lg">
+                        <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                    </button>
+                    <button class="border-2 border-stone-300 hover:border-stone-400 text-stone-700 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 text-lg">
+                        <i class="fas fa-play-circle mr-2"></i>Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-stone-800 mb-4">Why Choose CloudyBox?</h2>
+                <p class="text-xl text-stone-600 max-w-2xl mx-auto">Experience the perfect blend of simplicity and power</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="text-center p-6 card-hover bg-gradient-to-br from-yellow-50 to-lime-50 rounded-2xl">
+                    <div class="w-20 h-20 bg-lime-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-shield-alt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Bank-Level Security</h3>
+                    <p class="text-stone-600">Your data is protected with military-grade encryption and multi-factor authentication.</p>
+                </div>
+                
+                <div class="text-center p-6 card-hover bg-gradient-to-br from-yellow-50 to-lime-50 rounded-2xl">
+                    <div class="w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-bolt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Lightning Fast</h3>
+                    <p class="text-stone-600">Upload and download files at blazing speeds with our global CDN network.</p>
+                </div>
+                
+                <div class="text-center p-6 card-hover bg-gradient-to-br from-yellow-50 to-lime-50 rounded-2xl">
+                    <div class="w-20 h-20 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-users text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Team Collaboration</h3>
+                    <p class="text-stone-600">Work together seamlessly with real-time file sharing and commenting features.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-20 bg-gradient-to-b from-stone-50 to-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-stone-800 mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-stone-600 max-w-2xl mx-auto">No hidden fees. Cancel anytime. 30-day money-back guarantee.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Free Plan -->
+                <div class="bg-white rounded-2xl shadow-xl border-4 border-gray-200 card-hover p-8 relative">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-smile text-3xl text-gray-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-stone-800">Freebie</h3>
+                        <p class="text-stone-600">Perfect for getting started</p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-stone-900">$0</span>
+                        <span class="text-stone-600">/forever</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            5GB Storage
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Basic File Sharing
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Mobile App Access
+                        </li>
+                        <li class="flex items-center text-stone-400">
+                            <i class="fas fa-times-circle text-gray-300 mr-3 text-lg"></i>
+                            Advanced Security
+                        </li>
+                        <li class="flex items-center text-stone-400">
+                            <i class="fas fa-times-circle text-gray-300 mr-3 text-lg"></i>
+                            Priority Support
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-stone-800 font-bold py-4 rounded-full transition-all duration-300 hover:scale-105">
+                        Get Started Free
+                    </button>
+                </div>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="bg-white rounded-2xl shadow-2xl border-4 border-yellow-300 relative card-hover p-8 transform scale-105">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-gradient-to-r from-yellow-400 to-orange-400 text-white font-bold px-6 py-2 rounded-full text-sm shadow-lg">MOST POPULAR</span>
+                    </div>
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-rocket text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-stone-800">Pro Cloud</h3>
+                        <p class="text-stone-600">For power users & small teams</p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-stone-900">$9</span>
+                        <span class="text-stone-600">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            100GB Storage
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Advanced File Sharing
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Mobile & Desktop Sync
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Enhanced Security
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Priority Support
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-lg">
+                        Start 30-Day Free Trial
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl shadow-xl border-4 border-lime-300 card-hover p-8 relative">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-lime-400 to-green-400 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-building text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-stone-800">Enterprise</h3>
+                        <p class="text-stone-600">For large organizations</p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-stone-900">$29</span>
+                        <span class="text-stone-600">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Unlimited Storage
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Team Collaboration
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Advanced Admin Controls
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            Enterprise-grade Security
+                        </li>
+                        <li class="flex items-center text-stone-700">
+                            <i class="fas fa-check-circle text-lime-400 mr-3 text-lg"></i>
+                            24/7 Dedicated Support
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-white font-boldpy-4 rounded-full transition-all duration-300 hover:scale-105 shadow-lg">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-stone-800 mb-4">Trusted by Thousands</h2>
+                <p class="text-xl text-stone-600 max-w-2xl mx-auto">See what our users are saying about CloudyBox</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-gradient-to-br from-yellow-50 to-lime-50 rounded-2xl p-8 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-lime-400 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-stone-800">Sarah Johnson</h4>
+                            <p class="text-stone-600 text-sm">Small Business Owner</p>
+                        </div>
+                    </div>
+                    <p class="text-stone-700 italic">"CloudyBox transformed how our team collaborates. The interface is so intuitive and the pricing is unbeatable!"</p>
+                    <div class="flex text-yellow-400 mt-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-yellow-50 to-lime-50 rounded-2xl p-8 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-stone-800">Mike Chen</h4>
+                            <p class="text-stone-600 text-sm">Freelance Designer</p>
+                        </div>
+                    </div>
+                    <p class="text-stone-700 italic">"I love how fast CloudyBox syncs my files across all devices. The mobile app is a game-changer for my workflow."</p>
+                    <div class="flex text-yellow-400 mt-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-yellow-50 to-lime-50 rounded-2xl p-8 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-stone-800">Emily Rodriguez</h4>
+                            <p class="text-stone-600 text-sm">Marketing Director</p>
+                        </div>
+                    </div>
+                    <p class="text-stone-700 italic">"The enterprise features are exactly what our large team needed. The admin controls and security are top-notch."</p>
+                    <div class="flex text-yellow-400 mt-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="bg-gray-100 py-20">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-4xl font-bold text-center text-stone-800 mb-16">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div x-data="{ open: false }" class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <button @click="open = !open" class="w-full flex justify-between items-center text-left">
+                        <h3 class="text-lg font-bold text-stone-800">Can I upgrade or downgrade my plan anytime?</h3>
+                        <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="mt-4 text-stone-600">
+                        <p>Yes! You can change your plan at any time. Changes take effect immediately and we'll prorate the billing accordingly. No hidden fees or complicated processes.</p>
+                    </div>
+                </div>
+                
+                <div x-data="{ open: false }" class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <button @click="open = !open" class="w-full flex justify-between items-center text-left">
+                        <h3 class="text-lg font-bold text-stone-800">Is my data secure with CloudyBox?</h3>
+                        <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="mt-4 text-stone-600">
+                        <p>Absolutely! We use bank-level 256-bit encryption, multi-factor authentication, and regular security audits to keep your files safe and private. Your data is stored in secure data centers with 24/7 monitoring.</p>
+                    </div>
+                </div>
+                
+                <div x-data="{ open: false }" class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <button @click="open = !open" class="w-full flex justify-between items-center text-left">
+                        <h3 class="text-lg font-bold text-stone-800">Do you offer discounts for non-profits?</h3>
+                        <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="mt-4 text-stone-600">
+                        <p>Yes! We offer special pricing for registered non-profit organizations and educational institutions. Contact our team with your documentation for personalized pricing options.</p>
+                    </div>
+                </div>
+                
+                <div x-data="{ open: false }" class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <button @click="open = !open" class="w-full flex justify-between items-center text-left">
+                        <h3 class="text-lg font-bold text-stone-800">What happens if I exceed my storage limit?</h3>
+                        <i class="fas fa-chevron-down transition-transform duration-300" :class="{'rotate-180': open}"></i>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="mt-4 text-stone-600">
+                        <p>We'll notify you when you're approaching your storage limit. You can either upgrade your plan or clean up some files. Free accounts can't upload new files when over limit, but paid plans get graceful handling with upgrade prompts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-yellow-400 to-lime-400">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Join the Cloud Revolution?</h2>
+            <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">Start with 5GB free forever or try our Pro plan with a 30-day free trial. No credit card required.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-stone-900 hover:bg-stone-100 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 shadow-lg text-lg">
+                    <i class="fas fa-cloud-upload-alt mr-2"></i>Start Free Trial
+                </button>
+                <button class="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 text-lg">
+                    <i class="fas fa-comments mr-2"></i>Contact Sales
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-stone-200 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-lime-400 rounded-full flex items-center justify-center shadow-lg">
+                            <span class="text-xl">☁️</span>
+                        </div>
+                        <span class="text-2xl font-bold text-white">Cloudy<span class="text-lime-400">Box</span></span>
+                    </div>
+                    <p class="text-stone-400 mb-4">Making cloud storage fun and accessible for everyone since 2023.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-stone-400 hover:text-lime-400 transition-colors duration-200">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-lime-400 transition-colors duration-200">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-lime-400 transition-colors duration-200">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-lime-400 transition-colors duration-200">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Features</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Pricing</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Security</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">About Us</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Careers</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Blog</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Help Center</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Contact Us</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">Status</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors duration-200">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-stone-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-stone-500 mb-4 md:mb-0">&copy; 2023 CloudyBox. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-stone-500 hover:text-white transition-colors duration-200">Terms</a>
+                    <a href="#" class="text-stone-500 hover:text-white transition-colors duration-200">Privacy</a>
+                    <a href="#" class="text-stone-500 hover:text-white transition-colors duration-200">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('mobileMenuOpen', false)
+        })
+    </script>
+</body>
+</html>
