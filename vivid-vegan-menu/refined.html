@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegan Fusion | Bold Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fusion-yellow': '#fbbf24',
+                        'fusion-fuchsia': '#ec4899',
+                        'fusion-purple': '#a855f7',
+                        'fusion-emerald': '#10b981'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(251, 191, 36, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .menu-item:hover .item-image {
+            transform: scale(1.05);
+        }
+        .sticky-nav {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7, #ec4899, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl md:text-4xl font-bold gradient-text animate-fade-in">
+                    <i class="fas fa-leaf mr-2"></i>VEGAN FUSION
+                </h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="#" class="text-fusion-emerald font-bold border-b-2 border-fusion-emerald flex items-center">
+                        <i class="fas fa-utensils mr-2"></i>Menu
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold transition-colors duration-300 flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i>About
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold transition-colors duration-300 flex items-center">
+                        <i class="fas fa-phone mr-2"></i>Contact
+                    </a>
+                </nav>
+                <button class="md:hidden text-gray-700 text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-fusion-yellow/20 via-fusion-purple/20 to-fusion-emerald/20 py-16 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10 animate-slide-up">
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Our Bold Flavors</h2>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                Experience the vibrant fusion of plant-based cuisine with bold colors and explosive flavors.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-fusion-yellow/20 text-fusion-yellow">
+                    <i class="fas fa-star mr-1"></i> Fresh Ingredients
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-fusion-purple/20 text-fusion-purple">
+                    <i class="fas fa-heart mr-1"></i> 100% Vegan
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-fusion-emerald/20 text-fusion-emerald">
+                    <i class="fas fa-bolt mr-1"></i> Bold Flavors
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Navigation -->
+    <nav class="sticky-nav sticky top-16 shadow-md z-40 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto py-4 space-x-4 md:space-x-8 scrollbar-hide">
+                <button class="whitespace-nowrap px-6 py-3 bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow flex items-center">
+                    <i class="fas fa-th-large mr-2"></i>All Items
+                </button>
+                <button class="whitespace-nowrap px-6 py-3 text-gray-600 hover:text-fusion-purple font-semibold border-2 border-transparent hover:border-fusion-purple rounded-full transition-all duration-300 flex items-center">
+                    <i class="fas fa-appetizer mr-2"></i>Starters
+                </button>
+                <button class="whitespace-nowrap px-6 py-3 text-gray-600 hover:text-fusion-purple font-semibold border-2 border-transparent hover:border-fusion-purple rounded-full transition-all duration-300 flex items-center">
+                    <i class="fas fa-utensils mr-2"></i>Mains
+                </button>
+                <button class="whitespace-nowrap px-6 py-3 text-gray-600 hover:text-fusion-purple font-semibold border-2 border-transparent hover:border-fusion-purple rounded-full transition-all duration-300 flex items-center">
+                    <i class="fas fa-ice-cream mr-2"></i>Desserts
+                </button>
+                <button class="whitespace-nowrap px-6 py-3 text-gray-600 hover:text-fusion-purple font-semibold border-2 border-transparent hover:border-fusion-purple rounded-full transition-all duration-300 flex items-center">
+                    <i class="fas fa-glass-cheers mr-2"></i>Drinks
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Grid -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Menu Item 1 -->
+            <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1726514730004-f3a07597c7b0?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                         alt="Sunrise Tacos" 
+                         class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-yellow text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $14
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-yellow transition-colors duration-300">Sunrise Tacos</h3>
+                        <i class="fas fa-plus-circle text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Crispy jackfruit carnitas with mango salsa and avocado crema</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-emerald/10 text-fusion-emerald px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-pepper-hot mr-1"></i>Spicy
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-yellow/10 text-fusion-yellow px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-clock mr-1"></i>15 min
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1636423848781-d880c7c776db?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                         alt="Purple Dragon Bowl" 
+                         class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-purple text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $16
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-purple transition-colors duration-300">Purple Dragon Bowl</h3>
+                        <i class="fas fa-plus-circle text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Forbidden rice with purple sweet potato, edamame, and ginger-tahini sauce</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-fuchsia/10 text-fusion-fuchsia px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-crown mr-1"></i>Signature
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-purple/10 text-fusion-purple px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-leaf mr-1"></i>Gluten Free
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1635275650933-7b0911815a2e?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                         alt="Fusion Burger" 
+                         class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-fuchsia text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $18
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-fuchsia transition-colors duration-300">Fusion Burger</h3>
+                        <i class="fas fa-plus-circle text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">House-made beet and black bean patty with cashew cheese and crispy onions</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-yellow/10 text-fusion-yellow px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-fire mr-1"></i>Popular
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-fuchsia/10 text-fusion-fuchsia px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-cheese mr-1"></i>Cashew Cheese
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551266080-616f5d8174f1?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                         alt="Emerald Curry" 
+                         class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-emerald text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $17
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-emerald transition-colors duration-300">Emerald Curry</h3>
+                        <i class="fas fa-plus-circle text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Coconut green curry with seasonal vegetables and jasmine rice</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-purple/10 text-fusion-purple px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-leaf mr-1"></i>Mild
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-emerald/10 text-fusion-emerald px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-seedling mr-1"></i>Seasonal
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 5 -->
+            <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1576777647084-cac2dd176310?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                         alt="Golden Smoothie Bowl" 
+                         class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-yellow text-whitepx-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $12
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-yellow transition-colors duration-300">Golden Smoothie Bowl</h3>
+                        <i class="fas fa-plus-circle text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Turmeric-banana base with granola, berries, and coconut flakes</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-emerald/10 text-fusion-emerald px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-heartbeat mr-1"></i>Healthy
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-yellow/10 text-fusion-yellow px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-bolt mr-1"></i>Energizing
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 6 -->
+            <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1696504394461-59d47d030513?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                         alt="Berry Bliss Dessert" 
+                         class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-fuchsia text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $10
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-fuchsia transition-colors duration-300">Berry Bliss Dessert</h3>
+                        <i class="fas fa-plus-circle text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Mixed berry compote with cashew cream and dark chocolate shavings</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-purple/10 text-fusion-purple px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-candy-cane mr-1"></i>Sweet
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-fuchsia/10 text-fusion-fuchsia px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-wine-glass-alt mr-1"></i>Perfect Pairing
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-fusion-purple to-fusion-fuchsia py-16 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Experience Vegan Fusion?</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                Join us for an unforgettable culinary journey through bold flavors and vibrant colors.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-fusion-purple px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>Make Reservation
+                </button>
+                <button class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-fusion-purple transition-all duration-300 flex items-center justify-center">
+                    <i class="fas fa-phone mr-2"></i>Call Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">
+                        <i class="fas fa-leaf mr-2"></i>VEGAN FUSION
+                    </h3>
+                    <p class="text-gray-400 mb-6 max-w-md">Bold flavors, vibrant colors, plant-based perfection. Experience the future of vegan cuisine with our innovative fusion dishes.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-purple transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-fuchsia transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-emerald transition-colors duration-300">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-yellow transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-clock mr-2"></i>Hours
+                    </h4>
+                    <p class="text-gray-400 mb-2">Mon-Fri: 11am - 10pm</p>
+                    <p class="text-gray-400 mb-2">Sat-Sun: 10am - 11pm</p>
+                    <p class="text-gray-400 text-sm mt-4">Happy Hour: 3pm - 6pm Daily</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Contact
+                    </h4>
+                    <p class="text-gray-400 mb-2">123 Fusion Street</p>
+                    <p class="text-gray-400 mb-2">City, State 12345</p>
+                    <p class="text-gray-400 mb-2">hello@veganfusion.com</p>
+                    <p class="text-gray-400">(555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Vegan Fusion. All rights reserved. | <a href="#" class="hover:text-white transition-colors duration-300">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors duration-300">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="w-14 h-14 bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center animate-bounce">
+            <i class="fas fa-shopping-cart text-xl"></i>
+        </button>
+    </div>
+
+    <script>
+        // Simple scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Sticky nav effect
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('.sticky-nav');
+                if (window.scrollY > 100) {
+                    nav.classList.add('shadow-lg');
+                } else {
+                    nav.classList.remove('shadow-lg');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

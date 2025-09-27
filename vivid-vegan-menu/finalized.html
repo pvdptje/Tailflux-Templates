@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileOpen:false, filter:'all', cart:0, search:'' }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegan Fusion | Bold Menu</title>
+    <meta name="theme-color" content="#10b981">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fusion-yellow': '#fbbf24',
+                        'fusion-fuchsia': '#ec4899',
+                        'fusion-purple': '#a855f7',
+                        'fusion-emerald': '#10b981'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(251, 191, 36, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak]{ display:none !important; }
+        html { scroll-behavior: smooth; }
+        .menu-item:hover .item-image { transform: scale(1.05); }
+        .sticky-nav { backdrop-filter: blur(10px); background: rgba(255,255,255,0.9); }
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7, #ec4899, #fbbf24);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .scrollbar-hide::-webkit-scrollbar { width: 0; height: 0; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center">
+                    <h1 class="text-3xl md:text-4xl font-bold gradient-text animate-fade-in">
+                        <i class="fas fa-leaf mr-2"></i>VEGAN FUSION
+                    </h1>
+                </a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="#menu" class="text-fusion-emerald font-bold border-b-2 border-fusion-emerald flex items-center">
+                        <i class="fas fa-utensils mr-2"></i>Menu
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold transition-colors duration-300 flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i>About
+                    </a>
+                    <a href="#contact" class="text-gray-700 hover:text-fusion-emerald font-semibold transition-colors duration-300 flex items-center">
+                        <i class="fas fa-phone mr-2"></i>Contact
+                    </a>
+                </nav>
+                <button class="md:hidden text-gray-700 text-2xl" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen.toString()" aria-controls="mobile-menu" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" x-cloak x-show="mobileOpen" x-transition.origin.top class="md:hidden border-t border-gray-100 bg-white">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#" class="block text-gray-700 hover:text-fusion-emerald font-semibold"><i class="fas fa-home mr-2"></i>Home</a>
+                <a href="#menu" class="block text-fusion-emerald font-bold"><i class="fas fa-utensils mr-2"></i>Menu</a>
+                <a href="#" class="block text-gray-700 hover:text-fusion-emerald font-semibold"><i class="fas fa-info-circle mr-2"></i>About</a>
+                <a href="#contact" class="block text-gray-700 hover:text-fusion-emerald font-semibold"><i class="fas fa-phone mr-2"></i>Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1670427254737-3a6b3811dd4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920" alt="Vibrant vegan fusion background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-br from-white/85 via-white/75 to-white/70"></div>
+            <div class="absolute -top-20 -right-20 w-72 h-72 bg-fusion-purple/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-fusion-emerald/20 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 text-center relative z-10 animate-slide-up">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-4">Our Bold Flavors</h2>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                Experience the vibrant fusion of plant-based cuisine with bold colors and explosive flavors.
+            </p>
+            <div class="flex justify-center flex-wrap gap-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-fusion-yellow/20 text-fusion-yellow">
+                    <i class="fas fa-star mr-1"></i> Fresh Ingredients
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-fusion-purple/20 text-fusion-purple">
+                    <i class="fas fa-heart mr-1"></i> 100% Vegan
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-fusion-emerald/20 text-fusion-emerald">
+                    <i class="fas fa-bolt mr-1"></i> Bold Flavors
+                </span>
+            </div>
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#menu" class="bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white px-8 py-3 rounded-full font-semibold hover:shadow-xl hover:scale-[1.02] transition-all duration-300 inline-flex items-center justify-center">
+                    <i class="fas fa-utensils mr-2"></i> Explore Menu
+                </a>
+                <a href="#reserve" class="border-2 border-fusion-purple text-fusion-purple px-8 py-3 rounded-full font-semibold hover:bg-fusion-purple hover:text-white transition-all duration-300 inline-flex items-center justify-center">
+                    <i class="fas fa-calendar-check mr-2"></i> Reserve a Table
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Navigation -->
+    <nav class="sticky-nav sticky top-16 shadow-md z-40 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center overflow-x-auto py-4 gap-3 md:gap-6 scrollbar-hide">
+                <button aria-label="Show all items" @click="filter='all'" :class="filter==='all' ? 'bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white shadow-lg' : 'text-gray-600 hover:text-fusion-purple hover:border-fusion-purple'" class="whitespace-nowrap px-5 py-3 rounded-full font-semibold border-2 border-transparent transition-all duration-300 flex items-center">
+                    <i class="fas fa-th-large mr-2"></i>All Items
+                </button>
+                <button aria-label="Show starters" @click="filter='starters'" :class="filter==='starters' ? 'bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white shadow-lg' : 'text-gray-600 hover:text-fusion-purple hover:border-fusion-purple'" class="whitespace-nowrap px-5 py-3 rounded-full font-semibold border-2 border-transparent transition-all duration-300 flex items-center">
+                    <i class="fas fa-seedling mr-2"></i>Starters
+                </button>
+                <button aria-label="Show mains" @click="filter='mains'" :class="filter==='mains' ? 'bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white shadow-lg' : 'text-gray-600 hover:text-fusion-purple hover:border-fusion-purple'" class="whitespace-nowrap px-5 py-3 rounded-full font-semibold border-2 border-transparent transition-all duration-300 flex items-center">
+                    <i class="fas fa-utensils mr-2"></i>Mains
+                </button>
+                <button aria-label="Show desserts" @click="filter='desserts'" :class="filter==='desserts' ? 'bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white shadow-lg' : 'text-gray-600 hover:text-fusion-purple hover:border-fusion-purple'" class="whitespace-nowrap px-5 py-3 rounded-full font-semibold border-2 border-transparent transition-all duration-300 flex items-center">
+                    <i class="fas fa-ice-cream mr-2"></i>Desserts
+                </button>
+                <button aria-label="Show drinks" @click="filter='drinks'" :class="filter==='drinks' ? 'bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white shadow-lg' : 'text-gray-600 hover:text-fusion-purple hover:border-fusion-purple'" class="whitespace-nowrap px-5 py-3 rounded-full font-semibold border-2 border-transparent transition-all duration-300 flex items-center">
+                    <i class="fas fa-martini-glass-citrus mr-2"></i>Drinks
+                </button>
+
+                <div class="ml-auto hidden md:flex items-center">
+                    <div class="relative">
+                        <i class="fas fa-magnifying-glass text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                        <input type="search" placeholder="Search dishes..." class="pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-fusion-purple/40" x-model="search" aria-label="Search dishes">
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile search -->
+            <div class="md:hidden pb-4">
+                <div class="relative">
+                    <i class="fas fa-magnifying-glass text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                    <input type="search" placeholder="Search dishes..." class="w-full pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-fusion-purple/40" x-model="search" aria-label="Search dishes mobile">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Grid -->
+    <main id="menu" class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Menu Item 1 -->
+            <div x-data="{ category:'mains', title:'Sunrise Tacos' }" x-show="(filter==='all'||filter===category) && (title.toLowerCase().includes(search.toLowerCase()))" x-transition.opacity.scale class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1726514730004-f3a07597c7b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" loading="lazy" alt="Sunrise Tacos with jackfruit carnitas, mango salsa and avocado crema" class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-yellow text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $14
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-yellow transition-colors duration-300">Sunrise Tacos</h3>
+                        <button @click.stop="cart++; $dispatch('added', { name: title })" class="text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-label="Add Sunrise Tacos to cart">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Crispy jackfruit carnitas with mango salsa and avocado crema</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-emerald/10 text-fusion-emerald px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-pepper-hot mr-1"></i>Spicy
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-yellow/10 text-fusion-yellow px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-clock mr-1"></i>15 min
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div x-data="{ category:'mains', title:'Purple Dragon Bowl' }" x-show="(filter==='all'||filter===category) && (title.toLowerCase().includes(search.toLowerCase()))" x-transition.opacity.scale class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1647545401835-c21e6b04d853?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" loading="lazy" alt="Purple Dragon Bowl with forbidden rice, purple sweet potato and ginger tahini" class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-purple text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $16
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-purple transition-colors duration-300">Purple Dragon Bowl</h3>
+                        <button @click.stop="cart++; $dispatch('added', { name: title })" class="text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-label="Add Purple Dragon Bowl to cart">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Forbidden rice with purple sweet potato, edamame, and ginger-tahini sauce</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-fuchsia/10 text-fusion-fuchsia px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-crown mr-1"></i>Signature
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-purple/10 text-fusion-purple px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-leaf mr-1"></i>Gluten Free
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div x-data="{ category:'mains', title:'Fusion Burger' }" x-show="(filter==='all'||filter===category) && (title.toLowerCase().includes(search.toLowerCase()))" x-transition.opacity.scale class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1603508103076-b037fe3d1cb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" loading="lazy" alt="Fusion Burger with beet and black bean patty, cashew cheese and crispy onions" class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-fuchsia text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $18
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-fuchsia transition-colors duration-300">Fusion Burger</h3>
+                        <button @click.stop="cart++; $dispatch('added', { name: title })" class="text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-label="Add Fusion Burger to cart">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">House-made beet and black bean patty with cashew cheese and crispy onions</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-yellow/10 text-fusion-yellow px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-fire mr-1"></i>Popular
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-fuchsia/10 text-fusion-fuchsia px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-cheese mr-1"></i>Cashew Cheese
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div x-data="{ category:'mains', title:'Emerald Curry' }" x-show="(filter==='all'||filter===category) && (title.toLowerCase().includes(search.toLowerCase()))" x-transition.opacity.scale class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551266080-616f5d8174f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" loading="lazy" alt="Emerald green coconut curry with seasonal vegetables and jasmine rice" class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-emerald text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $17
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-emerald transition-colors duration-300">Emerald Curry</h3>
+                        <button @click.stop="cart++; $dispatch('added', { name: title })" class="text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-label="Add Emerald Curry to cart">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Coconut green curry with seasonal vegetables and jasmine rice</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-purple/10 text-fusion-purple px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-leaf mr-1"></i>Mild
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-emerald/10 text-fusion-emerald px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-seedling mr-1"></i>Seasonal
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 5 -->
+            <div x-data="{ category:'desserts', title:'Golden Smoothie Bowl' }" x-show="(filter==='all'||filter===category) && (title.toLowerCase().includes(search.toLowerCase()))" x-transition.opacity.scale class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1576777647084-cac2dd176310?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" loading="lazy" alt="Golden smoothie bowl with turmeric banana base, granola, berries and coconut" class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-yellow text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $12
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-yellow transition-colors duration-300">Golden Smoothie Bowl</h3>
+                        <button @click.stop="cart++; $dispatch('added', { name: title })" class="text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-label="Add Golden Smoothie Bowl to cart">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Turmeric-banana base with granola, berries, and coconut flakes</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-emerald/10 text-fusion-emerald px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-heartbeat mr-1"></i>Healthy
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-yellow/10 text-fusion-yellow px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-bolt mr-1"></i>Energizing
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Item 6 -->
+            <div x-data="{ category:'desserts', title:'Berry Bliss Dessert' }" x-show="(filter==='all'||filter===category) && (title.toLowerCase().includes(search.toLowerCase()))" x-transition.opacity.scale class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1562114512-c4aa1ca1c446?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" loading="lazy" alt="Berry Bliss dessert with mixed berry compote, cashew cream and dark chocolate shavings" class="item-image w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-fusion-fuchsia text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        $10
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-fusion-fuchsia transition-colors duration-300">Berry Bliss Dessert</h3>
+                        <button @click.stop="cart++; $dispatch('added', { name: title })" class="text-fusion-emerald text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-label="Add Berry Bliss Dessert to cart">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Mixed berry compote with cashew cream and dark chocolate shavings</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center bg-fusion-purple/10 text-fusion-purple px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-candy-cane mr-1"></i>Sweet
+                        </span>
+                        <span class="inline-flex items-center bg-fusion-fuchsia/10 text-fusion-fuchsia px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-wine-glass-alt mr-1"></i>Perfect Pairing
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CTA Section -->
+    <section id="reserve" class="bg-gradient-to-r from-fusion-purple to-fusion-fuchsia py-16 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true">
+            <div class="w-40 h-40 rounded-full bg-white blur-3xl absolute -top-10 left-10"></div>
+            <div class="w-64 h-64 rounded-full bg-yellow-200 blur-3xl absolute -bottom-16 right-10"></div>
+        </div>
+        <div class="container mx-auto px-4 text-center relative">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Experience Vegan Fusion?</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                Join us for an unforgettable culinary journey through bold flavors and vibrant colors.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-fusion-purple px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>Make Reservation
+                </button>
+                <a href="tel:+15551234567" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-fusion-purple transition-all duration-300 flex items-center justify-center">
+                    <i class="fas fa-phone mr-2"></i>Call Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12" id="contact">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">
+                        <i class="fas fa-leaf mr-2"></i>VEGAN FUSION
+                    </h3>
+                    <p class="text-gray-400 mb-6 max-w-md">Bold flavors, vibrant colors, plant-based perfection. Experience the future of vegan cuisine with our innovative fusion dishes.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-purple transition-colors duration-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-fuchsia transition-colors duration-300" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-emerald transition-colors duration-300" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-fusion-yellow transition-colors duration-300" aria-label="X">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                    </div>
+                    <form class="mt-6 max-w-md">
+                        <label for="newsletter" class="sr-only">Email address</label>
+                        <div class="flex">
+                            <input id="newsletter" type="email" placeholder="Subscribe for updates" class="flex-1 px-4 py-3 rounded-l-lg bg-gray-800 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-fusion-emerald" />
+                            <button type="button" class="px-5 bg-fusion-emerald hover:bg-emerald-600 rounded-r-lg font-semibold transition-colors">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-clock mr-2"></i>Hours
+                    </h4>
+                    <p class="text-gray-400 mb-2">Mon-Fri: 11am - 10pm</p>
+                    <p class="text-gray-400 mb-2">Sat-Sun: 10am - 11pm</p>
+                    <p class="text-gray-400 text-sm mt-4">Happy Hour: 3pm - 6pm Daily</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Contact
+                    </h4>
+                    <p class="text-gray-400 mb-2">123 Fusion Street</p>
+                    <p class="text-gray-400 mb-2">City, State 12345</p>
+                    <p class="text-gray-400 mb-2">hello@veganfusion.com</p>
+                    <p class="text-gray-400">(555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Vegan Fusion. All rights reserved. | <a href="#" class="hover:text-white transition-colors duration-300">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors duration-300">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button (Cart) -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="relative w-14 h-14 bg-gradient-to-r from-fusion-emerald to-fusion-purple text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center animate-bounce" aria-label="View cart">
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span x-show="cart>0" x-transition.scale class="absolute -top-1 -right-1 bg-fusion-yellow text-gray-900 text-xs font-bold rounded-full px-2 py-[2px]" aria-live="polite" x-text="cart"></span>
+        </button>
+    </div>
+
+    <script>
+        // Simple scroll animation and sticky shadow enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.05}s`;
+            });
+
+            const nav = document.querySelector('.sticky-nav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    nav.classList.add('shadow-lg');
+                } else {
+                    nav.classList.remove('shadow-lg');
+                }
+            });
+
+            // Toast-like feedback when items are added (Alpine dispatch listener)
+            document.addEventListener('added', (e) => {
+                const name = e.detail?.name || 'Item';
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-24 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                toast.textContent = `${name} added to cart`;
+                document.body.appendChild(toast);
+                setTimeout(() => { toast.classList.add('opacity-0'); }, 1400);
+                setTimeout(() => toast.remove(), 1800);
+            });
+        });
+    </script>
+</body>
+</html>

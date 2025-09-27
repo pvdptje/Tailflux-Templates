@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegan Fusion | Bold Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fusion-yellow': '#fbbf24',
+                        'fusion-fuchsia': '#ec4899',
+                        'fusion-purple': '#a855f7',
+                        'fusion-emerald': '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-fusion-purple to-fusion-fuchsia bg-clip-text text-transparent">
+                    VEGAN FUSION
+                </h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold">Home</a>
+                    <a href="#" class="text-fusion-emerald font-bold border-b-2 border-fusion-emerald">Menu</a>
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold">About</a>
+                    <a href="#" class="text-gray-700 hover:text-fusion-emerald font-semibold">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-fusion-yellow/20 to-fusion-purple/20 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold text-gray-800 mb-4">Our Bold Flavors</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Experience the vibrant fusion of plant-based cuisine with bold colors and explosive flavors.
+            </p>
+        </div>
+    </section>
+
+    <!-- Menu Navigation -->
+    <nav class="bg-white sticky top-0 shadow-md z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto py-4 space-x-8">
+                <button class="whitespace-nowrap px-4 py-2 bg-fusion-emerald text-white rounded-full font-semibold">
+                    All Items
+                </button>
+                <button class="whitespace-nowrap px-4 py-2 text-gray-600 hover:text-fusion-purple font-semibold">
+                    Starters
+                </button>
+                <button class="whitespace-nowrap px-4 py-2 text-gray-600 hover:text-fusion-purple font-semibold">
+                    Mains
+                </button>
+                <button class="whitespace-nowrap px-4 py-2 text-gray-600 hover:text-fusion-purple font-semibold">
+                    Desserts
+                </button>
+                <button class="whitespace-nowrap px-4 py-2 text-gray-600 hover:text-fusion-purple font-semibold">
+                    Drinks
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Grid -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Menu Item 1 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-r from-fusion-yellow to-fusion-fuchsia"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-800">Sunrise Tacos</h3>
+                        <span class="bg-fusion-yellow text-white px-3 py-1 rounded-full text-sm font-bold">$14</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Crispy jackfruit carnitas with mango salsa and avocado crema</p>
+                    <span class="inline-block bg-fusion-emerald/10 text-fusion-emerald px-2 py-1 rounded text-sm">Spicy</span>
+                </div>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-r from-fusion-purple to-fusion-emerald"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-800">Purple Dragon Bowl</h3>
+                        <span class="bg-fusion-purple text-white px-3 py-1 rounded-full text-sm font-bold">$16</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Forbidden rice with purple sweet potato, edamame, and ginger-tahini sauce</p>
+                    <span class="inline-block bg-fusion-fuchsia/10 text-fusion-fuchsia px-2 py-1 rounded text-sm">Signature</span>
+                </div>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-r from-fusion-fuchsia to-fusion-yellow"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-800">Fusion Burger</h3>
+                        <span class="bg-fusion-fuchsia text-white px-3 py-1 rounded-full text-sm font-bold">$18</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">House-made beet and black bean patty with cashew cheese and crispy onions</p>
+                    <span class="inline-block bg-fusion-yellow/10 text-fusion-yellow px-2 py-1 rounded text-sm">Popular</span>
+                </div>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-r from-fusion-emerald to-fusion-purple"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-800">Emerald Curry</h3>
+                        <span class="bg-fusion-emerald text-white px-3 py-1 rounded-full text-sm font-bold">$17</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Coconut green curry with seasonal vegetables and jasmine rice</p>
+                    <span class="inline-block bg-fusion-purple/10 text-fusion-purple px-2 py-1 rounded text-sm">Mild</span>
+                </div>
+            </div>
+
+            <!-- Menu Item 5 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-r from-fusion-yellow to-fusion-emerald"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-800">Golden Smoothie Bowl</h3>
+                        <span class="bg-fusion-yellow text-white px-3 py-1 rounded-full text-sm font-bold">$12</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Turmeric-banana base with granola, berries, and coconut flakes</p>
+                    <span class="inline-block bg-fusion-emerald/10 text-fusion-emerald px-2 py-1 rounded text-sm">Healthy</span>
+                </div>
+            </div>
+
+            <!-- Menu Item 6 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-r from-fusion-fuchsia to-fusion-purple"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-800">Berry Bliss Dessert</h3>
+                        <span class="bg-fusion-fuchsia text-white px-3 py-1 rounded-full text-sm font-bold">$10</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Mixed berry compote with cashew cream and dark chocolate shavings</p>
+                    <span class="inline-block bg-fusion-purple/10 text-fusion-purple px-2 py-1 rounded text-sm">Sweet</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 bg-gradient-to-r from-fusion-yellow to-fusion-fuchsia bg-clip-text text-transparent">
+                        VEGAN FUSION
+                    </h3>
+                    <p class="text-gray-400">Bold flavors, vibrant colors, plant-based perfection.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Hours</h4>
+                    <p class="text-gray-400">Mon-Fri: 11am - 10pm</p>
+                    <p class="text-gray-400">Sat-Sun: 10am - 11pm</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <p class="text-gray-400">123 Fusion Street</p>
+                    <p class="text-gray-400">hello@veganfusion.com</p>
+                    <p class="text-gray-400">(555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Vegan Fusion. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
