@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works | SocialSphere</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        purple: {
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed'
+                        },
+                        pink: {
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777'
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669'
+                        },
+                        sky: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/50 backdrop-blur-lg border-b border-purple-500/20 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg"></div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">SocialSphere</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-purple-400 transition-colors">Home</a>
+                    <a href="#" class="text-purple-400 font-semibold">How It Works</a>
+                    <a href="#" class="hover:text-purple-400 transition-colors">Features</a>
+                    <a href="#" class="hover:text-purple-400 transition-colors">Pricing</a>
+                </div>
+                <button class="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-2 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
+                    Join Now
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-pink-900/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    How <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">SocialSphere</span> Works
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Discover the magic behind our revolutionary social platform. Three simple steps to connect, create, and conquer the social world!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Step 1 -->
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-gray-800 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                            1
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400">Create Your Profile</h3>
+                        <p class="text-gray-300 mb-6">
+                            Sign up in seconds with your email or social accounts. Customize your profile with photos, bio, and interests that reflect your unique personality.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Quick Setup</span>
+                            <span class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm">Customizable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-sky-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-gray-800 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                            2
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-emerald-400">Connect & Explore</h3>
+                        <p class="text-gray-300 mb-6">
+                            Discover friends, join communities, and explore content tailored to your interests. Our smart algorithm helps you find exactly what you love.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm">Smart Matching</span>
+                            <span class="px-3 py-1 bg-sky-500/20 text-sky-300 rounded-full text-sm">Community</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-sky-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-gray-800 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-sky-500 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                            3
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-sky-400">Create & Share</h3>
+                        <p class="text-gray-300 mb-6">
+                            Share your stories, photos, and moments with the world. Engage with others through reactions, comments, and creative interactions.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Creative Tools</span>
+                            <span class="px-3 py-1 bg-sky-500/20 text-sky-300 rounded-full text-sm">Engagement</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Showcase -->
+    <section class="py-20 bg-gradient-to-br from-gray-800/50 to-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Why Choose SocialSphere?</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Experience social media like never before with our unique features</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl">🎨</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-purple-400">Creative Tools</h3>
+                    <p class="text-gray-400">Unleash your creativity with advanced editing and sharing tools.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl">🔒</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-emerald-400">Privacy First</h3>
+                    <p class="text-gray-400">Complete control over your data and who sees your content.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl">⚡</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-pink-400">Lightning Fast</h3>
+                    <p class="text-gray-400">Experience blazing fast performance and seamless interactions.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-500 to-emerald-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl">🌍</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-sky-400">Global Community</h3>
+                    <p class="text-gray-400">Connect with people from all around the world in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-3xl p-12">
+                <h2 class="text-4xl font-bold mb-4">Ready to Join the Revolution?</h2>
+                <p class="text-xl text-gray-300 mb-8">Millions are already experiencing the future of social media. Don't get left behind!</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
+                        Sign Up Free
+                    </button>
+                    <button class="border border-purple-500 text-purple-400 px-8 py-3 rounded-full font-semibold hover:bg-purple-500/10 transition-all">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/50 border-t border-purple-500/20 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg"></div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">SocialSphere</span>
+                    </div>
+                    <p class="text-gray-400">Connecting the world, one moment at a time.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-purple-400">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-purple-300 transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-purple-300 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-purple-300 transition-colors">Apps</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-emerald-400">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-sky-400">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-sky-300 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-sky-300 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-sky-300 transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 SocialSphere. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

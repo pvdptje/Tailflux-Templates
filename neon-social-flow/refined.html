@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works | SocialSphere</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        purple: {
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed'
+                        },
+                        pink: {
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777'
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669'
+                        },
+                        sky: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'slide-in': 'slideIn 0.8s ease-out forwards'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .step-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .step-card:hover {
+            transform: translateY(-8px);
+        }
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        .feature-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/80 backdrop-blur-xl border-b border-purple-500/30 sticky top-0 z-50 transition-all duration-300" x-data="{ scrolled: false }" 
+         @scroll.window="scrolled = window.scrollY > 50" 
+         :class="scrolled ? 'py-2 bg-gray-900/95' : 'py-4'">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-globe-americas text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">SocialSphere</span>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-purple-400 transition-colors" @click="mobileMenuOpen = !mobileMenuOpen">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="hover:text-purple-400 transition-all duration-300 hover:scale-105">Home</a>
+                    <a href="#" class="text-purple-400 font-semibold relative group">
+                        How It Works
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-purple-400 scale-x-100"></span>
+                    </a>
+                    <a href="#" class="hover:text-purple-400 transition-all duration-300 hover:scale-105">Features</a>
+                    <a href="#" class="hover:text-purple-400 transition-all duration-300 hover:scale-105">Pricing</a>
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-2 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/25">
+                        Join Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="md:hidden mt-4 pb-4 border-t border-gray-700 pt-4" x-show="mobileMenuOpen" x-transition>
+                <div class="flex flex-col space-y-4">
+                    <a href="#" class="hover:text-purple-400 transition-colors py-2">Home</a>
+                    <a href="#" class="text-purple-400 font-semibold py-2">How It Works</a>
+                    <a href="#" class="hover:text-purple-400 transition-colors py-2">Features</a>
+                    <a href="#" class="hover:text-purple-400 transition-colors py-2">Pricing</a>
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 w-full">
+                        Join Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900/20 to-pink-900/20">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/10 via-gray-900 to-gray-900"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+            <div class="text-center animate-slide-in">
+                <div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-2xl animate-float">
+                    <i class="fas fa-rocket text-4xl text-white"></i>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    How <span class="gradient-text">SocialSphere</span> Works
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    Discover the magic behind our revolutionary social platform. Three simple steps to connect, create, and conquer the social world!
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/25 flex items-center space-x-2">
+                        <i class="fas fa-play"></i>
+                        <span>Watch Demo</span>
+                    </button>
+                    <button class="border border-purple-500 text-purple-400 px-8 py-3 rounded-full font-semibold hover:bg-purple-500/10 transition-all flex items-center space-x-2">
+                        <i class="fas fa-download"></i>
+                        <span>Get Started</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 lg:gap-12" x-data="{ 
+                step1: false, 
+                step2: false, 
+                step3: false 
+            }" 
+            x-init="
+                setTimeout(() => step1 = true, 200);
+                setTimeout(() => step2 = true, 400);
+                setTimeout(() => step3 = true, 600);
+            ">
+                <!-- Step 1 -->
+                <div class="step-card relative group" x-show="step1" x-transition:enter="transition ease-out duration-700" 
+                     x-transition:enter-start="opacity-0 transform translateY-20" 
+                     x-transition:enter-end="opacity-100 transform translateY-0">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl blur opacity-25 group-hover:opacity-75 transition-all duration-500"></div>
+                    <div class="relative bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 h-full border border-gray-700/50">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6 shadow-lg mx-auto">
+                            <i class="fas fa-user-plus text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400 text-center">Create Your Profile</h3>
+                        <p class="text-gray-300 mb-6 text-center leading-relaxed">
+                            Sign up in seconds with your email or social accounts. Customize your profile with photos, bio, and interests that reflect your unique personality.
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <span class="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30">Quick Setup</span>
+                            <span class="px-4 py-2 bg-pink-500/20 text-pink-300 rounded-full text-sm border border-pink-500/30">Customizable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card relative group" x-show="step2" x-transition:enter="transition ease-out duration-700" 
+                     x-transition:enter-start="opacity-0 transform translateY-20" 
+                     x-transition:enter-end="opacity-100 transform translateY-0">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-sky-600 rounded-3xl blur opacity-25 group-hover:opacity-75 transition-all duration-500"></div>
+                    <div class="relative bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 h-full border border-gray-700/50">
+                        <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6 shadow-lg mx-auto">
+                            <i class="fas fa-users text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-emerald-400 text-center">Connect & Explore</h3>
+                        <p class="text-gray-300 mb-6 text-center leading-relaxed">
+                            Discover friends, join communities, and explore content tailored to your interests. Our smart algorithm helps you find exactly what you love.
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <span class="px-4 py-2 bg-emerald-500/20 text-emerald-300 rounded-full text-sm border border-emerald-500/30">Smart Matching</span>
+                            <span class="px-4 py-2 bg-sky-500/20 text-sky-300 rounded-full text-sm border border-sky-500/30">Community</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card relative group" x-show="step3" x-transition:enter="transition ease-out duration-700" 
+                     x-transition:enter-start="opacity-0 transform translateY-20" 
+                     x-transition:enter-end="opacity-100 transform translateY-0">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-sky-600 rounded-3xl blur opacity-25 group-hover:opacity-75 transition-all duration-500"></div>
+                    <div class="relative bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 h-full border border-gray-700/50">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-sky-500 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6 shadow-lg mx-auto">
+                            <i class="fas fa-share-alt text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-sky-400 text-center">Create & Share</h3>
+                        <p class="text-gray-300 mb-6 text-center leading-relaxed">
+                            Share your stories, photos, and moments with the world. Engage with others through reactions, comments, and creative interactions.
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <span class="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30">Creative Tools</span>
+                            <span class="px-4 py-2 bg-sky-500/20 text-sky-300 rounded-full text-sm border border-sky-500/30">Engagement</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Showcase -->
+    <section class="py-20 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-slide-in">
+                    <h2 class="text-4xl font-bold mb-6 gradient-text">Experience Social Media Reimagined</h2>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Our intuitive interface makes connecting with friends and discovering new content effortless. 
+                        With real-time updates and seamless navigation, you'll never miss a moment.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
+                            <span class="text-gray-300">Real-time notifications</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
+                            <span class="text-gray-300">Advanced privacy controls</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
+                            <span class="text-gray-300">Cross-platform compatibility</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-3xl p-8 backdrop-blur-sm border border-purple-500/30">
+                        <img src="https://images.unsplash.com/photo-1566458383719-239ca2d59a37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzb2NpYWwlMjBtZWRpYSUyMHBsYXRmb3JtJTIwaW50ZXJmYWNlfGVufDB8MHx8fDE3NTg5Njc1OTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=cNXqmO0Z24U" 
+                             alt="SocialSphere Interface" 
+                             class="rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Showcase -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 via-purple-900/10 to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-slide-in">
+                <h2 class="text-4xl font-bold mb-4">Why Choose SocialSphere?</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Experience social media like never before with our unique features</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 feature-icon group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-palette text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-purple-400">Creative Tools</h3>
+                    <p class="text-gray-400">Unleash your creativity with advanced editing and sharing tools.</p>
+                </div>
+                
+                <div class="text-center p-6 feature-icon group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-sky-500 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-emerald-400">Privacy First</h3>
+                    <p class="text-gray-400">Complete control over your data and who sees your content.</p>
+                </div>
+                
+                <div class="text-center p-6 feature-icon group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-bolt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-pink-400">Lightning Fast</h3>
+                    <p class="text-gray-400">Experience blazing fast performance and seamless interactions.</p>
+                </div>
+                
+                <div class="text-center p-6 feature-icon group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-500 to-emerald-500 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-globe text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-sky-400">Global Community</h3>
+                    <p class="text-gray-400">Connect with people from all around the world in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="py-20 bg-gray-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-sky-500/20 to-emerald-500/20 rounded-3xl p-8 backdrop-blur-sm border border-sky-500/30">
+                        <img src="https://images.unsplash.com/photo-1573152143286-0c422b4d2175?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwZW9wbGUlMjBjb25uZWN0aW5nJTIwc29jaWFsJTIwbWVkaWF8ZW58MHwwfHx8MTc1ODk2NzYwM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=qZenO_gQ7QA" 
+                             alt="People connecting on SocialSphere" 
+                             class="rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                    </div>
+                </div>
+                <div class="animate-slide-in">
+                    <h2 class="text-4xl font-bold mb-6 gradient-text">Join Our Growing Community</h2>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Millions of users worldwide are already experiencing the future of social media. 
+                        Connect with like-minded individuals and build meaningful relationships.
+                    </p>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="text-3xl font-bold text-purple-400">2M+</div>
+                            <div class="text-gray-400">Active Users</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-emerald-400">500K+</div>
+                            <div class="text-gray-400">Communities</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-sky-400">150+</div>
+                            <div class="text-gray-400">Countries</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-pink-900/20"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="bg-gray-800/80 backdrop-blur-sm rounded-3xl p-12 border border-purple-500/30 shadow-2xl">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                    <i class="fas fa-star text-2xl text-white"></i>
+                </div>
+                <h2 class="text-4xl font-bold mb-4">Ready to Join the Revolution?</h2>
+                <p class="text-xl text-gray-300 mb-8">Millions are already experiencing the future of social media. Don't get left behind!</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/25 flex items-center space-x-2">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Sign Up Free</span>
+                    </button>
+                    <button class="border border-purple-500 text-purple-400 px-8 py-3 rounded-full font-semibold hover:bg-purple-500/10 transition-all flex items-center space-x-2">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Watch Demo</span>
+                    </button>
+                </div>
+                <p class="text-gray-400 mt-6 text-sm">No credit card required • 30-day free trial</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/80 backdrop-blur-sm border-t border-purple-500/30 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-globe-americas text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">SocialSphere</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Connecting the world, one moment at a time.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-purple-400">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-purple-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Features</span></a></li>
+                        <li><a href="#" class="hover:text-purple-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Pricing</span></a></li>
+                        <li><a href="#" class="hover:text-purple-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Apps</span></a></li>
+                        <li><a href="#" class="hover:text-purple-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Updates</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-emerald-400">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>About</span></a></li>
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Blog</span></a></li>
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Careers</span></a></li>
+                        <li><a href="#" class="hover:text-emerald-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Press</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-sky-400">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-sky-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Help Center</span></a></li>
+                        <li><a href="#" class="hover:text-sky-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Contact</span></a></li>
+                        <li><a href="#" class="hover:text-sky-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Privacy Policy</span></a></li>
+                        <li><a href="#" class="hover:text-sky-300 transition-colors flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Terms of Service</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 SocialSphere. All rights reserved. Made with <i class="fas fa-heart text-red-400"></i> for the global community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('mobileMenu', () => ({
+                open: false,
+                toggle() {
+                    this.open = !this.open
+                }
+            }))
+        })
+    </script>
+</body>
+</html>
