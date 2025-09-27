@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Downtown Bistro | Cozy Dining Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-serif text-emerald-600">The Downtown Bistro</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-emerald-600 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#" class="text-slate-600 hover:text-emerald-600 px-3 py-2 text-sm font-medium">Menu</a>
+                        <a href="#" class="text-slate-600 hover:text-emerald-600 px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#" class="text-slate-600 hover:text-emerald-600 px-3 py-2 text-sm font-medium">Reservations</a>
+                        <a href="#" class="text-slate-600 hover:text-emerald-600 px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="#" class="bg-emerald-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition duration-200">
+                        Book a Table
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="open = !open" class="text-slate-600 hover:text-emerald-600">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="open" class="md:hidden" x-transition>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="#" class="text-emerald-600 block px-3 py-2 text-base font-medium">Home</a>
+                <a href="#" class="text-slate-600 hover:text-emerald-600 block px-3 py-2 text-base font-medium">Menu</a>
+                <a href="#" class="text-slate-600 hover:text-emerald-600 block px-3 py-2 text-base font-medium">About</a>
+                <a href="#" class="text-slate-600 hover:text-emerald-600 block px-3 py-2 text-base font-medium">Reservations</a>
+                <a href="#" class="text-slate-600 hover:text-emerald-600 block px-3 py-2 text-base font-medium">Contact</a>
+                <a href="#" class="bg-emerald-600 text-white block px-3 py-2 rounded-lg text-base font-medium hover:bg-emerald-700 mt-2">
+                    Book a Table
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-slate-900 leading-tight">
+                        Cozy Downtown<br>Dining Experience
+                    </h1>
+                    <p class="mt-6 text-lg text-slate-600 max-w-md">
+                        Fresh, locally-sourced ingredients crafted into memorable dishes. 
+                        Join us for an intimate dining experience in the heart of downtown.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <a href="#" class="bg-emerald-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-emerald-700 transition duration-200 text-center">
+                            View Our Menu
+                        </a>
+                        <a href="#" class="border border-slate-300 text-slate-700 px-8 py-3 rounded-lg font-medium hover:border-emerald-400 hover:text-emerald-700 transition duration-200 text-center">
+                            Make Reservation
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-emerald-100 rounded-2xl h-80 lg:h-96 w-full flex items-center justify-center">
+                        <span class="text-slate-400 text-lg">Restaurant Image</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-slate-900">Why Choose The Bistro</h2>
+                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
+                    We take pride in creating exceptional dining experiences with attention to every detail.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-2">Fresh Ingredients</h3>
+                    <p class="text-slate-600">
+                        Locally sourced, seasonal ingredients ensure the highest quality and flavor in every dish.
+                    </p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-2">Intimate Atmosphere</h3>
+                    <p class="text-slate-600">
+                        Our cozy space creates the perfect setting for romantic dinners and special occasions.
+                    </p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-2">Expert Chefs</h3>
+                    <p class="text-slate-600">
+                        Our talented culinary team brings creativity and passion to every plate they prepare.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview -->
+    <section class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-slate-900">Featured Dishes</h2>
+                <p class="mt-4 text-slate-600">A taste of what awaits you at our bistro</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-emerald-50 flex items-center justify-center">
+                        <span class="text-slate-400">Dish Image</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900">Herb-Crusted Salmon</h3>
+                        <p class="text-slate-600 mt-2">Fresh Atlantic salmon with seasonal herbs and lemon butter sauce.</p>
+                        <span class="text-emerald-600 font-medium mt-3 block">$28</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-emerald-50 flex items-center justify-center">
+                        <span class="text-slate-400">Dish Image</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900">Mushroom Risotto</h3>
+                        <p class="text-slate-600 mt-2">Creamy arborio rice with wild mushrooms and parmesan.</p>
+                        <span class="text-emerald-600 font-medium mt-3 block">$24</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="h-48 bg-emerald-50 flex items-center justify-center">
+                        <span class="text-slate-400">Dish Image</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-slate-900">Braised Short Rib</h3>
+                        <p class="text-slate-600 mt-2">Tender beef short rib with red wine reduction and root vegetables.</p>
+                        <span class="text-emerald-600 font-medium mt-3 block">$32</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-700">
+                    View Full Menu
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation CTA -->
+    <section class="py-20 bg-emerald-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-serif mb-6">Ready for an Unforgettable Evening?</h2>
+            <p class="text-emerald-100 text-lg max-w-2xl mx-auto mb-8">
+                Book your table today and experience the warmth and flavor of The Downtown Bistro.
+            </p>
+            <a href="#" class="bg-white text-emerald-600 px-8 py-3 rounded-lg font-medium hover:bg-slate-100 transition duration-200 inline-block">
+                Reserve Your Table
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <span class="text-2xl font-serif text-white">The Downtown Bistro</span>
+                    <p class="mt-4 max-w-md">
+                        A cozy dining experience in the heart of downtown. Fresh ingredients, intimate atmosphere, and exceptional service.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Hours</h4>
+                    <ul class="space-y-2">
+                        <li>Monday - Thursday: 5pm - 10pm</li>
+                        <li>Friday - Saturday: 5pm - 11pm</li>
+                        <li>Sunday: 4pm - 9pm</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li>123 Main Street</li>
+                        <li>Downtown, City 12345</li>
+                        <li>(555) 123-4567</li>
+                        <li>info@downtownbistro.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2023 The Downtown Bistro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('navigation', () => ({
+                open: false
+            }))
+        })
+    </script>
+</body>
+</html>
