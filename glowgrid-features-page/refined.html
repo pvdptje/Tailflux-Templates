@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowSpace - Project Management Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                        },
+                        yellow: {
+                            400: '#facc15',
+                            500: '#eab308',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-border {
+            background: linear-gradient(45deg, #8b5cf6, #2dd4bf, #a3e635);
+            padding: 2px;
+            border-radius: 12px;
+        }
+        .gradient-border > div {
+            background: #1f2937;
+            border-radius: 10px;
+            padding: 24px;
+        }
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        .feature-card:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans overflow-x-hidden">
+    <!-- Header -->
+    <header class="bg-gray-800/80 backdrop-blur-md border-b border-violet-500/20 sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-violet-500 to-teal-400 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-project-diagram text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-violet-400 to-teal-400 bg-clip-text text-transparent">FlowSpace</span>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-300 hover:text-lime-400 transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="hover:text-lime-400 transition-all duration-300 transform hover:scale-105">Home</a>
+                    <a href="#" class="text-lime-400 font-semibold relative group">
+                        Features
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-lime-400 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#" class="hover:text-lime-400 transition-all duration-300 transform hover:scale-105">Pricing</a>
+                    <a href="#" class="hover:text-lime-400 transition-all duration-300 transform hover:scale-105">About</a>
+                </div>
+                <button class="hidden md:block bg-gradient-to-r from-violet-600 to-teal-500 hover:from-violet-500 hover:to-teal-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-violet-500/25">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden mt-4 space-y-4 pb-4">
+                <a href="#" class="block hover:text-lime-400 transition-colors">Home</a>
+                <a href="#" class="block text-lime-400 font-semibold">Features</a>
+                <a href="#" class="block hover:text-lime-400 transition-colors">Pricing</a>
+                <a href="#" class="block hover:text-lime-400 transition-colors">About</a>
+                <button class="w-full bg-gradient-to-r from-violet-600 to-teal-500 text-white px-6 py-3 rounded-full font-semibold transition-colors">
+                    Get Started
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 py-24 overflow-hidden">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Powerful Features for 
+                    <span class="bg-gradient-to-r from-lime-400 via-yellow-400 to-teal-400 bg-clip-text text-transparent animate-pulse-slow">Modern Teams</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
+                    Everything you need to manage projects efficiently. From task tracking to team collaboration, 
+                    FlowSpace brings joy back to project management.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="bg-gradient-to-r from-lime-400 to-yellow-400 text-gray-900 px-8 py-4 rounded-full font-bold hover:from-lime-500 hover:to-yellow-500 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-lime-400/25">
+                        <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                    </button>
+                    <button class="border-2 border-gray-400 text-gray-300 px-8 py-4 rounded-full font-semibold hover:border-white hover:text-white transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-play-circle mr-2"></i>Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-10 left-10 w-20 h-20 bg-violet-500/20 rounded-full blur-xl animate-float"></div>
+        <div class="absolute top-1/4 right-20 w-32 h-32 bg-teal-500/15 rounded-full blur-2xl animate-float" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-lime-500/15 rounded-full blur-xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-10 right-10 w-28 h-28 bg-yellow-500/10 rounded-full blur-2xl animate-float" style="animation-delay: 3s;"></div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-20 bg-gray-900 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Everything Your Team Needs</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Designed with modern workflows in mind, our features adapt to your team's unique needs</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="gradient-border feature-card group">
+                    <div class="h-full">
+                        <div class="w-14 h-14 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-tasks text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-lime-400">Smart Task Management</h3>
+                        <p class="text-gray-300 mb-6">Create, assign, and track tasks with our intuitive drag-and-drop interface. Never miss a deadline again.</p>
+                        <div class="flex items-center text-violet-400 group-hover:text-violet-300 transition-colors">
+                            <span class="font-semibold">Learn more</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="gradient-border feature-card group">
+                    <div class="h-full">
+                        <div class="w-14 h-14 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-users text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-yellow-400">Team Collaboration</h3>
+                        <p class="text-gray-300 mb-6">Real-time messaging, file sharing, and comments keep your team connected and productive.</p>
+                        <div class="flex items-center text-teal-400 group-hover:text-teal-300 transition-colors">
+                            <span class="font-semibold">Learn more</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="gradient-border feature-card group">
+                    <div class="h-full">
+                        <div class="w-14 h-14 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-violet-400">Advanced Analytics</h3>
+                        <p class="text-gray-300 mb-6">Get insights into your team's performance with beautiful, interactive dashboards and reports.</p>
+                        <div class="flex items-center text-yellow-400 group-hover:text-yellow-300 transition-colors">
+                            <span class="font-semibold">Learn more</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="gradient-border feature-card group">
+                    <div class="h-full">
+                        <div class="w-14 h-14 bg-gradient-to-r from-lime-400 to-green-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-clock text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-teal-400">Time Tracking</h3>
+                        <p class="text-gray-300 mb-6">Monitor project timelines and individual contributions with built-in time tracking tools.</p>
+                        <div class="flex items-center text-lime-400 group-hover:text-lime-300 transition-colors">
+                            <span class="font-semibold">Learn more</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="gradient-border feature-card group">
+                    <div class="h-full">
+                        <div class="w-14 h-14 bg-gradient-to-r from-violet-500 to-pink-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-kanban text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-lime-400">Visual Boards</h3>
+                        <p class="text-gray-300 mb-6">Kanban boards, Gantt charts, and calendar views to visualize your workflow exactly how you want.</p>
+                        <div class="flex items-center text-violet-400 group-hover:text-violet-300 transition-colors">
+                            <span class="font-semibold">Learn more</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="gradient-border feature-card group">
+                    <div class="h-full">
+                        <div class="w-14 h-14 bg-gradient-to-r from-teal-400 to-blue-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-bell text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-yellow-400">Smart Notifications</h3>
+                        <p class="text-gray-300 mb-6">Stay informed with intelligent alerts that only notify you about what truly matters.</p>
+                        <div class="flex items-center text-teal-400 group-hover:text-teal-300 transition-colors">
+                            <span class="font-semibold">Learn more</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="py-20 bg-gray-800/50">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">See FlowSpace in Action</h2>
+                    <p class="text-xl text-gray-300 mb-8">Our intuitive interface makes complex project management feel simple and enjoyable.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-lime-400 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-gray-900"></i>
+                            </div>
+                            <span class="text-lg">Drag-and-drop task management</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-lime-400 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-gray-900"></i>
+                            </div>
+                            <span class="text-lg">Real-time team collaboration</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-lime-400 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-gray-900"></i>
+                            </div>
+                            <span class="text-lg">Advanced reporting and analytics</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="gradient-border rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1686061592689-312bbfb5c055?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9qZWN0JTIwbWFuYWdlbWVudCUyMGRhc2hib2FyZCUyMGFuYWx5dGljc3xlbnwwfDB8fHwxNzU4OTQ3Nzg5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=yqaskj8lQBE" 
+                             alt="FlowSpace Dashboard" class="w-full h-auto rounded-xl">
+                    </div>
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-violet-500/20 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-4 -left-4 w-20 h-20 bglime-400/15 rounded-full blur-lg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Collaboration Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="relative order-2 lg:order-1">
+                    <div class="gradient-border rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1758518730523-c9f6336ebdae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwd29ya2luZyUyMHRvZ2V0aGVyJTIwb2ZmaWNlfGVufDB8MHx8fDE3NTg5NDc3OTR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=qX-cwXCTotM" 
+                             alt="Team Collaboration" class="w-full h-auto rounded-xl">
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl"></div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Built for Team Success</h2>
+                    <p class="text-xl text-gray-300 mb-8">Bring your team together with features designed to enhance collaboration and productivity.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-comments text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Real-time Chat</h4>
+                                <p class="text-gray-400">Instant messaging with file sharing and threaded conversations.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-video text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Video Meetings</h4>
+                                <p class="text-gray-400">Integrated video calls with screen sharing capabilities.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-share-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">File Collaboration</h4>
+                                <p class="text-gray-400">Work together on documents with real-time editing and version control.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="space-y-4">
+                    <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-lime-400 to-yellow-400 bg-clip-text text-transparent">10K+</div>
+                    <div class="text-gray-400 text-lg">Teams Trust Us</div>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-400 to-teal-400 bg-clip-text text-transparent">98%</div>
+                    <div class="text-gray-400 text-lg">Customer Satisfaction</div>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">5M+</div>
+                    <div class="text-gray-400 text-lg">Tasks Completed</div>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">24/7</div>
+                    <div class="text-gray-400 text-lg">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-teal-500 transform -skew-y-3"></div>
+        <div class="relative container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Workflow?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of teams who are already using FlowSpace to achieve their project goals.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-gray-900 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-play mr-2"></i>Start Free Trial
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-calendar mr-2"></i>Schedule a Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-16 border-t border-gray-700">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-r from-violet-500 to-teal-400 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-project-diagram text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">FlowSpace</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">Making project management fun and effective for teams everywhere. Join the revolution in team collaboration.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-violet-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-lime-400">Product</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Features
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Pricing
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Integrations
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Updates
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-yellow-400">Company</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>About
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Blog
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Careers
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Press
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-teal-400">Support</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Help Center
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Contact
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Status
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>API Docs
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 FlowSpace. All rights reserved. Built with ❤️ for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('main', () => ({
+                mobileMenuOpen: false
+            }))
+        })
+    </script>
+</body>
+</html>

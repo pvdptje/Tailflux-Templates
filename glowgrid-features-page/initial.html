@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowSpace - Project Management Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                        },
+                        yellow: {
+                            400: '#facc15',
+                            500: '#eab308',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-violet-500/20">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-violet-500 to-teal-400 rounded-lg"></div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-violet-400 to-teal-400 bg-clip-text text-transparent">FlowSpace</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-lime-400 transition-colors">Home</a>
+                    <a href="#" class="text-lime-400 font-semibold">Features</a>
+                    <a href="#" class="hover:text-lime-400 transition-colors">Pricing</a>
+                    <a href="#" class="hover:text-lime-400 transition-colors">About</a>
+                </div>
+                <button class="bg-violet-600 hover:bg-violet-500 text-white px-6 py-2 rounded-full font-medium transition-colors">
+                    Get Started
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-800 to-gray-900 py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Powerful Features for 
+                <span class="bg-gradient-to-r from-lime-400 to-yellow-400 bg-clip-text text-transparent">Modern Teams</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                Everything you need to manage projects efficiently. From task tracking to team collaboration, 
+                FlowSpace brings joy back to project management.
+            </p>
+        </div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-800 rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-violet-500 to-purple-600 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-lime-400">Smart Task Management</h3>
+                    <p class="text-gray-300">Create, assign, and track tasks with our intuitive drag-and-drop interface. Never miss a deadline again.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-gray-800 rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-yellow-400">Team Collaboration</h3>
+                    <p class="text-gray-300">Real-time messaging, file sharing, and comments keep your team connected and productive.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-gray-800 rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-violet-400">Advanced Analytics</h3>
+                    <p class="text-gray-300">Get insights into your team's performance with beautiful, interactive dashboards and reports.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-gray-800 rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-lime-400 to-green-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-teal-400">Time Tracking</h3>
+                    <p class="text-gray-300">Monitor project timelines and individual contributions with built-in time tracking tools.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-gray-800 rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-violet-500 to-pink-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-lime-400">Visual Boards</h3>
+                    <p class="text-gray-300">Kanban boards, Gantt charts, and calendar views to visualize your workflow exactly how you want.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-gray-800 rounded-2xl p-8 hover:transform hover:scale-105 transition-all duration-300 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-teal-400 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-yellow-400">Smart Notifications</h3>
+                    <p class="text-gray-300">Stay informed with intelligent alerts that only notify you about what truly matters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-violet-600 to-teal-500">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Transform Your Workflow?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of teams who are already using FlowSpace to achieve their project goals.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    Start Free Trial
+                </button>
+                <button class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
+                    Schedule a Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-12 border-t border-gray-700">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-violet-500 to-teal-400 rounded-lg"></div>
+                        <span class="text-xl font-bold">FlowSpace</span>
+                    </div>
+                    <p class="text-gray-400">Making project management fun and effective for teams everywhere.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lime-400">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-yellow-400">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-teal-400">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 FlowSpace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
