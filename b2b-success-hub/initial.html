@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies | InnovateTech Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        orange: {
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                        },
+                        fuchsia: {
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral-50 text-neutral-800 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-neutral-200">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-violet-600 rounded-lg"></div>
+                    <span class="text-xl font-bold text-violet-700">InnovateTech</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-neutral-600 hover:text-violet-600 transition-colors">Solutions</a>
+                    <a href="#" class="text-violet-600 font-medium">Case Studies</a>
+                    <a href="#" class="text-neutral-600 hover:text-violet-600 transition-colors">Pricing</a>
+                    <a href="#" class="text-neutral-600 hover:text-violet-600 transition-colors">Contact</a>
+                </nav>
+                <button class="bg-violet-600 text-white px-6 py-2 rounded-lg hover:bg-violet-700 transition-colors">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-violet-50 to-fuchsia-50 py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-neutral-800 mb-4">
+                Success Stories That Speak Volumes
+            </h1>
+            <p class="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
+                Discover how leading enterprises transformed their operations with our innovative B2B software solutions.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-violet-600 text-white px-8 py-3 rounded-lg hover:bg-violet-700 transition-colors">
+                    View All Case Studies
+                </button>
+                <button class="border border-violet-600 text-violet-600 px-8 py-3 rounded-lg hover:bg-violet-50 transition-colors">
+                    Contact Sales
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Grid -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Case Study 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Manufacturing
+                        </span>
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2">
+                            Global Manufacturing Corp: 45% Efficiency Boost
+                        </h3>
+                        <p class="text-neutral-600 mb-4">
+                            How we helped streamline production processes and reduce operational costs by implementing our enterprise resource planning system.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-600 font-medium">Read Case Study →</span>
+                            <div class="flex items-center space-x-1 text-orange-500">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-fuchsia-400 to-orange-400"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-violet-100 text-violet-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Healthcare
+                        </span>
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2">
+                            MedTech Solutions: Patient Care Transformation
+                        </h3>
+                        <p class="text-neutral-600 mb-4">
+                            Revolutionizing patient management systems to improve care quality and reduce administrative overhead by 60%.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-600 font-medium">Read Case Study →</span>
+                            <div class="flex items-center space-x-1 text-orange-500">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-orange-400 to-violet-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Finance
+                        </span>
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2">
+                            FinSecure Bank: Digital Transformation Success
+                        </h3>
+                        <p class="text-neutral-600 mb-4">
+                            Implementing cutting-edge security protocols and automation systems that reduced fraud incidents by 85%.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-600 font-medium">Read Case Study →</span>
+                            <div class="flex items-center space-x-1 text-orange-500">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-violet-400 to-orange-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Retail
+                        </span>
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2">
+                            RetailChain Inc: Inventory Optimization
+                        </h3>
+                        <p class="text-neutral-600 mb-4">
+                            Advanced analytics and AI-powered inventory management leading to 30% reduction in stockouts and overstock.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-600 font-medium">Read Case Study →</span>
+                            <div class="flex items-center space-x-1 text-orange-500">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 5 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-fuchsia-500 to-violet-600"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-violet-100 text-violet-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Logistics
+                        </span>
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2">
+                            LogiFlow Systems: Supply Chain Revolution
+                        </h3>
+                        <p class="text-neutral-600 mb-4">
+                            Real-time tracking and predictive analytics transforming logistics operations across 15 countries.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-600 font-medium">Read Case Study →</span>
+                            <div class="flex items-center space-x-1 text-orange-500">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 6 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-orange-500 to-fuchsia-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Technology
+                        </span>
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2">
+                            TechInnovate: Scalable Infrastructure
+                        </h3>
+                        <p class="text-neutral-600 mb-4">
+                            Cloud migration and infrastructure optimization supporting 500% growth without performance degradation.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-600 font-medium">Read Case Study →</span>
+                            <div class="flex items-center space-x-1 text-orange-500">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-neutral-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-neutral-800 mb-4">Proven Results Across Industries</h2>
+                <p class="text-neutral-600 max-w-2xl mx-auto">Our solutions have delivered measurable impact for businesses worldwide</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-violet-600 mb-2">245%</div>
+                    <div class="text-neutral-600">Average ROI</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-500 mb-2">89%</div>
+                    <div class="text-neutral-600">Faster Deployment</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-fuchsia-500 mb-2">150+</div>
+                    <div class="text-neutral-600">Enterprise Clients</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-violet-600 mb-2">99.9%</div>
+                    <div class="text-neutral-600">Uptime Reliability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Write Your Success Story?</h2>
+            <p class="text-violet-100 max-w-2xl mx-auto mb-8">
+                Join hundreds of enterprises that have transformed their operations with our cutting-edge B2B software solutions.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-white text-violet-600 px-8 py-3 rounded-lg hover:bg-neutral-100 transition-colors font-medium">
+                    Schedule a Demo
+                </button>
+                <button class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white/10 transition-colors">
+                    Contact Our Team
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-800 text-neutral-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-violet-600 rounded-lg"></div>
+                        <span class="text-xl font-bold text-white">InnovateTech</span>
+                    </div>
+                    <p class="text-neutral-400">Enterprise software solutions for tomorrow's challenges.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">Enterprise Resource Planning</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Customer Relationship Management</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Supply Chain Management</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li>info@innovatetech.com</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>San Francisco, CA</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-neutral-700 mt-8 pt-8 text-center text-neutral-400">
+                <p>&copy; 2024 InnovateTech Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
