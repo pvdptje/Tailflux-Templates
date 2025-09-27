@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Playful, modern API documentation with colorful UI, code snippets, and examples to get you building quickly.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Playful Docs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="dns-prefetch" href="//images.unsplash.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'playful-green': '#a7f3d0',
+                        'playful-cyan': '#a5f3fc',
+                        'playful-pink': '#fbcfe8',
+                        'playful-red': '#fecaca',
+                        'playful-purple': '#ddd6fe',
+                        'playful-blue': '#bfdbfe'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'slide-in': 'slide-in 0.5s ease-out',
+                        'spin-slow': 'spin 12s linear infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'pulse-glow': {
+                            '0%': { boxShadow: '0 0 5px rgba(167, 243, 208, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(167, 243, 208, 0.8)' }
+                        },
+                        'slide-in': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #a7f3d0, #a5f3fc, #fbcfe8, #fecaca);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .code-block { position: relative; }
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #a7f3d0, #a5f3fc, #fbcfe8, #fecaca);
+        }
+        .nav-item { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-item.active { transform: translateX(8px); }
+        .section-transition { animation: slide-in 0.5s ease-out; }
+        ::selection { background: rgba(165,243,252,0.5); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-playful-cyan via-playful-green to-playful-pink min-h-screen text-gray-800">
+    <div x-data="{ 
+        activeSection: 'getting-started',
+        mobileMenuOpen: false,
+        showTop: false,
+        toggleTheme() { document.documentElement.classList.toggle('dark'); }
+    }" x-init="
+        window.addEventListener('scroll', () => showTop = window.scrollY > 400);
+    " class="container mx-auto px-4 py-8">
+        <!-- Decorative background orbs -->
+        <div class="pointer-events-none fixed inset-0 -z-10 opacity-40">
+            <div class="absolute -top-24 -left-16 w-72 h-72 bg-gradient-to-tr from-playful-green to-playful-cyan rounded-full blur-3xl animate-float"></div>
+            <div class="absolute top-32 -right-20 w-80 h-80 bg-gradient-to-tr from-playful-pink to-playful-purple rounded-full blur-3xl animate-float" style="animation-delay: 1.5s;"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="mb-12 text-center relative overflow-hidden rounded-3xl">
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-y-3"></div>
+            <div class="relative p-6 md:p-10">
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="flex-1">
+                        <div class="inline-block animate-float mb-6">
+                            <i class="fas fa-rocket text-6xl gradient-text drop-shadow"></i>
+                        </div>
+                        <h1 class="text-5xl md:text-6xl font-extrabold mb-4 gradient-text">🌈 API Playground</h1>
+                        <p class="text-lg md:text-xl text-gray-700/90 max-w-3xl mx-auto leading-relaxed">
+                            Welcome to our colorful API documentation! Build something amazing with delightful DX and speedy endpoints. 🚀
+                        </p>
+                        <div class="mt-6 flex flex-wrap justify-center gap-3">
+                            <span class="px-4 py-2 bg-white/80 backdrop-blur rounded-full text-sm font-medium text-gray-700 shadow-lg">
+                                <i class="fas fa-bolt text-yellow-500 mr-2"></i>Lightning Fast
+                            </span>
+                            <span class="px-4 py-2 bg-white/80 backdrop-blur rounded-full text-sm font-medium text-gray-700 shadow-lg">
+                                <i class="fas fa-shield-alt text-green-500 mr-2"></i>Secure
+                            </span>
+                            <span class="px-4 py-2 bg-white/80 backdrop-blur rounded-full text-sm font-medium text-gray-700 shadow-lg">
+                                <i class="fas fa-code text-blue-500 mr-2"></i>Developer Friendly
+                            </span>
+                            <span class="px-4 py-2 bg-white/80 backdrop-blur rounded-full text-sm font-medium text-gray-700 shadow-lg">
+                                <i class="fas fa-sitemap text-purple-500 mr-2"></i>v1 Stable
+                            </span>
+                        </div>
+                        <div class="mt-6 flex justify-center gap-4">
+                            <button @click="toggleTheme" class="group inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur rounded-xl shadow hover:shadow-md transition">
+                                <i class="fas fa-moon group-hover:rotate-12 transition"></i>
+                                <span class="font-medium">Toggle Theme</span>
+                            </button>
+                            <a href="#getting-started" @click.prevent="activeSection='getting-started'; window.scrollTo({top: document.querySelector('main').offsetTop - 20, behavior: 'smooth'});" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-playful-cyan to-playful-green rounded-xl shadow text-gray-800 font-semibold hover:opacity-90 transition">
+                                <i class="fas fa-play-circle"></i> Start Building
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <div class="relative mx-auto max-w-xl">
+                            <img src="https://images.unsplash.com/photo-1665764884116-11bf71512155?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGNvbG9yZnVsJTIwZ3JhZGllbnQlMjBzaGFwZXMlMjBiYWNrZ3JvdW5kfGVufDB8MHx8fDE3NTg5NTAyMzV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=VGYdjjmBb-A" alt="Abstract colorful gradient shapes" class="w-full h-64 md:h-80 object-cover rounded-3xl shadow-xl">
+                            <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur rounded-2xl shadow-lg p-4 border border-white/60">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 rounded-full bg-gradient-to-tr from-playful-green to-playful-cyan animate-pulse-glow"></div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-700">Requests / min</p>
+                                        <p class="text-xl font-extrabold">12,480</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute -top-6 -right-6 bg-white/90 backdrop-blur rounded-2xl shadow-lg p-4 border border-white/60">
+                                <p class="text-xs text-gray-600 mb-1">Uptime</p>
+                                <p class="text-lg font-bold"><i class="fas fa-signal text-green-500 mr-1"></i>99.99%</p>
+                            </div>
+                            <div class="absolute top-4 right-4 h-10 w-10 rounded-full bg-gradient-to-br from-playful-red to-playful-pink opacity-80 animate-spin-slow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Menu Button -->
+        <div class="lg:hidden mb-6">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="w-full bg-white rounded-2xl shadow-lg p-4 flex items-center justify-between font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-expanded="false" aria-controls="sidebar">
+                <span class="sr-only">Toggle documentation menu</span>
+                <span>Menu</span>
+                <i class="fas fa-chevron-down transition-transform duration-300" :class="mobileMenuOpen ? 'rotate-180' : ''" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <nav id="sidebar" class="lg:w-1/4 bg-white rounded-2xl shadow-xl p-6 sticky top-8 h-fit transition-all duration-300" :class="mobileMenuOpen ? 'block' : 'hidden lg:block'">
+                <ul class="space-y-2">
+                    <li class="nav-item" :class="activeSection === 'getting-started' ? 'active' : ''">
+                        <button @click="activeSection = 'getting-started'; mobileMenuOpen = false" :class="activeSection === 'getting-started' ? 'bg-gradient-to-r from-playful-green to-playful-cyan text-gray-800 shadow-lg' : 'text-gray-600 hover:bg-gray-50'"
+                                class="w-full text-left px-4 py-4 rounded-xl font-medium transition-all duration-300 flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-playful-cyan">
+                            <i class="fas fa-play-circle text-lg"></i>
+                            Getting Started
+                        </button>
+                    </li>
+                    <li class="nav-item" :class="activeSection === 'authentication' ? 'active' : ''">
+                        <button @click="activeSection = 'authentication'; mobileMenuOpen = false" :class="activeSection === 'authentication' ? 'bg-gradient-to-r from-playful-cyan to-playful-blue text-gray-800 shadow-lg' : 'text-gray-600 hover:bg-gray-50'"
+                                class="w-full text-left px-4 py-4 rounded-xl font-medium transition-all duration-300 flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-playful-cyan">
+                            <i class="fas fa-key text-lg"></i>
+                            Authentication
+                        </button>
+                    </li>
+                    <li class="nav-item" :class="activeSection === 'endpoints' ? 'active' : ''">
+                        <button @click="activeSection = 'endpoints'; mobileMenuOpen = false" :class="activeSection === 'endpoints' ? 'bg-gradient-to-r from-playful-pink to-playful-purple text-gray-800 shadow-lg' : 'text-gray-600 hover:bg-gray-50'"
+                                class="w-full text-left px-4 py-4 rounded-xl font-medium transition-all duration-300 flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-playful-cyan">
+                            <i class="fas fa-satellite-dish text-lg"></i>
+                            Endpoints
+                        </button>
+                    </li>
+                    <li class="nav-item" :class="activeSection === 'examples' ? 'active' : ''">
+                        <button @click="activeSection = 'examples'; mobileMenuOpen = false" :class="activeSection === 'examples' ? 'bg-gradient-to-r from-playful-red to-playful-pink text-gray-800 shadow-lg' : 'text-gray-600 hover:bg-gray-50'"
+                                class="w-full text-left px-4 py-4 rounded-xl font-medium transition-all duration-300 flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-playful-cyan">
+                            <i class="fas fa-lightbulb text-lg"></i>
+                            Examples
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="mt-8 p-4 bg-gradient-to-br from-playful-green/20 to-playful-cyan/20 rounded-xl">
+                    <h4 class="font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                        <i class="fas fa-question-circle"></i> Need Help?
+                    </h4>
+                    <p class="text-sm text-gray-600 mb-3">Check out our community resources</p>
+                    <a href="#" class="w-full inline-flex items-center justify-center gap-2 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:shadow-md transition-shadow">
+                        <i class="fas fa-comments"></i>Join Discord
+                    </a>
+                </div>
+
+                <div class="mt-6 p-4 rounded-xl bg-white/70 backdrop-blur border border-white/60">
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1649451844931-57e22fc82de3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkZXZlbG9wZXIlMjBBUEklMjBkb2N1bWVudGF0aW9uJTIwdGVhbXdvcmt8ZW58MHwwfHx8MTc1ODk1MDIzNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=aYosQyFcC8k" alt="Developers collaborating" class="w-12 h-12 rounded-lg object-cover">
+                        <div>
+                            <p class="text-sm font-semibold">Community Guides</p>
+                            <p class="text-xs text-gray-600">Best practices and tips</p>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Area -->
+            <main class="lg:w-3/4 space-y-8">
+                <!-- Getting Started Section -->
+                <section id="getting-started" x-show="activeSection === 'getting-started'" x-transition:enter="section-transition" class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="flex items-center gap-4 mb-6 group">
+                        <div class="bg-gradient-to-r from-playful-green to-playful-cyan p-3 rounded-2xl shadow">
+                            <i class="fas fa-play-circle text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800">Getting Started</h2>
+                        <a href="#getting-started" class="opacity-0 group-hover:opacity-100 transition ml-auto text-gray-400 hover:text-gray-600" title="Copy link">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-r from-playful-green/20 to-playful-cyan/20 p-6 rounded-2xl border-l-4 border-playful-green">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                                    <i class="fas fa-download text-playful-green"></i> Quick Setup
+                                </h3>
+                                <span class="text-xs px-2 py-1 rounded-full bg-white/70 text-gray-700 border">Terminal</span>
+                            </div>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>npm install colorful-api
+# or
+yarn add colorful-api</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-playful-cyan/20 to-playful-blue/20 p-6 rounded-2xl border-l-4 border-playful-cyan">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                                    <i class="fas fa-cog text-playful-cyan"></i> Basic Configuration
+                                </h3>
+                                <span class="text-xs px-2 py-1 rounded-full bg-white/70 text-gray-700 border">JavaScript</span>
+                            </div>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-cyan-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>import { ColorfulAPI } from 'colorful-api';
+
+const api = new ColorfulAPI({
+    apiKey: 'your-api-key-here',
+    environment: 'production'
+});</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Authentication Section -->
+                <section id="authentication" x-show="activeSection === 'authentication'" x-transition:enter="section-transition" class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="flex items-center gap-4 mb-6 group">
+                        <div class="bg-gradient-to-r from-playful-cyan to-playful-blue p-3 rounded-2xl shadow">
+                            <i class="fas fa-key text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800">Authentication</h2>
+                        <a href="#authentication" class="opacity-0 group-hover:opacity-100 transition ml-auto text-gray-400 hover:text-gray-600" title="Copy link">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-r from-playful-cyan/20 to-playful-blue/20 p-6 rounded-2xl border-l-4 border-playful-cyan">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                                <i class="fas fa-key text-playful-cyan"></i> API Keys
+                            </h3>
+                            <p class="text-gray-700 mb-4">Get your API key from the dashboard and include it in your requests:</p>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-cyan-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>curl -H "Authorization: Bearer YOUR_API_KEY" \
+     https://api.colorful.dev/v1/users</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Endpoints Section -->
+                <section id="endpoints" x-show="activeSection === 'endpoints'" x-transition:enter="section-transition" class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="flex items-center gap-4 mb-6 group">
+                        <div class="bg-gradient-to-r from-playful-pink to-playful-purple p-3 rounded-2xl shadow">
+                            <i class="fas fa-satellite-dish text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800">Endpoints</h2>
+                        <a href="#endpoints" class="opacity-0 group-hover:opacity-100 transition ml-auto text-gray-400 hover:text-gray-600" title="Copy link">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+
+                    <div x-data="{ q: '' }" class="space-y-6">
+                        <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+                            <div class="relative flex-1">
+                                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input x-model="q" type="text" placeholder="Search endpoints (e.g., users, POST)" class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-playful-pink" />
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="px-2 py-1 rounded bg-gray-100 border">v1</span>
+                                <span class="px-2 py-1 rounded bg-gray-100 border">JSON</span>
+                            </div>
+                        </div>
+
+                        <!-- GET Users -->
+                        <div x-show="('/v1/users get retrieve list users'.toLowerCase().includes(q.toLowerCase()))" class="border-l-4 border-playful-green pl-4 bg-gradient-to-r from-playful-green/10 to-transparent p-4 rounded-r-xl">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-playful-green text-gray-800 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
+                                    <i class="fas fa-arrow-down"></i> GET
+                                </span>
+                                <code class="text-lg font-mono bg-gray-100 px-2 py-1 rounded">/v1/users</code>
+                            </div>
+                            <p class="text-gray-600 mb-3">Retrieve a list of users</p>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>{
+    "users": [
+        {
+            "id": "123",
+            "name": "Alice",
+            "email": "alice@example.com"
+        }
+    ]
+}</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- POST Users -->
+                        <div x-show="('/v1/users post create user'.toLowerCase().includes(q.toLowerCase()))" class="border-l-4 border-playful-pink pl-4 bg-gradient-to-r from-playful-pink/10 to-transparent p-4 rounded-r-xl">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-playful-pink text-gray-800 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
+                                    <i class="fas fa-plus"></i> POST
+                                </span>
+                                <code class="text-lg font-mono bg-gray-100 px-2 py-1 rounded">/v1/users</code>
+                            </div>
+                            <p class="text-gray-600 mb-3">Create a new user</p>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-pink-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>{
+    "name": "Bob",
+    "email": "bob@example.com",
+    "role": "developer"
+}</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Examples Section -->
+                <section id="examples" x-show="activeSection === 'examples'" x-transition:enter="section-transition" class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="flex items-center gap-4 mb-6 group">
+                        <div class="bg-gradient-to-r from-playful-red to-playful-pink p-3 rounded-2xl shadow">
+                            <i class="fas fa-lightbulb text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800">Examples</h2>
+                        <a href="#examples" class="opacity-0 group-hover:opacity-100 transition ml-auto text-gray-400 hover:text-gray-600" title="Copy link">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-playful-red/20 to-playful-pink/20 p-6 rounded-2xl border-l-4 border-playful-red">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                                <i class="fab fa-js text-playful-red"></i> JavaScript Example
+                            </h3>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-red-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>async function fetchUsers() {
+    const response = await fetch('/v1/users', {
+        headers: {
+            'Authorization': 'Bearer YOUR_API_KEY'
+        }
+    });
+    return await response.json();
+}</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-playful-cyan/20 to-playful-blue/20 p-6 rounded-2xl border-l-4 border-playful-cyan">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                                <i class="fab fa-python text-playful-cyan"></i> Python Example
+                            </h3>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-cyan-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>import requests
+
+response = requests.get(
+    'https://api.colorful.dev/v1/users',
+    headers={'Authorization': 'Bearer YOUR_API_KEY'}
+)
+users = response.json()</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-2 bg-gradient-to-br from-playful-green/20 to-playful-cyan/20 p-6 rounded-2xl border-l-4 border-playful-green">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                                <i class="fab fa-java text-playful-green"></i> Java Example
+                            </h3>
+                            <div class="code-block">
+                                <pre class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+<code>HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://api.colorful.dev/v1/users"))
+    .header("Authorization", "Bearer YOUR_API_KEY")
+    .build();
+
+HttpResponse<String> response = client.send(request, 
+    HttpResponse.BodyHandlers.ofString());</code>
+                                </pre>
+                                <button class="absolute top-2 right-2 bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Copy code">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Back to top -->
+        <button x-show="showTop" @click="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-white text-gray-800 rounded-full shadow-lg hover:shadow-xl p-3 transition focus:outline-none focus:ring-2 focus:ring-playful-cyan" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-600">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/70">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+                    <div class="flex items-center gap-4 mb-4 md:mb-0">
+                        <img src="https://images.unsplash.com/photo-1560719887-fe3105fa1e55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGFwaSUyMGRvY3VtZW50YXRpb24lMjB0ZWNobm9sb2d5fGVufDB8MHx8fDE3NTg5NDg2NDR8MA&ixlib=rb-4.1.0&q=80&w=200" 
+                             alt="API Integration" class="w-12 h-12 rounded-lg object-cover">
+                        <div class="text-left">
+                            <h3 class="font-bold text-gray-800">Colorful API</h3>
+                            <p class="text-sm text-gray-600">Build amazing applications</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-500 hover:text-playful-pink transition-colors" aria-label="GitHub">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-playful-cyan transition-colors" aria-label="Discord">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-playful-green transition-colors" aria-label="Twitter">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-sm">Made with <i class="fas fa-heart text-red-400"></i> and lots of colors! Need help? 
+                    <a href="#" class="text-playful-pink hover:underline font-medium">Contact us</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Copy to clipboard functionality with feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.code-block button');
+
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('code');
+                    const textToCopy = codeBlock.textContent;
+
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
+                        this.classList.add('bg-green-600','text-white');
+
+                        // Announce for screen readers
+                        this.setAttribute('aria-live','polite');
+
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.classList.remove('bg-green-600','text-white');
+                        }, 2000);
+                    }).catch(() => {
+                        alert('Copy failed. Please copy manually.');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
