@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comedian Name | Stand-Up Comedy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                        },
+                        blue: {
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                        },
+                        pink: {
+                            400: '#f472b6',
+                            500: '#ec4899',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white font-sans overflow-x-hidden">
+    <!-- Navigation -->
+    <nav x-data="{ open: false }" class="bg-gray-800/90 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent animate-pulse-slow">COMEDIAN NAME</span>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i :class="open ? 'fa-times' : 'fa-bars'" class="fas text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-amber-500 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-user mr-2"></i>About
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-play-circle mr-2"></i>Videos
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-envelope mr-2"></i>Contact
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="open" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95" 
+                 class="md:hidden border-t border-gray-700 mt-2 pt-4 pb-6">
+                <div class="space-y-2">
+                    <a href="#" class="block text-amber-500 hover:text-amber-400 px-3 py-2 rounded-md text-base font-medium transition-colors">
+                        <i class="fas fa-home mr-3"></i>Home
+                    </a>
+                    <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">
+                        <i class="fas fa-user mr-3"></i>About
+                    </a>
+                    <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">
+                        <i class="fas fa-play-circle mr-3"></i>Videos
+                    </a>
+                    <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">
+                        <i class="fas fa-envelope mr-3"></i>Contact
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 py-20 overflow-hidden">
+        <!-- Animated background elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse-slow delay-500"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate-float">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="block opacity-90">LAUGHTER IS</span>
+                        <span class="bg-gradient-to-r from-amber-500 via-teal-400 to-pink-500 bg-clip-text text-transparent animate-pulse">MEDICINE</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Award-winning stand-up comedian bringing fresh perspectives and uncontrollable laughter to stages worldwide.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#tour-dates" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 flex items-center justify-center">
+                            <i class="fas fa-ticket-alt mr-2"></i>Tour Dates
+                        </a>
+                        <a href="#" class="border border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-play-circle mr-2"></i>Watch Videos
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1735892907385-796f972fd5c0?ixlib=rb-4.1.0&auto=format&fit=crop&w=800&q=80" 
+                             alt="Comedian performing on stage" 
+                             class="w-full h-96 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+                    </div>
+                    <div class="absolute -inset-4 bg-gradient-to-r from-pink-500 to-blue-500 rounded-2xl opacity-20 blur-xl animate-pulse"></div>
+                    
+                    <!-- Floating emojis -->
+                    <div class="absolute -top-4 -right-4 text-4xl animate-bounce-slow">😂</div>
+                    <div class="absolute -bottom-4 -left-4 text-4xl animate-bounce-slow delay-1000">🤣</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Video Section -->
+    <section class="py-20 bg-gray-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">FEATURED PERFORMANCE</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-amber-500 to-pink-500 mx-auto mb-4"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">Watch my latest stand-up special that had audiences rolling in the aisles</p>
+            </div>
+
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl max-w-4xl mx-auto">
+                <div class="aspect-w-16 aspect-h-9 bg-gray-700 flex items-center justify-center">
+                    <div class="text-center">
+                        <i class="fas fa-play-circle text-6xl text-amber-500 mb-4 opacity-80"></i>
+                        <p class="text-xl font-semibold">Latest Comedy Special</p>
+                        <p class="text-gray-400 mt-2">Click to watch the full performance</p>
+                    </div>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-pink-500/10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Dates Section -->
+    <section id="tour-dates" class="py-20 bg-gray-800/50 relative">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1527224857830-43a7acc85260?ixlib=rb-4.1.0&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-5"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">UPCOMING TOUR DATES</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-amber-500 to-pink-500 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tour Date Card 1 -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-teal-400/30 transform hover:scale-105 shadow-lg hover:shadow-teal-500/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-amber-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold animate-pulse">SOLD OUT</span>
+                        <span class="text-pink-400 font-semibold">$45</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">New York Comedy Club</h3>
+                    <p class="text-gray-400 mb-4">New York, NY</p>
+                    <div class="flex items-center text-blue-400 mb-4">
+                        <i class="fas fa-calendar-alt mr-3"></i>
+                        <span>March 15, 2024 • 8:00 PM</span>
+                    </div>
+                    <button class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg transition-colors flex items-center justify-center cursor-not-allowed" disabled>
+                        <i class="fas fa-times-circle mr-2"></i>Sold Out
+                    </button>
+                </div>
+
+                <!-- Tour Date Card 2 -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-blue-400/30 transform hover:scale-105 shadow-lg hover:shadow-blue-500/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-teal-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold animate-pulse">LOW TICKETS</span>
+                        <span class="text-pink-400 font-semibold">$35</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">The Comedy Store</h3>
+                    <p class="text-gray-400 mb-4">Los Angeles, CA</p>
+                    <div class="flex items-center text-blue-400 mb-4">
+                        <i class="fas fa-calendar-alt mr-3"></i>
+                        <span>March 22, 2024 • 9:30 PM</span>
+                    </div>
+                    <button class="w-full bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white py-3 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-ticket-alt mr-2"></i>Get Tickets
+                    </button>
+                </div>
+
+                <!-- Tour Date Card 3 -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-pink-400/30 transform hover:scale-105 shadow-lg hover:shadow-pink-500/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-pink-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold animate-pulse">NEW SHOW</span>
+                        <span class="text-pink-400 font-semibold">$40</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Chicago Laugh Factory</h3>
+                    <p class="text-gray-400 mb-4">Chicago, IL</p>
+                    <div class="flex items-center text-blue-400 mb-4">
+                        <i class="fas fa-calendar-alt mr-3"></i>
+                        <span>April 5, 2024 • 7:00 PM</span>
+                    </div>
+                    <button class="w-full bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white py-3 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-ticket-alt mr-2"></i>Get Tickets
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center text-teal-400 hover:text-teal-300 font-semibold transition-all duration-300 transform hover:scale-105">
+                    View All Tour Dates
+                    <i class="fas fa-arrow-right ml-2 animate-pulse"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-r from-gray-800 to-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">WHAT PEOPLE ARE SAYING</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-amber-500 to-pink-500 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700 transform hover:scale-105 transition-all duration-300">
+                    <div class="text-amber-400 text-2xl mb-4">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Absolutely hilarious! Had me laughing from start to finish. One of the best comedy shows I've ever seen!"</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-amber-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">JS</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Jane Smith</p>
+                            <p class="text-gray-400 text-sm">New York Times</p>
+                       <div>
+                    </div>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700 transform hover:scale-105 transition-all duration-300">
+                    <div class="text-teal-400 text-2xl mb-4">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Fresh, original, and incredibly funny. This comedian has a unique perspective that resonates with everyone."</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">MJ</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Mike Johnson</p>
+                            <p class="text-gray-400 text-sm">Comedy Central</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700 transform hover:scale-105 transition-all duration-300">
+                    <div class="text-pink-400 text-2xl mb-4">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">"A rising star in the comedy world. Witty, smart, and delivers punchlines that stick with you for days."</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">SD</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Sarah Davis</p>
+                            <p class="text-gray-400 text-sm">The Guardian</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1641903806973-17eaf2d2634f?ixlib=rb-4.1.0&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+                <h2 class="text-3xl font-bold mb-4">STAY IN THE LOOP</h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Get notified about new tour dates, special events, and exclusive content. No spam, just laughs.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your email" 
+                           class="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all duration-300">
+                    <button class="bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 flex items-center justify-center">
+                        <i class="fas fa-paper-plane mr-2"></i>Subscribe
+                    </button>
+                </div>
+                <p class="text-gray-500 text-sm mt-4">Join 10,000+ fans who get exclusive updates</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12 relative">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-teal-400 to-pink-500"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent animate-pulse-slow">COMEDIAN NAME</span>
+                    <p class="text-gray-400 mt-4 max-w-md">
+                        Bringing joy and laughter to audiences worldwide with unique perspectives and hilarious observations about everyday life.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-pink-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-amber-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-teal-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-teal-400 flex items-center">
+                        <i class="fas fa-link mr-2"></i>Quick Links
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Tour Dates</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Videos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-blue-400 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Next Show
+                    </h3>
+                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                        <p class="font-semibold text-amber-400">The Comedy Store</p>
+                        <p class="text-gray-400 text-sm">Los Angeles, CA</p>
+                        <p class="text-blue-400 text-sm mt-2"><i class="fas fa-calendar-alt mr-2"></i>March 22, 2024</p>
+                        <button class="w-full mt-3 bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white py-2 rounded text-sm transition-all duration-300">
+                            Get Tickets
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p class="flex items-center justify-center">
+                    <i class="fas fa-heart text-pink-500 mr-2 animate-pulse"></i>
+                    &copy; 2024 Comedian Name. All rights reserved. Made with laughter and good vibes
+                    <i class="fas fa-laugh-beam text-amber-500 ml-2"></i>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-amber-500 to-pink-500 rounded-full shadow-lg hover:shadow-amber-500/25 transition-all duration-300 transform hover:scale-110 hidden z-50">
+        <i class="fas fa-chevron-up text-white"></i>
+    </button>
+
+    <script>
+        // Back to top button functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #f59e0b, #ec4899);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #d97706, #db2777);
+        }
+    </style>
+</body>
+</html>
