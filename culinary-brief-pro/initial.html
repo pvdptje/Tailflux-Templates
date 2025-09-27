@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flavor Fusion | Gourmet Recipes & Culinary Inspiration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#faf5ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-50 text-zinc-800 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-zinc-200">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full"></div>
+                    <h1 class="text-2xl font-bold text-zinc-900">Flavor Fusion</h1>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-zinc-600 hover:text-purple-600 font-medium transition-colors">Recipes</a>
+                    <a href="#" class="text-zinc-600 hover:text-purple-600 font-medium transition-colors">Categories</a>
+                    <a href="#" class="text-zinc-600 hover:text-purple-600 font-medium transition-colors">About</a>
+                    <a href="#" class="text-zinc-600 hover:text-purple-600 font-medium transition-colors">Contact</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors font-medium">
+                        Subscribe
+                    </button>
+                    <button class="md:hidden text-zinc-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-purple-50 to-zinc-100 py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                    Featured Recipe
+                </span>
+                <h2 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-4">
+                    Mediterranean Quinoa Bowl with Lemon Herb Dressing
+                </h2>
+                <p class="text-lg text-zinc-600 mb-8">
+                    A vibrant, healthy bowl packed with fresh vegetables, protein-rich quinoa, and a zesty lemon herb dressing that will transport you to the Mediterranean coast.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <button class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
+                        Read Recipe
+                    </button>
+                    <button class="border border-zinc-300 text-zinc-700 px-6 py-3 rounded-lg hover:bg-white transition-colors font-medium">
+                        Watch Video
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Recipes -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-12">
+                <h2 class="text-3xl font-bold text-zinc-900">Latest Recipes</h2>
+                <a href="#" class="text-purple-600 hover:text-purple-700 font-medium flex items-center">
+                    View All
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Recipe Card 1 -->
+                <article class="bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-fuchsia-400 to-purple-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-medium mb-3">
+                            Vegetarian
+                        </span>
+                        <h3 class="text-xl font-semibold text-zinc-900 mb-2">Creamy Mushroom Risotto</h3>
+                        <p class="text-zinc-600 text-sm mb-4">Creamy arborio rice with wild mushrooms and parmesan cheese.</p>
+                        <div class="flex justify-between items-center text-sm text-zinc-500">
+                            <span>45 mins • 4 servings</span>
+                            <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Read →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Recipe Card 2 -->
+                <article class="bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-purple-400 to-fuchsia-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-medium mb-3">
+                            Gluten-Free
+                        </span>
+                        <h3 class="text-xl font-semibold text-zinc-900 mb-2">Thai Red Curry with Coconut</h3>
+                        <p class="text-zinc-600 text-sm mb-4">Aromatic curry with vegetables and coconut milk.</p>
+                        <div class="flex justify-between items-center text-sm text-zinc-500">
+                            <span>30 mins • 2 servings</span>
+                            <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Read →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Recipe Card 3 -->
+                <article class="bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-fuchsia-500 to-red-400"></div>
+                    <div class="p-6">
+                        <span class="inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-medium mb-3">
+                            Dessert
+                        </span>
+                        <h3 class="text-xl font-semibold text-zinc-900 mb-2">Dark Chocolate Avocado Mousse</h3>
+                        <p class="text-zinc-600 text-sm mb-4">Rich, creamy dessert made with avocado and dark chocolate.</p>
+                        <div class="flex justify-between items-center text-sm text-zinc-500">
+                            <span>15 mins • 6 servings</span>
+                            <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Read →</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="bg-gradient-to-r from-purple-600 to-fuchsia-600 py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center text-white">
+                <h2 class="text-3xl font-bold mb-4">Join Our Culinary Community</h2>
+                <p class="text-purple-100 mb-8">Get weekly recipes, cooking tips, and exclusive content delivered to your inbox.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg border border-purple-300 focus:outline-none focus:ring-2 focus:ring-white text-zinc-900">
+                    <button class="bg-white text-purple-600 px-6 py-3 rounded-lg hover:bg-zinc-100 transition-colors font-medium">
+                        Subscribe Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-900 text-zinc-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full"></div>
+                        <span class="text-white font-bold text-lg">Flavor Fusion</span>
+                    </div>
+                    <p class="text-zinc-500 text-sm">Sharing gourmet recipes and culinary inspiration since 2018.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Categories</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Vegetarian</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Desserts</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Quick Meals</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Special Diets</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">...</svg>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">...</svg>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                            <span class="sr-only">Pinterest</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">...</svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-zinc-800 mt-8 pt-8 text-center text-sm text-zinc-600">
+                <p>© 2024 Flavor Fusion. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
