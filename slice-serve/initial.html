@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Parlor - Order Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pizza-orange': '#f97316',
+                        'pizza-red': '#dc2626',
+                        'pizza-emerald': '#10b981',
+                        'pizza-blue': '#3b82f6'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="pizzaOrder()" class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-pizza-orange mb-2">Slice & Dice Pizza</h1>
+            <p class="text-gray-600">Fresh ingredients, delivered hot to your door</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Pizza Selection -->
+            <div class="lg:col-span-2">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Choose Your Pizza</h2>
+                
+                <!-- Pizza Cards Grid -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Pizza Card 1 -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Margherita</h3>
+                            <span class="text-pizza-orange font-bold text-lg">$14.99</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Fresh tomatoes, mozzarella, basil, olive oil</p>
+                        <button @click="addToCart('Margherita', 14.99)" class="w-full bg-pizza-emerald text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            Add to Order
+                        </button>
+                    </div>
+
+                    <!-- Pizza Card 2 -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Pepperoni</h3>
+                            <span class="text-pizza-orange font-bold text-lg">$16.99</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Pepperoni, mozzarella, tomato sauce</p>
+                        <button @click="addToCart('Pepperoni', 16.99)" class="w-full bg-pizza-emerald text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            Add to Order
+                        </button>
+                    </div>
+
+                    <!-- Pizza Card 3 -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Vegetarian</h3>
+                            <span class="text-pizza-orange font-bold text-lg">$15.99</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Bell peppers, mushrooms, onions, olives</p>
+                        <button @click="addToCart('Vegetarian', 15.99)" class="w-full bg-pizza-emerald text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            Add to Order
+                        </button>
+                    </div>
+
+                    <!-- Pizza Card 4 -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">BBQ Chicken</h3>
+                            <span class="text-pizza-orange font-bold text-lg">$18.99</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Grilled chicken, BBQ sauce, red onions</p>
+                        <button @click="addToCart('BBQ Chicken', 18.99)" class="w-full bg-pizza-emerald text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            Add to Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Pizza Builder -->
+                <div class="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Build Your Own Pizza</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                            <div class="flex gap-4">
+                                <button @click="customPizza.size = 'Small'" 
+                                        :class="customPizza.size === 'Small' ? 'bg-pizza-blue text-white' : 'bg-gray-100 text-gray-700'"
+                                        class="px-4 py-2 rounded-lg transition-colors">Small ($12)</button>
+                                <button @click="customPizza.size = 'Medium'" 
+                                        :class="customPizza.size === 'Medium' ? 'bg-pizza-blue text-white' : 'bg-gray-100 text-gray-700'"
+                                        class="px-4 py-2 rounded-lg transition-colors">Medium ($15)</button>
+                                <button @click="customPizza.size = 'Large'" 
+                                        :class="customPizza.size === 'Large' ? 'bg-pizza-blue text-white' : 'bg-gray-100 text-gray-700'"
+                                        class="px-4 py-2 rounded-lg transition-colors">Large ($18)</button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Toppings ($1.50 each)</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                <template x-for="topping in availableToppings" :key="topping">
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" x-model="customPizza.toppings" :value="topping" class="rounded text-pizza-blue">
+                                        <span x-text="topping" class="text-sm text-gray-700"></span>
+                                    </label>
+                                </template>
+                            </div>
+                        </div>
+                        
+                        <button @click="addCustomPizza()" class="w-full bg-pizza-blue text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Add Custom Pizza to Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sticky top-4">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Your Order</h2>
+                    
+                    <!-- Cart Items -->
+                    <div class="space-y-4 mb-6">
+                        <template x-for="(item, index) in cart" :key="index">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <div>
+                                    <span x-text="item.name" class="font-medium text-gray-800"></span>
+                                    <span x-show="item.toppings && item.toppings.length > 0" 
+                                          x-text="' (' + item.toppings.join(', ') + ')'" 
+                                          class="text-sm text-gray-600"></span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span x-text="'$' + item.price.toFixed(2)" class="font-semibold text-pizza-orange"></span>
+                                    <button @click="removeFromCart(index)" class="text-pizza-red hover:text-red-700">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                        
+                        <div x-show="cart.length === 0" class="text-center text-gray-500 py-4">
+                            Your cart is empty
+                        </div>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="border-t border-gray-200 pt-4 mb-6">
+                        <div class="flex justify-between items-center text-lg font-semibold">
+                            <span>Total:</span>
+                            <span x-text="'$' + total.toFixed(2)" class="text-pizza-orange"></span>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button @click="checkout()" 
+                            :disabled="cart.length === 0"
+                            :class="cart.length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-pizza-orange hover:bg-orange-600'"
+                            class="w-full text-white py-3 rounded-lg font-semibold transition-colors">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function pizzaOrder() {
+            return {
+                cart: [],
+                customPizza: {
+                    size: 'Medium',
+                    toppings: []
+                },
+                availableToppings: ['Pepperoni', 'Mushrooms', 'Onions', 'Bell Peppers', 'Olives', 'Extra Cheese', 'Sausage', 'Bacon'],
+                
+                addToCart(name, price) {
+                    this.cart.push({
+                        name: name,
+                        price: price,
+                        type: 'premade'
+                    });
+                },
+                
+                addCustomPizza() {
+                    const basePrice = this.customPizza.size === 'Small' ? 12 : 
+                                    this.customPizza.size === 'Medium' ? 15 : 18;
+                    const toppingsPrice = this.customPizza.toppings.length * 1.5;
+                    const totalPrice = basePrice + toppingsPrice;
+                    
+                    this.cart.push({
+                        name: 'Custom ' + this.customPizza.size + ' Pizza',
+                        price: totalPrice,
+                        toppings: [...this.customPizza.toppings],
+                        type: 'custom'
+                    });
+                    
+                    // Reset custom pizza
+                    this.customPizza.toppings = [];
+                },
+                
+                removeFromCart(index) {
+                    this.cart.splice(index, 1);
+                },
+                
+                checkout() {
+                    if (this.cart.length === 0) return;
+                    
+                    alert('Order placed! Total: $' + this.total.toFixed(2) + '\nThank you for your order!');
+                    this.cart = [];
+                },
+                
+                get total() {
+                    return this.cart.reduce((sum, item) => sum + item.price, 0);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
