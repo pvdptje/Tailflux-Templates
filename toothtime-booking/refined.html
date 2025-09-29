@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmileBright Dental - Book Your Appointment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyan: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            400: '#a8a29e',
+                        },
+                        orange: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-gentle': 'pulseGentle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGentle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 via-white to-orange-50 min-h-screen">
+    <div x-data="appointmentBooking()" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12 animate-slide-up">
+            <div class="inline-block bg-white rounded-full p-4 shadow-lg mb-4 transform hover:scale-105 transition-all duration-300">
+                <i class="fas fa-tooth text-cyan-500 text-4xl"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-500 to-fuchsia-500 bg-clip-text text-transparent mb-3">
+                SmileBright Dental
+            </h1>
+            <p class="text-stone-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                Experience premium dental care with our state-of-the-art technology and compassionate team
+            </p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="max-w-6xl mx-auto">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
+                <div class="grid lg:grid-cols-2">
+                    <!-- Left Side - Form -->
+                    <div class="p-8 lg:p-12">
+                        <div class="flex items-center mb-6">
+                            <div class="w-3 h-8 bg-gradient-to-b from-cyan-500 to-fuchsia-500 rounded-full mr-3"></div>
+                            <h2 class="text-2xl lg:text-3xl font-bold text-stone-800">Book Your Appointment</h2>
+                        </div>
+                        
+                        <form @submit.prevent="submitBooking" class="space-y-6">
+                            <!-- Personal Information -->
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                            <i class="fas fa-user text-cyan-500 mr-2 text-sm"></i>
+                                            First Name
+                                        </label>
+                                        <input type="text" x-model="form.firstName" required
+                                               class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                            <i class="fas fa-user text-cyan-500 mr-2 text-sm"></i>
+                                            Last Name
+                                        </label>
+                                        <input type="text" x-model="form.lastName" required
+                                               class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50">
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                        <i class="fas fa-envelope text-fuchsia-500 mr-2 text-sm"></i>
+                                        Email Address
+                                    </label>
+                                    <input type="email" x-model="form.email" required
+                                           class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50">
+                                </div>
+                                
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                        <i class="fas fa-phone text-orange-500 mr-2 text-sm"></i>
+                                        Phone Number
+                                    </label>
+                                    <input type="tel" x-model="form.phone" required
+                                           class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50">
+                                </div>
+                            </div>
+
+                            <!-- Appointment Details -->
+                            <div class="space-y-4">
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                        <i class="fas fa-stethoscope text-cyan-500 mr-2 text-sm"></i>
+                                        Service Type
+                                    </label>
+                                    <select x-model="form.service" required
+                                            class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50 appearance-none">
+                                        <option value="">Select a service</option>
+                                        <option value="cleaning">Teeth Cleaning & Checkup</option>
+                                        <option value="whitening">Teeth Whitening</option>
+                                        <option value="filling">Dental Filling</option>
+                                        <option value="braces">Braces Consultation</option>
+                                        <option value="emergency">Emergency Care</option>
+                                        <option value="cosmetic">Cosmetic Dentistry</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                            <i class="fas fa-calendar text-fuchsia-500 mr-2 text-sm"></i>
+                                            Preferred Date
+                                        </label>
+                                        <input type="date" x-model="form.date" required
+                                               class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50">
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                            <i class="fas fa-clock text-orange-500 mr-2 text-sm"></i>
+                                            Preferred Time
+                                        </label>
+                                        <select x-model="form.time" required
+                                                class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50 appearance-none">
+                                            <option value="">Select a time</option>
+                                            <template x-for="time in availableTimes" :key="time">
+                                                <option x-text="time" :value="time"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Notes -->
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-stone-700 flex items-center">
+                                    <i class="fas fa-notes-medical text-cyan-500 mr-2 text-sm"></i>
+                                    Additional Notes
+                                </label>
+                                <textarea x-model="form.notes" rows="3"
+                                          class="w-full px-4 py-3 border border-stone-200 rounded-xl form-input focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 bg-stone-50 resize-none"
+                                          placeholder="Any specific concerns, medical conditions, or special requests..."></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                    class="w-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white py-4 px-6 rounded-xl font-semibold hover:from-cyan-600 hover:to-fuchsia-600 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center group animate-pulse-gentle">
+                                <i class="fas fa-calendar-check mr-3 group-hover:scale-110 transition-transform"></i>
+                                Book Appointment Now
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right Side - Info & Confirmation -->
+                    <div class="bg-gradient-to-br from-orange-50 via-white to-cyan-50 p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
+                        <!-- Background Pattern -->
+                        <div class="absolute inset-0 opacity-5">
+                            <div class="absolute top-10 right-10 w-32 h-32 bg-cyan-500 rounded-full"></div>
+                            <div class="absolute bottom-10 left-10 w-24 h-24 bg-fuchsia-500 rounded-full"></div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-orange-500 rounded-full"></div>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <!-- Clinic Image -->
+                            <div class="mb-8 rounded-2xl overflow-hidden shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1629909615957-be38d48fbbe6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBkZW50YWwlMjBjbGluaWMlMjBpbnRlcmlvcnxlbnwwfDB8fHwxNzU5MTYzOTIxfDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                                     alt="Modern Dental Clinic" 
+                                     class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-500">
+                            </div>
+
+                            <!-- Service Info -->
+                            <div class="mb-8">
+                                <h3 class="text-xl font-bold text-stone-800 mb-6 flex items-center">
+                                    <i class="fas fa-star text-orange-500 mr-3"></i>
+                                    Premium Dental Services
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="service-card flex items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
+                                        <div class="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <i class="fas fa-teeth text-cyan-600"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-stone-800 font-semibold block">Teeth Cleaning & Checkup</span>
+                                            <span class="text-stone-500 text-sm">Comprehensive oral examination</span>
+                                        </div>
+                                    </div>
+                                    <div class="service-card flex items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
+                                        <div class="w-10 h-10 bg-fuchsia-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <i class="fas fa-sparkles text-fuchsia-600"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-stone-800 font-semibold block">Cosmetic Dentistry</span>
+                                            <span class="text-stone-500 text-sm">Smile makeovers & veneers</span>
+                                        </div>
+                                    </div>
+                                    <div class="service-card flex items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
+                                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <i class="fas fa-ambulance text-orange-600"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-stone-800 font-semibold block">Emergency Care</span>
+                                            <span class="text-stone-500 text-sm">24/7 urgent dental services</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Confirmation Display -->
+                            <div x-show="bookingConfirmed" x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 class="mb-8 p-6 bg-white rounded-2xl shadow-xl border-l-4 border-green-500">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-check text-green-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold text-stone-800">Appointment Confirmed!</h4>
+                                        <p class="text-green-600 text-sm font-semibold">We're excited to see you!</p>
+                                    </div>
+                                </div>
+                                <p class="text-stone-600 leading-relaxed" x-text="confirmationMessage"></p>
+                                <div class="mt-4 pt-4 border-t border-stone-200">
+                                    <p class="text-sm text-stone-500">
+                                        <i class="fas fa-info-circle text-cyan-500 mr-2"></i>
+                                        Please arrive 15 minutes early for your appointment
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Contact Info -->
+                            <div class="text-center bg-white rounded-2xl p-6 shadow-lg">
+                                <div class="flex items-center justify-center mb-4">
+                                    <img src="https://images.unsplash.com/photo-1675526607070-f5cbd71dde92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwZGVudGlzdCUyMHByb2Zlc3Npb25hbHxlbnwwfDB8fHwxNzU5MTYzOTI0fDA&ixlib=rb-4.1.0&q=80&w=400" 
+                                         alt="Professional Dentist" 
+                                         class="w-16 h-16 rounded-full object-cover border-4 border-cyan-200">
+                                </div>
+                                <p class="text-stone-600 mb-4 font-semibold">Need immediate assistance?</p>
+                                <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-6">
+                                    <a href="tel:+15551234567" class="inline-flex items-center text-cyan-600 hover:text-cyan-700 font-semibold transition-colors">
+                                        <i class="fas fa-phone mr-2"></i>
+                                        (555) 123-4567
+                                    </a>
+                                    <a href="mailto:hello@smilebright.com" class="inline-flex items-center text-fuchsia-600 hover:text-fuchsia-700 font-semibold transition-colors">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        Email Us
+                                    </a>
+                                </div>
+                                <div class="mt-4 flex justify-center space-x-4text-sm text-stone-500">
+                                    <i class="fas fa-map-marker-alt text-orange-500 mr-1"></i>
+                                    123 Dental Street, Smile City
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="max-w-6xl mx-auto mt-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-cyan-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Sterile Environment</h3>
+                    <p class="text-stone-600 text-sm">State-of-the-art sterilization protocols for your safety</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-fuchsia-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-fuchsia-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Flexible Hours</h3>
+                    <p class="text-stone-600 text-sm">Evening and weekend appointments available</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comments text-orange-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">24/7 Support</h3>
+                    <p class="text-stone-600 text-sm">Always here to answer your questions and concerns</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function appointmentBooking() {
+            return {
+                form: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    service: '',
+                    date: '',
+                    time: '',
+                    notes: ''
+                },
+                bookingConfirmed: false,
+                confirmationMessage: '',
+                availableTimes: [
+                    '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM',
+                    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+                    '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
+                    '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'
+                ],
+                
+                submitBooking() {
+                    // Validate form
+                    if (!this.form.firstName || !this.form.lastName || !this.form.email || 
+                        !this.form.phone || !this.form.service || !this.form.date || !this.form.time) {
+                        return;
+                    }
+
+                    // Simulate form submission with loading state
+                    this.bookingConfirmed = true;
+                    this.confirmationMessage = `Thank you, ${this.form.firstName}! Your ${this.getServiceName(this.form.service)} appointment is confirmed for ${this.formatDate(this.form.date)} at ${this.form.time}. We've sent a confirmation email to ${this.form.email} and will call you at ${this.form.phone} to confirm.`;
+                    
+                    // Reset form after 8 seconds
+                    setTimeout(() => {
+                        this.bookingConfirmed = false;
+                        this.form = {
+                            firstName: '',
+                            lastName: '',
+                            email: '',
+                            phone: '',
+                            service: '',
+                            date: '',
+                            time: '',
+                            notes: ''
+                        };
+                    }, 8000);
+                },
+                
+                getServiceName(serviceCode) {
+                    const services = {
+                        'cleaning': 'Teeth Cleaning & Checkup',
+                        'whitening': 'Teeth Whitening',
+                        'filling': 'Dental Filling',
+                        'braces': 'Braces Consultation',
+                        'emergency': 'Emergency Care',
+                        'cosmetic': 'Cosmetic Dentistry'
+                    };
+                    return services[serviceCode] || 'Dental Service';
+                },
+
+                formatDate(dateString) {
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    return new Date(dateString).toLocaleDateString('en-US', options);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
