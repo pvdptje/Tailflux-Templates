@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Our Trainers | Personal Training Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-neutral-800">FitStudio</h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-neutral-600 hover:text-fuchsia-600 transition-colors">Home</a>
+                    <a href="#" class="text-fuchsia-600 font-medium">Trainers</a>
+                    <a href="#" class="text-neutral-600 hover:text-fuchsia-600 transition-colors">Programs</a>
+                    <a href="#" class="text-neutral-600 hover:text-fuchsia-600 transition-colors">Contact</a>
+                </nav>
+                <button class="md:hidden text-neutral-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-neutral-800 mb-4">Meet Our Expert Trainers</h1>
+            <p class="text-xl text-neutral-600 max-w-2xl mx-auto">
+                Our certified professionals are here to guide you on your fitness journey with personalized training and expert support.
+            </p>
+        </div>
+    </section>
+
+    <!-- Trainers Grid -->
+    <section class="py-16 bg-neutral-50">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Trainer 1 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-zinc-200 relative">
+                        <!-- Placeholder for trainer image -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-zinc-400 text-sm">Trainer Photo</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Sarah Johnson</h3>
+                        <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full mb-4">
+                            Strength Training
+                        </span>
+                        <p class="text-neutral-600 mb-4">
+                            With over 8 years of experience, Sarah specializes in strength and conditioning, helping clients build functional strength and confidence.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium">Certified: NASM, ACE</span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-colors">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 2 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-zinc-200 relative">
+                        <!-- Placeholder for trainer image -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-zinc-400 text-sm">Trainer Photo</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Marcus Chen</h3>
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-800 text-sm px-3 py-1 rounded-full mb-4">
+                            Yoga & Mobility
+                        </span>
+                        <p class="text-neutral-600 mb-4">
+                            Marcus brings 6 years of yoga expertise, focusing on mobility, flexibility, and mindfulness practices for holistic wellness.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium">Certified: RYT 500</span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-colors">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 3 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-zinc-200 relative">
+                        <!-- Placeholder for trainer image -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-zinc-400 text-sm">Trainer Photo</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Alex Rodriguez</h3>
+                        <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full mb-4">
+                            HIIT & Cardio
+                        </span>
+                        <p class="text-neutral-600 mb-4">
+                            Alex specializes in high-intensity interval training and cardiovascular conditioning, creating dynamic and effective workout programs.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium">Certified: ISSA, CPR/AED</span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-colors">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 4 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-zinc-200 relative">
+                        <!-- Placeholder for trainer image -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-zinc-400 text-sm">Trainer Photo</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Jessica Williams</h3>
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-800 text-sm px-3 py-1 rounded-full mb-4">
+                            Nutrition & Wellness
+                        </span>
+                        <p class="text-neutral-600 mb-4">
+                            Jessica combines fitness with nutritional guidance, helping clients achieve their goals through comprehensive lifestyle changes.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium">Certified: Precision Nutrition</span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-colors">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 5 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-zinc-200 relative">
+                        <!-- Placeholder for trainer image -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-zinc-400 text-sm">Trainer Photo</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">David Thompson</h3>
+                        <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full mb-4">
+                            Senior Fitness
+                        </span>
+                        <p class="text-neutral-600 mb-4">
+                            David specializes in senior fitness programs, focusing on mobility, balance, and strength maintenance for active aging.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium">Certified: ACE Senior Fitness</span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-colors">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 6 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-64 bg-zinc-200 relative">
+                        <!-- Placeholder for trainer image -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-zinc-400 text-sm">Trainer Photo</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-neutral-800 mb-2">Maya Patel</h3>
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-800 text-sm px-3 py-1 rounded-full mb-4">
+                            Postnatal Fitness
+                        </span>
+                        <p class="text-neutral-600 mb-4">
+                            Maya specializes in postnatal fitness and recovery, providing safe and effective workouts for new mothers.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium">Certified: Pre/Postnatal</span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-colors">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-neutral-800 mb-4">Ready to Start Your Journey?</h2>
+            <p class="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
+                Book a complimentary consultation with one of our trainers to discuss your goals and create a personalized plan.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-fuchsia-600 text-white px-8 py-3 rounded-lg hover:bg-fuchsia-700 transition-colors font-medium">
+                    Book Free Consultation
+                </button>
+                <button class="border border-neutral-300 text-neutral-700 px-8 py-3 rounded-lg hover:bg-neutral-50 transition-colors font-medium">
+                    View Class Schedule
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">FitStudio</h3>
+                    <p class="text-neutral-400">
+                        Empowering your fitness journey with expert guidance and personalized training.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-neutral-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Trainers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Programs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-neutral-400">
+                        <li>123 Fitness Street</li>
+                        <li>City, State 12345</li>
+                        <li>(555) 123-4567</li>
+                        <li>info@fitstudio.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Hours</h4>
+                    <ul class="space-y-2 text-neutral-400">
+                        <li>Mon-Fri: 5:00 AM - 10:00 PM</li>
+                        <li>Saturday: 6:00 AM - 8:00 PM</li>
+                        <li>Sunday: 7:00 AM - 6:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-neutral-700 mt-8 pt-8 text-center text-neutral-400">
+                <p>&copy; 2024 FitStudio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

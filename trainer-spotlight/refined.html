@@ -1,0 +1,443 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Our Trainers | Personal Training Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-fuchsia-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-dumbbell text-white text-sm"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-neutral-800">FitStudio</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-neutral-600 hover:text-fuchsia-600 transition-all duration-300 hover:scale-105">Home</a>
+                    <a href="#" class="text-fuchsia-600 font-medium relative">
+                        Trainers
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-fuchsia-600"></span>
+                    </a>
+                    <a href="#" class="text-neutral-600 hover:text-fuchsia-600 transition-all duration-300 hover:scale-105">Programs</a>
+                    <a href="#" class="text-neutral-600 hover:text-fuchsia-600 transition-all duration-300 hover:scale-105">Contact</a>
+                </nav>
+                <button class="md:hidden text-neutral-600 hover:text-fuchsia-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-white to-neutral-50 py-20">
+        <div class="container mx-auto px-4 text-center animate-slide-up">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold text-neutral-800 mb-6 leading-tight">
+                    Meet Our <span class="text-fuchsia-600">Expert</span> Trainers
+                </h1>
+                <p class="text-xl text-neutral-600 mb-8 leading-relaxed">
+                    Our certified professionals are here to guide you on your fitness journey with personalized training and expert support.
+                </p>
+                <div class="flex items-center justify-center space-x-4 text-neutral-500">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span>4.9/5 Rating</span>
+                    </div>
+                    <div class="w-1 h-1 bg-neutral-300 rounded-full"></div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-users text-fuchsia-600"></i>
+                        <span>500+ Clients</span>
+                    </div>
+                    <div class="w-1 h-1 bg-neutral-300 rounded-full"></div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-award text-orange-500"></i>
+                        <span>Certified Experts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trainers Grid -->
+    <section class="py-20 bg-neutral-50">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Trainer 1 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in">
+                    <div class="h-72 bg-zinc-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1758875569071-717cfaa97c4b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=400&q=80" 
+                             alt="Sarah Johnson - Strength Training" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-sm text-neutral-800 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fas fa-fire text-orange-500 mr-1"></i>8+ Years
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2 group-hover:text-fuchsia-600 transition-colors">Sarah Johnson</h3>
+                        <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full mb-4 font-medium">
+                            <i class="fas fa-dumbbell mr-1"></i>Strength Training
+                        </span>
+                        <p class="text-neutral-600 mb-4 leading-relaxed">
+                            With over 8 years of experience, Sarah specializes in strength and conditioning, helping clients build functional strength and confidence.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium text-sm">
+                                <i class="fas fa-certificate mr-1"></i>NASM, ACE
+                            </span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 hover:scale-105 group-hover:shadow-lg">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 2 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in" style="animation-delay: 100ms">
+                    <div class="h-72 bg-zinc-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1677741447224-0d228455bceb?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=400&q=80" 
+                             alt="Marcus Chen - Yoga & Mobility" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-sm text-neutral-800 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fas fa-leaf text-green-500 mr-1"></i>6+ Years
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2 group-hover:text-fuchsia-600 transition-colors">Marcus Chen</h3>
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-800 text-sm px-3 py-1 rounded-full mb-4 font-medium">
+                            <i class="fas fa-spa mr-1"></i>Yoga & Mobility
+                        </span>
+                        <p class="text-neutral-600 mb-4 leading-relaxed">
+                            Marcus brings 6 years of yoga expertise, focusing on mobility, flexibility, and mindfulness practices for holistic wellness.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium text-sm">
+                                <i class="fas fa-certificate mr-1"></i>RYT 500
+                            </span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 hover:scale-105 group-hover:shadow-lg">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 3 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in" style="animation-delay: 200ms">
+                    <div class="h-72 bg-zinc-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1610769340165-92f31d40da1d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=400&q=80" 
+                             alt="Alex Rodriguez - HIIT & Cardio" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-sm text-neutral-800 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fas fa-bolt text-red-500 mr-1"></i>5+ Years
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2 group-hover:text-fuchsia-600 transition-colors">Alex Rodriguez</h3>
+                        <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full mb-4 font-medium">
+                            <i class="fas fa-running mr-1"></i>HIIT & Cardio
+                        </span>
+                        <p class="text-neutral-600 mb-4 leading-relaxed">
+                            Alex specializes in high-intensity interval training and cardiovascular conditioning, creating dynamic and effective workout programs.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium text-sm">
+                                <i class="fas fa-certificate mr-1"></i>ISSA, CPR/AED
+                            </span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 hover:scale-105 group-hover:shadow-lg">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 4 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in" style="animation-delay: 300ms">
+                    <div class="h-72 bg-zinc-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1672819030217-a1ad8307e629?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=400&q=80" 
+                             alt="Jessica Williams - Nutrition & Wellness" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-sm text-neutral-800 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fas fa-apple-alt text-green-500 mr-1"></i>7+ Years
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2 group-hover:text-fuchsia-600 transition-colors">Jessica Williams</h3>
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-800 text-sm px-3 py-1 rounded-full mb-4 font-medium">
+                            <i class="fas fa-heartbeat mr-1"></i>Nutrition & Wellness
+                        </span>
+                        <p class="text-neutral-600 mb-4 leading-relaxed">
+                            Jessica combines fitness with nutritional guidance, helping clients achieve their goals through comprehensive lifestyle changes.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium text-sm">
+                                <i class="fas fa-certificate mr-1"></i>Precision Nutrition
+                            </span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 hover:scale-105 group-hover:shadow-lg">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 5 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in" style="animation-delay: 400ms">
+                    <div class="h-72 bg-zinc-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1750698544727-ffc439ade2ba?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=400&q=80" 
+                             alt="David Thompson - Senior Fitness" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-sm text-neutral-800 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fas fa-user-friends text-blue-500 mr-1"></i>10+ Years
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2 group-hover:text-fuchsia-600 transition-colors">David Thompson</h3>
+                        <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full mb-4 font-medium">
+                            <i class="fas fa-walking mr-1"></i>Senior Fitness
+                        </span>
+                        <p class="text-neutral-600 mb-4 leading-relaxed">
+                            David specializes in senior fitness programs, focusing on mobility, balance, and strength maintenance for active aging.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium text-sm">
+                                <i class="fas fa-certificate mr-1"></i>ACE Senior Fitness
+                            </span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 hover:scale-105 group-hover:shadow-lg">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer 6 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in" style="animation-delay: 500ms">
+                    <div class="h-72 bg-zinc-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1584847688440-549d4d9eb7c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=400&q=80" 
+                             alt="Maya Patel - Postnatal Fitness" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-sm text-neutral-800 text-xs px-3 py-1 rounded-full font-medium">
+                                <i class="fas fa-baby text-pink-500 mr-1"></i>5+ Years
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-neutral-800 mb-2 group-hover:text-fuchsia-600 transition-colors">Maya Patel</h3>
+                        <span class="inline-block bg-fuchsia-100 text-fuchsia-800 text-sm px-3 py-1 rounded-full mb-4 font-medium">
+                            <i class="fas fa-hands-helping mr-1"></i>Postnatal Fitness
+                        </span>
+                        <p class="text-neutral-600 mb-4 leading-relaxed">
+                            Maya specializes in postnatal fitness and recovery, providing safe and effective workouts for new mothers.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-fuchsia-600 font-medium text-sm">
+                                <i class="fas fa-certificate mr-1"></i>Pre/Postnatal
+                            </span>
+                            <button class="bg-fuchsia-600 text-white px-4 py-2 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 hover:scale-105 group-hover:shadow-lg">
+                                Book Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="animate-scale-in">
+                    <div class="text-3xl md:text-4xl font-bold text-fuchsia-600 mb-2">500+</div>
+                    <div class="text-neutral-600">Happy Clients</div>
+                </div>
+                <div class="animate-scale-in" style="animation-delay: 100ms">
+                    <div class="text-3xl md:text-4xl font-bold text-orange-500 mb-2">25+</div>
+                    <div class="text-neutral-600">Years Combined</div>
+                </div>
+                <div class="animate-scale-in" style="animation-delay: 200ms">
+                    <div class="text-3xl md:text-4xl font-bold text-green-500 mb-2">15+</div>
+                    <div class="text-neutral-600">Certifications</div>
+                </div>
+                <div class="animate-scale-in" style="animation-delay: 300ms">
+                    <div class="text-3xl md:text-4xl font-bold text-blue-500 mb-2">4.9/5</div>
+                    <div class="text-neutral-600">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-fuchsia-600 to-purple-700 text-white">
+        <div class="container mx-auto px-4 text-center animate-slide-up">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your Journey?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                Book a complimentary consultation with one of our trainers to discuss your goals and create a personalized plan.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="bg-white text-fuchsia-600 px-8 py-4 rounded-xl hover:bg-neutral-100 transition-all duration-300 hover:scale-105 font-semibold shadow-lg">
+                    <i class="fas fa-calendar-check mr-2"></i>Book Free Consultation
+                </button>
+                <button class="border-2 border-white/30 text-white px-8 py-4 rounded-xl hover:bg-white/10 transition-all duration-300 hover:scale-105 font-semibold backdrop-blur-sm">
+                    <i class="fas fa-clock mr-2"></i>View Class Schedule
+                </button>
+            </div>
+            <div class="mt-8 flex justify-center space-x-6 text-white/70">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="text-sm">No Commitment Required</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="text-sm">30-Minute Session</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="text-sm">Personalized Plan</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-800 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-fuchsia-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-sm"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">FitStudio</h3>
+                    </div>
+                    <p class="text-neutral-400 leading-relaxed">
+                        Empowering your fitness journey with expert guidance and personalized training.
+                    </p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Quick Links</h4>
+                    <ul class="space-y-3 text-neutral-400">
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-600"></i>Home</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-600"></i>Trainers</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-600"></i>Programs</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 text-fuchsia-600"></i>Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Contact</h4>
+                    <ul class="space-y-3 text-neutral-400">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-map-marker-alt text-fuchsia-600 w-4"></i>
+                            <span>123 Fitness Street, City, State 12345</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-phone text-fuchsia-600 w-4"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-fuchsia-600 w-4"></i>
+                            <span>info@fitstudio.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Hours</h4>
+                    <ul class="space-y-3 text-neutral-400">
+                        <li class="flex justify-between">
+                            <span>Mon-Fri:</span>
+                            <span class="text-white">5:00 AM - 10:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Saturday:</span>
+                            <span class="text-white">6:00 AM - 8:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday:</span>
+                            <span class="text-white">7:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-neutral-700 mt-12 pt-8 text-center text-neutral-400">
+                <p>&copy; 2024 FitStudio. All rights reserved. | <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
