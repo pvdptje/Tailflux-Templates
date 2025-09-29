@@ -1,0 +1,436 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Your Personal Workout Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-sm"></i>
+                        </div>
+                        <span class="ml-2 text-xl font-bold text-slate-800">FitTrack</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="text-orange-500 border-b-2 border-orange-500 px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">Home</a>
+                        <a href="#" class="text-slate-500 hover:text-slate-700 px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">Workouts</a>
+                        <a href="#" class="text-slate-500 hover:text-slate-700 px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">Progress</a>
+                        <a href="#" class="text-slate-500 hover:text-slate-700 px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">Nutrition</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-slate-50 to-cyan-50 py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-left animate-fade-in">
+                    <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-6 leading-tight">
+                        Transform Your
+                        <span class="text-orange-500 bg-gradient-to-r from-orange-500 to-cyan-500 bg-clip-text text-transparent">Fitness Journey</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed">
+                        Track workouts, monitor progress, and achieve your fitness goals with our intuitive workout tracking app. Join thousands of users transforming their lives.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-play"></i>
+                            Start Free Trial
+                        </button>
+                        <button class="border-2 border-slate-300 hover:border-orange-500 text-slate-700 hover:text-orange-500 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                            <i class="fas fa-info-circle"></i>
+                            Learn More
+                        </button>
+                    </div>
+                    <div class="mt-8 flex items-center gap-6 text-sm text-slate-500">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>No credit card required</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>14-day free trial</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate-slide-up">
+                    <div class="relative">
+                        <div class="bg-white rounded-2xl shadow-2xl p-6 transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1591311630200-ffa9120a540f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwd29ya291dCUyMHRyYWNraW5nJTIwYXBwfGVufDB8MHx8fDE3NTkxNDIxNDF8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                                 alt="Fitness App Interface" 
+                                 class="w-full h-80 object-cover rounded-xl shadow-lg">
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-orange-500 text-white p-4 rounded-xl shadow-lg">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold">4.9</div>
+                                <div class="text-sm">★ ★ ★ ★ ★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+                    Powerful Features for Your <span class="text-orange-500">Fitness Goals</span>
+                </h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                    Everything you need to track, analyze, and improve your workouts in one place.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:border-orange-300 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-xl group">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-200 transition-colors duration-300">
+                        <i class="fas fa-dumbbell text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4 group-hover:text-indigo-600 transition-colors duration-300">Workout Tracking</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Log your exercises, sets, reps, and weights with our intuitive interface. Track your progress over time with detailed analytics.
+                    </p>
+                    <div class="mt-4 flex items-center text-indigo-600 font-medium">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:border-cyan-300 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-xl group">
+                    <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-200 transition-colors duration-300">
+                        <i class="fas fa-chart-line text-cyan-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4 group-hover:text-cyan-600 transition-colors duration-300">Progress Analytics</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Visualize your fitness journey with detailed charts and insights. See your improvements week over week with beautiful graphs.
+                    </p>
+                    <div class="mt-4 flex items-center text-cyan-600 font-medium">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:border-orange-300 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-xl group">
+                    <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-orange-200 transition-colors duration-300">
+                        <i class="fas fa-cogs text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4 group-hover:text-orange-600 transition-colors duration-300">Custom Workouts</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Create and save your own workout routines. Share them with friends or follow expert-designed programs tailored to your goals.
+                    </p>
+                    <div class="mt-4 flex items-center text-orange-600 font-medium">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="py-20 bg-gradient-to-br from-slate-50 to-indigo-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-slide-up">
+                    <img src="https://images.unsplash.com/photo-1710746904773-73e073fd1549?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBleGVyY2lzaW5nJTIwZ3ltfGVufDB8MHx8fDE3NTkxNDIxNDF8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Person exercising" 
+                         class="w-full h-96 object-cover rounded-2xl shadow-2xl">
+                </div>
+                <div class="animate-fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+                        See Your <span class="text-orange-500">Progress</span> in Real-Time
+                    </h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        Our advanced analytics dashboard gives you instant insights into your fitness journey. Track every rep, set, and personal best with beautiful visualizations that motivate you to keep going.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-chart-bar text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Real-time Analytics</h4>
+                                <p class="text-slate-600 text-sm">See your progress update instantly</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-trophy text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Achievement Tracking</h4>
+                                <p class="text-slate-600 text-sm">Celebrate every milestone</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-bell text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Smart Reminders</h4>
+                                <p class="text-slate-600 text-sm">Never miss a workout again</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-50 to-cyan-50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="animate-pulse-slow">
+                    <div class="text-4xl font-bold text-indigo-600 mb-2">50K+</div>
+                    <div class="text-slate-600 font-medium">Active Users</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 0.2s;">
+                    <div class="text-4xl font-bold text-cyan-600 mb-2">1M+</div>
+                    <div class="text-slate-600 font-medium">Workouts Logged</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 0.4s;">
+                    <div class="text-4xl font-bold text-orange-600 mb-2">95%</div>
+                    <div class="text-slate-600 font-medium">User Satisfaction</div>
+                </div>
+                <div class="animate-pulse-slow" style="animation-delay: 0.6s;">
+                    <div class="text-4xl font-bold text-slate-600 mb-2">24/7</div>
+                    <div class="text-slate-600 font-medium">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+                    What Our <span class="text-orange-500">Users Say</span>
+                </h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                    Join thousands of fitness enthusiasts who have transformed their lives with FitTrack
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-cyan-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-slate-800">Sarah Johnson</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 italic">
+                        "FitTrack completely transformed my fitness journey. The progress tracking kept me motivated and the custom workouts were exactly what I needed!"
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-slate-800">Mike Chen</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 italic">
+                        "As a personal trainer, I recommend FitTrack to all my clients. The analytics help them see real progress and stay committed to their goals."
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-slate-800">Emma Rodriguez</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 italic">
+                        "The nutrition tracking combined with workout analytics helped me lose 15 pounds in 3 months. Couldn't have done it without FitTrack!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-slate-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-cyan-500/10"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to Start Your <span class="text-orange-400">Fitness Journey</span>?
+            </h2>
+            <p class="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of users who have transformed their fitness with FitTrack. Start your free trial today and experience the difference.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                    <i class="fas fa-rocket"></i>
+                    Get Started Now
+                </button>
+                <button class="border-2 border-slate-600 hover:border-orange-400 text-slate-300 hover:text-orange-400 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fas fa-play-circle"></i>
+                    Watch Demo
+                </button>
+            </div>
+            <div class="mt-8 text-slate-400 text-sm">
+                <i class="fas fa-shield-alt mr-2"></i>
+                Secure & Privacy-First • No Credit Card Required
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-sm"></i>
+                        </div>
+                        <span class="ml-2 text-xl font-bold text-white">FitTrack</span>
+                    </div>
+                    <p class="text-slate-400 mb-4">
+                        Your personal workout tracking companion for achieving fitness goals and transforming lives.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-facebook text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-linkedin text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Features</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Download</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> About</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center">
+                <p class="text-slate-500">
+                    <i class="fas fa-heart text-orange-500 mr-1"></i>
+                    Made with passion for fitness enthusiasts worldwide
+                </p>
+                <p class="text-slate-500 mt-2">&copy; 2024 FitTrack. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
