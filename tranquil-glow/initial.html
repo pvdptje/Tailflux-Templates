@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Spa & Wellness Retreat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'spa-blue': '#93c5fd',
+                        'spa-purple': '#d8b4fe',
+                        'spa-red': '#fca5a5',
+                        'spa-rose': '#fecdd3'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">Serenity Spa</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-600 hover:text-spa-purple transition">Home</a>
+                <a href="#" class="text-gray-600 hover:text-spa-purple transition">Services</a>
+                <a href="#" class="text-gray-600 hover:text-spa-purple transition">Packages</a>
+                <a href="#" class="text-gray-600 hover:text-spa-purple transition">About</a>
+                <a href="#" class="text-gray-600 hover:text-spa-purple transition">Contact</a>
+            </div>
+            <button class="bg-spa-purple text-white px-6 py-2 rounded-full hover:bg-purple-400 transition">
+                Book Now
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-spa-blue to-spa-purple py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl font-bold text-white mb-6">Find Your Inner Peace</h1>
+            <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
+                Experience ultimate relaxation and rejuvenation at our premier spa and wellness retreat. Your journey to tranquility begins here.
+            </p>
+            <div class="space-x-4">
+                <button class="bg-white text-spa-purple px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+                    Explore Services
+                </button>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-spa-purple transition">
+                    Book Treatment
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Signature Services</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-spa-rose rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-spa text-spa-red text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Massage Therapy</h3>
+                    <p class="text-gray-600 mb-4">
+                        Rejuvenate your body and mind with our expert massage therapies tailored to your needs.
+                    </p>
+                    <button class="text-spa-purple font-semibold hover:text-purple-400 transition">
+                        Learn More →
+                    </button>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-spa-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-leaf text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Aromatherapy</h3>
+                    <p class="text-gray-600 mb-4">
+                        Experience the healing power of essential oils in our calming aromatherapy sessions.
+                    </p>
+                    <button class="text-spa-purple font-semibold hover:text-purple-400 transition">
+                        Learn More →
+                    </button>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-spa-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-water text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Hydrotherapy</h3>
+                    <p class="text-gray-600 mb-4">
+                        Immerse yourself in our therapeutic water treatments designed for complete relaxation.
+                    </p>
+                    <button class="text-spa-purple font-semibold hover:text-purple-400 transition">
+                        Learn More →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="py-16 bg-gradient-to-r from-spa-rose to-spa-red">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">Special Wellness Packages</h2>
+            <p class="text-white mb-8 max-w-2xl mx-auto">
+                Discover our curated wellness packages designed to provide complete mind and body rejuvenation.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Weekend Retreat</h3>
+                    <p class="text-gray-600 mb-4">Perfect for a quick escape from daily stress</p>
+                    <div class="text-3xl font-bold text-spa-purple mb-4">$299</div>
+                    <button class="bg-spa-purple text-white px-6 py-2 rounded-full hover:bg-purple-400 transition">
+                        Book Package
+                    </button>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Ultimate Wellness</h3>
+                    <p class="text-gray-600 mb-4">Comprehensive 5-day wellness journey</p>
+                    <div class="text-3xl font-bold text-spa-purple mb-4">$799</div>
+                    <button class="bg-spa-purple text-white px-6 py-2 rounded-full hover:bg-purple-400 transition">
+                        Book Package
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Guests Say</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="text-spa-purple text-2xl mb-4">"</div>
+                    <p class="text-gray-600 mb-4">
+                        The most relaxing experience of my life. The staff was incredibly professional and the atmosphere was pure tranquility.
+                    </p>
+                    <div class="font-semibold text-gray-800">- Sarah Johnson</div>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="text-spa-blue text-2xl mb-4">"</div>
+                    <p class="text-gray-600 mb-4">
+                        I left feeling completely renewed. The wellness packages are worth every penny. Can't wait to return!
+                    </p>
+                    <div class="font-semibold text-gray-800">- Michael Chen</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-12 bg-spa-blue">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Stay Connected</h2>
+            <p class="text-white mb-6">Subscribe to receive wellness tips and special offers</p>
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-l-lg focus:outline-none">
+                <button class="bg-spa-purple text-white px-6 py-3 rounded-r-lg hover:bg-purple-400 transition">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Serenity Spa</h3>
+                    <p class="text-gray-400">
+                        Your sanctuary for wellness and relaxation. Experience the perfect balance of mind, body, and spirit.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="hover:text-white transition">Services</a></li>
+                        <li><a href="#" class="hover:text-white transition">Packages</a></li>
+                        <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>123 Wellness Lane</li>
+                        <li>Serenity, ST 12345</li>
+                        <li>(555) 123-4567</li>
+                        <li>info@serenityspa.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Serenity Spa & Wellness Retreat. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
