@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenFlow - Mindful Meditation App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: '#FF6B35',
+                        fuchsia: '#D946EF',
+                        blue: '#3B82F6',
+                        green: '#10B981'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/80 backdrop-blur-lg border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-spa text-white text-sm"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-orange to-fuchsia bg-clip-text text-transparent">ZenFlow</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-orange transition-all duration-300 transform hover:scale-105 font-medium">Home</a>
+                    <a href="#" class="hover:text-fuchsia transition-all duration-300 transform hover:scale-105 font-medium">Meditations</a>
+                    <a href="#" class="hover:text-blue transition-all duration-300 transform hover:scale-105 font-medium">Sleep</a>
+                    <a href="#" class="hover:text-green transition-all duration-300 transform hover:scale-105 font-medium">Courses</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-gradient-to-r from-orange to-fuchsia px-8 py-3 rounded-full font-semibold hover:shadow-2xl hover:shadow-orange/30 transition-all duration-300 transform hover:scale-105 active:scale-95">
+                        <i class="fas fa-play mr-2"></i>Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-90"></div>
+        <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1755591169837-01288ab3c111?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtZWRpdGF0aW9uJTIwcGVhY2VmdWwlMjBuYXR1cmUlMjBsYW5kc2NhcGV8ZW58MHwwfHx8MTc1OTIxODYyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=D2MGkerNYDw'); background-size: cover; background-position: center; opacity: 0.3;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                        Find Your
+                        <span class="bg-gradient-to-r from-orange to-fuchsia bg-clip-text text-transparent block animate-pulse-slow">Inner Peace</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 leading-relaxed">
+                        Join millions of people discovering mindfulness through guided meditations, sleep stories, and breathing exercises designed for modern life.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <button class="group bg-gradient-to-r from-orange to-fuchsia px-10 py-5 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-orange/40 transition-all duration-300 transform hover:scale-105 active:scale-95">
+                            <i class="fas fa-play-circle mr-3 group-hover:scale-110 transition-transform"></i>Start Your Journey
+                        </button>
+                        <button class="group border-2 border-gray-600 px-10 py-5 rounded-full font-semibold text-lg hover:border-orange hover:text-orange transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-info-circle mr-3"></i>Learn More
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-6 text-gray-400">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <span>4.9 Rating</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-users text-blue-400"></i>
+                            <span>50K+ Users</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-globe text-green-400"></i>
+                            <span>Worldwide</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative z-10 bg-gray-800/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-gray-700 hover:border-orange/50 transition-all duration-500 transform hover:scale-105">
+                        <div class="flex items-center justify-center mb-8">
+                            <div class="w-32 h-32 bg-gradient-to-r from-blue to-green rounded-full flex items-center justify-center shadow-2xl animate-float">
+                                <div class="w-24 h-24 bg-gray-900 rounded-full flex items-center justify-center shadow-inner">
+                                    <div class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-play text-white text-xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center space-y-4">
+                            <h3 class="text-3xl font-bold">Daily Calm</h3>
+                            <p class="text-gray-400 text-lg">10-minute meditation for focus & clarity</p>
+                            <div class="flex justify-center space-x-6">
+                                <button class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-orange/30">
+                                    <i class="fas fa-play text-white"></i>
+                                </button>
+                                <button class="w-16 h-16 border-2 border-gray-600 rounded-full flex items-center justify-center hover:border-orange hover:text-orange transition-all duration-300">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Floating elements -->
+                    <div class="absolute -top-6 -right-6 w-12 h-12 bg-orange rounded-full opacity-70 animate-bounce-slow shadow-lg"></div>
+                    <div class="absolute -bottom-6 -left-6 w-10 h-10 bg-fuchsia rounded-full opacity-70 animate-pulse shadow-lg"></div>
+                    <div class="absolute top-1/2 -right-8 w-8 h-8 bg-blue rounded-full opacity-60 animate-float shadow-lg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-gradient-to-b from-gray-800/20 to-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-bold mb-6">Why Choose ZenFlow?</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Designed to fit perfectly into your daily routine with scientifically-backed techniques</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Feature 1 -->
+                <div class="group bg-gray-800/60 backdrop-blur-sm p-10 rounded-3xl hover:transform hover:scale-105 transition-all duration-500 border border-gray-700 hover:border-orange/50 hover:shadow-2xl hover:shadow-orange/20">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-spa text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6">Guided Meditations</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed">Expert-led sessions for every mood and moment, from quick 3-minute breaks to deep 30-minute journeys.</p>
+                    <div class="mt-6 flex items-center text-orange">
+                        <span class="text-sm font-semibold">Explore Sessions</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="group bg-gray-800/60 backdrop-blur-sm p-10 rounded-3xl hover:transform hover:scale-105 transition-all duration-500 border border-gray-700 hover:border-blue/50 hover:shadow-2xl hover:shadow-blue/20">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue to-green rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-moon text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6">Sleep Stories</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed">Drift off peacefully with soothing bedtime stories, calming sounds, and sleep-focused meditations.</p>
+                    <div class="mt-6 flex items-center text-blue">
+                        <span class="text-sm font-semibold">Discover Stories</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="group bg-gray-800/60 backdrop-blur-sm p-10 rounded-3xl hover:transform hover:scale-105 transition-all duration-500 border border-gray-700 hover:border-green/50 hover:shadow-2xl hover:shadow-green/20">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green to-blue rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6">Progress Tracking</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed">Monitor your mindfulness journey with detailed insights, achievements, and personalized recommendations.</p>
+                    <div class="mt-6 flex items-center text-green">
+                        <span class="text-sm font-semibold">View Progress</span>
+                        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Showcase Section -->
+    <section class="py-24 bg-gray-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <h2 class="text-5xl font-bold">Experience Mindfulness Anywhere</h2>
+                    <p class="text-xl text-gray-300 leading-relaxed">
+                        Access your meditation practice on all devices. Download our app for the complete ZenFlow experience with offline access and personalized recommendations.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green text-xl"></i>
+                                <span class="text-lg">Offline Access</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green text-xl"></i>
+                                <span class="text-lg">Personalized Plans</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green text-xl"></i>
+                                <span class="text-lg">Sleep Tracking</span>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green text-xl"></i>
+                                <span class="text-lg">Daily Reminders</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green text-xl"></i>
+                                <span class="text-lg">Progress Analytics</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green text-xl"></i>
+                                <span class="text-lg">Community Support</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-6">
+                        <button class="flex items-center space-x-3 bg-black/50 px-6 py-4 rounded-2xl border border-gray-600 hover:border-white transition-all duration-300">
+                            <i class="fab fa-apple text-2xl"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Download on the</div>
+                                <div class="font-semibold">App Store</div>
+                            </div>
+                        </button>
+                        <button class="flex items-center space-x-3 bg-black/50 px-6 py-4 rounded-2xl border border-gray-600 hover:border-white transition-all duration-300">
+                            <i class="fab fa-google-play text-2xl"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Get it on</div>
+                                <div class="font-semibold">Google Play</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative z-10 bg-gray-800/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-gray-700 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1585435516476-bd92c7d4d9b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtaW5kZnVsbmVzcyUyMGFwcCUyMG1vYmlsZSUyMHBob25lJTIwaW50ZXJmYWNlfGVufDB8MHx8fDE3NTkyMTg2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=C9omhINyVQs" alt="ZenFlow App Interface" class="rounded-2xl shadow-2xl">
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-r from-orange to-fuchsia rounded-full opacity-20 animate-pulse"></div>
+                    <div class="absolute -bottom-6 -right-6 w-16 h-16 bg-gradient-to-r from-blue to-green rounded-full opacity-20 animate-float"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-4xl p-16 border border-gray-700 shadow-2xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-orange/10 to-fuchsia/10"></div>
+                <div class="relative z-10">
+                    <h2 class="text-5xl font-bold mb-8">Ready to Transform Your Life?</h2>
+                    <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Join our community of mindful individuals and start your journey to inner peace today. Experience the benefits of daily meditation with our free trial.
+                    </p>
+                    <button class="group bg-gradient-to-r from-orange to-fuchsia px-12 py-6 rounded-full font-semibold text-xl hover:shadow-2xl hover:shadow-orange/40 transition-all duration-300 transform hover:scale-105 active:scale-95 mb-8">
+                        <i class="fas fa-download mr-3 group-hover:scale-110 transition-transform"></i>Download Now - It's Free!
+                    </button>
+                    <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-12 text-gray-400">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <span class="ml-2 font-semibold">4.9 • 50K+ Reviews</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-award text-orange"></i>
+                            <span>Editor's Choice 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-spa text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold bg-gradient-to-r from-orange to-fuchsia bg-clip-text text-transparent">ZenFlow</span>
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed">Your daily companion for mindfulness, meditation, and mental wellness.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-orange hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-fuchsia hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-green hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Product</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-orange transition-all duration-300 transform hover:translate-x-2 block">Meditations</a></li>
+                        <li><a href="#" class="hover:text-fuchsia transition-all duration-300 transform hover:translate-x-2 block">Sleep Stories</a></li>
+                        <li><a href="#" class="hover:text-blue transition-all duration-300 transform hover:translate-x-2 block">Breathing Exercises</a></li>
+                        <li><a href="#" class="hover:text-green transition-all duration-300 transform hover:translate-x-2 block">Mindfulness Courses</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Company</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-orange transition-all duration-300 transform hover:translate-x-2 block">About Us</a></li>
+                        <li><a href="#" class="hover:text-fuchsia transition-all duration-300 transform hover:translate-x-2 block">Careers</a></li>
+                        <li><a href="#" class="hover:text-blue transition-all duration-300 transform hover:translate-x-2 block">Blog</a></li>
+                        <li><a href="#" class="hover:text-green transition-all duration-300 transform hover:translate-x-2 block">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-orange transition-all duration-300 transform hover:translate-x-2 block">Help Center</a></li>
+                        <li><a href="#" class="hover:text-fuchsia transition-all duration-300 transform hover:translate-x-2 block">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-blue transition-all duration-300 transform hover:translate-x-2 block">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-green transition-all duration-300 transform hover:translate-x-2 block">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p class="text-lg">&copy; 2024 ZenFlow. All rights reserved. Made with <i class="fas fa-heart text-red-400 mx-1"></i> for mindful living.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button for Mobile -->
+    <div class="fixed bottom-6 right-6 md:hidden z-50">
+        <button class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-2xl hover:shadow-orange/40 transition-all duration-300 transform hover:scale-110 active:scale-95">
+            <i class="fas fa-play text-white text-xl"></i>
+        </button>
+    </div>
+</body>
+</html>

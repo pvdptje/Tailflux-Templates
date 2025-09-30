@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileOpen:false, showScrollTop:false }" x-init="window.addEventListener('scroll', () => { showScrollTop = window.scrollY > 400 })">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenFlow - Mindful Meditation App</title>
+    <meta name="description" content="ZenFlow helps you build a mindful habit with guided meditations, sleep stories, and breathing exercises for modern life.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: '#FF6B35',
+                        fuchsia: '#D946EF',
+                        blue: '#3B82F6',
+                        green: '#10B981'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp .8s ease-out both'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(12px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    },
+                    boxShadow: {
+                        'glow-orange': '0 10px 30px -10px rgba(255,107,53,0.35)',
+                        'glow-blue': '0 10px 30px -10px rgba(59,130,246,0.35)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700 sticky top-0 z-50" x-data="{ scrolled: false }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 8 })" :class="scrolled ? 'bg-gray-800/90' : 'bg-gray-800/70'">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center space-x-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange rounded-lg">
+                    <div class="w-10 h-10 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-spa text-white text-sm"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-orange to-fuchsia bg-clip-text text-transparent">ZenFlow</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-orange transition-all duration-300 transform hover:scale-105 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-orange rounded">Home</a>
+                    <a href="#features" class="hover:text-fuchsia transition-all duration-300 transform hover:scale-105 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia rounded">Meditations</a>
+                    <a href="#showcase" class="hover:text-blue transition-all duration-300 transform hover:scale-105 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue rounded">Sleep</a>
+                    <a href="#testimonials" class="hover:text-green transition-all duration-300 transform hover:scale-105 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-green rounded">Community</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="bg-gradient-to-r from-orange to-fuchsia px-6 py-3 rounded-full font-semibold hover:shadow-2xl hover:shadow-orange/30 transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange">
+                        <i class="fas fa-play mr-2"></i>Get Started
+                    </button>
+                </div>
+
+                <!-- Mobile Hamburger -->
+                <button @click="mobileOpen = !mobileOpen" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-gray-700 hover:border-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-orange" aria-label="Toggle menu" :aria-expanded="mobileOpen">
+                    <i class="fas" :class="mobileOpen ? 'fa-times' : 'fa-bars'"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="md:hidden overflow-hidden transition-[max-height] duration-500" :style="mobileOpen ? 'max-height: 320px' : 'max-height: 0'">
+                <div class="py-4 space-y-2 border-t border-gray-700">
+                    <a @click="mobileOpen=false" href="#home" class="block px-3 py-3 rounded-lg hover:bg-gray-700/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange">Home</a>
+                    <a @click="mobileOpen=false" href="#features" class="block px-3 py-3 rounded-lg hover:bg-gray-700/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia">Meditations</a>
+                    <a @click="mobileOpen=false" href="#showcase" class="block px-3 py-3 rounded-lg hover:bg-gray-700/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue">Sleep</a>
+                    <a @click="mobileOpen=false" href="#testimonials" class="block px-3 py-3 rounded-lg hover:bg-gray-700/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-green">Community</a>
+                    <div class="pt-2">
+                        <button class="w-full bg-gradient-to-r from-orange to-fuchsia px-6 py-3 rounded-xl font-semibold hover:shadow-2xl hover:shadow-orange/30 transition-all duration-300">
+                            <i class="fas fa-play mr-2"></i>Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="home">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden scroll-mt-24">
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-95"></div>
+            <div class="absolute inset-0">
+                <div aria-hidden="true" class="w-full h-full bg-center bg-cover opacity-30" style="background-image:url('https://images.unsplash.com/photo-1523131375637-b9a3e62574c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtZWRpdGF0aW9uJTIwcGVhY2VmdWwlMjBuYXR1cmUlMjBsYW5kc2NhcGUlMjBzdW5yaXNlJTIwbWlzdCUyMG1vdW50YWlucyUyMGxha2UlMjB6ZW58ZW58MHwwfHx8MTc1OTIxODg4NHww&ixlib=rb-4.1.0&q=80&w=1600&utm_source=TailFlux&photo_id=A6gls-LXVcw');"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8 animate-fade-in-up">
+                        <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                            Find Your
+                            <span class="bg-gradient-to-r from-orange to-fuchsia bg-clip-text text-transparent block animate-pulse-slow">Inner Peace</span>
+                        </h1>
+                        <p class="text-xl text-gray-300 leading-relaxed">
+                            Join millions of people discovering mindfulness through guided meditations, sleep stories, and breathing exercises designed for modern life.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <a href="#features" class="group bg-gradient-to-r from-orange to-fuchsia px-10 py-5 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-orange/40 transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange">
+                                <i class="fas fa-play-circle mr-3 group-hover:scale-110 transition-transform"></i>Start Your Journey
+                            </a>
+                            <a href="#showcase" class="group border-2 border-gray-600 px-10 py-5 rounded-full font-semibold text-lg hover:border-orange hover:text-orange transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange">
+                                <i class="fas fa-info-circle mr-3"></i>Learn More
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-6 text-gray-300">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span>4.9 Rating</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-users text-blue-400"></i>
+                                <span>50K+ Users</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-globe text-green-400"></i>
+                                <span>Worldwide</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="relative z-10 bg-gray-800/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-gray-700 hover:border-orange/50 transition-all duration-500 transform hover:scale-105 animate-fade-in-up">
+                            <div class="flex items-center justify-center mb-8">
+                                <div class="w-32 h-32 bg-gradient-to-r from-blue to-green rounded-full flex items-center justify-center shadow-2xl animate-float">
+                                    <div class="w-24 h-24 bg-gray-900 rounded-full flex items-center justify-center shadow-inner">
+                                        <button class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-lg hover:shadow-orange/40 transition transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange" aria-label="Play Daily Calm">
+                                            <i class="fas fa-play text-white text-xl"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center space-y-4">
+                                <h3 class="text-3xl font-bold">Daily Calm</h3>
+                                <p class="text-gray-400 text-lg">10-minute meditation for focus & clarity</p>
+                                <!-- Simple progress mock -->
+                                <div class="mx-auto max-w-md">
+                                    <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-orange to-fuchsia w-2/3 animate-pulse-slow"></div>
+                                    </div>
+                                    <div class="flex justify-between text-sm text-gray-400 mt-2">
+                                        <span>00:00</span><span>10:00</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center gap-4 mt-6">
+                                    <button class="px-5 py-3 rounded-full border-2 border-gray-600 hover:border-orange hover:text-orange transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange">
+                                        <i class="fas fa-heart"></i>
+                                        <span class="sr-only">Favorite</span>
+                                    </button>
+                                    <button class="px-5 py-3 rounded-full border-2 border-gray-600 hover:border-blue hover:text-blue transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue">
+                                        <i class="fas fa-download"></i>
+                                        <span class="sr-only">Download</span>
+                                    </button>
+                                    <button class="px-5 py-3 rounded-full border-2 border-gray-600 hover:border-green hover:text-green transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span class="sr-only">Share</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Floating elements -->
+                        <div class="absolute -top-6 -right-6 w-12 h-12 bg-orange rounded-full opacity-70 animate-bounce-slow shadow-lg"></div>
+                        <div class="absolute -bottom-6 -left-6 w-10 h-10 bg-fuchsia rounded-full opacity-70 animate-pulse shadow-lg"></div>
+                        <div class="absolute top-1/2 -right-8 w-8 h-8 bg-blue rounded-full opacity-60 animate-float shadow-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-24 bg-gradient-to-b from-gray-800/20 to-gray-900/50 scroll-mt-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-20">
+                    <h2 class="text-5xl font-bold mb-6">Why Choose ZenFlow?</h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">Designed to fit perfectly into your daily routine with scientifically-backed techniques</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-10">
+                    <!-- Feature 1 -->
+                    <div class="group bg-gray-800/60 backdrop-blur-sm p-10 rounded-3xl hover:transform hover:scale-105 transition-all duration-500 border border-gray-700 hover:border-orange/50 hover:shadow-2xl hover:shadow-orange/20">
+                        <div class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <i class="fas fa-spa text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-6">Guided Meditations</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Expert-led sessions for every mood and moment, from quick 3-minute breaks to deep 30-minute journeys.</p>
+                        <div class="mt-6 flex items-center text-orange">
+                            <span class="text-sm font-semibold">Explore Sessions</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="group bg-gray-800/60 backdrop-blur-sm p-10 rounded-3xl hover:transform hover:scale-105 transition-all duration-500 border border-gray-700 hover:border-blue/50 hover:shadow-2xl hover:shadow-blue/20">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue to-green rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <i class="fas fa-moon text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-6">Sleep Stories</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Drift off peacefully with soothing bedtime stories, calming sounds, and sleep-focused meditations.</p>
+                        <div class="mt-6 flex items-center text-blue">
+                            <span class="text-sm font-semibold">Discover Stories</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="group bg-gray-800/60 backdrop-blur-sm p-10 rounded-3xl hover:transform hover:scale-105 transition-all duration-500 border border-gray-700 hover:border-green/50 hover:shadow-2xl hover:shadow-green/20">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green to-blue rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-6">Progress Tracking</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Monitor your mindfulness journey with detailed insights, achievements, and personalized recommendations.</p>
+                        <div class="mt-6 flex items-center text-green">
+                            <span class="text-sm font-semibold">View Progress</span>
+                            <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Showcase Section -->
+        <section id="showcase" class="py-24 bg-gray-800/30 scroll-mt-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <h2 class="text-5xl font-bold">Experience Mindfulness Anywhere</h2>
+                        <p class="text-xl text-gray-300 leading-relaxed">
+                            Access your meditation practice on all devices. Download our app for the complete ZenFlow experience with offline access and personalized recommendations.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-green text-xl"></i>
+                                    <span class="text-lg">Offline Access</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-green text-xl"></i>
+                                    <span class="text-lg">Personalized Plans</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-green text-xl"></i>
+                                    <span class="text-lg">Sleep Tracking</span>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-green text-xl"></i>
+                                    <span class="text-lg">Daily Reminders</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-green text-xl"></i>
+                                    <span class="text-lg">Progress Analytics</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-green text-xl"></i>
+                                    <span class="text-lg">Community Support</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-6">
+                            <button class="flex items-center space-x-3 bg-black/50 px-6 py-4 rounded-2xl border border-gray-600 hover:border-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                                <i class="fab fa-apple text-2xl"></i>
+                                <div class="text-left">
+                                    <div class="text-xs">Download on the</div>
+                                    <div class="font-semibold">App Store</div>
+                                </div>
+                            </button>
+                            <button class="flex items-center space-x-3 bg-black/50 px-6 py-4 rounded-2xl border border-gray-600 hover:border-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                                <i class="fab fa-google-play text-2xl"></i>
+                                <div class="text-left">
+                                    <div class="text-xs">Get it on</div>
+                                    <div class="font-semibold">Google Play</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="relative z-10 bg-gray-800/80 backdrop-blur-lg rounded-3xl p-6 shadow-2xl border border-gray-700 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1703355684811-609896031caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBwaG9uZSUyMG1lZGl0YXRpb24lMjBhcHAlMjBpbnRlcmZhY2UlMjBtaW5kZnVsbmVzcyUyMHNjcmVlbiUyMGRhcmslMjBtb2RlfGVufDB8MHx8fDE3NTkyMTg4ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=2dknVAe924Y" alt="ZenFlow App Interface" class="rounded-2xl shadow-2xl">
+                        </div>
+                        <!-- Decorative orbs -->
+                        <div class="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-r from-orange to-fuchsia rounded-full opacity-20 animate-pulse"></div>
+                        <div class="absolute -bottom-6 -right-6 w-16 h-16 bg-gradient-to-r from-blue to-green rounded-full opacity-20 animate-float"></div>
+                        <!-- Overlay secondary card for depth -->
+                        <div class="hidden sm:block absolute -bottom-10 -left-10 bg-gray-800/60 border border-gray-700 rounded-2xl p-4 shadow-glow-blue">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-orange to-fuchsia flex items-center justify-center">
+                                    <i class="fas fa-bell text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Daily reminder set</p>
+                                    <p class="text-xs text-gray-400">7:00 AM • Focus session</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="py-24 bg-gray-900 scroll-mt-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl font-bold mb-4">Voices from Our Community</h2>
+                    <p class="text-gray-300 text-lg">Real people. Real moments of calm.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-gray-800/60 border border-gray-700 rounded-3xl p-8 hover:border-orange/50 transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1706999474920-837447b808e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMG1lZGl0YXRpb24lMjB3b21hbiUyMHNvZnQlMjBsaWdodCUyMHNtaWxpbmd8ZW58MHwwfHx8MTc1OTIxODg4NXww&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=9xATP92GZQ8" alt="Smiling woman meditating" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">Ava N.</p>
+                                <p class="text-sm text-gray-400">Product Designer</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-3">
+                            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-300">ZenFlow is now part of my morning ritual. 10 minutes and I feel centered for the whole day.</p>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-gray-800/60 border border-gray-700 rounded-3xl p-8 hover:border-blue/50 transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1526101542314-3eb028cded32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMG1lZGl0YXRpb24lMjBtYW4lMjBiZWFyZGVkJTIwc29mdCUyMGxpZ2h0JTIwc21pbGluZ3xlbnwwfDB8fHwxNzU5MjE4OTAwfDA&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=yXNk3FqsBSs" alt="Smiling man meditating" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">Daniel R.</p>
+                                <p class="text-sm text-gray-400">Developer</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-3">
+                            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-300">Sleep stories are a game-changer. I fall asleep faster and wake up refreshed.</p>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="bg-gray-800/60 border border-gray-700 rounded-3xl p-8 hover:border-green/50 transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1729886484969-188f0d7f196c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMHlvZ2ElMjBwZXJzb24lMjBzZXJlbmUlMjBzb2Z0JTIwbGlnaHR8ZW58MHwwfHx8MTc1OTIxODg4N3ww&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=Sh0kB-XROh0" alt="Person practicing yoga" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">Mei L.</p>
+                                <p class="text-sm text-gray-400">Teacher</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-3">
+                            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-300">The reminders and progress tracking keep me consistent. It’s the calm I needed.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-24">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-10 sm:p-16 border border-gray-700 shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-orange/10 to-fuchsia/10"></div>
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-r from-orange to-fuchsia opacity-10 rounded-full"></div>
+                    <div class="relative z-10">
+                        <h2 class="text-5xl font-bold mb-8">Ready to Transform Your Life?</h2>
+                        <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                            Join our community of mindful individuals and start your journey to inner peace today. Experience the benefits of daily meditation with our free trial.
+                        </p>
+                        <button class="group bg-gradient-to-r from-orange to-fuchsia px-10 py-5 rounded-full font-semibold text-xl hover:shadow-2xl hover:shadow-orange/40 transition-all duration-300 transform hover:scale-105 active:scale-95 mb-8 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange">
+                            <i class="fas fa-download mr-3 group-hover:scale-110 transition-transform"></i>Download Now - It's Free!
+                        </button>
+                        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-12 text-gray-400">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-2 font-semibold">4.9 • 50K+ Reviews</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-award text-orange"></i>
+                                <span>Editor's Choice 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-5 gap-12">
+                <div class="md:col-span-2 space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-spa text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold bg-gradient-to-r from-orange to-fuchsia bg-clip-text text-transparent">ZenFlow</span>
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed">Your daily companion for mindfulness, meditation, and mental wellness.</p>
+                    <!-- Newsletter -->
+                    <div x-data="{ email:'', sent:false }" class="bg-gray-900/60 border border-gray-700 rounded-2xl p-4">
+                        <form @submit.prevent="sent = true" class="flex flex-col sm:flex-row gap-3">
+                            <label for="newsletter" class="sr-only">Email address</label>
+                            <input id="newsletter" x-model="email" type="email" required placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:border-orange" />
+                            <button type="submit" class="px-5 py-3 rounded-xl bg-gradient-to-r from-orange to-fuchsia font-semibold hover:shadow-glow-orange transition">
+                                Subscribe
+                            </button>
+                        </form>
+                        <p x-show="sent" x-transition.opacity class="text-green mt-3 text-sm">Thanks! Please check your inbox to confirm.</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-orange hover:scale-110 transition-all duration-300" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue hover:scale-110 transition-all duration-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-fuchsia hover:scale-110 transition-all duration-300" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-green hover:scale-110 transition-all duration-300" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Product</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#features" class="hover:text-orange transition-all duration-300 transform hover:translate-x-2 block">Meditations</a></li>
+                        <li><a href="#showcase" class="hover:text-fuchsia transition-all duration-300 transform hover:translate-x-2 block">Sleep Stories</a></li>
+                        <li><a href="#features" class="hover:text-blue transition-all duration-300 transform hover:translate-x-2 block">Breathing Exercises</a></li>
+                        <li><a href="#features" class="hover:text-green transition-all duration-300 transform hover:translate-x-2 block">Mindfulness Courses</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Company</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-orange transition-all duration-300 transform hover:translate-x-2 block">About Us</a></li>
+                        <li><a href="#" class="hover:text-fuchsia transition-all duration-300 transform hover:translate-x-2 block">Careers</a></li>
+                        <li><a href="#" class="hover:text-blue transition-all duration-300 transform hover:translate-x-2 block">Blog</a></li>
+                        <li><a href="#" class="hover:text-green transition-all duration-300 transform hover:translate-x-2 block">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-orange transition-all duration-300 transform hover:translate-x-2 block">Help Center</a></li>
+                        <li><a href="#" class="hover:text-fuchsia transition-all duration-300 transform hover:translate-x-2 block">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-blue transition-all duration-300 transform hover:translate-x-2 block">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-green transition-all duration-300 transform hover:translate-x-2 block">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p class="text-lg">&copy; 2024 ZenFlow. All rights reserved. Made with <i class="fas fa-heart text-red-400 mx-1"></i> for mindful living.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button for Mobile -->
+    <div class="fixed bottom-6 right-6 md:hidden z-50">
+        <button class="w-16 h-16 bg-gradient-to-r from-orange to-fuchsia rounded-full flex items-center justify-center shadow-2xl hover:shadow-orange/40 transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange" aria-label="Start meditation">
+            <i class="fas fa-play text-white text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Scroll to top -->
+    <button x-show="showScrollTop" x-transition.opacity @click="window.scrollTo({ top: 0, behavior: 'smooth' })" class="hidden md:flex fixed bottom-6 left-6 z-50 w-12 h-12 items-center justify-center rounded-full border border-gray-700 bg-gray-800/70 backdrop-blur hover:border-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-orange" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</body>
+</html>
