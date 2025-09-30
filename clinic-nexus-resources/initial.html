@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Resources | Local Health Clinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                            600: '#65a30d',
+                        },
+                        stone: {
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        purple: {
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-900 text-gray-100 min-h-screen transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-stone-800 border-b border-purple-600/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-lime-500 rounded-lg"></div>
+                        <span class="ml-2 text-xl font-bold text-lime-400">Health Clinic</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium">Services</a>
+                    <a href="#" class="bg-purple-600 text-white px-3 py-2 rounded-md text-sm font-medium">Resources</a>
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-stone-800 to-purple-900/30">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
+                    Health Resources
+                </h1>
+                <p class="mt-5 max-w-xl mx-auto text-xl text-gray-300">
+                    Comprehensive health information and resources to support your wellness journey.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Search and Filter Section -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <input type="text" 
+                           placeholder="Search resources..." 
+                           class="w-full px-4 py-3 bg-stone-800 border border-stone-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                </div>
+                <select class="px-4 py-3 bg-stone-800 border border-stone-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <option value="">All Categories</option>
+                    <option value="prevention">Prevention</option>
+                    <option value="treatment">Treatment</option>
+                    <option value="mental-health">Mental Health</option>
+                    <option value="nutrition">Nutrition</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Resources Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Resource Card 1 -->
+            <div class="bg-stone-800 rounded-xl border border-stone-700 hover:border-lime-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/10">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">PH</span>
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-purple-400">Prevention & Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Seasonal Flu Prevention</h3>
+                    <p class="text-gray-400 mb-4">Learn about effective strategies to prevent seasonal flu and protect your family.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Updated: Jan 2024</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm">Read More →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 2 -->
+            <div class="bg-stone-800 rounded-xl border border-stone-700 hover:border-lime-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/10">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-lime-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">NH</span>
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-lime-400">Nutrition & Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Healthy Eating Guide</h3>
+                    <p class="text-gray-400 mb-4">Comprehensive guide to balanced nutrition and meal planning for optimal health.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Updated: Dec 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm">Read More →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 3 -->
+            <div class="bg-stone-800 rounded-xl border border-stone-700 hover:border-lime-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/10">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">MH</span>
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-purple-400">Mental Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Stress Management</h3>
+                    <p class="text-gray-400 mb-4">Techniques and resources to help manage stress and improve mental wellbeing.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Updated: Nov 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm">Read More →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 4 -->
+            <div class="bg-stone-800 rounded-xl border border-stone-700 hover:border-lime-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/10">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-lime-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">EX</span>
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-lime-400">Exercise</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Home Workout Plans</h3>
+                    <p class="text-gray-400 mb-4">Effective workout routines you can do at home with minimal equipment.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Updated: Oct 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm">Read More →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 5 -->
+            <div class="bg-stone-800 rounded-xl border border-stone-700 hover:border-lime-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/10">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">CH</span>
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-purple-400">Chronic Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Diabetes Management</h3>
+                    <p class="text-gray-400 mb-4">Resources and tools for effective diabetes management and prevention.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Updated: Sep 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm">Read More →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 6 -->
+            <div class="bg-stone-800 rounded-xl border border-stone-700 hover:border-lime-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/10">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-lime-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">PC</span>
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-lime-400">Preventive Care</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Annual Check-ups Guide</h3>
+                    <p class="text-gray-400 mb-4">Understand the importance of regular health screenings and check-ups.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Updated: Aug 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm">Read More →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Section -->
+        <div class="bg-gradient-to-r from-purple-900/40 to-stone-800 border border-purple-600/30 rounded-xl p-6 mb-8">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">!</span>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-lg font-bold text-white mb-2">Emergency Resources</h3>
+                    <p class="text-gray-300 mb-4">
+                        If you're experiencing a medical emergency, call 911 immediately. For urgent care needs, visit our emergency department or contact our 24/7 helpline.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            Emergency Contact
+                        </button>
+                        <button class="border border-purple-500 text-purple-400 hover:bg-purple-900/30 px-4 py-2 rounded-lg font-medium transition-colors">
+                            Urgent Care Info
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 border-t border-stone-700 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-lime-400 mb-4">Health Clinic</h3>
+                    <p class="text-gray-400">
+                        Providing comprehensive healthcare services to our community since 2005.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400">Appointments</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400">Resources</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>123 Health Street</li>
+                        <li>Medical City, MC 12345</li>
+                        <li>(555) 123-4567</li>
+                        <li>info@healthclinic.org</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hours</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Mon-Fri: 8:00 AM - 6:00 PM</li>
+                        <li>Sat: 9:00 AM - 2:00 PM</li>
+                        <li>Sun: Closed</li>
+                        <li>Emergency: 24/7</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-6 text-center text-gray-500">
+                <p>&copy; 2024 Health Clinic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

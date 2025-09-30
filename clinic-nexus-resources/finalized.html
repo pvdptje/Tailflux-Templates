@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Resources | Local Health Clinic</title>
+    <meta name="description" content="Comprehensive health information and resources to support your wellness journey.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                            600: '#65a30d',
+                        },
+                        stone: {
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        purple: {
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .transition-all, .transition, .duration-300, .duration-500, .duration-700 { transition: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-stone-900 text-gray-100 min-h-screen transition-colors duration-300">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] bg-stone-800 text-white px-3 py-2 rounded-md">Skip to content</a>
+
+    <!-- Navigation -->
+    <nav x-data="{ open: false }" class="bg-stone-800 border-b border-purple-600/20 sticky top-0 z-50 backdrop-blur-sm bg-stone-800/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded-md">
+                        <div class="w-8 h-8 bg-lime-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-sm"></i>
+                        </div>
+                        <span class="ml-2 text-xl font-bold text-lime-400 group-hover:text-lime-300 transition-colors">Health Clinic</span>
+                    </a>
+                </div>
+
+                <!-- Desktop links -->
+                <div class="hidden md:flex items-center space-x-2">
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"><i class="fas fa-home mr-2"></i>Home</a>
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"><i class="fas fa-stethoscope mr-2"></i>Services</a>
+                    <a href="#" aria-current="page" class="bg-purple-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-purple-700 shadow-lg shadow-purple-600/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"><i class="fas fa-book-medical mr-2"></i>Resources</a>
+                    <a href="#footer-contact" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"><i class="fas fa-phone mr-2"></i>Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="flex md:hidden items-center">
+                    <button @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-menu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-stone-700/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 transition">
+                        <span class="sr-only">Open main menu</span>
+                        <i x-show="!open" class="fas fa-bars text-lg"></i>
+                        <i x-show="open" class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div x-show="open" x-transition.origin.top id="mobile-menu" class="md:hidden border-t border-stone-700 bg-stone-800/95 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-stone-700/50"><i class="fas fa-home mr-2"></i>Home</a>
+                <a href="#" class="block text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-stone-700/50"><i class="fas fa-stethoscope mr-2"></i>Services</a>
+                <a href="#" class="block bg-purple-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-purple-700 shadow"><i class="fas fa-book-medical mr-2"></i>Resources</a>
+                <a href="#footer-contact" class="block text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-stone-700/50"><i class="fas fa-phone mr-2"></i>Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-stone-800 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-stone-800 via-purple-900/20 to-stone-800"></div>
+        <div class="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-10 items-center">
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-lime-500/10 rounded-full mb-6 border border-lime-500/30">
+                        <i class="fas fa-book-medical text-lime-400 text-2xl"></i>
+                    </div>
+                    <h1 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl bg-gradient-to-r from-lime-400 to-purple-400 bg-clip-text text-transparent">
+                        Health Resources
+                    </h1>
+                    <p class="mt-5 max-w-xl mx-auto lg:mx-0 text-xl text-gray-300 leading-relaxed">
+                        Comprehensive health information and resources to support your wellness journey.
+                    </p>
+                    <div class="mt-8 flex justify-center lg:justify-start">
+                        <div class="inline-flex items-center space-x-2 text-lime-400">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="text-sm">Trusted Medical Information</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative hidden lg:block">
+                    <div class="absolute -inset-6 bg-lime-500/10 rounded-3xl blur-2xl"></div>
+                    <img
+                        src="https://images.unsplash.com/photo-1731983538220-7bf88cd11b90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoZWFsdGglMjByZXNvdXJjZXMlMjBsaWJyYXJ5JTIwbWVkaWNhbCUyMG1vZGVybnxlbnwwfDB8fHwxNzU5MjE5NjU4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=CGYJlz5Rh2g"
+                        alt="Modern health resources gallery"
+                        class="relative w-full h-80 object-cover rounded-2xl border border-stone-700 shadow-xl shadow-stone-900/40"
+                        loading="lazy"
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Search and Filter Section -->
+        <section x-data="{
+                query: '',
+                category: '',
+                count: 0,
+                matches(el) {
+                    const t = (el.dataset.title || '').toLowerCase();
+                    const cat = el.dataset.category || '';
+                    const q = this.query.trim().toLowerCase();
+                    const c = this.category;
+                    return (!q || t.includes(q)) && (!c || cat === c);
+                }
+            }" x-effect="$nextTick(() => {
+                const cards = Array.from($refs.grid.querySelectorAll('[data-card]'));
+                count = cards.filter(el => matches(el)).length;
+            })" role="search" aria-label="Search and filter health resources" class="mb-12">
+            <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+                <div class="flex-1 relative">
+                    <label for="resource-search" class="sr-only">Search resources</label>
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input id="resource-search" type="text" x-model="query" placeholder="Search resources..."
+                           class="w-full pl-12 pr-12 py-3 bg-stone-800 border border-stone-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all duration-300"
+                           autocomplete="off">
+                    <button x-show="query" @click="query=''" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition" aria-label="Clear search">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <label for="category-filter" class="sr-only">Filter by category</label>
+                    <i class="fas fa-filter absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    <select id="category-filter" x-model="category"
+                            class="pl-12 pr-8 py-3 bg-stone-800 border border-stone-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 appearance-none">
+                        <option value="">All Categories</option>
+                        <option value="prevention">Prevention</option>
+                        <option value="treatment">Treatment</option>
+                        <option value="mental-health">Mental Health</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="exercise">Exercise</option>
+                        <option value="chronic">Chronic Health</option>
+                        <option value="preventive-care">Preventive Care</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button x-show="query || category" @click="query=''; category='';" class="px-4 py-3 border border-stone-600 rounded-lg text-gray-300 hover:text-white hover:border-gray-500 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500">
+                        <i class="fas fa-rotate-left mr-2"></i> Reset
+                    </button>
+                    <div aria-live="polite" class="text-sm text-gray-400">
+                        <span x-text="`Showing ${count} result${count === 1 ? '' : 's'}`"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Grid -->
+            <div x-ref="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 mb-16">
+                <!-- Resource Card 1 -->
+                <article data-card data-category="prevention" data-title="Seasonal Flu Prevention" x-show="matches($el)"
+                         x-transition.opacity.duration.300ms
+                         class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-lime-500">
+                    <div class="h-32 bg-cover bg-center rounded-t-2xl"
+                         style="background-image: url('https://images.unsplash.com/photo-1586163958271-4d2cc29feff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmbHUlMjBwcmV2ZW50aW9uJTIwaGVhbHRoY2FyZSUyMHZpcnVzJTIwc2hpZWxkfGVufDB8MHx8fDE3NTkyMTk2NTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=AS-ksEGPa2c')">
+                        <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                            <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                <i class="fas fa-shield-virus text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm font-medium text-purple-400 bg-purple-900/30 px-3 py-1 rounded-full"><i class="fas fa-microscope mr-2"></i>Prevention & Health</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Seasonal Flu Prevention</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">Learn about effective strategies to prevent seasonal flu and protect your family with evidence-based approaches.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                            <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Jan 2024</span>
+                            <a href="#" class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Resource Card 2 -->
+                <article data-card data-category="nutrition" data-title="Healthy Eating Guide" x-show="matches($el)"
+                         x-transition.opacity.duration.300ms
+                         class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-lime-500">
+                    <div class="h-32 bg-cover bg-center rounded-t-2xl"
+                         style="background-image: url('https://images.unsplash.com/photo-1720305284322-07b6f099395c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoZWFsdGh5JTIwZWF0aW5nJTIwbnV0cml0aW9uJTIwZnJ1aXRzJTIwdmVnZXRhYmxlc3xlbnwwfDB8fHwxNzU5MjE5NjU5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=y-zLr_3U0Dw')">
+                        <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                            <div class="w-14 h-14 bg-lime-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                <i class="fas fa-apple-alt text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm font-medium text-lime-400 bg-lime-900/30 px-3 py-1 rounded-full"><i class="fas fa-utensils mr-2"></i>Nutrition & Health</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Healthy Eating Guide</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">Comprehensive guide to balanced nutrition and meal planning for optimal health and wellness.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                            <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Dec 2023</span>
+                            <a href="#" class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Resource Card 3 -->
+                <article data-card data-category="mental-health" data-title="Stress Management" x-show="matches($el)"
+                         x-transition.opacity.duration.300ms
+                         class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-lime-500">
+                    <div class="h-32 bg-cover bg-center rounded-t-2xl"
+                         style="background-image: url('https://images.unsplash.com/photo-1758874384683-0accd9fb26ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdHJlc3MlMjBtYW5hZ2VtZW50JTIwbWVudGFsJTIwaGVhbHRoJTIwY2FsbXxlbnwwfDB8fHwxNzU5MjE5NjYwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Nj3fU5SLFzQ')">
+                        <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                            <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                <i class="fas fa-brain text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm font-medium text-purple-400 bg-purple-900/30 px-3 py-1 rounded-full"><i class="fas fa-head-side-virus mr-2"></i>Mental Health</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Stress Management</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">Techniques and resources to help manage stress and improve mental wellbeing in daily life.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                            <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Nov 2023</span>
+                            <a href="#" class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Resource Card 4 -->
+                <article data-card data-category="exercise" data-title="Home Workout Plans" x-show="matches($el)"
+                         x-transition.opacity.duration.300ms
+                         class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-lime-500">
+                    <div class="h-32 bg-cover bg-center rounded-t-2xl"
+                         style="background-image: url('https://images.unsplash.com/photo-1758599879927-f60878034fca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxob21lJTIwd29ya291dCUyMGZpdG5lc3MlMjBleGVyY2lzZSUyMGF0JTIwaG9tZXxlbnwwfDB8fHwxNzU5MjE5NjYxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=fbA_qViNdGw')">
+                        <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                            <div class="w-14 h-14 bg-lime-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                <i class="fas fa-running text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm font-medium text-lime-400 bg-lime-900/30 px-3 py-1 rounded-full"><i class="fas fa-dumbbell mr-2"></i>Exercise</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Home Workout Plans</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">Effective workout routines you can do at home with minimal equipment for all fitness levels.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                            <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Oct 2023</span>
+                            <a href="#" class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Resource Card 5 -->
+                <article data-card data-category="chronic" data-title="Diabetes Management" x-show="matches($el)"
+                         x-transition.opacity.duration.300ms
+                         class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-lime-500">
+                    <div class="h-32 bg-cover bg-center rounded-t-2xl"
+                         style="background-image: url('https://images.unsplash.com/photo-1599814516324-66aa0bf16425?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkaWFiZXRlcyUyMG1hbmFnZW1lbnQlMjBibG9vZCUyMGdsdWNvc2V8ZW58MHwwfHx8MTc1OTIxOTY2MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=z03Q6GAkqKM')">
+                        <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                            <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                <i class="fas fa-file-medical text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm font-medium text-purple-400 bg-purple-900/30 px-3 py-1 rounded-full"><i class="fas fa-heartbeat mr-2"></i>Chronic Health</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Diabetes Management</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">Resources and tools for effective diabetes management, prevention, and lifestyle adjustments.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                            <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Sep 2023</span>
+                            <a href="#" class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Resource Card 6 -->
+                <article data-card data-category="preventive-care" data-title="Annual Check-ups Guide" x-show="matches($el)"
+                         x-transition.opacity.duration.300ms
+                         class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-lime-500">
+                    <div class="h-32 bg-cover bg-center rounded-t-2xl"
+                         style="background-image: url('https://images.unsplash.com/photo-1676313027775-a5a3dca6f98b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBjaGVja3VwJTIwc3RldGhvc2NvcGUlMjBjbGluaWN8ZW58MHwwfHx8MTc1OTIxOTY2Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Kru-gp6dgS0')">
+                        <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                            <div class="w-14 h-14 bg-lime-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                <i class="fas fa-user-md text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm font-medium text-lime-400 bg-lime-900/30 px-3 py-1 rounded-full"><i class="fas fa-stethoscope mr-2"></i>Preventive Care</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Annual Check-ups Guide</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">Understand the importance of regular health screenings and preventive check-ups for long-term wellness.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                            <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Aug 2023</span>
+                            <a href="#" class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Empty state -->
+                <template x-if="count === 0">
+                    <div class="col-span-full">
+                        <div class="border border-stone-700 rounded-2xl p-10 text-center bg-stone-800/70">
+                            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-stone-700 flex items-center justify-center">
+                                <i class="fas fa-folder-open text-gray-300"></i>
+                            </div>
+                            <p class="text-gray-300">No resources match your filters.</p>
+                            <button @click="query=''; category='';" class="mt-4 inline-flex items-center px-4 py-2 rounded-lg border border-stone-600 text-gray-200 hover:text-white hover:border-gray-500 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500">
+                                <i class="fas fa-rotate-left mr-2"></i> Clear filters
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Emergency Section -->
+        <section class="bg-gradient-to-r from-red-900/40 via-purple-900/30 to-stone-800 border border-red-500/30 rounded-2xl p-8 mb-12 transform hover:scale-[1.02] transition-all duration-500">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div class="flex-shrink-0">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg shadow-red-600/30 animate-pulse">
+                        <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-white mb-3 flex items-center">
+                        <i class="fas fa-ambulance mr-3 text-red-400"></i>
+                        Emergency Resources
+                    </h3>
+                    <p class="text-gray-300 mb-6 text-lg leading-relaxed">
+                        If you're experiencing a medical emergency, call 911 immediately. For urgent care needs, visit our emergency department or contact our 24/7 helpline.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="tel:5551234567" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:shadow-red-600/25 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            Emergency Contact
+                        </a>
+                        <a href="#" class="border border-purple-500 text-purple-400 hover:bg-purple-900/30 px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400">
+                            <i class="fas fa-info-circle mr-3"></i>
+                            Urgent Care Info
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden lg:block flex-shrink-0">
+                    <div class="w-24 h-24 bg-cover bg-center rounded-full border-4 border-red-500/30" style="background-image: url('https://images.unsplash.com/photo-1697952431905-9c8d169d9d2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlbWVyZ2VuY3klMjBhbWJ1bGFuY2UlMjBob3NwaXRhbHxlbnwwfDB8fHwxNzU5MjE5NjYyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=FOoY-BZ5PtI')"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section x-data="{ email: '', submitted: false }" class="bg-gradient-to-r from-stone-800 to-purple-900/20 border border-stone-700 rounded-2xl p-8 mb-12">
+            <div class="text-center max-w-2xl mx-auto">
+                <div class="w-16 h-16 bg-lime-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-lime-500/30">
+                    <i class="fas fa-newspaper text-lime-400 text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Stay Informed</h3>
+                <p class="text-gray-300 mb-6 text-lg">Get the latest health updates and resources delivered to your inbox.</p>
+                <form @submit.prevent="submitted = true; setTimeout(()=>{submitted=false; email=''}, 2000)" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <label for="newsletter-email" class="sr-only">Email address</label>
+                    <input id="newsletter-email" type="email" x-model="email" required
+                           placeholder="Enter your email" 
+                           class="flex-1 px-4 py-3 bg-stone-700 border border-stone-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    <button type="submit" class="bg-lime-500 hover:bg-lime-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/25 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Subscribe
+                    </button>
+                </form>
+                <p class="mt-3 text-xs text-gray-400">We respect your privacy. Unsubscribe at any time.</p>
+                <div x-show="submitted" x-transition.opacity class="mt-4 text-lime-400 flex items-center justify-center space-x-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Subscribed! Check your inbox.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to top -->
+    <div x-data="{show:false}" x-init="window.addEventListener('scroll',()=>{ show = window.scrollY > 400 })" class="fixed bottom-5 right-5 z-40">
+        <a href="#top" x-show="show" x-transition.opacity class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-stone-800 border border-stone-700 text-gray-300 hover:text-white hover:border-gray-500 shadow-lg shadow-stone-900/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer-contact" class="bg-stone-800 border-t border-stone-700 mt-16">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-lime-500 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-heartbeat text-white text-sm"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-lime-400">Health Clinic</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4 leading-relaxed">
+                        Providing comprehensive healthcare services to our community since 2005.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4 flex items-center">
+                        <i class="fas fa-link mr-2 text-lime-400"></i>
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded"><i class="fas fa-calendar-check mr-2"></i>Appointments</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded"><i class="fas fa-stethoscope mr-2"></i>Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded"><i class="fas fa-book-medical mr-2"></i>Resources</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded"><i class="fas fa-phone mr-2"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-purple-400"></i>
+                        Contact
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-location-dot mr-3 text-gray-500"></i>123 Health Street</li>
+                        <li class="flex items-center"><i class="fas fa-city mr-3 text-gray-500"></i>Medical City, MC 12345</li>
+                        <li class="flex items-center"><i class="fas fa-phone mr-3 text-gray-500"></i>(555) 123-4567</li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-3 text-gray-500"></i>info@healthclinic.org</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4 flex items-center">
+                        <i class="fas fa-clock mr-2 text-lime-400"></i>
+                        Hours
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-calendar-day mr-3 text-gray-500"></i>Mon-Fri: 8:00 AM - 6:00 PM</li>
+                        <li class="flex items-center"><i class="fas fa-calendar-day mr-3 text-gray-500"></i>Sat: 9:00 AM - 2:00 PM</li>
+                        <li class="flex items-center"><i class="fas fa-calendar-times mr-3 text-gray-500"></i>Sun: Closed</li>
+                        <li class="flex items-center"><i class="fas fa-ambulance mr-3 text-red-400"></i>Emergency: 24/7</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-center text-gray-500">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="mb-4 md:mb-0">&copy; 2024 Health Clinic. All rights reserved.</p>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-500 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">Privacy Policy</a>
+                        <a href="#" class="text-gray-500 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">Terms of Service</a>
+                        <a href="#" class="text-gray-500 hover:text-lime-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 rounded">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

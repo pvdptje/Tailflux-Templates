@@ -1,0 +1,405 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Resources | Local Health Clinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                            600: '#65a30d',
+                        },
+                        stone: {
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        purple: {
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-900 text-gray-100 min-h-screen transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-stone-800 border-b border-purple-600/20 sticky top-0 z-50 backdrop-blur-sm bg-stone-800/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-lime-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-sm"></i>
+                        </div>
+                        <span class="ml-2 text-xl font-bold text-lime-400">Health Clinic</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-stone-700/50"><i class="fas fa-home mr-2"></i>Home</a>
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-stone-700/50"><i class="fas fa-stethoscope mr-2"></i>Services</a>
+                    <a href="#" class="bg-purple-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-purple-700 shadow-lg shadow-purple-600/25"><i class="fas fa-book-medical mr-2"></i>Resources</a>
+                    <a href="#" class="text-gray-300 hover:text-lime-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-stone-700/50"><i class="fas fa-phone mr-2"></i>Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative bg-stone-800 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-stone-800 via-purple-900/20 to-stone-800"></div>
+        <div class="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-lime-500/10 rounded-full mb-6 border border-lime-500/30">
+                    <i class="fas fa-book-medical text-lime-400 text-2xl"></i>
+                </div>
+                <h1 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl bg-gradient-to-r from-lime-400 to-purple-400 bg-clip-text text-transparent">
+                    Health Resources
+                </h1>
+                <p class="mt-5 max-w-xl mx-auto text-xl text-gray-300 leading-relaxed">
+                    Comprehensive health information and resources to support your wellness journey.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <div class="inline-flex items-center space-x-2 text-lime-400">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="text-sm">Trusted Medical Information</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Search and Filter Section -->
+        <div class="mb-12">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" 
+                           placeholder="Search resources..." 
+                           class="w-full pl-12 pr-4 py-3 bg-stone-800 border border-stone-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all duration-300">
+                </div>
+                <div class="relative">
+                    <i class="fas fa-filter absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <select class="pl-12 pr-8 py-3 bg-stone-800 border border-stone-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 appearance-none">
+                        <option value="">All Categories</option>
+                        <option value="prevention">Prevention</option>
+                        <option value="treatment">Treatment</option>
+                        <option value="mental-health">Mental Health</option>
+                        <option value="nutrition">Nutrition</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <!-- Resource Card 1 -->
+            <div class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2">
+                <div class="h-32 bg-cover bg-center rounded-t-2xl" style="background-image: url('https://images.unsplash.com/photo-1666886573590-5815157da865?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=400')">
+                    <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-shield-virus text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm font-medium text-purple-400 bg-purple-900/30 px-3 py-1 rounded-full"><i class="fas fa-microscope mr-2"></i>Prevention & Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Seasonal Flu Prevention</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">Learn about effective strategies to prevent seasonal flu and protect your family with evidence-based approaches.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                        <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Jan 2024</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 2 -->
+            <div class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2">
+                <div class="h-32 bg-cover bg-center rounded-t-2xl" style="background-image: url('https://images.unsplash.com/photo-1720305284322-07b6f099395c?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=400')">
+                    <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-lime-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-apple-alt text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm font-medium text-lime-400 bg-lime-900/30 px-3 py-1 rounded-full"><i class="fas fa-utensils mr-2"></i>Nutrition & Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Healthy Eating Guide</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">Comprehensive guide to balanced nutrition and meal planning for optimal health and wellness.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                        <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Dec 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 3 -->
+            <div class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2">
+                <div class="h-32 bg-cover bg-center rounded-t-2xl" style="background-image: url('https://images.unsplash.com/photo-1635373390303-cc78167278ee?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=400')">
+                    <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-brain text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm font-medium text-purple-400 bg-purple-900/30 px-3 py-1 rounded-full"><i class="fas fa-head-side-virus mr-2"></i>Mental Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Stress Management</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">Techniques and resources to help manage stress and improve mental wellbeing in daily life.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                        <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Nov 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 4 -->
+            <div class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2">
+                <div class="h-32 bg-cover bg-center rounded-t-2xl" style="background-image: url('https://images.unsplash.com/photo-1518310383802-640c2de311b2?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=400')">
+                    <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-lime-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-running text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm font-medium text-lime-400 bg-lime-900/30 px-3 py-1 rounded-full"><i class="fas fa-dumbbell mr-2"></i>Exercise</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Home Workout Plans</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">Effective workout routines you can do at home with minimal equipment for all fitness levels.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                        <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Oct 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 5 -->
+            <div class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2">
+                <div class="h-32 bg-cover bg-center rounded-t-2xl" style="background-image: url('https://images.unsplash.com/photo-1624727828489-a1e03b79bba8?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=400')">
+                    <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-file-medical text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm font-medium text-purple-400 bg-purple-900/30 px-3 py-1 rounded-full"><i class="fas fa-heartbeat mr-2"></i>Chronic Health</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Diabetes Management</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">Resources and tools for effective diabetes management, prevention, and lifestyle adjustments.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                        <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Sep 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Card 6 -->
+           <div class="group bg-stone-800 rounded-2xl border border-stone-700 hover:border-lime-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-2">
+                <div class="h-32 bg-cover bg-center rounded-t-2xl" style="background-image: url('https://images.unsplash.com/photo-1666886573590-5815157da865?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=400')">
+                    <div class="h-full w-full bg-stone-900/60 rounded-t-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-lime-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-user-md text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm font-medium text-lime-400 bg-lime-900/30 px-3 py-1 rounded-full"><i class="fas fa-stethoscope mr-2"></i>Preventive Care</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-lime-300 transition-colors">Annual Check-ups Guide</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">Understand the importance of regular health screenings and preventive check-ups for long-term wellness.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-700">
+                        <span class="text-sm text-gray-500 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Aug 2023</span>
+                        <button class="text-lime-400 hover:text-lime-300 font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Section -->
+        <div class="bg-gradient-to-r from-red-900/40 via-purple-900/30 to-stone-800 border border-red-500/30 rounded-2xl p-8 mb-12 transform hover:scale-[1.02] transition-all duration-500">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div class="flex-shrink-0">
+                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center shadow-lg shadow-red-500/30 animate-pulse">
+                        <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-white mb-3 flex items-center">
+                        <i class="fas fa-ambulance mr-3 text-red-400"></i>
+                        Emergency Resources
+                    </h3>
+                    <p class="text-gray-300 mb-6 text-lg leading-relaxed">
+                        If you're experiencing a medical emergency, call 911 immediately. For urgent care needs, visit our emergency department or contact our 24/7 helpline.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:shadow-red-600/25 flex items-center justify-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            Emergency Contact
+                        </button>
+                        <button class="border border-purple-500 text-purple-400 hover:bg-purple-900/30 px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-info-circle mr-3"></i>
+                            Urgent Care Info
+                        </button>
+                    </div>
+                </div>
+                <div class="hidden lg:block flex-shrink-0">
+                    <div class="w-24 h-24 bg-cover bg-center rounded-full border-4 border-red-500/30" style="background-image: url('https://images.unsplash.com/photo-1697952431905-9c8d169d9d2b?crop=entropy&cs=tinysrgb&fit=crop&h=200&w=200')"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="bg-gradient-to-r from-stone-800 to-purple-900/20 border border-stone-700 rounded-2xl p-8 mb-12">
+            <div class="text-center max-w-2xl mx-auto">
+                <div class="w-16 h-16 bg-lime-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-lime-500/30">
+                    <i class="fas fa-newspaper text-lime-400 text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Stay Informed</h3>
+                <p class="text-gray-300 mb-6 text-lg">Get the latest health updates and resources delivered to your inbox.</p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" 
+                           placeholder="Enter your email" 
+                           class="flex-1 px-4 py-3 bg-stone-700 border border-stone-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    <button class="bg-lime-500 hover:bg-lime-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-lime-500/25 flex items-center justify-center">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 border-t border-stone-700 mt-16">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-lime-500 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-heartbeat text-white text-sm"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-lime-400">Health Clinic</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4 leading-relaxed">
+                        Providing comprehensive healthcare services to our community since 2005.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-lime-400 transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4 flex items-center">
+                        <i class="fas fa-link mr-2 text-lime-400"></i>
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center"><i class="fas fa-calendar-check mr-2"></i>Appointments</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center"><i class="fas fa-stethoscope mr-2"></i>Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center"><i class="fas fa-book-medical mr-2"></i>Resources</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-lime-400 transition-colors flex items-center"><i class="fas fa-phone mr-2"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-purple-400"></i>
+                        Contact
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-location-dot mr-3 text-gray-500"></i>123 Health Street</li>
+                        <li class="flex items-center"><i class="fas fa-city mr-3 text-gray-500"></i>Medical City, MC 12345</li>
+                        <li class="flex items-center"><i class="fas fa-phone mr-3 text-gray-500"></i>(555) 123-4567</li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-3 text-gray-500"></i>info@healthclinic.org</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4 flex items-center">
+                        <i class="fas fa-clock mr-2 text-lime-400"></i>
+                        Hours
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-calendar-day mr-3 text-gray-500"></i>Mon-Fri: 8:00 AM - 6:00 PM</li>
+                        <li class="flex items-center"><i class="fas fa-calendar-day mr-3 text-gray-500"></i>Sat: 9:00 AM - 2:00 PM</li>
+                        <li class="flex items-center"><i class="fas fa-calendar-times mr-3 text-gray-500"></i>Sun: Closed</li>
+                        <li class="flex items-center"><i class="fas fa-ambulance mr-3 text-red-400"></i>Emergency: 24/7</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-center text-gray-500">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="mb-4 md:mb-0">&copy; 2024 Health Clinic. All rights reserved.</p>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-500 hover:text-lime-400 transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-gray-500 hover:text-lime-400 transition-colors">Terms of Service</a>
+                        <a href="#" class="text-gray-500 hover:text-lime-400 transition-colors">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
