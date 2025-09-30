@@ -1,0 +1,472 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Travel | Epic Tour Packages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            900: '#1a202c',
+                            800: '#2d3748',
+                            700: '#4a5568',
+                            600: '#718096',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(251, 191, 36, 0.4)' },
+                            '50%': { boxShadow: '0 0 20px rgba(251, 191, 36, 0.8)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white dark">
+    <!-- Navigation -->
+    <nav class="bg-gray-800/95 backdrop-blur-sm border-b border-amber-500 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-mountain text-amber-400 text-xl"></i>
+                    <span class="text-amber-400 font-bold text-xl tracking-tight">Adventure Travel</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-home text-sm"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="text-amber-400 font-semibold border-b-2 border-amber-400 pb-1 flex items-center space-x-1">
+                        <i class="fas fa-map-marked-alt text-sm"></i>
+                        <span>Tours</span>
+                    </a>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-globe-americas text-sm"></i>
+                        <span>Destinations</span>
+                    </a>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+                        <i class="fas fa-info-circle text-sm"></i>
+                        <span>About</span>
+                    </a>
+                    <button class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center space-x-2">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Book Now</span>
+                    </button>
+                </div>
+                <button class="md:hidden text-cyan-400 text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-800 via-gray-900 to-cyan-900 py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold text-amber-400 mb-6 animate-slide-up">
+                Epic <span class="text-cyan-400">Adventure</span> Tours
+            </h1>
+            <p class="text-xl md:text-2xl text-cyan-300 max-w-3xl mx-auto mb-10 animate-fade-in">
+                Discover the world's most thrilling destinations with our expertly crafted adventure packages
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 animate-slide-up">
+                <button class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center space-x-2 animate-pulse-glow">
+                    <i class="fas fa-compass"></i>
+                    <span>Explore Tours</span>
+                </button>
+                <button class="border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 flex items-center space-x-2">
+                    <i class="fas fa-pencil-alt"></i>
+                    <span>Custom Trip</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Packages Grid -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-amber-400 text-center mb-4 animate-fade-in">Featured Tour Packages</h2>
+            <p class="text-cyan-300 text-center mb-12 max-w-2xl mx-auto animate-fade-in">Handpicked adventures that will take your breath away</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tour Card 1 -->
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-cyan-400/20 hover:border-cyan-400/60 transition-all duration-500 hover:scale-105 group cursor-pointer">
+                    <div class="h-56 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1742302678793-be0e3459096f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YW4lMjBtb3VudGFpbnMlMjB0cmVra2luZyUyMGFkdmVudHVyZXxlbnwwfDB8fHwxNzU5MjQ4MTY5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Cfd7uNcd6M8')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-amber-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                            <i class="fas fa-fire mr-1"></i>Popular
+                        </span>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-clock mr-1"></i>14 days
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-3 group-hover:text-amber-300 transition-colors">Himalayan Trekking Expedition</h3>
+                        <p class="text-cyan-300 mb-4 leading-relaxed">14-day trek through the majestic Himalayas with expert guides and full support team.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-amber-400 font-bold text-xl">$2,499</span>
+                            <span class="text-cyan-400 text-sm font-semibold">All Inclusive</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mb-6">
+                            <div class="flex items-center mr-6">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.8 (124 reviews)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-mountain text-red-400 mr-1"></i>
+                                <span>Extreme</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Book This Tour</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tour Card 2 -->
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-amber-400/20 hover:border-amber-400/60 transition-all duration-500 hover:scale-105 group cursor-pointer">
+                    <div class="h-56 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1724355198376-05df48bd251a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhbWF6b24lMjByYWluZm9yZXN0JTIwanVuZ2xlJTIwYWR2ZW50dXJlfGVufDB8MHx8fDE3NTkyNDgxNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=H4NlRx76erw')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-green-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                            <i class="fas fa-leaf mr-1"></i>New
+                        </span>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-clock mr-1"></i>8 days
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-3 group-hover:text-amber-300 transition-colors">Amazon Rainforest Adventure</h3>
+                        <p class="text-cyan-300 mb-4 leading-relaxed">8-day immersive experience in the world's largest tropical rainforest with wildlife experts.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-amber-400 font-bold text-xl">$1,799</span>
+                            <span class="text-cyan-400 text-sm font-semibold">Eco-Friendly</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mb-6">
+                            <div class="flex items-center mr-6">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.9 (89 reviews)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-hiking text-green-400 mr-1"></i>
+                                <span>Moderate</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Book This Tour</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tour Card 3 -->
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-cyan-400/20 hover:border-cyan-400/60 transition-all duration-500 hover:scale-105 group cursor-pointer">
+                    <div class="h-56 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1577373482643-5c7ccf8f0ac9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwYXRhZ29uaWElMjBnbGFjaWVycyUyMG1vdW50YWluc3xlbnwwfDB8fHwxNzU5MjQ4MTcxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=fB8AA00lEFk')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-blue-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>Limited
+                        </span>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-clock mr-1"></i>10 days
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-3 group-hover:text-amber-300 transition-colors">Patagonia Glacier Exploration</h3>
+                        <p class="text-cyan-300 mb-4 leading-relaxed">10-day journey through the stunning glaciers and mountains of Patagonia with expert mountaineers.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-amber-400 font-bold text-xl">$3,199</span>
+                            <span class="text-cyan-400 text-sm font-semibold">Small Group</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mb-6">
+                            <div class="flex items-center mr-6">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.7 (156 reviews)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-snowflake text-blue-400 mr-1"></i>
+                                <span>Challenging</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Book This Tour</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tour Card 4 -->
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-amber-400/20 hover:border-amber-400/60 transition-all duration-500 hover:scale-105 group cursor-pointer">
+                    <div class="h-56 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1750981078726-f151600e663b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzYWhhcmElMjBkZXNlcnQlMjBjYW1lbCUyMHRyZWt8ZW58MHwwfHx8MTc1OTI0ODE3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=VE1FJW45rj4')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-clock mr-1"></i>7 days
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-3 group-hover:text-amber-300 transitioncols">Sahara Desert Expedition</h3>
+                        <p class="text-cyan-300 mb-4 leading-relaxed">7-day camel trek and camping under the stars in the Sahara Desert with Berber guides.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-amber-400 font-bold text-xl">$1,299</span>
+                            <span class="text-cyan-400 text-sm font-semibold">Cultural Immersion</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mb-6">
+                            <div class="flex items-center mr-6">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.6 (92 reviews)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-sun text-orange-400 mr-1"></i>
+                                <span>Moderate</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Book This Tour</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tour Card 5 -->
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-cyan-400/20 hover:border-cyan-400/60 transition-all duration-500 hover:scale-105 group cursor-pointer">
+                    <div class="h-56 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1553125333-5f74dbe58ea9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb3N0YSUyMHJpY2ElMjByYWluZm9yZXN0JTIwdm9sY2Fub3xlbnwwfDB8fHwxNzU5MjQ4MTcyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=p9aDQpr3gbE')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-clock mr-1"></i>9 days
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-3 group-hover:text-amber-300 transition-colors">Costa Rica Wildlife & Volcanoes</h3>
+                        <p class="text-cyan-300 mb-4 leading-relaxed">9-day eco-adventure through rainforests, volcanoes, and pristine beaches with naturalists.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-amber-400 font-bold text-xl">$1,899</span>
+                            <span class="text-cyan-400 text-sm font-semibold">Sustainable</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mb-6">
+                            <div class="flex items-center mr-6">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.8 (203 reviews)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-tree text-green-400 mr-1"></i>
+                                <span>Easy</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-cyan-500 hover:bg-cyan-600 text-gray-900 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Book This Tour</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tour Card 6 -->
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-amber-400/20 hover:border-amber-400/60 transition-all duration-500 hover:scale-105 group cursor-pointer">
+                    <div class="h-56 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1556789483-2d4a13fb8fca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxuZXclMjB6ZWFsYW5kJTIwbW91bnRhaW5zJTIwbGFuZHNjYXBlfGVufDB8MHx8fDE3NTkyNDgxNzN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rIOIZ5bEBDw')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-purple-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                            <i class="fas fa-users mr-1"></i>Family
+                        </span>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-clock mr-1"></i>12 days
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-3 group-hover:text-amber-300 transition-colors">New Zealand Adventure Family</h3>
+                        <p class="text-cyan-300 mb-4 leading-relaxed">12-day family-friendly adventure through New Zealand's stunning landscapes with kid-friendly activities.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-amber-400 font-bold text-xl">$2,899</span>
+                            <span class="text-cyan-400 text-sm font-semibold">Family Package</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mb-6">
+                            <div class="flex items-center mr-6">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.9 (167 reviews)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-child text-purple-400 mr-1"></i>
+                                <span>Easy</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Book This Tour</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 flex items-center space-x-2 mx-auto">
+                    <i class="fas fa-eye"></i>
+                    <span>View All 24+ Tours</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-amber-400 text-center mb-4">Why Choose Adventure Travel?</h2>
+            <p class="text-cyan-300 text-center mb-12 max-w-2xl mx-auto">We're committed to providing unforgettable experiences with safety and sustainability at the core</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 bg-gray-800/30 rounded-2xl border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300">
+                    <div class="w-16 h-16 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-gray-900"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-3">Safety First</h3>
+                    <p class="text-cyan-300">All our guides are certified professionals with extensive wilderness first aid training and emergency protocols.</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-800/30 rounded-2xl border border-amber-400/20 hover:border-amber-400/40 transition-all duration-300">
+                    <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-leaf text-2xl text-gray-900"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-3">Eco-Friendly</h3>
+                    <p class="text-cyan-300">We practice Leave No Trace principles and support local conservation efforts in all our destinations.</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-800/30 rounded-2xl border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300">
+                    <div class="w-16 h-16 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-award text-2xl text-gray-900"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-3">Expert Guides</h3>
+                    <p class="text-cyan-300">Our guides are local experts with years of experience and deep knowledge of their regions and cultures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-cyan-900 via-gray-800 to-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold text-amber-400 mb-6">Ready for Your Next Adventure?</h2>
+            <p class="text-cyan-300 text-xl mb-10 max-w-2xl mx-auto">
+                Join thousands of adventurers who have trusted us with their most memorable experiences. Your journey of a lifetime awaits.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <button class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center space-x-2 mx-auto sm:mx-0">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>View All Packages</span>
+                </button>
+                <button class="border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 mx-auto sm:mx-0">
+                    <i class="fas fa-headset"></i>
+                    <span>Contact Our Experts</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-amber-500/30 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-mountain text-amber-400 text-2xl"></i>
+                        <span class="text-amber-400 font-bold text-xl">Adventure Travel</span>
+                    </div>
+                    <p class="text-cyan-300 text-sm leading-relaxed mb-4">
+                        Creating unforgettable adventure experiences since 2010. Your journey of a lifetime starts here.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-amber-400 font-semibold mb-4 flex items-center">
+                        <i class="fas fa-globe-americas mr-2"></i>Destinations
+                    </h4>
+                    <ul class="space-y-2 text-cyan-300 text-sm">
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Asia</a></li>
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>South America</a></li>
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Africa</a></li>
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Europe</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-amber-400 font-semibold mb-4 flex items-center">
+                        <i class="fas fa-hiking mr-2"></i>Adventure Types
+                    </h4>
+                    <ul class="space-y-2 text-cyan-300 text-sm">
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Trekking</a></li>
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Wildlife</a></li>
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Cultural</a></li>
+                        <li><a href="#" class="hover:text-cyan-200 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i>Extreme Sports</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-amber-400 font-semibold mb-4 flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>Contact
+                    </h4>
+                    <ul class="space-y-3 text-cyan-300 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-amber-400 mr-3"></i>
+                            +1 (555) 123-ADVENTURE
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-amber-400 mr-3"></i>
+                            hello@adventuretravel.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-amber-400 mr-3"></i>
+                            123 Adventure St, Boulder CO
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-cyan-400 text-sm">
+                <p>&copy; 2024 Adventure Travel. All rights reserved. <span class="text-amber-400">Live your adventure.</span></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
