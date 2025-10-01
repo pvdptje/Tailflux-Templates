@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wilderness Wonders National Park - Interactive Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'playful-fuchsia': '#ec4899',
+                        'playful-yellow': '#facc15',
+                        'playful-violet': '#a855f7',
+                        'playful-cyan': '#22d3ee'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-playful-cyan/10 to-playful-violet/10 min-h-screen">
+    <div x-data="mapApp()" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-playful-violet mb-2">Wilderness Wonders National Park</h1>
+            <p class="text-lg text-gray-600">Explore our beautiful trails and attractions!</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Map Container -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 border-2 border-playful-yellow">
+                <div class="relative bg-gradient-to-br from-green-100 to-blue-100 rounded-xl h-96 lg:h-[500px] border-2 border-playful-cyan">
+                    <!-- Map Background -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-200 to-blue-200 rounded-xl opacity-50"></div>
+                    
+                    <!-- Interactive Points -->
+                    <template x-for="point in points" :key="point.id">
+                        <button 
+                            @click="selectPoint(point)"
+                            class="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-125"
+                            :style="`left: ${point.x}%; top: ${point.y}%;`"
+                            :class="{
+                                'text-playful-fuchsia': point.type === 'trail',
+                                'text-playful-yellow': point.type === 'attraction',
+                                'text-playful-violet': point.type === 'facility',
+                                'text-playful-cyan': point.type === 'viewpoint'
+                            }"
+                        >
+                            <div class="relative">
+                                <svg class="w-8 h-8 drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path x-show="point.type === 'trail'" fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                    <path x-show="point.type === 'attraction'" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+                                    <path x-show="point.type === 'facility'" fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                    <path x-show="point.type === 'viewpoint'" fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path>
+                                </svg>
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded-lg shadow-lg text-xs font-semibold whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                                     :class="{
+                                         'text-playful-fuchsia': point.type === 'trail',
+                                         'text-playful-yellow': point.type === 'attraction',
+                                         'text-playful-violet': point.type === 'facility',
+                                         'text-playful-cyan': point.type === 'viewpoint'
+                                     }">
+                                    <span x-text="point.name"></span>
+                                </div>
+                            </div>
+                        </button>
+                    </template>
+
+                    <!-- Legend -->
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+                        <h3 class="font-bold text-sm mb-2 text-gray-700">Map Legend</h3>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-playful-fuchsia rounded-full"></div>
+                                <span>Hiking Trails</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-playful-yellow rounded-full"></div>
+                                <span>Attractions</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-playful-violet rounded-full"></div>
+                                <span>Facilities</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-playful-cyan rounded-full"></div>
+                                <span>Viewpoints</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Selected Point Info -->
+                <div x-show="selectedPoint" class="bg-white rounded-2xl shadow-lg p-6 border-2 border-playful-fuchsia">
+                    <div class="flex items-start justify-between mb-4">
+                        <h2 class="text-xl font-bold text-gray-800" x-text="selectedPoint?.name"></h2>
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold capitalize"
+                              :class="{
+                                  'bg-playful-fuchsia/20 text-playful-fuchsia': selectedPoint?.type === 'trail',
+                                  'bg-playful-yellow/20 text-playful-yellow': selectedPoint?.type === 'attraction',
+                                  'bg-playful-violet/20 text-playful-violet': selectedPoint?.type === 'facility',
+                                  'bg-playful-cyan/20 text-playful-cyan': selectedPoint?.type === 'viewpoint'
+                              }"
+                              x-text="selectedPoint?.type">
+                        </span>
+                    </div>
+                    <p class="text-gray-600 mb-4" x-text="selectedPoint?.description"></p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Difficulty:</span>
+                            <span class="font-semibold" x-text="selectedPoint?.difficulty || 'N/A'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Distance:</span>
+                            <span class="font-semibold" x-text="selectedPoint?.distance || 'N/A'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Elevation:</span>
+                            <span class="font-semibold" x-text="selectedPoint?.elevation || 'N/A'"></span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-playful-violet text-white py-2 rounded-lg font-semibold hover:bg-playful-violet/90 transition-colors">
+                        Plan Your Visit
+                    </button>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-2 border-playful-cyan">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="bg-playful-yellow text-white py-2 px-4 rounded-lg font-semibold hover:bg-playful-yellow/90 transition-colors text-sm">
+                            Weather Info
+                        </button>
+                        <button class="bg-playful-fuchsia text-white py-2 px-4 rounded-lg font-semibold hover:bg-playful-fuchsia/90 transition-colors text-sm">
+                            Trail Conditions
+                        </button>
+                        <button class="bg-playful-cyan text-white py-2 px-4 rounded-lg font-semibold hover:bg-playful-cyan/90 transition-colors text-sm">
+                            Park Rules
+                        </button>
+                        <button class="bg-playful-violet text-white py-2 px-4 rounded-lg font-semibold hover:bg-playful-violet/90 transition-colors text-sm">
+                            Emergency Info
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Park Stats -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-2 border-playful-yellow">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Park Statistics</h3>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div>
+                            <div class="text-2xl font-bold text-playful-fuchsia" x-text="points.filter(p => p.type === 'trail').length"></div>
+                            <div class="text-xs text-gray-600">Hiking Trails</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-playful-yellow" x-text="points.filter(p => p.type === 'attraction').length"></div>
+                            <div class="text-xs text-gray-600">Attractions</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-playful-violet" x-text="points.filter(p => p.type === 'facility').length"></div>
+                            <div class="text-xs text-gray-600">Facilities</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-playful-cyan" x-text="points.filter(p => p.type === 'viewpoint').length"></div>
+                            <div class="text-xs text-gray-600">Viewpoints</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mapApp() {
+            return {
+                selectedPoint: null,
+                points: [
+                    {
+                        id: 1,
+                        name: "Sunrise Peak Trail",
+                        type: "trail",
+                        x: 25,
+                        y: 30,
+                        description: "A challenging 5-mile hike to the highest viewpoint in the park with breathtaking sunrise views.",
+                        difficulty: "Hard",
+                        distance: "5 miles",
+                        elevation: "1,200 ft"
+                    },
+                    {
+                        id: 2,
+                        name: "Crystal Lake",
+                        type: "attraction",
+                        x: 60,
+                        y: 45,
+                        description: "A pristine alpine lake perfect for swimming and picnics during summer months.",
+                        difficulty: "Easy",
+                        distance: "1.5 miles",
+                        elevation: "300 ft"
+                    },
+                    {
+                        id: 3,
+                        name: "Visitor Center",
+                        type: "facility",
+                        x: 15,
+                        y: 70,
+                        description: "Main visitor center with information, restrooms, and park souvenirs.",
+                        difficulty: "N/A",
+                        distance: "0.2 miles",
+                        elevation: "Flat"
+                    },
+                    {
+                        id: 4,
+                        name: "Eagle's Nest Viewpoint",
+                        type: "viewpoint",
+                        x: 75,
+                        y: 25,
+                        description: "Spectacular 360-degree views of the entire park valley and surrounding mountains.",
+                        difficulty: "Moderate",
+                        distance: "2.5 miles",
+                        elevation: "800 ft"
+                    },
+                    {
+                        id: 5,
+                        name: "Bear Creek Trail",
+                        type: "trail",
+                        x: 40,
+                        y: 60,
+                        description: "Gentle trail following a scenic creek through old-growth forest.",
+                        difficulty: "Easy",
+                        distance: "3 miles",
+                        elevation: "200 ft"
+                    },
+                    {
+                        id: 6,
+                        name: "Waterfall Overlook",
+                        type: "viewpoint",
+                        x: 55,
+                        y: 75,
+                        description: "Stunning view of the 200-foot Cascade Falls from a safe viewing platform.",
+                        difficulty: "Moderate",
+                        distance: "1.8 miles",
+                        elevation: "450 ft"
+                    }
+                ],
+                selectPoint(point) {
+                    this.selectedPoint = point;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

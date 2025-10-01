@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wilderness Wonders National Park - Interactive Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'playful-fuchsia': '#ec4899',
+                        'playful-yellow': '#facc15',
+                        'playful-violet': '#a855f7',
+                        'playful-cyan': '#22d3ee'
+                    },
+                    animation: {
+                        'pulse-gentle': 'pulse-gentle 2s ease-in-out infinite',
+                        'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'pulse-gentle': {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' }
+                        },
+                        'bounce-gentle': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .map-point {
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+        }
+        .map-point:hover {
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+        }
+        .glow {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+        .sidebar-card {
+            transition: all 0.3s ease;
+        }
+        .sidebar-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-playful-cyan/5 via-white to-playful-violet/5 min-h-screen">
+    <div x-data="mapApp()" class="container mx-auto px-4 py-8">
+        <!-- Header with Enhanced Design -->
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center justify-center mb-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-playful-cyan to-playful-violet rounded-full flex items-center justify-center mr-4 shadow-lg">
+                    <i class="fas fa-mountain text-white text-xl"></i>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-playful-violet to-playful-cyan bg-clip-text text-transparent">Wilderness Wonders</h1>
+            </div>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Discover breathtaking trails, stunning viewpoints, and hidden gems in our pristine national park
+            </p>
+            <div class="mt-4 flex justify-center space-x-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-playful-fuchsia/10 text-playful-fuchsia">
+                    <i class="fas fa-hiking mr-1"></i> 6+ Trails
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-playful-cyan/10 text-playful-cyan">
+                    <i class="fas fa-camera mr-1"></i> 4 Viewpoints
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-playful-yellow/10 text-playful-yellow">
+                    <i class="fas fa-restroom mr-1"></i> Facilities
+                </span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Enhanced Map Container -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-xl p-6 border-2 border-playful-yellow/20 glow transition-all duration-300 hover:glow-lg">
+                <div class="relative bg-gradient-to-br from-green-50 to-blue-50 rounded-xl h-96 lg:h-[500px] border-2 border-playful-cyan/30 overflow-hidden">
+                    <!-- Enhanced Map Background with Image -->
+                    <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://images.unsplash.com/photo-1634407253851-209fca171cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxuYXRpb25hbCUyMHBhcmslMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBmb3Jlc3R8ZW58MHwwfHx8MTc1OTMwNTc1MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=wQwjG-aurO4')"></div>
+                    
+                    <!-- Topographic Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-100/30 to-blue-100/30 rounded-xl"></div>
+                    
+                    <!-- Interactive Points with Enhanced Design -->
+                    <template x-for="point in points" :key="point.id">
+                        <button 
+                            @click="selectPoint(point)"
+                            class="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 hover:scale-125 group map-point"
+                            :style="`left: ${point.x}%; top: ${point.y}%;`"
+                            :class="{
+                                'animate-bounce-gentle': selectedPoint?.id === point.id,
+                                'hover:animate-float': selectedPoint?.id !== point.id
+                            }"
+                        >
+                            <div class="relative">
+                                <!-- Enhanced Icons with Background -->
+                                <div class="relative w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                                     :class="{
+                                         'border-2 border-playful-fuchsia text-playful-fuchsia': point.type === 'trail',
+                                         'border-2 border-playful-yellow text-playful-yellow': point.type === 'attraction',
+                                         'border-2 border-playful-violet text-playful-violet': point.type === 'facility',
+                                         'border-2 border-playful-cyan text-playful-cyan': point.type === 'viewpoint'
+                                     }">
+                                    <i :class="getPointIcon(point.type)" class="text-lg"></i>
+                                </div>
+                                
+                                <!-- Enhanced Tooltip -->
+                                <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-lg shadow-xl border text-sm font-semibold whitespace-nowrap opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-top-12 pointer-events-none"
+                                     :class="{
+                                         'border-playful-fuchsia text-playful-fuchsia': point.type === 'trail',
+                                         'border-playful-yellow text-playful-yellow': point.type === 'attraction',
+                                         'border-playful-violet text-playful-violet': point.type === 'facility',
+                                         'border-playful-cyan text-playful-cyan': point.type === 'viewpoint'
+                                     }">
+                                    <span x-text="point.name"></span>
+                                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-white rotate-45 border-r border-b"
+                                         :class="{
+                                             'border-playful-fuchsia': point.type === 'trail',
+                                             'border-playful-yellow': point.type === 'attraction',
+                                             'border-playful-violet': point.type === 'facility',
+                                             'border-playful-cyan': point.type === 'viewpoint'
+                                         }"></div>
+                                </div>
+                            </div>
+                        </button>
+                    </template>
+
+                    <!-- Enhanced Legend -->
+                    <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-xl border border-gray-100">
+                        <h3 class="font-bold text-sm mb-3 text-gray-700 flex items-center">
+                            <i class="fas fa-map-legend mr-2 text-playful-violet"></i>
+                            Map Legend
+                        </h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <div class="w-4 h-4 bg-playful-fuchsia rounded-full shadow-sm"></div>
+                                <span class="font-medium">Hiking Trails</span>
+                                <i class="fas fa-hiking ml-auto text-playful-fuchsia/70"></i>
+                            </div>
+                            <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <div class="w-4 h-4 bg-playful-yellow rounded-full shadow-sm"></div>
+                                <span class="font-medium">Attractions</span>
+                                <i class="fas fa-landmark ml-auto text-playful-yellow/70"></i>
+                            </div>
+                            <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <div class="w-4 h-4 bg-playful-violet rounded-full shadow-sm"></div>
+                                <span class="font-medium">Facilities</span>
+                                <i class="fas fa-restroom ml-auto text-playful-violet/70"></i>
+                            </div>
+                            <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <div class="w-4 h-4 bg-playful-cyan rounded-full shadow-sm"></div>
+                                <span class="font-medium">Viewpoints</span>
+                                <i class="fas fa-camera ml-auto text-playful-cyan/70"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Controls -->
+                    <div class="absolute top-4 right-4 flex flex-col space-y-2">
+                        <button class="w-10 h-10 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white transition-colors">
+                            <i class="fas fa-search-plus text-gray-600"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white transition-colors">
+                            <i class="fas fa-search-minus text-gray-600"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white transition-colors">
+                            <i class="fas fa-sync-alt text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Sidebar -->
+            <div class="space-y-6">
+                <!-- Selected Point Info with Image -->
+                <div x-show="selectedPoint" x-transition:enter="transition ease-out duration-300" 
+                     x-transition:enter-start="opacity-0 transform translate-y-4" 
+                     x-transition:enter-end="opacity-100 transform translate-y-0"
+                     class="bg-white rounded-2xl shadow-xl p-6 border-2 border-playful-fuchsia/20 sidebar-card">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800" x-text="selectedPoint?.name"></h2>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold capitalize mt-2"
+                                  :class="{
+                                      'bg-playful-fuchsia/20 text-playful-fuchsia': selectedPoint?.type === 'trail',
+                                      'bg-playful-yellow/20 text-playful-yellow': selectedPoint?.type === 'attraction',
+                                      'bg-playful-violet/20 text-playful-violet': selectedPoint?.type === 'facility',
+                                      'bg-playful-cyan/20 text-playful-cyan': selectedPoint?.type === 'viewpoint'
+                                  }">
+                                <i :class="getPointIcon(selectedPoint?.type)" class="mr-1"></i>
+                                <span x-text="selectedPoint?.type"></span>
+                            </span>
+                        </div>
+                        <button @click="selectedPoint = null" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                            <i class="fas fa-times text-gray-500"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Point Image -->
+                    <div class="mb-4 rounded-xl overflow-hidden h-32 bg-gray-100 relative">
+                        <img :src="getPointImage(selectedPoint?.type)" :alt="selectedPoint?.name" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4 leading-relaxed" x-text="selectedPoint?.description"></p>
+                    
+                    <!-- Enhanced Stats -->
+                    <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                        <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-chart-line mr-2 text-playful-violet"></i>
+                            Trail Information
+                        </h4>
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div class="flex items-center justify-between p-2 bg-white rounded-lg">
+                                <span class="text-gray-500 flex items-center">
+                                    <i class="fas fa-mountain mr-2 text-playful-fuchsia"></i>
+                                    Difficulty
+                                </span>
+                                <span class="font-semibold" x-text="selectedPoint?.difficulty || 'N/A'"></span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-white rounded-lg">
+                                <span class="text-gray-500 flex items-center">
+                                    <i class="fas fa-road mr-2 text-playful-cyan"></i>
+                                    Distance
+                                </span>
+                                <span class="font-semibold" x-text="selectedPoint?.distance || 'N/A'"></span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-white rounded-lg">
+                                <span class="text-gray-500 flex items-center">
+                                    <i class="fas fa-arrow-up mr-2 text-playful-yellow"></i>
+                                    Elevation
+                                </span>
+                                <span class="font-semibold" x-text="selectedPoint?.elevation || 'N/A'"></span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-white rounded-lg">
+                                <span class="text-gray-500 flex items-center">
+                                    <i class="fas fa-clock mr-2 text-playful-violet"></i>
+                                    Est. Time
+                                </span>
+                                <span class="font-semibold" x-text="selectedPoint?.estimatedTime || 'N/A'"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-gradient-to-r from-playful-violet to-playful-cyan text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                        <i class="fas fa-calendar-plus mr-2 group-hover:scale-110 transition-transform"></i>
+                        Plan Your Visit
+                    </button>
+                </div>
+
+                <!-- Quick Actions with Icons -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border-2 border-playful-cyan/20 sidebar-card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-bolt mr-2 text-playful-cyan"></i>
+                        Quick Actions
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="bg-playful-yellow text-white py-3 px-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                            <i class="fas fa-cloud-sun mr-2 group-hover:scale-110 transition-transform"></i>
+                            Weather
+                        </button>
+                        <button class="bg-playful-fuchsia text-white py-3 px-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                            <i class="fas fa-trail-sign mr-2 group-hover:scale-110 transition-transform"></i>
+                            Conditions
+                        </button>
+                        <button class="bg-playful-cyan text-white py-3 px-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                            <i class="fas fa-info-circle mr-2 group-hover:scale-110 transition-transform"></i>
+                            Park Rules
+                        </button>
+                        <button class="bg-playful-violet text-white py-3 px4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                            <i class="fas fa-phone-alt mr-2 group-hover:scale-110 transition-transform"></i>
+                            Emergency
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Enhanced Park Stats -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border-2 border-playful-yellow/20 sidebar-card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-chart-bar mr-2 text-playful-yellow"></i>
+                        Park Statistics
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                            <div class="text-2xl font-bold text-playful-fuchsia mb-1" x-text="points.filter(p => p.type === 'trail').length"></div>
+                            <div class="text-xs text-gray-600 flex items-center justify-center">
+                                <i class="fas fa-hiking mr-1"></i>
+                                Hiking Trails
+                            </div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                            <div class="text-2xl font-bold text-playful-yellow mb-1" x-text="points.filter(p => p.type === 'attraction').length"></div>
+                            <div class="text-xs text-gray-600 flex items-center justify-center">
+                                <i class="fas fa-landmark mr-1"></i>
+                                Attractions
+                            </div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                            <div class="text-2xl font-bold text-playful-violet mb-1" x-text="points.filter(p => p.type === 'facility').length"></div>
+                            <div class="text-xs text-gray-600 flex items-center justify-center">
+                                <i class="fas fa-restroom mr-1"></i>
+                                Facilities
+                            </div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                            <div class="text-2xl font-bold text-playful-cyan mb-1" x-text="points.filter(p => p.type === 'viewpoint').length"></div>
+                            <div class="text-xs text-gray-600 flex items-center justify-center">
+                                <i class="fas fa-camera mr-1"></i>
+                                Viewpoints
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Widget -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border-2 border-playful-cyan/20 sidebar-card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-cloud-sun mr-2 text-playful-cyan"></i>
+                        Current Weather
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-sun text-3xl text-yellow-500 mr-4"></i>
+                            <div>
+                                <div class="text-2xl font-bold text-gray-800">72°F</div>
+                                <div class="text-sm text-gray-600">Sunny & Clear</div>
+                            </div>
+                        </div>
+                        <div class="text-right text-sm text-gray-600">
+                            <div>Humidity: 45%</div>
+                            <div>Wind: 5 mph</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mapApp() {
+            return {
+                selectedPoint: null,
+                points: [
+                    {
+                        id: 1,
+                        name: "Sunrise Peak Trail",
+                        type: "trail",
+                        x: 25,
+                        y: 30,
+                        description: "A challenging 5-mile hike to the highest viewpoint in the park with breathtaking sunrise views. Experience panoramic mountain vistas and alpine meadows.",
+                        difficulty: "Hard",
+                        distance: "5 miles",
+                        elevation: "1,200 ft",
+                        estimatedTime: "3-4 hours"
+                    },
+                    {
+                        id: 2,
+                        name: "Crystal Lake",
+                        type: "attraction",
+                        x: 60,
+                        y: 45,
+                        description: "A pristine alpine lake perfect for swimming and picnics during summer months. Crystal clear waters surrounded by ancient pine forests.",
+                        difficulty: "Easy",
+                        distance: "1.5 miles",
+                        elevation: "300 ft",
+                        estimatedTime: "45 minutes"
+                    },
+                    {
+                        id: 3,
+                        name: "Visitor Center",
+                        type: "facility",
+                        x: 15,
+                        y: 70,
+                        description: "Main visitor center with information, restrooms, park souvenirs, and expert rangers ready to assist with your adventure planning.",
+                        difficulty: "N/A",
+                        distance: "0.2 miles",
+                        elevation: "Flat",
+                        estimatedTime: "5 minutes"
+                    },
+                    {
+                        id: 4,
+                        name: "Eagle's Nest Viewpoint",
+                        type: "viewpoint",
+                        x: 75,
+                        y: 25,
+                        description: "Spectacular 360-degree views of the entire park valley and surrounding mountains. Perfect spot for photography and bird watching.",
+                        difficulty: "Moderate",
+                        distance: "2.5 miles",
+                        elevation: "800 ft",
+                        estimatedTime: "1.5 hours"
+                    },
+                    {
+                        id: 5,
+                        name: "Bear Creek Trail",
+                        type: "trail",
+                        x: 40,
+                        y: 60,
+                        description: "Gentle trail following a scenic creek through old-growth forest. Listen to the soothing sounds of flowing water and spot local wildlife.",
+                        difficulty: "Easy",
+                        distance: "3 miles",
+                        elevation: "200 ft",
+                        estimatedTime: "1 hour"
+                    },
+                    {
+                        id: 6,
+                        name: "Waterfall Overlook",
+                        type: "viewpoint",
+                        x: 55,
+                        y: 75,
+                        description: "Stunning view of the 200-foot Cascade Falls from a safe viewing platform. Feel the mist and hear the thunderous roar of the waterfall.",
+                        difficulty: "Moderate",
+                        distance: "1.8 miles",
+                        elevation: "450 ft",
+                        estimatedTime: "1 hour"
+                    }
+                ],
+                selectPoint(point) {
+                    this.selectedPoint = point;
+                },
+                getPointIcon(type) {
+                    const icons = {
+                        'trail': 'fas fa-hiking',
+                        'attraction': 'fas fa-landmark',
+                        'facility': 'fas fa-restroom',
+                        'viewpoint': 'fas fa-camera'
+                    };
+                    return icons[type] || 'fas fa-map-marker-alt';
+                },
+                getPointImage(type) {
+                    const images = {
+                        'trail': 'https://images.unsplash.com/photo-1650464179774-caf42373dc17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoaWtpbmclMjB0cmFpbCUyMGZvcmVzdCUyMHBhdGh8ZW58MHwwfHx8MTc1OTMwNTc1NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=FnaiTxmOHhA',
+                        'attraction': 'https://images.unsplash.com/photo-1474733387839-3b7fd18075de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhbHBpbmUlMjBsYWtlJTIwbW91bnRhaW4lMjByZWZsZWN0aW9ufGVufDB8MHx8fDE3NTkzMDU3NTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=AoGduv67dss',
+                        'facility': 'https://images.unsplash.com/photo-1634407253851-209fca171cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxuYXRpb25hbCUyMHBhcmslMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBmb3Jlc3R8ZW58MHwwfHx8MTc1OTMwNTc1MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=wQwjG-aurO4',
+                        'viewpoint': 'https://images.unsplash.com/photo-1556223464-f92e99fdf5ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHZpZXdwb2ludCUyMHBhbm9yYW1hfGVufDB8MHx8fDE3NTkzMDU3NjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=eccUL_MYu6A'
+                    };
+                    return images[type] || 'https://images.unsplash.com/photo-1634407253851-209fca171cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxuYXRpb25hbCUyMHBhcmslMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBmb3Jlc3R8ZW58MHwwfHx8MTc1OTMwNTc1MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=wQwjG-aurO4';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
