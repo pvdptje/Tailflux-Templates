@@ -1,0 +1,420 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeDrive | Premium Car Rental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .hero-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .nav-blur {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-zinc-800">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-blur shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-emerald-600 tracking-tight">LuxeDrive</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-zinc-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-emerald-600">Home</a>
+                        <a href="#" class="text-zinc-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-emerald-600">Fleet</a>
+                        <a href="#" class="text-zinc-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-emerald-600">Locations</a>
+                        <a href="#" class="text-zinc-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-emerald-600">About</a>
+                        <a href="#" class="text-zinc-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-all duration-300 border-b-2 border-transparent hover:border-emerald-600">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-zinc-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-all duration-300">
+                        <i class="fas fa-user mr-2"></i>Sign In
+                    </button>
+                    <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-200">
+                        <i class="fas fa-calendar-check mr-2"></i>Book Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-16 hero-gradient">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center fade-in">
+                <div>
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 text-sm font-medium mb-6">
+                        <i class="fas fa-star mr-2"></i>Premium Car Rental Service
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-zinc-900 mb-6 leading-tight">
+                        Drive in
+                        <span class="text-emerald-600 bg-gradient-to-r from-emerald-600 to-fuchsia-600 bg-clip-text text-transparent">Style</span>
+                    </h1>
+                    <p class="text-xl text-zinc-600 mb-10 max-w-lg leading-relaxed">
+                        Experience luxury on the road with our premium fleet of vehicles. From sleek sedans to powerful SUVs, we have the perfect car for every occasion.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="group bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-200 flex items-center justify-center">
+                            <i class="fas fa-car mr-3 group-hover:translate-x-1 transition-transform"></i>
+                            Browse Fleet
+                        </button>
+                        <button class="group border-2 border-zinc-300 hover:border-emerald-600 text-zinc-700 hover:text-emerald-600 px-10 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-play-circle mr-3 group-hover:scale-110 transition-transform"></i>
+                            Watch Video
+                        </button>
+                    </div>
+                    <div class="flex items-center mt-12 space-x-8 text-sm text-zinc-500">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                            <span>Premium Vehicles</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                            <span>24/7 Support</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                            <span>Best Prices</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1758179128122-6079c9cb3e4e?ixlib=rb-4.1.0&auto=format&fit=crop&w=1200&q=80" 
+                             alt="Luxury Car" 
+                             class="w-full h-auto object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-emerald-500 rounded-2xl opacity-20 animate-pulse"></div>
+                    <div class="absolute -top-6 -right-6 w-20 h-20 bg-fuchsia-500 rounded-full opacity-20 animate-pulse delay-300"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-6">Why Choose LuxeDrive</h2>
+                <p class="text-xl text-zinc-600 max-w-3xl mx-auto leading-relaxed">Experience the difference with our premium service and exceptional vehicles</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center p-8 card-hover bg-white rounded-2xl border border-gray-100">
+                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-zinc-900 mb-4">Premium Quality</h3>
+                    <p class="text-zinc-600 leading-relaxed">Every vehicle in our fleet undergoes rigorous maintenance and quality checks to ensure your safety and comfort.</p>
+                </div>
+                <div class="text-center p-8 card-hover bg-white rounded-2xl border border-gray-100">
+                    <div class="w-20 h-20 bg-gradient-to-br from-fuchsia-500 to-fuchsia-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-tag text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-zinc-900 mb-4">Best Prices</h3>
+                    <p class="text-zinc-600 leading-relaxed">Competitive pricing with no hidden fees. Get the luxury experience you deserve without breaking the bank.</p>
+                </div>
+                <div class="text-center p-8 card-hover bg-white rounded-2xl border border-gray-100">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-zinc-900 mb-4">24/7 Support</h3>
+                    <p class="text-zinc-600 leading-relaxed">Our dedicated support team is available around the clock to assist you with any questions or concerns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Preview -->
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-6">Our Premium Fleet</h2>
+                <p class="text-xl text-zinc-600 max-w-3xl mx-auto leading-relaxed">Discover our carefully curated collection of luxury vehicles</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Car 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-hover border border-gray-100">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1758179128122-6079c9cb3e4e?ixlib=rb-4.1.0&auto=format&fit=crop&w=800&q=80" 
+                             alt="Executive Sedan" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">Popular</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-zinc-900">Executive Sedan</h3>
+                            <i class="fas fa-car text-emerald-500 text-xl"></i>
+                        </div>
+                        <p class="text-zinc-600 mb-6 leading-relaxed">Perfect for business trips and city driving with premium comfort and style.</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-3xl font-bold text-emerald-600">$89</span>
+                                <span class="text-zinc-500 text-sm">/day</span>
+                            </div>
+                            <button class="group bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 flex items-center">
+                                View Details
+                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Car 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-hover border border-gray-100">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1758217209786-95458c5d30a7?ixlib=rb-4.1.0&auto=format&fit=crop&w=800&q=80" 
+                             alt="Luxury SUV" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium">Family</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-zinc-900">Luxury SUV</h3>
+                            <i class="fas fa-truck text-fuchsia-500 text-xl"></i>
+                        </div>
+                        <p class="text-zinc-600 mb-6 leading-relaxed">Spacious comfort for family adventures with premium features and safety.</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-3xl font-bold text-emerald-600">$129</span>
+                                <span class="text-zinc-500 text-sm">/day</span>
+                            </div>
+                            <button class="group bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 flex items-center">
+                                View Details
+                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Car 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-hover border border-gray-100">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1708019892601-bf728ba24028?ixlib=rb-4.1.0&auto=format&fit=crop&w=800&q=80" 
+                             alt="Sports Coupe" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">Sport</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-zinc-900">Sports Coupe</h3>
+                            <i class="fas fa-bolt text-blue-500 text-xl"></i>
+                        </div>
+                        <p class="text-zinc-600 mb-6 leading-relaxed">Thrilling performance for the open road with exceptional speed and handling.</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-3xl font-bold text-emerald-600">$199</span>
+                                <span class="text-zinc-500 text-sm">/day</span>
+                            </div>
+                            <button class="group bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 flex items-center">
+                                View Details
+                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-r from-emerald-600 via-emerald-500 to-fuchsia-600 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">Ready to Experience Luxury Driving?</h2>
+            <p class="text-xl text-emerald-100 mb-12 max-w-3xl mx-auto leading-relaxed">Join thousands of satisfied customers who trust LuxeDrive for their premium car rental needs. Experience unparalleled comfort and style on every journey.</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button class="group bg-white text-emerald-600 hover:bg-gray-50 px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center">
+                    <i class="fas fa-calendar-check mr-3 group-hover:scale-110 transition-transform"></i>
+                    Book Your Car Now
+                </button>
+                <button class="group border-2 border-white text-white hover:bg-white hover:text-emerald-600 px-10 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center">
+                    <i class="fas fa-phone mr-3 group-hover:scale-110 transition-transform"></i>
+                    Contact Us
+                </button>
+            </div>
+            <div class="mt-12 flex justify-center space-x-8 text-emerald-100">
+                <div class="text-center">
+                    <div class="text-3xl font-bold">500+</div>
+                    <div class="text-sm">Happy Customers</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold">50+</div>
+                    <div class="text-sm">Premium Vehicles</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold">24/7</div>
+                    <div class="text-sm">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <h3 class="text-3xl font-bold text-emerald-400 mb-6">LuxeDrive</h3>
+                    <p class="text-zinc-400 mb-6 leading-relaxed">Premium car rental service for the discerning driver. Experience luxury on every journey.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-zinc-400">
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Home
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Fleet
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Locations
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            About Us
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Support</h4>
+                    <ul class="space-y-3 text-zinc-400">
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Help Center
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Contact Us
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            FAQs
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Terms of Service
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Contact</h4>
+                    <ul class="space-y-4 text-zinc-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-emerald-400 mt-1 mr-3"></i>
+                            <span>123 Luxury Lane<br>Premium City, PC 12345</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-emerald-400 mr-3"></i>
+                            <span>info@luxedrive.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-emerald-400 mr-3"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-emerald-400 mr-3"></i>
+                            <span>24/7 Available</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-zinc-800 mt-12 pt-8 text-center text-zinc-400">
+                <p>&copy; 2024 LuxeDrive. All rights reserved. | <a href="#" class="hover:text-white transition-colors duration-300">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors duration-300">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 opacity-0 invisible flex items-center justify-center">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add fade-in animation to elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
