@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bali Travel Guide | Paradise Awaits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #fdf2f8 0%, #f0f9ff 50%, #fff1f2 100%);
+        }
+        
+        .destination-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .stat-counter {
+            animation: countUp 2s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-rose-50 min-h-screen" x-data="{ mobileMenuOpen: false }">
+    <!-- Navigation -->
+    <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent flex items-center gap-2">
+                        <i class="fas fa-umbrella-beach text-orange-500"></i>
+                        BaliGuide
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#destinations" class="text-gray-600 hover:text-pink-500 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105 flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-sm"></i>
+                            Destinations
+                        </a>
+                        <a href="#culture" class="text-gray-600 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105 flex items-center gap-1">
+                            <i class="fas fa-landmark text-sm"></i>
+                            Culture
+                        </a>
+                        <a href="#food" class="text-gray-600 hover:text-cyan-500 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105 flex items-center gap-1">
+                            <i class="fas fa-utensils text-sm"></i>
+                            Food
+                        </a>
+                        <a href="#tips" class="text-gray-600 hover:text-rose-500 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105 flex items-center gap-1">
+                            <i class="fas fa-lightbulb text-sm"></i>
+                            Travel Tips
+                        </a>
+                    </div>
+                </div>
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0 -translate-y-4" 
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200" 
+                 x-transition:leave-start="opacity-100 translate-y-0" 
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="md:hidden py-4 border-t border-gray-100">
+                <div class="flex flex-col space-y-3">
+                    <a href="#destinations" class="text-gray-600 hover:text-pink-500 px-3 py-2 rounded-md font-medium transition-colors flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Destinations
+                    </a>
+                    <a href="#culture" class="text-gray-600 hover:text-orange-500 px-3 py-2 rounded-md font-medium transition-colors flex items-center gap-2">
+                        <i class="fas fa-landmark"></i>
+                        Culture
+                    </a>
+                    <a href="#food" class="text-gray-600 hover:text-cyan-500 px-3 py-2 rounded-md font-medium transition-colors flex items-center gap-2">
+                        <i class="fas fa-utensils"></i>
+                        Food
+                    </a>
+                    <a href="#tips" class="text-gray-600 hover:text-rose-500 px-3 py-2 rounded-md font-medium transition-colors flex items-center gap-2">
+                        <i class="fas fa-lightbulb"></i>
+                        Travel Tips
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative hero-gradient py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-black/5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight">
+                    Discover the Magic of
+                    <span class="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent floating">Bali</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+                    Experience the perfect blend of stunning beaches, rich culture, and spiritual tranquility in Indonesia's island paradise.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        Plan Your Trip
+                    </button>
+                    <button class="border-2 border-cyan-500 text-cyan-600 hover:bg-cyan-500 hover:text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                        <i class="fas fa-compass"></i>
+                        Explore Destinations
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-10 left-10 w-20 h-20 bg-pink-200 rounded-full opacity-20 floating" style="animation-delay: 0s;"></div>
+        <div class="absolute bottom-20 right-20 w-16 h-16 bg-orange-200 rounded-full opacity-20 floating" style="animation-delay: 1s;"></div>
+        <div class="absolute top-32 right-32 w-12 h-12 bg-cyan-200 rounded-full opacity-20 floating" style="animation-delay: 2s;"></div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="stat-counter">
+                    <div class="text-4xl font-bold text-orange-500 mb-2 flex items-center justify-center gap-2">
+                        <i class="fas fa-torii-gate"></i>
+                        20K+
+                    </div>
+                    <div class="text-gray-600 font-medium">Sacred Temples</div>
+                </div>
+                <div class="stat-counter" style="animation-delay: 0.2s;">
+                    <div class="text-4xl font-bold text-pink-500 mb-2 flex items-center justify-center gap-2">
+                        <i class="fas fa-umbrella-beach"></i>
+                        50+
+                    </div>
+                    <div class="text-gray-600 font-medium">Pristine Beaches</div>
+                </div>
+                <div class="stat-counter" style="animation-delay: 0.4s;">
+                    <div class="text-4xl font-bold text-cyan-500 mb-2 flex items-center justify-center gap-2">
+                        <i class="fas fa-water"></i>
+                        300+
+                    </div>
+                    <div class="text-gray-600 font-medium">Majestic Waterfalls</div>
+                </div>
+                <div class="stat-counter" style="animation-delay: 0.6s;">
+                    <div class="text-4xl font-bold text-rose-500 mb-2 flex items-center justify-center gap-2">
+                        <i class="fas fa-users"></i>
+                        12M+
+                    </div>
+                    <div class="text-gray-600 font-medium">Annual Visitors</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section id="destinations" class="py-20 bg-rose-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">
+                Must-Visit <span class="text-orange-500">Destinations</span>
+            </h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">From lush rice terraces to world-class surf breaks, discover Bali's most iconic locations</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Destination 1 - Ubud -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden group cursor-pointer">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1715755455989-76413081ad10?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                             alt="Ubud Rice Terraces" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">Cultural</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-mountain text-orange-500"></i>
+                            Ubud
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Cultural heart of Bali with lush rice terraces, ancient temples, traditional arts, and spiritual retreats.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-cyan-600 font-medium">
+                                <i class="fas fa-tag mr-1"></i>
+                                <span>Cultural • Nature • Arts</span>
+                            </div>
+                            <button class="text-pink-500 hover:text-pink-600 transition-colors">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination 2 - Canggu -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden group cursor-pointer">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1717501787981-d5f28eb2df5f?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                             alt="Canggu Beach Sunset" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <span class="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">Beach</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-surfboard text-pink-500"></i>
+                            Canggu
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Surf paradise with trendy cafes, digital nomad community, stunning sunsets, and vibrant nightlife.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-orange-600 font-medium">
+                                <i class="fas fa-tag mr-1"></i>
+                                <span>Beach • Surf • Lifestyle</span>
+                            </div>
+                            <button class="text-pink-500 hover:text-pink-600 transition-colors">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination 3 - Uluwatu -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden group cursor-pointer">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1675821422165-80b51ddec703?crop=entropy&cs=tinysrgb&fit=crop&h=400&w=600" 
+                             alt="Uluwatu Temple" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <span class="bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium">Cliffs</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-monument text-cyan-500"></i>
+                            Uluwatu
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Famous for dramatic cliffs, world-class surf breaks, iconic sea temple, and traditional Kecak dance.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-pink-600 font-medium">
+                                <i class="fas fa-tag mr-1"></i>
+                                <span>Cliffs • Surf • Temple</span>
+                            </div>
+                            <button class="text-pink-500 hover:text-pink-600 transition-colors">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture Section -->
+    <section id="culture" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                        Rich <span class="text-rose-500">Cultural</span> Heritage
+                    </h2>
+                    <p class="text-gray-600 mb-8 text-lg leading-relaxed">
+                        Bali's culture is deeply rooted in Hindu traditions,with daily offerings, colorful ceremonies, and intricate temple architecture that create a unique spiritual atmosphere.</p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center p-4 rounded-xl bg-orange-50 hover:bg-orange-100 transition-colors duration-300">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-music text-orange-500"></i>
+                            </div>
+                            <span class="text-gray-700 font-medium">Traditional Dance Performances</span>
+                        </div>
+                        <div class="flex items-center p-4 rounded-xl bg-pink-50 hover:bg-pink-100 transition-colors duration-300">
+                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-pray text-pink-500"></i>
+                            </div>
+                            <span class="text-gray-700 font-medium">Temple Ceremonies & Festivals</span>
+                        </div>
+                        <div class="flex items-center p-4 rounded-xl bg-cyan-50 hover:bg-cyan-100 transition-colors duration-300">
+                            <div class="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-hands text-cyan-500"></i>
+                            </div>
+                            <span class="text-gray-700 font-medium">Local Craft Villages</span>
+                        </div>
+                    </div>
+                    <button class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                        <i class="fas fa-calendar-day"></i>
+                        View Cultural Calendar
+                    </button>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-orange-100 to-pink-100 rounded-2xl p-8 shadow-lg">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 text-center">
+                                <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-moon text-rose-500"></i>
+                                </div>
+                                <div class="text-rose-500 text-lg font-bold mb-1">Nyepi</div>
+                                <div class="text-gray-600 text-sm">Day of Silence</div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 text-center">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-flag text-orange-500"></i>
+                                </div>
+                                <div class="text-orange-500 text-lg font-bold mb-1">Galungan</div>
+                                <div class="text-gray-600 text-sm">Victory of Good</div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 text-center">
+                                <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-leaf text-pink-500"></i>
+                                </div>
+                                <div class="text-pink-500 text-lg font-bold mb-1">Kuningan</div>
+                                <div class="text-gray-600 text-sm">Ancestors Day</div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 text-center">
+                                <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-book text-cyan-500"></i>
+                                </div>
+                                <div class="text-cyan-500 text-lg font-bold mb-1">Saraswati</div>
+                                <div class="text-gray-600 text-sm">Knowledge Day</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-rose-400 to-orange-400 rounded-full opacity-20 floating"></div>
+                    <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-cyan-400 to-pink-400 rounded-full opacity-20 floating" style="animation-delay: 1.5s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Section -->
+    <section id="food" class="py-20 bg-gradient-to-br from-cyan-50 to-pink-50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">
+                Local <span class="text-orange-500">Cuisine</span>
+            </h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Savor the authentic flavors of Bali with these traditional dishes that define the island's culinary identity</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Food Item 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-orange-100 to-orange-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-bowl-food text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Nasi Campur</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Mixed rice with various side dishes including vegetables, meat, and sambal - the ultimate Balinese comfort food.</p>
+                    <div class="text-orange-500 font-medium flex items-center justify-center gap-1">
+                        <i class="fas fa-star"></i>
+                        <span>Must Try</span>
+                    </div>
+                </div>
+
+                <!-- Food Item 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-pink-100 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-drumstick-bite text-3xl text-pink-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Babi Guling</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Suckling pig roasted over fire with traditional spices, a Balinese specialty for celebrations and ceremonies.</p>
+                    <div class="text-pink-500 font-medium flex items-center justify-center gap-1">
+                        <i class="fas fa-crown"></i>
+                        <span>Signature Dish</span>
+                    </div>
+                </div>
+
+                <!-- Food Item 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-cyan-100 to-cyan-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-fish text-3xl text-cyan-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Sate Lilit</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Minced seafood satay wrapped around lemongrass sticks, grilled to perfection with aromatic Balinese spices.</p>
+                    <div class="text-cyan-500 font-medium flex items-center justify-center gap-1">
+                        <i class="fas fa-fire"></i>
+                        <span>Grilled Delight</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 mx-auto">
+                    <i class="fas fa-utensils"></i>
+                    Explore More Dishes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Tips -->
+    <section id="tips" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">
+                Essential <span class="text-cyan-500">Travel Tips</span>
+            </h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Make the most of your Bali adventure with these practical tips and local insights</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-money-bill-wave text-2xl text-rose-500"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-3 text-lg">Currency</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Indonesian Rupiah (IDR). Cash is preferred in local markets. ATMs widely available in tourist areas.</p>
+                </div>
+                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-cloud-sun text-2xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-3 text-lg">Weather</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Tropical climate year-round. Dry season: April-September, Wet season: October-March. Pack light clothing.</p>
+                </div>
+                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-tshirt text-2xl text-pink-500"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-3 text-lg">Dress Code</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Modest clothing for temples. Cover shoulders and knees. Sarongs available for rent at temple entrances.</p>
+                </div>
+                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-taxi text-2xl text-cyan-500"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-3 text-lg">Transport</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Rent scooters or use ride-hailing apps like Gojek and Grab. Private drivers available for day trips.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-pink-500 to-orange-500 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Stay Updated on Bali</h2>
+            <p class="text-pink-100 mb-8 text-lg max-w-2xl mx-auto">Get the latest travel tips, cultural insights, and destination updates delivered to your inbox</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-lg flex-1 text-gray-800 focus:outline-none focus:ring-2 focus:ring-white">
+                <button class="bg-white text-pink-500 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 flex items-center gap-2">
+                    <i class="fas fa-paper-plane"></i>
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent mb-4 flex items-center gap-2">
+                        <i class="fas fa-umbrella-beach"></i>
+                        BaliGuide
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Your ultimate guide to exploring the beautiful island of Bali, Indonesia. Discover hidden gems, cultural treasures, and unforgettable experiences.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-500 transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-500 transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-cyan-500 transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-rose-500 transition-colors duration-300">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Quick Links</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a href="#destinations" class="hover:text-cyan-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Destinations</a></li>
+                        <li><a href="#culture" class="hover:text-pink-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Culture</a></li>
+                        <li><a href="#food" class="hover:text-orange-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Food</a></li>
+                        <li><a href="#tips" class="hover:text-rose-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Travel Tips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Contact</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-cyan-400"></i>
+                            info@baliguide.com
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone text-pink-400"></i>
+                            +62 361 123 4567
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-orange-400"></i>
+                            Denpasar, Bali
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Support</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">Help Center</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition-colors duration-300">Travel Advisory</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-300">Emergency Contacts</a></li>
+                        <li><a href="#" class="hover:text-rose-400 transition-colors duration-300">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-400">
+                <p class="flex items-center justify-center gap-2">
+                    <i class="fas fa-heart text-rose-400"></i>
+                    &copy; 2024 BaliGuide. All rights reserved. Made with love for travelers exploring paradise.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 hidden z-50 flex items-center justify-center">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+                backToTopButton.classList.add('flex');
+            } else {
+                backToTopButton.classList.add('hidden');
+                backToTopButton.classList.remove('flex');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Counter animation for stats
+        const counters = document.querySelectorAll('.stat-counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => {
+            observer.observe(counter);
+        });
+
+        // Add fade-in animation to elements on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        fadeElements.forEach(element => {
+            fadeObserver.observe(element);
+        });
+    </script>
+</body>
+</html>
