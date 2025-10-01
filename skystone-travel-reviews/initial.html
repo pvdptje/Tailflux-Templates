@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Reviews | Wanderlust Adventures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-sky-600">Wanderlust Adventures</h1>
+                    </div>
+                    <nav class="hidden md:ml-8 md:flex space-x-8">
+                        <a href="#" class="text-stone-600 hover:text-sky-600">Destinations</a>
+                        <a href="#" class="text-stone-600 hover:text-sky-600">Tours</a>
+                        <a href="#" class="text-sky-600 font-medium">Reviews</a>
+                        <a href="#" class="text-stone-600 hover:text-sky-600">About</a>
+                    </nav>
+                </div>
+                <button class="bg-sky-600 text-white px-6 py-2 rounded-lg hover:bg-sky-700 transition-colors">
+                    Book Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-sky-500 to-purple-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">What Our Travelers Say</h1>
+            <p class="text-xl text-sky-100 max-w-2xl mx-auto">
+                Discover why thousands of adventurers trust us for their dream vacations
+            </p>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <div class="text-3xl font-bold text-cyan-600">4.9</div>
+                    <div class="text-stone-600">Average Rating</div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <div class="text-3xl font-bold text-purple-600">2,500+</div>
+                    <div class="text-stone-600">Happy Travelers</div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <div class="text-3xl font-bold text-sky-600">50+</div>
+                    <div class="text-stone-600">Destinations</div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <div class="text-3xl font-bold text-cyan-600">98%</div>
+                    <div class="text-stone-600">Would Recommend</div>
+                </div>
+            </div>
+
+            <!-- Reviews Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                            <span class="text-cyan-600 font-bold">JS</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Jessica Smith</h3>
+                            <div class="flex text-amber-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4">
+                        "The Bali tour was absolutely magical! Every detail was perfectly planned. The local guides were knowledgeable and the accommodations were stunning."
+                    </p>
+                    <div class="text-sm text-stone-500">Bali Adventure • March 2024</div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <span class="text-purple-600 font-bold">MR</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Michael Rodriguez</h3>
+                            <div class="flex text-amber-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4">
+                        "Our European tour exceeded all expectations. The seamless coordination between cities made the trip stress-free and incredibly enjoyable."
+                    </p>
+                    <div class="text-sm text-stone-500">European Grand Tour • February 2024</div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center">
+                            <span class="text-sky-600 font-bold">SC</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Sarah Chen</h3>
+                            <div class="flex text-amber-400">
+                                ★★★★☆
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4">
+                        "The Japan cultural tour was insightful and well-organized. The food experiences were exceptional, though I wish we had more free time in Kyoto."
+                    </p>
+                    <div class="text-sm text-stone-500">Japan Cultural Journey • January 2024</div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                            <span class="text-cyan-600 font-bold">DP</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">David Park</h3>
+                            <div class="flex text-amber-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4">
+                        "The African safari was a once-in-a-lifetime experience. Our guide's expertise in wildlife tracking made every game drive exciting and memorable."
+                    </p>
+                    <div class="text-sm text-stone-500">African Safari • December 2023</div>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <span class="text-purple-600 font-bold">ET</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Emily Thompson</h3>
+                            <div class="flex text-amber-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4">
+                        "The customer service team was incredibly responsive and helpful throughout the entire booking process. They made planning our honeymoon effortless."
+                    </p>
+                    <div class="text-sm text-stone-500">Maldives Paradise • November 2023</div>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center">
+                            <span class="text-sky-600 font-bold">KW</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Kevin Wilson</h3>
+                            <div class="flex text-amber-400">
+                                ★★★★☆
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4">
+                        "Great value for the Peruvian adventure. The Machu Picchu hike was challenging but rewarding. Minor issues with hotel transfers were quickly resolved."
+                    </p>
+                    <div class="text-sm text-stone-500">Peru Explorer • October 2023</div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="bg-sky-600 text-white px-8 py-3 rounded-lg hover:bg-sky-700 transition-colors font-medium">
+                    Load More Reviews
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-stone-100 py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-stone-900 mb-4">Ready for Your Next Adventure?</h2>
+            <p class="text-xl text-stone-600 mb-8">
+                Join thousands of satisfied travelers and create memories that last a lifetime.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-cyan-600 text-white px-8 py-3 rounded-lg hover:bg-cyan-700 transition-colors font-medium">
+                    Browse Destinations
+                </button>
+                <button class="border border-sky-600 text-sky-600 px-8 py-3 rounded-lg hover:bg-sky-50 transition-colors font-medium">
+                    Contact Our Experts
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-sky-400 mb-4">Wanderlust Adventures</h3>
+                    <p class="text-stone-300">
+                        Creating unforgettable travel experiences since 2010.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Destinations</h4>
+                    <ul class="space-y-2 text-stone-300">
+                        <li><a href="#" class="hover:text-sky-400">Asia</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Europe</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Africa</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Americas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-stone-300">
+                        <li><a href="#" class="hover:text-sky-400">About Us</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Careers</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Blog</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-stone-300">
+                        <li><a href="#" class="hover:text-sky-400">FAQ</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-sky-400">Reviews</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-center text-stone-400">
+                <p>&copy; 2024 Wanderlust Adventures. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

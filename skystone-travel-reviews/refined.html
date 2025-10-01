@@ -1,0 +1,489 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Reviews | Wanderlust Adventures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-sky-600 flex items-center">
+                            <i class="fas fa-compass mr-2 text-sky-500"></i>
+                            Wanderlust Adventures
+                        </h1>
+                    </div>
+                    <nav class="hidden md:ml-8 md:flex space-x-8">
+                        <a href="#" class="text-stone-600 hover:text-sky-600 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-sm"></i>
+                            Destinations
+                        </a>
+                        <a href="#" class="text-stone-600 hover:text-sky-600 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-route mr-2 text-sm"></i>
+                            Tours
+                        </a>
+                        <a href="#" class="text-sky-600 font-medium flex items-center">
+                            <i class="fas fa-star mr-2 text-sm"></i>
+                            Reviews
+                        </a>
+                        <a href="#" class="text-stone-600 hover:text-sky-600 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-info-circle mr-2 text-sm"></i>
+                            About
+                        </a>
+                    </nav>
+                </div>
+                <button class="bg-sky-600 text-white px-6 py-2 rounded-lg hover:bg-sky-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center">
+                    <i class="fas fa-calendar-check mr-2"></i>
+                    Book Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-sky-500 to-purple-600 text-white py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">What Our Travelers Say</h1>
+            <p class="text-xl text-sky-100 max-w-2xl mx-auto mb-8 animate-fade-in-up delay-100">
+                Discover why thousands of adventurers trust us for their dream vacations
+            </p>
+            <div class="flex justify-center space-x-4 animate-fade-in-up delay-200">
+                <div class="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+                    <i class="fas fa-star text-amber-400 mr-2"></i>
+                    <span>4.9/5 Rating</span>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2">
+                    <i class="fas fa-users text-amber-400 mr-2"></i>
+                    <span>2,500+ Travelers</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-br from-cyan-50 to-white rounded-2xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300 border border-cyan-100">
+                    <div class="text-4xl font-bold text-cyan-600 mb-2">4.9</div>
+                    <div class="text-stone-600 font-medium">Average Rating</div>
+                    <div class="flex justify-center mt-3">
+                        <i class="fas fa-star text-amber-400"></i>
+                        <i class="fas fa-star text-amber-400"></i>
+                        <i class="fas fa-star text-amber-400"></i>
+                        <i class="fas fa-star text-amber-400"></i>
+                        <i class="fas fa-star text-amber-400"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-white rounded-2xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300 border border-purple-100">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">2,500+</div>
+                    <div class="text-stone-600 font-medium">Happy Travelers</div>
+                    <div class="text-2xl text-purple-400 mt-3">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-sky-50 to-white rounded-2xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300 border border-sky-100">
+                    <div class="text-4xl font-bold text-sky-600 mb-2">50+</div>
+                    <div class="text-stone-600 font-medium">Destinations</div>
+                    <div class="text-2xl text-sky-400 mt-3">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-50 to-white rounded-2xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300 border border-cyan-100">
+                    <div class="text-4xl font-bold text-cyan-600 mb-2">98%</div>
+                    <div class="text-stone-600 font-medium">Would Recommend</div>
+                    <div class="text-2xl text-cyan-400 mt-3">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-16 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Reviews Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <span class="text-cyan-600 font-bold text-lg">JS</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Jessica Smith</h3>
+                            <div class="flex text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4 leading-relaxed">
+                        "The Bali tour was absolutely magical! Every detail was perfectly planned. The local guides were knowledgeable and the accommodations were stunning."
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-cyan-500"></i>
+                            Bali Adventure • March 2024
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1729605411113-daa81a7836b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiYWxpJTIwdHJvcGljYWwlMjBiZWFjaHxlbnwwfDB8fHwxNzU5MzQ4OTQ4fDA&ixlib=rb-4.1.0&q=80&w=200&utm_source=TailFlux&photo_id=t2A7VoNW3p0" alt="Bali Beach" class="w-12 h-12 rounded-lg object-cover shadow-sm">
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-50 rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <span class="text-purple-600 font-bold text-lg">MR</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Michael Rodriguez</h3>
+                            <div class="flex text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4 leading-relaxed">
+                        "Our European tour exceeded all expectations. The seamless coordination between cities made the trip stress-free and incredibly enjoyable."
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-purple-500"></i>
+                            European Grand Tour • February 2024
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1744231036185-5e523954f23f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxldXJvcGUlMjBjaXR5JTIwdG91cnxlbnwwfDB8fHwxNzU5MzQ4OTQ5fDA&ixlib=rb-4.1.0&q=80&w=200&utm_source=TailFlux&photo_id=nlIe-BAVS28" alt="European City" class="w-12 h-12 rounded-lg object-cover shadow-sm">
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-sky-100 to-sky-50 rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <span class="text-sky-600 font-bold text-lg">SC</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Sarah Chen</h3>
+                            <div class="flex text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4 leading-relaxed">
+                        "The Japan cultural tour was insightful and well-organized. The food experiences were exceptional, though I wish we had more free time in Kyoto."
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-sky-500"></i>
+                            Japan Cultural Journey • January 2024
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1694715580935-b9c5c00a9770?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMGN1bHR1cmUlMjB0ZW1wbGV8ZW58MHwwfHx8MTc1OTM0ODk1MHww&ixlib=rb-4.1.0&q=80&w=200&utm_source=TailFlux&photo_id=fdzrPIOuWmQ" alt="Japan Temple" class="w-12 h-12 rounded-lg object-cover shadow-sm">
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <span class="text-cyan-600 font-bold text-lg">DP</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">David Park</h3>
+                            <div class="flex text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4 leading-relaxed">
+                        "The African safari was a once-in-a-lifetime experience. Our guide's expertise in wildlife tracking made every game drive exciting and memorable."
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-cyan-500"></i>
+                            African Safari • December 2023
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg flex items-center justify-center shadow-sm">
+                            <i class="fas fa-lion text-amber-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-50 rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <span class="text-purple-600 font-bold text-lg">ET</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Emily Thompson</h3>
+                            <div class="flex text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4 leading-relaxed">
+                        "The customer service team was incredibly responsive and helpful throughout the entire booking process. They made planning our honeymoon effortless."
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-m<div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-purple-500"></i>
+                            Maldives Paradise • November 2023
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center shadow-sm">
+                            <i class="fas fa-umbrella-beach text-blue-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-sky-100 to-sky-50 rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <span class="text-sky-600 font-bold text-lg">KW</span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-semibold text-stone-900">Kevin Wilson</h3>
+                            <div class="flex text-amber-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-stone-600 mb-4 leading-relaxed">
+                        "Great value for the Peruvian adventure. The Machu Picchu hike was challenging but rewarding. Minor issues with hotel transfers were quickly resolved."
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-stone-500 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-sky-500"></i>
+                            Peru Explorer • October 2023
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-100 to-green-100 rounded-lg flex items-center justify-center shadow-sm">
+                            <i class="fas fa-mountain text-emerald-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-16">
+                <button class="bg-gradient-to-r from-sky-600 to-cyan-600 text-white px-10 py-4 rounded-xl hover:from-sky-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium flex items-center mx-auto">
+                    <i class="fas fa-sync-alt mr-3 animate-spin-slow"></i>
+                    Load More Reviews
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-br from-stone-100 to-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-stone-900 mb-6">Ready for Your Next Adventure?</h2>
+            <p class="text-xl text-stone-600 mb-10 max-w-2xl mx-auto">
+                Join thousands of satisfied travelers and create memories that last a lifetime.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button class="bg-gradient-to-r from-cyan-600 to-sky-600 text-white px-10 py-4 rounded-xl hover:from-cyan-700 hover:to-sky-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium flex items-center justify-center">
+                    <i class="fas fa-search mr-3"></i>
+                    Browse Destinations
+                </button>
+                <button class="border-2 border-sky-600 text-sky-600 bg-white px-10 py-4 rounded-xl hover:bg-sky-50 transition-all duration-300 transform hover:scale-105 font-medium flex items-center justify-center">
+                    <i class="fas fa-headset mr-3"></i>
+                    Contact Our Experts
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-sky-400 mb-4 flex items-center">
+                        <i class="fas fa-compass mr-3"></i>
+                        Wanderlust Adventures
+                    </h3>
+                    <p class="text-stone-300 mb-4 leading-relaxed">
+                        Creating unforgettable travel experiences since 2010.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-stone-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-stone-400 hover:text-sky-400 transition-colors duration-300">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-sky-300">Destinations</h4>
+                    <ul class="space-y-3 text-stone-300">
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Asia
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Europe
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Africa
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Americas
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-sky-300">Company</h4>
+                    <ul class="space-y-3 text-stone-300">
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            About Us
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Careers
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Blog
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Contact
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-sky-300">Support</h4>
+                    <ul class="space-y-3 text-stone-300">
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            FAQ
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Terms of Service
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Privacy Policy
+                        </a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-sky-400"></i>
+                            Reviews
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-12 pt-8 text-center text-stone-400">
+                <p class="flex items-center justify-center">
+                    <i class="fas fa-heart text-red-400 mr-2"></i>
+                    &copy; 2024 Wanderlust Adventures. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out;
+        }
+        
+        .animate-fade-in-up.delay-100 {
+            animation-delay: 0.1s;
+        }
+        
+        .animate-fade-in-up.delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-spin-slow {
+            animation: spin-slow 2s linear infinite;
+        }
+    </style>
+</body>
+</html>
