@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Discover the soul of our city: attractions, events, dining, and stays. Plan your visit with the official tourism guide.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Discover Our City | Official Tourism Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-lift {
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #fbbf24, #f97316);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.show { opacity: 1; transform: none; }
+
+        /* Blur-up image loading */
+        img:not(.loaded) { filter: blur(12px); transform: scale(1.02); }
+        img.loaded { filter: none; transform: none; transition: filter .5s ease, transform .5s ease; }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .hover-lift, .hover-lift:hover, .nav-link::after { transition: none !important; transform: none !important; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white" x-data="{ mobileMenuOpen: false, planModal: false, newsletter: {email: '', sent: false} }">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 bg-gray-800 text-white px-4 py-2 rounded-lg">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav id="siteNav" role="navigation" aria-label="Primary" class="bg-gray-800/95 backdrop-blur-sm border-b border-cyan-500/30 sticky top-0 z-50 transition-shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center space-x-2 group" aria-label="Home">
+                        <span class="text-2xl font-bold text-yellow-400 tracking-tight">CITY<span class="text-cyan-400">EXPLORE</span></span>
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                            :aria-expanded="mobileMenuOpen.toString()"
+                            aria-controls="mobileMenu"
+                            class="text-orange-300 hover:text-orange-400 p-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-orange-300 hover:text-orange-400 font-semibold transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Destinations
+                    </a>
+                    <a href="#" class="nav-link text-orange-300 hover:text-orange-400 font-semibold transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                        <i class="fas fa-calendar-alt mr-2"></i>Events
+                    </a>
+                    <a href="#" class="nav-link text-orange-300 hover:text-orange-400 font-semibold transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                        <i class="fas fa-utensils mr-2"></i>Dining
+                    </a>
+                    <a href="#" class="nav-link text-orange-300 hover:text-orange-400 font-semibold transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                        <i class="fas fa-hotel mr-2"></i>Accommodation
+                    </a>
+                </div>
+                <button @click="planModal = true"
+                        class="hidden md:inline-flex bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-gray-900 px-6 py-2 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-yellow-500/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400">
+                    <i class="fas fa-plane-departure mr-2"></i>Plan Your Visit
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu"
+                 x-show="mobileMenuOpen"
+                 x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0 -translate-y-4" 
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="md:hidden bg-gray-800/95 backdrop-blur-sm rounded-lg p-4 mt-2 border border-gray-700">
+                <div class="space-y-4">
+                    <a href="#" class="block text-orange-300 hover:text-orange-400 font-semibold py-2">
+                        <i class="fas fa-map-marker-alt mr-3"></i>Destinations
+                    </a>
+                    <a href="#" class="block text-orange-300 hover:text-orange-400 font-semibold py-2">
+                        <i class="fas fa-calendar-alt mr-3"></i>Events
+                    </a>
+                    <a href="#" class="block text-orange-300 hover:text-orange-400 font-semibold py-2">
+                        <i class="fas fa-utensils mr-3"></i>Dining
+                    </a>
+                    <a href="#" class="block text-orange-300 hover:text-orange-400 font-semibold py-2">
+                        <i class="fas fa-hotel mr-3"></i>Accommodation
+                    </a>
+                    <button @click="planModal = true; mobileMenuOpen=false"
+                            class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-gray-900 px-6 py-3 rounded-lg font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400">
+                        <i class="fas fa-plane-departure mr-2"></i>Plan Your Visit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 overflow-hidden">
+        <!-- Accent blobs -->
+        <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-24 -left-24 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl"></div>
+
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left reveal">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">Discover The Soul Of Our City</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Experience the vibrant culture, stunning architecture, and unforgettable moments that make our city a must-visit destination. From historic landmarks to modern attractions, adventure awaits around every corner.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#" class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/25 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300">
+                            <i class="fas fa-compass mr-3"></i>Explore Attractions
+                        </a>
+                        <a href="#" class="border-2 border-cyan-400/80 text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+                            <i class="fas fa-calendar-check mr-3"></i>View Events Calendar
+                        </a>
+                    </div>
+                    <div class="flex items-center justify-center lg:justify-start gap-6 mt-10 text-sm text-gray-300">
+                        <div class="flex items-center"><i class="fas fa-bus text-yellow-400 mr-2"></i>Easy Transit</div>
+                        <div class="flex items-center"><i class="fas fa-shield-alt text-cyan-400 mr-2"></i>Traveler Support</div>
+                        <div class="flex items-center"><i class="fas fa-leaf text-green-400 mr-2"></i>Eco-friendly</div>
+                    </div>
+                </div>
+                <div class="relative reveal">
+                    <div class="relative rounded-2xl overflow-hidden hover-lift">
+                        <img src="https://images.unsplash.com/photo-1758384076112-ca8f68f40cc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjaXR5JTIwc2t5bGluZSUyMGF0JTIwbmlnaHQlMjBsaWdodHMlMjByZWZsZWN0aW9ufGVufDB8MHx8fDE3NTkyOTE2MjB8MA&ixlib=rb-4.1.0&q=80&w=1280&utm_source=TailFlux&photo_id=ZMwg3eEnzKE"
+                             alt="Illuminated modern city skyline reflecting on water at night"
+                             class="w-full h-64 lg:h-96 object-cover rounded-2xl"
+                             decoding="async">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent rounded-2xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Attractions -->
+    <section class="py-16 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="text-yellow-400">Featured</span> 
+                    <span class="text-cyan-400">Attractions</span>
+                </h2>
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+                    Discover the most popular destinations that capture the essence of our city's rich heritage and modern charm.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <article class="bg-gray-700/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-lift border border-gray-600/30 reveal">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1668232295546-c8bd49625f4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoaXN0b3JpYyUyMGRvd250b3duJTIwYXJjaGl0ZWN0dXJlJTIwc3RyZWV0fGVufDB8MHx8fDE3NTkyOTE2MjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=wFXA1H9tuy8" 
+                             alt="Historic downtown street with classic architecture facades" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                             loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">Historic</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2 flex items-center">
+                            <i class="fas fa-landmark mr-2"></i>Historic Downtown
+                        </h3>
+                        <div class="flex items-center text-yellow-400 mb-3" aria-label="4.8 out of 5 stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star-half-alt ml-1"></i>
+                            <span class="text-gray-400 text-sm ml-2">(4.8)</span>
+                        </div>
+                        <p class="text-gray-300 mb-4 leading-relaxed">Walk through centuries of history in our beautifully preserved downtown district with stunning architecture.</p>
+                        <div class="flex items-center justify-between">
+                            <a href="#" class="text-orange-400 hover:text-orange-300 font-semibold transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                                Learn More <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-sm flex items-center">
+                                <i class="fas fa-map-marker-alt mr-1"></i>View on Map
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Card 2 -->
+                <article class="bg-gray-700/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-lift border border-gray-600/30 reveal">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1750326562849-5bd94ed444e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcnQlMjBnYWxsZXJ5JTIwaW50ZXJpb3IlMjB2aXNpdG9yc3xlbnwwfDB8fHwxNzU5MjkxNjIxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=KBnfo0ZMQVs" 
+                             alt="Visitors walking through a contemporary art gallery" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                             loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-cyan-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">Modern</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2 flex items-center">
+                            <i class="fas fa-palette mr-2"></i>Modern Arts District
+                        </h3>
+                        <div class="flex items-center text-yellow-400 mb-3" aria-label="4.7 out of 5 stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star-half-alt ml-1"></i>
+                            <span class="text-gray-400 text-sm ml-2">(4.7)</span>
+                        </div>
+                        <p class="text-gray-300 mb-4 leading-relaxed">Experience cutting-edge art and culture in our vibrant creative hub with contemporary galleries.</p>
+                        <div class="flex items-center justify-between">
+                            <a href="#" class="text-orange-400 hover:text-orange-300 font-semibold transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                                Learn More <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-sm flex items-center">
+                                <i class="fas fa-map-marker-alt mr-1"></i>View on Map
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Card 3 -->
+                <article class="bg-gray-700/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-lift border border-gray-600/30 reveal">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1758892591936-2f90604fb95a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMHJpdmVyc2lkZSUyMHBhcmslMjBzdW5zZXR8ZW58MHwwfHx8MTc1OTI5MTYyMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=VlJrfxak8BI" 
+                             alt="Sunset over a tranquil urban riverside park" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                             loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-green-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">Nature</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2 flex items-center">
+                            <i class="fas fa-tree mr-2"></i>Riverside Park
+                        </h3>
+                        <div class="flex items-center text-yellow-400 mb-3" aria-label="4.9 out of 5 stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i>
+                            <span class="text-gray-400 text-sm ml-2">(4.9)</span>
+                        </div>
+                        <p class="text-gray-300 mb-4 leading-relaxed">Relax and enjoy nature in our expansive urban park along the river with scenic walking trails.</p>
+                        <div class="flex items-center justify-between">
+                            <a href="#" class="text-orange-400 hover:text-orange-300 font-semibold transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                                Learn More <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-sm flex items-center">
+                                <i class="fas fa-map-marker-alt mr-1"></i>View on Map
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="text-orange-400">Upcoming</span> 
+                    <span class="text-cyan-400">Events</span>
+                </h2>
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+                    Don't miss out on the exciting events happening throughout our city this season.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Event 1 -->
+                <article class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border-l-4 border-yellow-400 hover-lift reveal overflow-hidden">
+                    <div class="grid md:grid-cols-3 gap-0">
+                        <div class="md:col-span-1">
+                            <img src="https://images.unsplash.com/photo-1707905870990-5c5083375ab1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjaXR5JTIwbXVzaWMlMjBmZXN0aXZhbCUyMGNyb3dkJTIwc3RhZ2UlMjBsaWdodHN8ZW58MHwwfHx8MTc1OTI5MTYyM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=03ym5q4ammI"
+                                 alt="Festival crowd in front of a stage with colorful lights"
+                                 class="w-full h-48 md:h-full object-cover"
+                                 loading="lazy" decoding="async">
+                        </div>
+                        <div class="p-6 md:col-span-2">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white flex items-center">
+                                    <i class="fas fa-music mr-3 text-yellow-400"></i>City Music Festival
+                                </h3>
+                                <span class="bg-cyan-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold flex items-center">
+                                    <i class="fas fa-calendar-day mr-1"></i>June 15-17
+                                </span>
+                            </div>
+                            <p class="text-gray-300 mb-4 leading-relaxed">Three days of incredible music featuring local and international artists in the heart of downtown. Experience live performances across multiple stages with food trucks and art installations.</p>
+                            <div class="flex flex-wrap gap-3 text-xs text-gray-300 mb-4">
+                                <span class="px-2 py-1 rounded-full bg-gray-700/60"><i class="fas fa-location-dot mr-1 text-cyan-400"></i>Riverfront Stage</span>
+                                <span class="px-2 py-1 rounded-full bg-gray-700/60"><i class="fas fa-clock mr-1 text-yellow-400"></i>All Day</span>
+                            </div>
+                            <a href="#" class="text-orange-400 hover:text-orange-300 font-semibold transition duration-300 inline-flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                                <i class="fas fa-ticket-alt mr-2"></i>Get Tickets <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Event 2 -->
+                <article class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border-l-4 border-orange-400 hover-lift reveal overflow-hidden">
+                    <div class="grid md:grid-cols-3 gap-0">
+                        <div class="md:col-span-1">
+                            <img src="https://images.unsplash.com/photo-1758346970380-f04aae7a2599?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjBmb29kJTIwbWFya2V0JTIwbmlnaHQlMjBmZXN0aXZhbHxlbnwwfDB8fHwxNzU5MjkxNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=SdtbD9WMUVI"
+                                 alt="Night street food market with colorful stalls and people"
+                                 class="w-full h-48 md:h-full object-cover"
+                                 loading="lazy" decoding="async">
+                        </div>
+                        <div class="p-6 md:col-span-2">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white flex items-center">
+                                    <i class="fas fa-utensils mr-3 text-orange-400"></i>Food & Culture Fair
+                                </h3>
+                                <span class="bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold flex items-center">
+                                    <i class="fas fa-calendar-day mr-1"></i>July 8-10
+                                </span>
+                            </div>
+                            <p class="text-gray-300 mb-4 leading-relaxed">Taste your way through our city's diverse culinary scene and cultural traditions. Featuring local chefs, traditional performances, and cooking demonstrations.</p>
+                            <div class="flex flex-wrap gap-3 text-xs text-gray-300 mb-4">
+                                <span class="px-2 py-1 rounded-full bg-gray-700/60"><i class="fas fa-location-dot mr-1 text-cyan-400"></i>Central Plaza</span>
+                                <span class="px-2 py-1 rounded-full bg-gray-700/60"><i class="fas fa-clock mr-1 text-yellow-400"></i>10 AM – 10 PM</span>
+                            </div>
+                            <a href="#" class="text-orange-400 hover:text-orange-300 font-semibold transition duration-300 inline-flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                                <i class="fas fa-info-circle mr-2"></i>Learn More <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- View All Events Button -->
+            <div class="text-center mt-12 reveal">
+                <a href="#" class="inline-flex bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+                    <i class="fas fa-calendar-week mr-2"></i>View All Events
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-gray-800/80 via-gray-900 to-gray-950/80 backdrop-blur-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="text-yellow-400">Stay</span> 
+                    <span class="text-cyan-400">Connected</span>
+                </h2>
+                <p class="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                    Get the latest updates on events, attractions, and special offers delivered straight to your inbox.
+                </p>
+                <form @submit.prevent="newsletter.sent = true" class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div class="relative flex-grow max-w-md w-full">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input x-model="newsletter.email" type="email" placeholder="Enter your email" required
+                               class="w-full pl-12 pr-4 py-4 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition duration-300"
+                               aria-label="Email address">
+                    </div>
+                    <button type="submit"
+                            class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/25 flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300">
+                        <i class="fas fa-paper-plane mr-2"></i>Subscribe
+                    </button>
+                </form>
+                <p class="text-gray-400 text-sm mt-4">
+                    <i class="fas fa-shield-alt mr-1"></i>We respect your privacy. Unsubscribe at any time.
+                </p>
+                <div x-show="newsletter.sent" x-transition.opacity x-cloak
+                     class="mt-6 text-green-400 text-sm flex items-center justify-center"
+                     role="status" aria-live="polite">
+                    <i class="fas fa-check-circle mr-2"></i>Thanks! Please check your inbox to confirm your subscription.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/80 backdrop-blur-sm border-t border-gray-700/50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="reveal">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 tracking-tight">CITY<span class="text-cyan-400">EXPLORE</span></h3>
+                    <p class="text-gray-300 leading-relaxed">Your gateway to unforgettable experiences in our beautiful city. Discover hidden gems and create lasting memories.</p>
+                    <div class="flex space-x-3 mt-4" aria-hidden="true">
+                        <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                        <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h4 class="text-orange-400 font-bold mb-4 flex items-center">
+                        <i class="fas fa-link mr-2"></i>Quick Links
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Visitor Information
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Maps & Directions
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Transportation
+                        </a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition duration-300 flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded">
+                            <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>Accessibility
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <h4 class="text-orange-400 font-bold mb-4 flex items-center">
+                        <i class="fas fa-address-card mr-2"></i>Contact
+                    </h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-cyan-400"></i>123 Tourism Avenue
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-city mr-3 text-cyan-400"></i>City, State 12345
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-cyan-400"></i>info@cityexplore.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-cyan-400"></i>(555) 123-4567
+                        </li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <h4 class="text-orange-400 font-bold mb-4 flex items-center">
+                        <i class="fas fa-share-alt mr-2"></i>Follow Us
+                    </h4>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" title="Facebook" class="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                            <i class="fab fa-facebook-f text-white" aria-hidden="true"></i>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="#" title="Instagram" class="w-10 h-10 bg-gray-700 hover:bg-pink-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                            <i class="fab fa-instagram text-white" aria-hidden="true"></i>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                        <a href="#" title="X (Twitter)" class="w-10 h-10 bg-gray-700 hover:bg-blue-400 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                            <i class="fab fa-twitter text-white" aria-hidden="true"></i>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="#" title="YouTube" class="w-10 h-10 bg-gray-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                            <i class="fab fa-youtube text-white" aria-hidden="true"></i>
+                            <span class="sr-only">YouTube</span>
+                        </a>
+                    </div>
+                    <div class="bg-gray-700/50 rounded-lg p-4">
+                        <p class="text-gray-300 text-sm flex items-center">
+                            <i class="fas fa-clock mr-2 text-yellow-400"></i>Visitor Center Hours:
+                        </p>
+                        <p class="text-gray-400 text-xs mt-1">Mon-Sat: 9AM-6PM<br>Sun: 10AM-4PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700/50 mt-8 pt-8 text-center text-gray-400 reveal">
+                <p class="flex items-center justify-center flex-wrap gap-2">
+                    <i class="fas fa-heart text-red-400"></i><span>&copy; 2024 CityExplore Tourism. All rights reserved.</span> 
+                    <span class="hidden sm:inline">|</span> 
+                    <a href="#" class="hover:text-cyan-400 transition duration-300">Privacy Policy</a> | 
+                    <a href="#" class="hover:text-cyan-400 transition duration-300">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Plan Your Visit Modal -->
+    <div x-show="planModal" x-cloak
+         x-transition.opacity
+         class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div @click="planModal=false" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div @keydown.escape.window="planModal=false"
+             class="relative bg-gray-800/90 border border-gray-700 rounded-2xl w-full max-w-lg p-6 shadow-2xl">
+            <div class="flex items-start justify-between mb-4">
+                <h3 class="text-2xl font-bold text-yellow-400">
+                    <i class="fas fa-suitcase-rolling mr-2 text-cyan-400"></i>Plan Your Visit
+                </h3>
+                <button @click="planModal=false"
+                        class="text-gray-300 hover:text-white p-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                        aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1" for="arrival">Arrival</label>
+                        <input id="arrival" type="date" class="w-full bg-gray-700/50 border border-gray-600/70 rounded-lg px-3 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1" for="departure">Departure</label>
+                        <input id="departure" type="date" class="w-full bg-gray-700/50 border border-gray-600/70 rounded-lg px-3 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1" for="guests">Guests</label>
+                    <select id="guests" class="w-full bg-gray-700/50 border border-gray-600/70 rounded-lg px-3 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400">
+                        <option>1 Adult</option>
+                        <option>2 Adults</option>
+                        <option>Family (3-5)</option>
+                        <option>Group (6+)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1" for="interest">Primary Interest</label>
+                    <select id="interest" class="w-full bg-gray-700/50 border border-gray-600/70 rounded-lg px-3 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400">
+                        <option>Historic Landmarks</option>
+                        <option>Arts & Culture</option>
+                        <option>Nature & Parks</option>
+                        <option>Food & Nightlife</option>
+                    </select>
+                </div>
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" @click="planModal=false"
+                            class="px-5 py-2 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-700/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 text-gray-900 font-semibold hover:from-yellow-600 hover:to-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400">
+                        <i class="fas fa-map mr-2"></i>Get Itinerary
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" aria-label="Back to top"
+            class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-110 hidden z-40 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <script>
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide back to top button and nav shadow
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            const nav = document.getElementById('siteNav');
+            const y = window.scrollY || document.documentElement.scrollTop;
+
+            if (y > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+
+            if (y > 10) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+
+        // Add loading animation for images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                    });
+                }
+            });
+        });
+
+        // Reveal on scroll
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealEls.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
