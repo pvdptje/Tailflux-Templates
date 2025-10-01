@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Gallery | Recent Adventures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blue: {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        sky: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                        },
+                        zinc: {
+                            800: '#27272a',
+                            900: '#18181b',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen">
+    <div x-data="{ selectedCategory: 'all' }" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-sky-400 mb-4">Wanderlust Chronicles</h1>
+            <p class="text-zinc-400 text-lg max-w-2xl mx-auto">Exploring the world one destination at a time. Recent adventures and unforgettable moments.</p>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button 
+                @click="selectedCategory = 'all'"
+                :class="selectedCategory === 'all' ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'"
+                class="px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            >
+                All Trips
+            </button>
+            <button 
+                @click="selectedCategory = 'mountains'"
+                :class="selectedCategory === 'mountains' ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'"
+                class="px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            >
+                Mountains
+            </button>
+            <button 
+                @click="selectedCategory = 'beaches'"
+                :class="selectedCategory === 'beaches' ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'"
+                class="px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            >
+                Beaches
+            </button>
+            <button 
+                @click="selectedCategory = 'cities'"
+                :class="selectedCategory === 'cities' ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'"
+                class="px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            >
+                Cities
+            </button>
+            <button 
+                @click="selectedCategory = 'nature'"
+                :class="selectedCategory === 'nature' ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'"
+                class="px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            >
+                Nature
+            </button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Trip 1 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'mountains'"
+                class="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+                <div class="h-64 bg-gradient-to-br from-blue-500 to-sky-400 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold">Mountains</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Swiss Alps Adventure</h3>
+                    <p class="text-zinc-400 mb-4">Hiking through breathtaking alpine landscapes and charming mountain villages.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium">June 2024</span>
+                        <span class="text-lime-400">★ 4.8</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trip 2 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'beaches'"
+                class="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+                <div class="h-64 bg-gradient-to-br from-sky-400 to-blue-600 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold">Beaches</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Maldives Paradise</h3>
+                    <p class="text-zinc-400 mb-4">Crystal clear waters and pristine white sand beaches in tropical paradise.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium">May 2024</span>
+                        <span class="text-lime-400">★ 4.9</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trip 3 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'cities'"
+                class="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+                <div class="h-64 bg-gradient-to-br from-blue-600 to-zinc-800 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold">Cities</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Tokyo Urban Exploration</h3>
+                    <p class="text-zinc-400 mb-4">Discovering the perfect blend of traditional culture and modern innovation.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium">April 2024</span>
+                        <span class="text-lime-400">★ 4.7</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trip 4 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'nature'"
+                class="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+                <div class="h-64 bg-gradient-to-br from-zinc-800 to-lime-500 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold">Nature</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Costa Rica Rainforest</h3>
+                    <p class="text-zinc-400 mb-4">Immersed in lush rainforests and diverse wildlife encounters.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium">March 2024</span>
+                        <span class="text-lime-400">★ 4.8</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trip 5 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'mountains'"
+                class="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+                <div class="h-64 bg-gradient-to-br from-sky-400 to-lime-400 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold">Mountains</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Rocky Mountain Journey</h3>
+                    <p class="text-zinc-400 mb-4">Exploring rugged peaks and serene alpine lakes in North America.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium">February 2024</span>
+                        <span class="text-lime-400">★ 4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trip 6 -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'beaches'"
+                class="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+                <div class="h-64 bg-gradient-to-br from-lime-400 to-blue-500 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold">Beaches</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Greek Island Hopping</h3>
+                    <p class="text-zinc-400 mb-4">Santorini sunsets and Mediterranean crystal waters adventure.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium">January 2024</span>
+                        <span class="text-lime-400">★ 4.9</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 pt-8 border-t border-zinc-700">
+            <p class="text-zinc-500">© 2024 Wanderlust Chronicles. All journeys documented with passion.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-sky-400 hover:text-sky-300 transition-colors">Instagram</a>
+                <a href="#" class="text-sky-400 hover:text-sky-300 transition-colors">Blog</a>
+                <a href="#" class="text-sky-400 hover:text-sky-300 transition-colors">Contact</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

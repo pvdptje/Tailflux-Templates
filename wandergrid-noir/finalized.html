@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Gallery | Recent Adventures</title>
+    <meta name="description" content="Wanderlust Chronicles: A curated gallery of recent adventures across mountains, beaches, cities, and nature. Explore stunning photos and trip highlights.">
+    <meta name="theme-color" content="#0ea5e9">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Smooth scroll for in-page navigation and scroll-to-top */
+        html { scroll-behavior: smooth; }
+        /* Hide scrollbar on overlays for a cleaner look */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blue: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+                        sky: { 400: '#38bdf8', 500: '#0ea5e9' },
+                        zinc: { 800: '#27272a', 900: '#18181b' },
+                        lime: { 400: '#a3e635', 500: '#84cc16' }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'scale-in': 'scaleIn 0.4s ease-out',
+                        'float-y': 'floatY 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        scaleIn: { '0%': { transform: 'scale(0.95)', opacity: '0' }, '100%': { transform: 'scale(1)', opacity: '1' } },
+                        floatY: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-6px)' } }
+                    },
+                    boxShadow: {
+                        'glow-sky': '0 0 0 3px rgba(14,165,233,0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen">
+    <a href="#gallery" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 bg-sky-500 text-white px-3 py-2 rounded-lg">Skip to content</a>
+
+    <div 
+        x-data="{
+            selectedCategory: 'all',
+            categories: { all: 'All Trips', mountains: 'Mountains', beaches: 'Beaches', cities: 'Cities', nature: 'Nature' },
+            visibleCount: 6,
+            modalOpen: false,
+            modal: { title: '', img: '', alt: '', category: '', date: '', rating: '', description: '' },
+            showScrollTop: false,
+            openModal(data){ this.modal = data; this.modalOpen = true; document.body.classList.add('overflow-hidden'); },
+            closeModal(){ this.modalOpen = false; document.body.classList.remove('overflow-hidden'); },
+            updateCount(){ 
+                if (!this.$refs.grid) return;
+                if (this.selectedCategory === 'all') {
+                    this.visibleCount = this.$refs.grid.querySelectorAll('[data-category]').length;
+                } else {
+                    this.visibleCount = this.$refs.grid.querySelectorAll(`[data-category='${this.selectedCategory}']`).length;
+                }
+            }
+        }"
+        x-init="$nextTick(() => updateCount())"
+        x-effect="updateCount()"
+        @scroll.window="showScrollTop = window.scrollY > 300"
+        class="container mx-auto px-4 py-8"
+    >
+        <!-- Header -->
+        <header class="text-center mb-10 animate-fade-in">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-sky-500 rounded-full mb-6 shadow-lg shadow-sky-500/20 animate-float-y">
+                <i class="fas fa-globe-americas text-white text-2xl" aria-hidden="true"></i>
+                <span class="sr-only">Wanderlust Chronicles</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-sky-400 mb-3 bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+                Wanderlust Chronicles
+            </h1>
+            <p class="text-zinc-400 text-lg max-w-2xl mx-auto leading-relaxed">Exploring the world one destination at a time. Recent adventures and unforgettable moments captured with passion.</p>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mb-6 animate-slide-up" role="tablist" aria-label="Category filters">
+            <button 
+                @click="selectedCategory = 'all'"
+                :aria-pressed="selectedCategory === 'all'"
+                :class="selectedCategory === 'all' ? 'bg-blue-600 text-white shadow-lg scale-105 ring-2 ring-sky-500/60' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:scale-105'"
+                class="px-5 py-2.5 rounded-xl transition-all duration-300 font-medium flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                role="tab"
+            >
+                <i class="fas fa-layer-group text-sm" aria-hidden="true"></i>
+                All Trips
+            </button>
+            <button 
+                @click="selectedCategory = 'mountains'"
+                :aria-pressed="selectedCategory === 'mountains'"
+                :class="selectedCategory === 'mountains' ? 'bg-blue-600 text-white shadow-lg scale-105 ring-2 ring-sky-500/60' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:scale-105'"
+                class="px-5 py-2.5 rounded-xl transition-all duration-300 font-medium flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                role="tab"
+            >
+                <i class="fas fa-mountain text-sm" aria-hidden="true"></i>
+                Mountains
+            </button>
+            <button 
+                @click="selectedCategory = 'beaches'"
+                :aria-pressed="selectedCategory === 'beaches'"
+                :class="selectedCategory === 'beaches' ? 'bg-blue-600 text-white shadow-lg scale-105 ring-2 ring-sky-500/60' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:scale-105'"
+                class="px-5 py-2.5 rounded-xl transition-all duration-300 font-medium flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                role="tab"
+            >
+                <i class="fas fa-umbrella-beach text-sm" aria-hidden="true"></i>
+                Beaches
+            </button>
+            <button 
+                @click="selectedCategory = 'cities'"
+                :aria-pressed="selectedCategory === 'cities'"
+                :class="selectedCategory === 'cities' ? 'bg-blue-600 text-white shadow-lg scale-105 ring-2 ring-sky-500/60' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:scale-105'"
+                class="px-5 py-2.5 rounded-xl transition-all duration-300 font-medium flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                role="tab"
+            >
+                <i class="fas fa-city text-sm" aria-hidden="true"></i>
+                Cities
+            </button>
+            <button 
+                @click="selectedCategory = 'nature'"
+                :aria-pressed="selectedCategory === 'nature'"
+                :class="selectedCategory === 'nature' ? 'bg-blue-600 text-white shadow-lg scale-105 ring-2 ring-sky-500/60' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:scale-105'"
+                class="px-5 py-2.5 rounded-xl transition-all duration-300 font-medium flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                role="tab"
+            >
+                <i class="fas fa-tree text-sm" aria-hidden="true"></i>
+                Nature
+            </button>
+        </div>
+
+        <!-- Current filter summary -->
+        <div class="text-center mb-8" aria-live="polite">
+            <p class="text-sm text-zinc-400">
+                Showing <span class="text-sky-400 font-semibold" x-text="visibleCount"></span>
+                <span class="text-zinc-300" x-text="categories[selectedCategory]"></span>
+            </p>
+        </div>
+
+        <!-- Gallery Grid -->
+        <section id="gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-ref="grid">
+            <!-- Trip 1 -->
+            <article 
+                data-category="mountains"
+                x-show="selectedCategory === 'all' || selectedCategory === 'mountains'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group cursor-pointer focus-within:shadow-glow-sky"
+            >
+                <div class="h-64 relative overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1611004764859-820cb3105b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbnMlMjBsYW5kc2NhcGV8ZW58MHwwfHx8MTc1OTI3NjkyMnww&ixlib=rb-4.1.0&q=80&w=1080"
+                        srcset="
+                            https://images.unsplash.com/photo-1611004764859-820cb3105b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbnMlMjBsYW5kc2NhcGV8ZW58MHwwfHx8MTc1OTI3NjkyMnww&ixlib=rb-4.1.0&q=80&w=640 640w,
+                            https://images.unsplash.com/photo-1611004764859-820cb3105b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbnMlMjBsYW5kc2NhcGV8ZW58MHwwfHx8MTc1OTI3NjkyMnww&ixlib=rb-4.1.0&q=80&w=1080 1080w,
+                            https://images.unsplash.com/photo-1611004764859-820cb3105b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbnMlMjBsYW5kc2NhcGV8ZW58MHwwfHx8MTc1OTI3NjkyMnww&ixlib=rb-4.1.0&q=80&w=1920 1920w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt="Swiss Alps mountains landscape"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    <!-- Favorite -->
+                    <div class="absolute top-4 left-4" x-data="{ liked: false }">
+                        <button @click.stop="liked = !liked" :aria-pressed="liked" class="w-10 h-10 rounded-full bg-zinc-900/50 backdrop-blur text-white grid place-items-center hover:bg-zinc-900/70 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                            <i :class="liked ? 'fa-solid fa-heart text-lime-400' : 'fa-regular fa-heart text-white/90'" aria-hidden="true"></i>
+                            <span class="sr-only" x-text="liked ? 'Remove from favorites' : 'Add to favorites'"></span>
+                        </button>
+                    </div>
+
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
+                            <i class="fas fa-mountain text-xs" aria-hidden="true"></i>
+                            Mountains
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                            @click.stop="openModal({ title: 'Swiss Alps Adventure', img: 'https://images.unsplash.com/photo-1611004764859-820cb3105b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbnMlMjBsYW5kc2NhcGV8ZW58MHwwfHx8MTc1OTI3NjkyMnww&ixlib=rb-4.1.0&q=80&w=1920', alt: 'Swiss Alps mountains landscape', category: 'Mountains', date: 'June 2024', rating: '4.8', description: 'Hiking through breathtaking alpine landscapes and charming mountain villages in the heart of Europe.' })"
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                        >
+                            <i class="fas fa-expand mr-1" aria-hidden="true"></i>
+                            View More
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">Swiss Alps Adventure</h3>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Hiking through breathtaking alpine landscapes and charming mountain villages in the heart of Europe.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium flex items-center gap-1">
+                            <i class="far fa-calendar text-sm" aria-hidden="true"></i>
+                            June 2024
+                        </span>
+                        <span class="text-lime-400 flex items-center gap-1" aria-label="Rating 4.8 out of 5">
+                            <i class="fas fa-star text-sm" aria-hidden="true"></i>
+                            4.8
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Trip 2 -->
+            <article 
+                data-category="beaches"
+                x-show="selectedCategory === 'all' || selectedCategory === 'beaches'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group cursor-pointer focus-within:shadow-glow-sky"
+            >
+                <div class="h-64 relative overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1683188687217-edec620b5b5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtYWxkaXZlcyUyMGJlYWNoJTIwdHJvcGljYWwlMjBwYXJhZGlzZXxlbnwwfDB8fHwxNzU5Mjc2OTIzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+                        srcset="
+                            https://images.unsplash.com/photo-1683188687217-edec620b5b5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtYWxkaXZlcyUyMGJlYWNoJTIwdHJvcGljYWwlMjBwYXJhZGlzZXxlbnwwfDB8fHwxNzU5Mjc2OTIzfDA&ixlib=rb-4.1.0&q=80&w=640 640w,
+                            https://images.unsplash.com/photo-1683188687217-edec620b5b5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtYWxkaXZlcyUyMGJlYWNoJTIwdHJvcGljYWwlMjBwYXJhZGlzZXxlbnwwfDB8fHwxNzU5Mjc2OTIzfDA&ixlib=rb-4.1.0&q=80&w=1080 1080w,
+                            https://images.unsplash.com/photo-1683188687217-edec620b5b5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtYWxkaXZlcyUyMGJlYWNoJTIwdHJvcGljYWwlMjBwYXJhZGlzZXxlbnwwfDB8fHwxNzU5Mjc2OTIzfDA&ixlib=rb-4.1.0&q=80&w=1920 1920w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt="Maldives beach tropical paradise"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    <!-- Favorite -->
+                    <div class="absolute top-4 left-4" x-data="{ liked: false }">
+                        <button @click.stop="liked = !liked" :aria-pressed="liked" class="w-10 h-10 rounded-full bg-zinc-900/50 backdrop-blur text-white grid place-items-center hover:bg-zinc-900/70 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                            <i :class="liked ? 'fa-solid fa-heart text-lime-400' : 'fa-regular fa-heart text-white/90'" aria-hidden="true"></i>
+                            <span class="sr-only" x-text="liked ? 'Remove from favorites' : 'Add to favorites'"></span>
+                        </button>
+                    </div>
+
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
+                            <i class="fas fa-umbrella-beach text-xs" aria-hidden="true"></i>
+                            Beaches
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                            @click.stop="openModal({ title: 'Maldives Paradise', img: 'https://images.unsplash.com/photo-1683188687217-edec620b5b5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtYWxkaXZlcyUyMGJlYWNoJTIwdHJvcGljYWwlMjBwYXJhZGlzZXxlbnwwfDB8fHwxNzU5Mjc2OTIzfDA&ixlib=rb-4.1.0&q=80&w=1920', alt: 'Maldives beach tropical paradise', category: 'Beaches', date: 'May 2024', rating: '4.9', description: 'Crystal clear turquoise waters and pristine white sand beaches in this tropical island paradise.' })"
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                        >
+                            <i class="fas fa-expand mr-1" aria-hidden="true"></i>
+                            View More
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">Maldives Paradise</h3>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Crystal clear turquoise waters and pristine white sand beaches in this tropical island paradise.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium flex items-center gap-1">
+                            <i class="far fa-calendar text-sm" aria-hidden="true"></i>
+                            May 2024
+                        </span>
+                        <span class="text-lime-400 flex items-center gap-1" aria-label="Rating 4.9 out of 5">
+                            <i class="fas fa-star text-sm" aria-hidden="true"></i>
+                            4.9
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Trip 3 -->
+            <article 
+                data-category="cities"
+                x-show="selectedCategory === 'all' || selectedCategory === 'cities'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group cursor-pointer focus-within:shadow-glow-sky"
+            >
+                <div class="h-64 relative overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1571625021382-523ec77781b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUb2t5byUyMGNpdHklMjBKYXBhbiUyMG5lb24lMjB1cmJhbiUyMHN0cmVldCUyMHNreWxpbmV8ZW58MHwwfHx8MTc1OTI3NzE0OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rNmuEDmBC2c"
+                        srcset="
+                            https://images.unsplash.com/photo-1571625021382-523ec77781b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUb2t5byUyMGNpdHklMjBKYXBhbiUyMG5lb24lMjB1cmJhbiUyMHN0cmVldCUyMHNreWxpbmV8ZW58MHwwfHx8MTc1OTI3NzE0OXww&ixlib=rb-4.1.0&q=80&w=640&utm_source=TailFlux&photo_id=rNmuEDmBC2c 640w,
+                            https://images.unsplash.com/photo-1571625021382-523ec77781b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUb2t5byUyMGNpdHklMjBKYXBhbiUyMG5lb24lMjB1cmJhbiUyMHN0cmVldCUyMHNreWxpbmV8ZW58MHwwfHx8MTc1OTI3NzE0OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=rNmuEDmBC2c 1080w,
+                            https://images.unsplash.com/photo-1571625021382-523ec77781b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUb2t5byUyMGNpdHklMjBKYXBhbiUyMG5lb24lMjB1cmJhbiUyMHN0cmVldCUyMHNreWxpbmV8ZW58MHwwfHx8MTc1OTI3NzE0OXww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=rNmuEDmBC2c 1920w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt="Tokyo city at night with neon lights"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    <!-- Favorite -->
+                    <div class="absolute top-4 left-4" x-data="{ liked: false }">
+                        <button @click.stop="liked = !liked" :aria-pressed="liked" class="w-10 h-10 rounded-full bg-zinc-900/50 backdrop-blur text-white grid place-items-center hover:bg-zinc-900/70 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                            <i :class="liked ? 'fa-solid fa-heart text-lime-400' : 'fa-regular fa-heart text-white/90'" aria-hidden="true"></i>
+                            <span class="sr-only" x-text="liked ? 'Remove from favorites' : 'Add to favorites'"></span>
+                        </button>
+                    </div>
+
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
+                            <i class="fas fa-city text-xs" aria-hidden="true"></i>
+                            Cities
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                            @click.stop="openModal({ title: 'Tokyo Urban Exploration', img: 'https://images.unsplash.com/photo-1571625021382-523ec77781b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUb2t5byUyMGNpdHklMjBKYXBhbiUyMG5lb24lMjB1cmJhbiUyMHN0cmVldCUyMHNreWxpbmV8ZW58MHwwfHx8MTc1OTI3NzE0OXww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=rNmuEDmBC2c', alt: 'Tokyo city at night with neon lights', category: 'Cities', date: 'April 2024', rating: '4.7', description: 'Discovering the perfect blend of traditional Japanese culture and cutting-edge modern innovation.' })"
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                        >
+                            <i class="fas fa-expand mr-1" aria-hidden="true"></i>
+                            View More
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">Tokyo Urban Exploration</h3>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Discovering the perfect blend of traditional Japanese culture and cutting-edge modern innovation.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium flex items-center gap-1">
+                            <i class="far fa-calendar text-sm" aria-hidden="true"></i>
+                            April 2024
+                        </span>
+                        <span class="text-lime-400 flex items-center gap-1" aria-label="Rating 4.7 out of 5">
+                            <i class="fas fa-star text-sm" aria-hidden="true"></i>
+                            4.7
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Trip 4 -->
+            <article 
+                data-category="nature"
+                x-show="selectedCategory === 'all' || selectedCategory === 'nature'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group cursor-pointer focus-within:shadow-glow-sky"
+            >
+                <div class="h-64 relative overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1688550001785-7d076c27ebea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxDb3N0YSUyMFJpY2ElMjByYWluZm9yZXN0JTIwanVuZ2xlJTIwd2lsZGxpZmV8ZW58MHwwfHx8MTc1OTI3NzE1MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=MSAiPYdn8Pw"
+                        srcset="
+                            https://images.unsplash.com/photo-1688550001785-7d076c27ebea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxDb3N0YSUyMFJpY2ElMjByYWluZm9yZXN0JTIwanVuZ2xlJTIwd2lsZGxpZmV8ZW58MHwwfHx8MTc1OTI3NzE1MHww&ixlib=rb-4.1.0&q=80&w=640&utm_source=TailFlux&photo_id=MSAiPYdn8Pw 640w,
+                            https://images.unsplash.com/photo-1688550001785-7d076c27ebea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxDb3N0YSUyMFJpY2ElMjByYWluZm9yZXN0JTIwanVuZ2xlJTIwd2lsZGxpZmV8ZW58MHwwfHx8MTc1OTI3NzE1MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=MSAiPYdn8Pw 1080w,
+                            https://images.unsplash.com/photo-1688550001785-7d076c27ebea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxDb3N0YSUyMFJpY2ElMjByYWluZm9yZXN0JTIwanVuZ2xlJTIwd2lsZGxpZmV8ZW58MHwwfHx8MTc1OTI3NzE1MHww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=MSAiPYdn8Pw 1920w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt="Costa Rica rainforest jungle with rich wildlife"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    <!-- Favorite -->
+                    <div class="absolute top-4 left-4" x-data="{ liked: false }">
+                        <button @click.stop="liked = !liked" :aria-pressed="liked" class="w-10 h-10 rounded-full bg-zinc-900/50 backdrop-blur text-white grid place-items-center hover:bg-zinc-900/70 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                            <i :class="liked ? 'fa-solid fa-heart text-lime-400' : 'fa-regular fa-heart text-white/90'" aria-hidden="true"></i>
+                            <span class="sr-only" x-text="liked ? 'Remove from favorites' : 'Add to favorites'"></span>
+                        </button>
+                    </div>
+
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
+                            <i class="fas fa-tree text-xs" aria-hidden="true"></i>
+                            Nature
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                            @click.stop="openModal({ title: 'Costa Rica Rainforest', img: 'https://images.unsplash.com/photo-1688550001785-7d076c27ebea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxDb3N0YSUyMFJpY2ElMjByYWluZm9yZXN0JTIwanVuZ2xlJTIwd2lsZGxpZmV8ZW58MHwwfHx8MTc1OTI3NzE1MHww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=MSAiPYdn8Pw', alt: 'Costa Rica rainforest jungle with rich wildlife', category: 'Nature', date: 'March 2024', rating: '4.8', description: 'Immersed in lush tropical rainforests and incredible wildlife encounters in Central America.' })"
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                        >
+                            <i class="fas fa-expand mr-1" aria-hidden="true"></i>
+                            View More
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">Costa Rica Rainforest</h3>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Immersed in lush tropical rainforests and incredible wildlife encounters in Central America.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium flex items-center gap-1">
+                            <i class="far fa-calendar text-sm" aria-hidden="true"></i>
+                            March 2024
+                        </span>
+                        <span class="text-lime-400 flex items-center gap-1" aria-label="Rating 4.8 out of 5">
+                            <i class="fas fa-star text-sm" aria-hidden="true"></i>
+                            4.8
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Trip 5 -->
+            <article 
+                data-category="mountains"
+                x-show="selectedCategory === 'all' || selectedCategory === 'mountains'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group cursor-pointer focus-within:shadow-glow-sky"
+            >
+                <div class="h-64 relative overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1501693988750-8495148d47e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxSb2NreSUyME1vdW50YWlucyUyMGxhbmRzY2FwZSUyMGFscGluZSUyMGxha2V8ZW58MHwwfHx8MTc1OTI3NzE1MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=zEvZRMyLd-A"
+                        srcset="
+                            https://images.unsplash.com/photo-1501693988750-8495148d47e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxSb2NreSUyME1vdW50YWlucyUyMGxhbmRzY2FwZSUyMGFscGluZSUyMGxha2V8ZW58MHwwfHx8MTc1OTI3NzE1MXww&ixlib=rb-4.1.0&q=80&w=640&utm_source=TailFlux&photo_id=zEvZRMyLd-A 640w,
+                            https://images.unsplash.com/photo-1501693988750-8495148d47e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxSb2NreSUyME1vdW50YWlucyUyMGxhbmRzY2FwZSUyMGFscGluZSUyMGxha2V8ZW58MHwwfHx8MTc1OTI3NzE1MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=zEvZRMyLd-A 1080w,
+                            https://images.unsplash.com/photo-1501693988750-8495148d47e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxSb2NreSUyME1vdW50YWlucyUyMGxhbmRzY2FwZSUyMGFscGluZSUyMGxha2V8ZW58MHwwfHx8MTc1OTI3NzE1MXww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=zEvZRMyLd-A 1920w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt="Rocky Mountains landscape with alpine lake"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    <!-- Favorite -->
+                    <div class="absolute top-4 left-4" x-data="{ liked: false }">
+                        <button @click.stop="liked = !liked" :aria-pressed="liked" class="w-10 h-10 rounded-full bg-zinc-900/50 backdrop-blur text-white grid place-items-center hover:bg-zinc-900/70 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                            <i :class="liked ? 'fa-solid fa-heart text-lime-400' : 'fa-regular fa-heart text-white/90'" aria-hidden="true"></i>
+                            <span class="sr-only" x-text="liked ? 'Remove from favorites' : 'Add to favorites'"></span>
+                        </button>
+                    </div>
+
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
+                            <i class="fas fa-mountain text-xs" aria-hidden="true"></i>
+                            Mountains
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                            @click.stop="openModal({ title: 'Rocky Mountain Journey', img: 'https://images.unsplash.com/photo-1501693988750-8495148d47e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxSb2NreSUyME1vdW50YWlucyUyMGxhbmRzY2FwZSUyMGFscGluZSUyMGxha2V8ZW58MHwwfHx8MTc1OTI3NzE1MXww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=zEvZRMyLd-A', alt: 'Rocky Mountains landscape with alpine lake', category: 'Mountains', date: 'February 2024', rating: '4.6', description: 'Exploring rugged peaks and serene alpine lakes in the breathtaking North American wilderness.' })"
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                        >
+                            <i class="fas fa-expand mr-1" aria-hidden="true"></i>
+                            View More
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">Rocky Mountain Journey</h3>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Exploring rugged peaks and serene alpine lakes in the breathtaking North American wilderness.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium flex items-center gap-1">
+                            <i class="far fa-calendar text-sm" aria-hidden="true"></i>
+                            February 2024
+                        </span>
+                        <span class="text-lime-400 flex items-center gap-1" aria-label="Rating 4.6 out of 5">
+                            <i class="fas fa-star text-sm" aria-hidden="true"></i>
+                            4.6
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Trip 6 -->
+            <article 
+                data-category="beaches"
+                x-show="selectedCategory === 'all' || selectedCategory === 'beaches'"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group cursor-pointer focus-within:shadow-glow-sky"
+            >
+                <div class="h-64 relative overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1692485296299-7f57c027d491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYW50b3JpbmklMjBHcmVlY2UlMjBpc2xhbmQlMjBzdW5zZXQlMjBjYWxkZXJhfGVufDB8MHx8fDE3NTkyNzcxNTF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=1nZGiOofraA"
+                        srcset="
+                            https://images.unsplash.com/photo-1692485296299-7f57c027d491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYW50b3JpbmklMjBHcmVlY2UlMjBpc2xhbmQlMjBzdW5zZXQlMjBjYWxkZXJhfGVufDB8MHx8fDE3NTkyNzcxNTF8MA&ixlib=rb-4.1.0&q=80&w=640&utm_source=TailFlux&photo_id=1nZGiOofraA 640w,
+                            https://images.unsplash.com/photo-1692485296299-7f57c027d491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYW50b3JpbmklMjBHcmVlY2UlMjBpc2xhbmQlMjBzdW5zZXQlMjBjYWxkZXJhfGVufDB8MHx8fDE3NTkyNzcxNTF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=1nZGiOofraA 1080w,
+                            https://images.unsplash.com/photo-1692485296299-7f57c027d491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYW50b3JpbmklMjBHcmVlY2UlMjBpc2xhbmQlMjBzdW5zZXQlMjBjYWxkZXJhfGVufDB8MHx8fDE3NTkyNzcxNTF8MA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=1nZGiOofraA 1920w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt="Santorini Greece island sunset over the caldera"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    <!-- Favorite -->
+                    <div class="absolute top-4 left-4" x-data="{ liked: false }">
+                        <button @click.stop="liked = !liked" :aria-pressed="liked" class="w-10 h-10 rounded-full bg-zinc-900/50 backdrop-blur text-white grid place-items-center hover:bg-zinc-900/70 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                            <i :class="liked ? 'fa-solid fa-heart text-lime-400' : 'fa-regular fa-heart text-white/90'" aria-hidden="true"></i>
+                            <span class="sr-only" x-text="liked ? 'Remove from favorites' : 'Add to favorites'"></span>
+                        </button>
+                    </div>
+
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-lime-500 text-zinc-900 px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
+                            <i class="fas fa-umbrella-beach text-xs" aria-hidden="true"></i>
+                            Beaches
+                        </span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                            @click.stop="openModal({ title: 'Greek Island Hopping', img: 'https://images.unsplash.com/photo-1692485296299-7f57c027d491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxTYW50b3JpbmklMjBHcmVlY2UlMjBpc2xhbmQlMjBzdW5zZXQlMjBjYWxkZXJhfGVufDB8MHx8fDE3NTkyNzcxNTF8MA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=1nZGiOofraA', alt: 'Santorini Greece island sunset over the caldera', category: 'Beaches', date: 'January 2024', rating: '4.9', description: 'Santorini\'s magical sunsets and Mediterranean crystal waters in this unforgettable island adventure.' })"
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500"
+                        >
+                            <i class="fas fa-expand mr-1" aria-hidden="true"></i>
+                            View More
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">Greek Island Hopping</h3>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">Santorini's magical sunsets and Mediterranean crystal waters in this unforgettable island adventure.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sky-400 font-medium flex items-center gap-1">
+                            <i class="far fa-calendar text-sm" aria-hidden="true"></i>
+                            January 2024
+                        </span>
+                        <span class="text-lime-400 flex items-center gap-1" aria-label="Rating 4.9 out of 5">
+                            <i class="fas fa-star text-sm" aria-hidden="true"></i>
+                            4.9
+                        </span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Modal -->
+        <div 
+            x-show="modalOpen" 
+            x-transition.opacity
+            class="fixed inset-0 z-50"
+            aria-labelledby="modal-title"
+            aria-modal="true"
+            role="dialog"
+        >
+            <div @click="closeModal()" class="absolute inset-0 bg-zinc-950/70 backdrop-blur-sm"></div>
+
+            <div 
+                class="relative max-w-3xl mx-auto my-10 md:my-16 bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden border border-zinc-800"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+            >
+                <button @click="closeModal()" class="absolute top-3 right-3 w-10 h-10 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-white grid place-items-center transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500" aria-label="Close modal">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+
+                <div class="h-64 md:h-96 relative bg-zinc-800">
+                    <img :src="modal.img" :alt="modal.alt" class="w-full h-full object-cover" loading="eager" decoding="async">
+                    <div class="absolute bottom-3 left-3">
+                        <span class="bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold text-white">
+                            <i class="fa-regular fa-calendar mr-1" aria-hidden="true"></i>
+                            <span x-text="modal.date"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h2 id="modal-title" class="text-2xl font-bold text-white mb-1" x-text="modal.title"></h2>
+                            <div class="flex items-center gap-3 text-sm">
+                                <span class="inline-flex items-center gap-1 text-zinc-300">
+                                    <i class="fa-solid fa-tag text-lime-400 text-xs" aria-hidden="true"></i>
+                                    <span x-text="modal.category"></span>
+                                </span>
+                                <span class="inline-flex items-center gap-1 text-lime-400" :aria-label="`Rating ${modal.rating} out of 5`">
+                                    <i class="fa-solid fa-star text-xs" aria-hidden="true"></i>
+                                    <span x-text="modal.rating"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="shrink-0 hidden sm:flex items-center gap-2">
+                            <a :href="modal.img" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                                <i class="fa-solid fa-arrow-up-right-from-square mr-1" aria-hidden="true"></i>
+                                Open
+                            </a>
+                            <button @click="navigator.clipboard.writeText(window.location.href)" class="px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">
+                                <i class="fa-solid fa-link mr-1" aria-hidden="true"></i>
+                                Copy Link
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-zinc-300 mt-4 leading-relaxed" x-text="modal.description"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll-to-top floating button -->
+        <button 
+            x-show="showScrollTop" 
+            x-transition
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-sky-500 text-white shadow-lg shadow-sky-500/30 hover:bg-sky-600 grid place-items-center focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-white"
+            aria-label="Scroll to top"
+        >
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 pt-8 border-t border-zinc-700 animate-fade-in">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center text-sky-400 hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-lg focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500" aria-label="Instagram">
+                    <i class="fab fa-instagram text-xl" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center text-sky-400 hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-lg focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500" aria-label="Blog">
+                    <i class="fas fa-blog text-xl" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center text-sky-400 hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-lg focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500" aria-label="Email">
+                    <i class="fas fa-envelope text-xl" aria-hidden="true"></i>
+                </a>
+            </div>
+            <p class="text-zinc-500 text-sm">© 2024 Wanderlust Chronicles. All journeys documented with passion and wanderlust.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-sky-400 hover:text-sky-300 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">Privacy Policy</a>
+                <a href="#" class="text-sky-400 hover:text-sky-300 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">Terms of Service</a>
+                <a href="#" class="text-sky-400 hover:text-sky-300 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-zinc-900 ring-sky-500">Contact</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
