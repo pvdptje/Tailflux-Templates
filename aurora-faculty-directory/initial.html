@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Directory | Private High School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'school-yellow': '#FBBF24',
+                        'school-red': '#EF4444',
+                        'school-sky': '#0EA5E9',
+                        'school-purple': '#8B5CF6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-school-purple to-school-sky rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">PHS</span>
+                    </div>
+                    <h1 class="ml-3 text-2xl font-bold text-gray-900">Private High School</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-school-purple transition-colors">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-school-purple transition-colors">Academics</a>
+                    <a href="#" class="text-gray-600 hover:text-school-purple transition-colors">Faculty</a>
+                    <a href="#" class="text-gray-600 hover:text-school-purple transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Faculty Directory</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Meet our dedicated team of educators committed to excellence in teaching and student development.
+            </p>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8" x-data="{ 
+            search: '',
+            department: 'all',
+            departments: ['Mathematics', 'Science', 'English', 'History', 'Arts', 'Languages', 'Physical Education']
+        }">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <input 
+                        type="text" 
+                        x-model="search"
+                        placeholder="Search faculty by name or subject..."
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-school-sky focus:border-school-sky transition-all"
+                    >
+                </div>
+                <select 
+                    x-model="department"
+                    class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-school-purple focus:border-school-purple transition-all"
+                >
+                    <option value="all">All Departments</option>
+                    <template x-for="dept in departments" :key="dept">
+                        <option :value="dept" x-text="dept"></option>
+                    </template>
+                </select>
+            </div>
+        </div>
+
+        <!-- Faculty Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
+             x-data="{
+                 faculty: [
+                     { 
+                         name: 'Dr. Sarah Johnson', 
+                         title: 'Mathematics Department Head', 
+                         department: 'Mathematics',
+                         email: 's.johnson@school.edu',
+                         phone: '(555) 123-4567',
+                         office: 'Room 201',
+                         bio: 'Specializes in Advanced Calculus and Statistics with 15 years of teaching experience.',
+                         avatar: '/api/placeholder/150/150'
+                     },
+                     { 
+                         name: 'Prof. Michael Chen', 
+                         title: 'Science Teacher', 
+                         department: 'Science',
+                         email: 'm.chen@school.edu',
+                         phone: '(555) 123-4568',
+                         office: 'Room 305',
+                         bio: 'Passionate about experimental physics and chemistry. Leads the Science Olympiad team.',
+                         avatar: '/api/placeholder/150/150'
+                     },
+                     { 
+                         name: 'Ms. Emily Rodriguez', 
+                         title: 'English Literature', 
+                         department: 'English',
+                         email: 'e.rodriguez@school.edu',
+                         phone: '(555) 123-4569',
+                         office: 'Room 102',
+                         bio: 'Focuses on classic literature and creative writing. Published author of two novels.',
+                         avatar: '/api/placeholder/150/150'
+                     },
+                     { 
+                         name: 'Mr. David Thompson', 
+                         title: 'History Teacher', 
+                         department: 'History',
+                         email: 'd.thompson@school.edu',
+                         phone: '(555) 123-4570',
+                         office: 'Room 208',
+                         bio: 'Expert in World History and Political Science. Leads the Model UN program.',
+                         avatar: '/api/placeholder/150/150'
+                     },
+                     { 
+                         name: 'Ms. Olivia Parker', 
+                         title: 'Art Director', 
+                         department: 'Arts',
+                         email: 'o.parker@school.edu',
+                         phone: '(555) 123-4571',
+                         office: 'Art Studio',
+                         bio: 'Professional artist specializing in mixed media. Exhibited work in local galleries.',
+                         avatar: '/api/placeholder/150/150'
+                     },
+                     { 
+                         name: 'Prof. Carlos Mendez', 
+                         title: 'Spanish Department', 
+                         department: 'Languages',
+                         email: 'c.mendez@school.edu',
+                         phone: '(555) 123-4572',
+                         office: 'Room 115',
+                         bio: 'Native Spanish speaker with expertise in language acquisition and cultural studies.',
+                         avatar: '/api/placeholder/150/150'
+                     }
+                 ],
+                 get filteredFaculty() {
+                     return this.faculty.filter(teacher => {
+                         const matchesSearch = teacher.name.toLowerCase().includes(this.search.toLowerCase()) ||
+                                              teacher.department.toLowerCase().includes(this.search.toLowerCase());
+                         const matchesDepartment = this.department === 'all' || teacher.department === this.department;
+                         return matchesSearch && matchesDepartment;
+                     });
+                 }
+             }">
+            
+            <template x-for="teacher in filteredFaculty" :key="teacher.name">
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100">
+                    <!-- Department Color Bar -->
+                    <div class="h-2" 
+                         :class="{
+                             'bg-school-yellow': teacher.department === 'Mathematics',
+                             'bg-school-red': teacher.department === 'Science',
+                             'bg-school-sky': teacher.department === 'English',
+                             'bg-school-purple': teacher.department === 'History',
+                             'bg-yellow-400': teacher.department === 'Arts',
+                             'bg-red-400': teacher.department === 'Languages',
+                             'bg-blue-400': teacher.department === 'Physical Education'
+                         }"></div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-r from-school-sky to-school-purple rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                <span x-text="teacher.name.split(' ').map(n => n[0]).join('')"></span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold text-gray-900" x-text="teacher.name"></h3>
+                                <p class="text-school-sky font-medium" x-text="teacher.title"></p>
+                                <div class="mt-2 flex items-center text-sm text-gray-600">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                                          x-text="teacher.department"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 space-y-2 text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-school-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span x-text="teacher.email"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-school-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                <span x-text="teacher.phone"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-school-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                <span x-text="teacher.office"></span>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed" x-text="teacher.bio"></p>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Empty State -->
+            <div x-show="filteredFaculty.length === 0" class="col-span-full text-center py-12">
+                <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No faculty members found</h3>
+                <p class="text-gray-600">Try adjusting your search criteria or filter settings.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-school-purple to-school-sky rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">PHS</span>
+                        </div>
+                        <span class="ml-2 text-xl font-bold">Private High School</span>
+                    </div>
+                    <p class="text-gray-400 max-w-md">
+                        Dedicated to academic excellence and character development since 1985. 
+                        Preparing students for success in college and beyond.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Admissions</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Academics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Faculty Directory</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Calendar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <address class="not-italic text-gray-400 space-y-2">
+                        <p>123 Education Lane</p>
+                        <p>Academic City, AC 12345</p>
+                        <p>Phone: (555) 123-4000</p>
+                        <p>Email: info@school.edu</p>
+                    </address>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Private High School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

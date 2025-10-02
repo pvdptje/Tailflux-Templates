@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Meet the Private High School faculty. Search and filter by department, view bios, and connect with our educators.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Directory | Private High School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'school-yellow': '#FBBF24',
+                        'school-red': '#EF4444',
+                        'school-sky': '#0EA5E9',
+                        'school-purple': '#8B5CF6',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .teacher-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+        }
+        .teacher-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .search-focus {
+            transition: all 0.3s ease;
+        }
+        .search-focus:focus {
+            transform: scale(1.02);
+        }
+        .department-badge {
+            transition: all 0.3s ease;
+        }
+        .department-badge:hover {
+            transform: scale(1.05);
+        }
+        .stagger-animation > * {
+            animation: slideUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.06s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.12s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.18s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.24s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.30s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.36s; }
+
+        /* Fallback for line-clamp-3 without plugin */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        .line-clamp-none {
+            -webkit-line-clamp: unset;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen text-gray-900">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-200/60 sticky top-0 z-50" x-data="{ open:false }" @keydown.escape.window="open=false">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center group focus:outline-none focus:ring-2 focus:ring-school-sky rounded-xl">
+                    <div class="w-12 h-12 bg-gradient-to-r from-school-purple to-school-sky rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                        <span class="text-white font-bold text-xl">PHS</span>
+                    </div>
+                    <h1 class="ml-4 text-2xl font-bold bg-gradient-to-r from-school-purple to-school-sky bg-clip-text text-transparent">Private High School</h1>
+                </a>
+                <nav class="hidden md:flex space-x-8" aria-label="Primary">
+                    <a href="#" class="text-gray-700 hover:text-school-purple transition-all duration-300 hover:scale-105 flex items-center">
+                        <i class="fas fa-home mr-2 text-sm"></i>Home
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-school-purple transition-all duration-300 hover:scale-105 flex items-center">
+                        <i class="fas fa-graduation-cap mr-2 text-sm"></i>Academics
+                    </a>
+                    <a href="#" class="text-school-purple font-semibold transition-all duration-300 hover:scale-105 flex items-center">
+                        <i class="fas fa-chalkboard-teacher mr-2 text-sm"></i>Faculty
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-school-purple transition-all duration-300 hover:scale-105 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-sm"></i>Contact
+                    </a>
+                </nav>
+                <button class="md:hidden text-gray-700 hover:text-school-purple transition-colors focus:outline-none focus:ring-2 focus:ring-school-sky rounded-lg p-2" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobileMenu" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div x-show="open" x-transition.opacity x-transition.duration.200 id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-4 space-y-2">
+                <a href="#" class="block px-3 py-3 rounded-lg hover:bg-gray-50">Home</a>
+                <a href="#" class="block px-3 py-3 rounded-lg hover:bg-gray-50">Academics</a>
+                <a href="#" class="block px-3 py-3 rounded-lg hover:bg-gray-50 font-semibold text-school-purple">Faculty</a>
+                <a href="#" class="block px-3 py-3 rounded-lg hover:bg-gray-50">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main x-data="facultyDirectory()" x-init="init()" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-12 animate-slide-up">
+            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-school-sky to-school-purple rounded-full flex items-center justify-center shadow-lg">
+                <i class="fas fa-chalkboard-teacher text-white text-2xl" aria-hidden="true"></i>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-school-purple bg-clip-text text-transparent">Faculty Directory</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Meet our dedicated team of educators committed to excellence in teaching and student development.
+            </p>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <section class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8 border border-gray-200/50 animate-fade-in" aria-labelledby="filtersHeading">
+            <h3 id="filtersHeading" class="sr-only">Search and Filters</h3>
+            <div class="flex flex-col md:flex-row gap-4 items-center">
+                <div class="flex-1 w-full">
+                    <div class="relative">
+                        <label for="search" class="sr-only">Search faculty by name, department or title</label>
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                        <input 
+                            id="search"
+                            type="text"
+                            x-model.debounce.200ms="search"
+                            placeholder="Search faculty by name, department or title..."
+                            class="w-full pl-12 pr-12 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-school-sky focus:border-school-sky transition-all duration-300 search-focus shadow-sm"
+                            autocomplete="off"
+                        >
+                        <button x-show="search.length" @click="search=''" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-school-sky" aria-label="Clear search">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="relative w-full md:w-64">
+                    <label for="department" class="sr-only">Filter by department</label>
+                    <i class="fas fa-filter absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" aria-hidden="true"></i>
+                    <select 
+                        id="department"
+                        x-model="department"
+                        class="w-full pl-12 pr-10 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-school-purple focus:border-school-purple transition-all duration-300 search-focus shadow-sm appearance-none bg-white"
+                    >
+                        <option value="all">All Departments</option>
+                        <template x-for="dept in departments" :key="dept">
+                            <option :value="dept" x-text="dept"></option>
+                        </template>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
+                </div>
+                <div class="relative w-full md:w-56">
+                    <label for="sort" class="sr-only">Sort faculty</label>
+                    <i class="fas fa-arrow-up-a-z absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" aria-hidden="true"></i>
+                    <select 
+                        id="sort"
+                        x-model="sortBy"
+                        class="w-full pl-12 pr-10 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-school-sky focus:border-school-sky transition-all duration-300 search-focus shadow-sm appearance-none bg-white"
+                    >
+                        <option value="nameAsc">Name (A–Z)</option>
+                        <option value="nameDesc">Name (Z–A)</option>
+                        <option value="deptAsc">Department (A–Z)</option>
+                        <option value="deptDesc">Department (Z–A)</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <!-- Quick department chips -->
+            <div class="mt-4 flex flex-wrap gap-2 items-center">
+                <span class="text-sm text-gray-500 mr-2">Quick filters:</span>
+                <button @click="department='all'" :class="chipClass('all')" class="department-badge">All</button>
+                <template x-for="dept in departments" :key="'chip-' + dept">
+                    <button @click="department=dept" :class="chipClass(dept)" class="department-badge" x-text="dept" :aria-pressed="(department===dept).toString()"></button>
+                </template>
+                <div class="ml-auto flex items-center gap-3">
+                    <div class="text-sm text-gray-600" aria-live="polite">
+                        <span x-text="filteredFaculty.length"></span> of <span x-text="faculty.length"></span> shown
+                    </div>
+                    <button @click="resetFilters()" class="text-sm font-medium text-school-sky hover:text-school-purple px-3 py-1.5 rounded-lg hover:bg-school-sky/10 transition-colors">
+                        <i class="fas fa-rotate-right mr-1"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Faculty Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-animation" role="grid" aria-live="polite">
+            <template x-for="teacher in filteredFaculty" :key="teacher.email">
+                <article class="teacher-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200/50 group focus-within:ring-2 focus-within:ring-school-sky" role="gridcell" x-data="{ expanded:false }">
+                    <!-- Background Image -->
+                    <div class="h-32 bg-cover bg-center relative" :style="`background-image: url('${teacher.background}')`" role="img" :aria-label="teacher.department + ' background'">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-opacity duration-500"></div>
+                        <!-- Department Color Bar -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1.5" 
+                             :class="{
+                                 'bg-school-yellow': teacher.department === 'Mathematics',
+                                 'bg-school-red': teacher.department === 'Science',
+                                 'bg-school-sky': teacher.department === 'English',
+                                 'bg-school-purple': teacher.department === 'History',
+                                 'bg-yellow-400': teacher.department === 'Arts',
+                                 'bg-red-400': teacher.department === 'Languages',
+                                 'bg-blue-400': teacher.department === 'Physical Education'
+                             }"></div>
+                    </div>
+                    
+                    <div class="p-6 relative">
+                        <!-- Avatar -->
+                        <div class="absolute -top-16 left-6">
+                            <div class="w-20 h-20 rounded-2xl border-4 border-white shadow-lg overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                                <img :src="teacher.avatar" :alt="teacher.name + ' portrait'" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pr-10">
+                            <h3 class="text-xl font-bold group-hover:text-school-purple transition-colors duration-300" x-text="teacher.name"></h3>
+                            <p class="text-school-sky font-semibold mt-1" x-text="teacher.title"></p>
+                            <div class="mt-3 flex items-center gap-2">
+                                <span class="department-badge inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 border border-gray-200"
+                                      x-text="teacher.department"></span>
+                            </div>
+                            <!-- Mobile expand toggle -->
+                            <button @click="expanded = !expanded" class="absolute right-6 top-6 w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors md:hidden" :aria-expanded="expanded.toString()" :aria-controls="`details-${teacher.email}`" aria-label="Toggle details">
+                                <i class="fas" :class="expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mt-6 space-y-3 text-sm text-gray-600" :id="`details-${teacher.email}`" x-show="expanded || $screen('md')" x-transition>
+                            <div class="flex items-center group/item hover:text-school-purple transition-colors duration-300">
+                                <div class="w-8 h-8 bg-school-purple/10 rounded-lg flex items-center justify-center mr-3 group-hover/item:bg-school-purple/20 transition-colors duration-300">
+                                    <i class="fas fa-envelope text-school-purple text-xs"></i>
+                                </div>
+                                <a :href="`mailto:${teacher.email}`" class="truncate hover:underline" x-text="teacher.email"></a>
+                            </div>
+                            <div class="flex items-center group/item hover:text-school-red transition-colors duration-300">
+                                <div class="w-8 h-8 bg-school-red/10 rounded-lg flex items-center justify-center mr-3 group-hover/item:bg-school-red/20 transition-colors duration-300">
+                                    <i class="fas fa-phone text-school-red text-xs"></i>
+                                </div>
+                                <a :href="`tel:${teacher.phone.replace(/[^0-9]/g,'')}`" x-text="teacher.phone" class="hover:underline"></a>
+                            </div>
+                            <div class="flex items-center group/item hover:text-school-yellow transition-colors duration-300">
+                                <div class="w-8 h-8 bg-school-yellow/10 rounded-lg flex items-center justify-center mr-3 group-hover/item:bg-school-yellow/20 transition-colors duration-300">
+                                    <i class="fas fa-map-marker-alt text-school-yellow text-xs"></i>
+                                </div>
+                                <span x-text="teacher.office"></span>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-6 text-gray-600 text-sm leading-relaxed line-clamp-3 md:group-hover:line-clamp-none transition-all duration-300" x-text="teacher.bio"></p>
+                        
+                        <div class="mt-6 pt-4 border-t border-gray-200/50 flex justify-between items-center">
+                            <button class="text-school-sky hover:text-school-purple transition-colors duration-300 flex items-center text-sm font-medium focus:outline-none focus:ring-2 focus:ring-school-sky rounded-lg px-2 py-1">
+                                <i class="fas fa-calendar-plus mr-2"></i>Schedule Meeting
+                            </button>
+                            <div class="flex space-x-2">
+                                <a :href="`mailto:${teacher.email}`" class="w-8 h-8 bg-gray-100 hover:bg-school-sky hover:text-white rounded-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-school-sky" aria-label="Email">
+                                    <i class="fas fa-envelope text-xs"></i>
+                                </a>
+                                <a :href="`tel:${teacher.phone.replace(/[^0-9]/g,'')}`" class="w-8 h-8 bg-gray-100 hover:bg-school-purple hover:text-white rounded-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-school-sky" aria-label="Call">
+                                    <i class="fas fa-phone text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </template>
+
+            <!-- Empty State -->
+            <div x-show="filteredFaculty.length === 0" class="col-span-full text-center py-16 animate-bounce-in">
+                <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center shadow-inner">
+                    <i class="fas fa-search text-gray-400 text-2xl" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">No faculty members found</h3>
+                <p class="text-gray-600 text-lg max-w-md mx-auto mb-6">
+                    Try adjusting your search or filter settings to find what you're looking for.
+                </p>
+                <button @click="resetFilters()" class="bg-school-sky hover:bg-school-purple text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-rotate-right mr-2"></i>Reset Filters
+                </button>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="mt-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 border border-gray-200/50" aria-label="School statistics">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="animate-slide-up" style="animation-delay: 0.1s">
+                    <div class="text-3xl font-bold text-school-purple mb-2">24</div>
+                    <div class="text-gray-600 text-sm">Faculty Members</div>
+                </div>
+                <div class="animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="text-3xl font-bold text-school-sky mb-2">7</div>
+                    <div class="text-gray-600 text-sm">Departments</div>
+                </div>
+                <div class="animate-slide-up" style="animation-delay: 0.3s">
+                    <div class="text-3xl font-bold text-school-yellow mb-2">15+</div>
+                    <div class="text-gray-600 text-sm">Avg. Years Experience</div>
+                </div>
+                <div class="animate-slide-up" style="animation-delay: 0.4s">
+                    <div class="text-3xl font-bold text-school-red mb-2">98%</div>
+                    <div class="text-gray-600 text-sm">Student Satisfaction</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-gray-900 to-purple-900 text-white mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-r from-school-purple to-school-sky rounded-xl flex items-center justify-center shadow-lg">
+                            <span class="text-white font-bold text-lg">PHS</span>
+                        </div>
+                        <span class="ml-3 text-2xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Private High School</span>
+                    </div>
+                    <p class="text-gray-300 max-w-md text-lg leading-relaxed">
+                        Dedicated to academic excellence and character development since 1985. 
+                        Preparing students for success in college and beyond.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-school-sky rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-school-purple rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Twitter">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-school-red rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Instagram">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-school-yellow rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6 text-white">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li><a href="#" class="group hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>Admissions</a></li>
+                        <li><a href="#" class="group hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>Academics</a></li>
+                        <li><a href="#" class="group hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>Faculty Directory</a></li>
+                        <li><a href="#" class="group hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>Calendar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6 text-white">Contact</h4>
+                    <address class="not-italic text-gray-300 space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-school-yellow mr-3"></i>
+                            <p>123 Education Lane<br>Academic City, AC 12345</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-school-red mr-3"></i>
+                            <p>Phone: (555) 123-4000</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-school-sky mr-3"></i>
+                            <p>Email: info@school.edu</p>
+                        </div>
+                    </address>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p class="flex items-center justify-center">
+                    <i class="fas fa-heart text-school-red mr-2" aria-hidden="true"></i>
+                    &copy; 2024 Private High School. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-school-sky hover:bg-school-purple text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-0 pointer-events-none focus:outline-none focus:ring-2 focus:ring-white/70" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Alpine store for responsive check
+        document.addEventListener('alpine:init', () => {
+            Alpine.magic('screen', () => (size) => {
+                const breakpoints = { sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 };
+                return window.innerWidth >= breakpoints[size];
+            });
+        });
+
+        function facultyDirectory() {
+            return {
+                search: '',
+                department: 'all',
+                sortBy: 'nameAsc',
+                departments: ['Mathematics', 'Science', 'English', 'History', 'Arts', 'Languages', 'Physical Education'],
+                faculty: [
+                    { 
+                        name: 'Dr. Sarah Johnson', 
+                        title: 'Mathematics Department Head', 
+                        department: 'Mathematics',
+                        email: 's.johnson@school.edu',
+                        phone: '(555) 123-4567',
+                        office: 'Room 201',
+                        bio: 'Specializes in Advanced Calculus and Statistics with 15 years of teaching experience. Passionate about making complex mathematical concepts accessible to all students.',
+                        avatar: 'https://images.unsplash.com/photo-1758685845906-6f705cde4fb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+                        background: 'https://images.unsplash.com/photo-1758685734226-e5a8327bf502?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800&h=300'
+                    },
+                    { 
+                        name: 'Prof. Michael Chen', 
+                        title: 'Science Teacher', 
+                        department: 'Science',
+                        email: 'm.chen@school.edu',
+                        phone: '(555) 123-4568',
+                        office: 'Room 305',
+                        bio: 'Passionate about experimental physics and chemistry. Leads the Science Olympiad team and organizes annual science fairs.',
+                        avatar: 'https://images.unsplash.com/photo-1758685848602-09e52ef9c7d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+                        background: 'https://images.unsplash.com/photo-1705727210721-961cc64a6895?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800&h=300'
+                    },
+                    { 
+                        name: 'Ms. Emily Rodriguez', 
+                        title: 'English Literature', 
+                        department: 'English',
+                        email: 'e.rodriguez@school.edu',
+                        phone: '(555) 123-4569',
+                        office: 'Room 102',
+                        bio: 'Focuses on classic literature and creative writing. Published author of two novels and leads the school literary magazine.',
+                        avatar: 'https://images.unsplash.com/photo-1758685848177-93817e9ad5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+                        background: 'https://images.unsplash.com/photo-1731170333468-693719d8ecca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800&h=300'
+                    },
+                    { 
+                        name: 'Mr. David Thompson', 
+                        title: 'History Teacher', 
+                        department: 'History',
+                        email: 'd.thompson@school.edu',
+                        phone: '(555) 123-4570',
+                        office: 'Room 208',
+                        bio: 'Expert in World History and Political Science. Leads the Model UN program and organizes historical field trips.',
+                        avatar: 'https://images.unsplash.com/photo-1553690300-93871c6a6654?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+                        background: 'https://images.unsplash.com/photo-1756507175997-7dfc3ff3b353?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800&h=300'
+                    },
+                    { 
+                        name: 'Ms. Olivia Parker', 
+                        title: 'Art Director', 
+                        department: 'Arts',
+                        email: 'o.parker@school.edu',
+                        phone: '(555) 123-4571',
+                        office: 'Art Studio',
+                        bio: 'Professional artist specializing in mixed media. Exhibited work in local galleries and leads student art exhibitions.',
+                        avatar: 'https://images.unsplash.com/photo-1624827610597-bab1eba70db2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+                        background: 'https://images.unsplash.com/photo-1573919226685-2dd15ebabf57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800&h=300'
+                    },
+                    { 
+                        name: 'Prof. Carlos Mendez', 
+                        title: 'Spanish Department', 
+                        department: 'Languages',
+                        email: 'c.mendez@school.edu',
+                        phone: '(555) 123-4572',
+                        office: 'Room 115',
+                        bio: 'Native Spanish speaker with expertise in language acquisition and cultural studies. Organizes cultural exchange programs.',
+                        avatar: 'https://images.unsplash.com/photo-1758685848177-93817e9ad5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
+                        background: 'https://images.unsplash.com/photo-1711988738095-7f7bc859847d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800&h=300'
+                    }
+                ],
+                init() {},
+                resetFilters() {
+                    this.search = '';
+                    this.department = 'all';
+                    this.sortBy = 'nameAsc';
+                },
+                chipClass(value) {
+                    const active = (this.department === value) || (value === 'all' && this.department === 'all');
+                    return [
+                        'px-3','py-1.5','rounded-full','text-sm','font-medium','border','transition-colors',
+                        active ? 'bg-school-sky text-white border-school-sky' : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
+                    ].join(' ');
+                },
+                get filteredFaculty() {
+                    const list = this.faculty.filter(teacher => {
+                        const q = this.search.trim().toLowerCase();
+                        const matchesSearch = !q || teacher.name.toLowerCase().includes(q) ||
+                                              teacher.department.toLowerCase().includes(q) ||
+                                              teacher.title.toLowerCase().includes(q);
+                        const matchesDepartment = this.department === 'all' || teacher.department === this.department;
+                        return matchesSearch && matchesDepartment;
+                    });
+                    const sort = this.sortBy;
+                    return list.sort((a, b) => {
+                        const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
+                        const deptA = a.department.toLowerCase(), deptB = b.department.toLowerCase();
+                        if (sort === 'nameAsc') return nameA.localeCompare(nameB);
+                        if (sort === 'nameDesc') return nameB.localeCompare(nameA);
+                        if (sort === 'deptAsc') return deptA.localeCompare(deptB) || nameA.localeCompare(nameB);
+                        if (sort === 'deptDesc') return deptB.localeCompare(deptA) || nameA.localeCompare(nameB);
+                        return 0;
+                    });
+                }
+            }
+        }
+
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                backToTop.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                backToTop.classList.remove('opacity-100', 'pointer-events-auto');
+                backToTop.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
