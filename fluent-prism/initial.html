@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinguaFlow - Master Languages with Expert Tutors</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        },
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        cyan: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        },
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            500: '#ec4899',
+                            600: '#db2777',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-teal-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-teal-600 to-cyan-500 bg-clip-text text-transparent">LinguaFlow</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="text-gray-900 hover:text-teal-600 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#" class="text-gray-500 hover:text-teal-600 px-3 py-2 text-sm font-medium">Languages</a>
+                        <a href="#" class="text-gray-500 hover:text-teal-600 px-3 py-2 text-sm font-medium">Tutors</a>
+                        <a href="#" class="text-gray-500 hover:text-teal-600 px-3 py-2 text-sm font-medium">Pricing</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="#" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition duration-300">Start Learning</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-cyan-50 to-pink-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Speak <span class="bg-gradient-to-r from-teal-600 to-pink-500 bg-clip-text text-transparent">Confidently</span> in Any Language
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Connect with expert native tutors and achieve fluency faster with personalized 1-on-1 lessons tailored to your goals.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition duration-300 shadow-lg">
+                        Book Your First Lesson
+                    </a>
+                    <a href="#" class="border-2 border-teal-500 text-teal-600 hover:bg-teal-50 px-8 py-4 rounded-lg font-bold text-lg transition duration-300">
+                        Meet Our Tutors
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose LinguaFlow?</h2>
+                <p class="text-xl text-gray-600">Experience language learning that actually works</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-teal-50 p-8 rounded-2xl border border-teal-100">
+                    <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-white text-xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Expert Native Tutors</h3>
+                    <p class="text-gray-600">Learn from certified native speakers who understand the nuances of their language and culture.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-amber-50 p-8 rounded-2xl border border-amber-100">
+                    <div class="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-white text-xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Flexible Scheduling</h3>
+                    <p class="text-gray-600">Book lessons that fit your schedule, with 24/7 availability across multiple time zones.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-pink-50 p-8 rounded-2xl border border-pink-100">
+                    <div class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-white text-xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Progress Tracking</h3>
+                    <p class="text-gray-600">Monitor your improvement with detailed progress reports and personalized learning paths.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section class="py-20 bg-cyan-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Learn Popular Languages</h2>
+                <p class="text-xl text-gray-600">Choose from 20+ languages taught by expert tutors</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Language 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">ES</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900">Spanish</h3>
+                    <p class="text-gray-500 text-sm">150+ tutors</p>
+                </div>
+                
+                <!-- Language 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">FR</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900">French</h3>
+                    <p class="text-gray-500 text-sm">120+ tutors</p>
+                </div>
+                
+                <!-- Language 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">DE</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900">German</h3>
+                    <p class="text-gray-500 text-sm">90+ tutors</p>
+                </div>
+                
+                <!-- Language 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">JA</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900">Japanese</h3>
+                    <p class="text-gray-500 text-sm">80+ tutors</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="text-teal-600 hover:text-teal-700 font-bold text-lg">View All Languages →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-teal-600 to-cyan-500">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Language Journey?</h2>
+            <p class="text-xl text-teal-100 mb-8">Join thousands of students who have achieved fluency with LinguaFlow</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition duration-300 shadow-lg">
+                    Get Started Today
+                </a>
+                <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-teal-600 px-8 py-4 rounded-lg font-bold text-lg transition duration-300">
+                    Schedule a Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent mb-4">LinguaFlow</h3>
+                    <p class="text-gray-400">Making language learning accessible and effective for everyone.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition duration-300">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Connect</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition duration-300">Twitter</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Facebook</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Instagram</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 LinguaFlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
