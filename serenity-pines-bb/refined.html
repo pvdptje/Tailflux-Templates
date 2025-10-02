@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whispering Pines - Countryside Bed & Breakfast</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                        yellow: {
+                            50: '#fefce8',
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                            800: '#854d0e',
+                            900: '#713f12',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .parallax {
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) {
+            .parallax {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-stone-800/95 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-700/50" x-data="{ mobileMenuOpen: false }">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-serif font-bold text-yellow-400 flex items-center gap-2">
+                    <i class="fas fa-tree text-yellow-500"></i>
+                    Whispering Pines
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-all duration-300 hover:scale-105 relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-all duration-300 hover:scale-105 relative group">
+                        Rooms
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-all duration-300 hover:scale-105 relative group">
+                        Dining
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-all duration-300 hover:scale-105 relative group">
+                        Activities
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-all duration-300 hover:scale-105 relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-stone-900 px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/25 flex items-center gap-2">
+                        <i class="fas fa-calendar-check"></i>
+                        Book Now
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-300 hover:text-yellow-400 transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0 transform -translate-y-4" 
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200" 
+                 x-transition:leave-start="opacity-100 transform translate-y-0" 
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 class="md:hidden mt-4 space-y-4 pb-4 border-t border-stone-700/50 pt-4">
+                <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors py-2">Home</a>
+                <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors py-2">Rooms</a>
+                <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors py-2">Dining</a>
+                <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors py-2">Activities</a>
+                <a href="#" class="block text-gray-300 hover:text-yellow-400 transition-colors py-2">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-stone-900/70 via-stone-800/50 to-stone-900/70 z-10"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1602294782711-3413d0dccd0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center parallax"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-8 h-8 bg-yellow-400/20 rounded-full animate-float"></div>
+        <div class="absolute top-40 right-20 w-6 h-6 bg-sky-400/20 rounded-full animate-float" style="animation-delay: 0.5s;"></div>
+        <div class="absolute bottom-40 left-20 w-10 h-10 bg-yellow-400/10 rounded-full animate-float" style="animation-delay: 1s;"></div>
+        
+        <div class="relative z-20 text-center px-6 max-w-4xl animate-fade-in">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 animate-slide-up">
+                Escape to <span class="text-yellow-400">Serenity</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed animate-slide-up" style="animation-delay: 0.2s;">
+                Discover the perfect countryside retreat where luxury meets nature's tranquility at Whispering Pines.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay: 0.4s;">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-stone-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/30 flex items-center gap-3 group">
+                    <i class="fas fa-door-open group-hover:rotate-12 transition-transform duration-300"></i>
+                    Explore Our Rooms
+                </button>
+                <button class="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-stone-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 group">
+                    <i class="fas fa-images group-hover:scale-110 transition-transform duration-300"></i>
+                    View Gallery
+                </button>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <div class="w-6 h-10 border-2 border-yellow-400 rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-yellow-400 rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-stone-800 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full"></div>
+            <div class="absolute bottom-10 right-10 w-24 h-24 bg-sky-400 rounded-full"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Experience Countryside Luxury</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Our carefully curated amenities ensure your stay is nothing short of magical.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-stone-700/50 p-8 rounded-xl hover:bg-stone-700 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl border border-stone-600/30 group animate-slide-up">
+                    <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-bed text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-yellow-400 transition-colors">Luxurious Rooms</h3>
+                    <p class="text-gray-300 leading-relaxed">Elegantly appointed rooms with panoramic views, premium bedding, and modern comforts designed for ultimate relaxation.</p>
+                </div>
+                <div class="bg-stone-700/50 p-8 rounded-xl hover:bg-stone-700 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl border border-stone-600/30 group animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-utensils text-stone-900 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-yellow-400 transition-colors">Gourmet Breakfast</h3>
+                    <p class="text-gray-300 leading-relaxed">Farm-to-table dining experience with locally sourced ingredients and seasonal specialties prepared by our expert chefs.</p>
+                </div>
+                <div class="bg-stone-700/50 p-8 rounded-xl hover:bg-stone-700 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl border border-stone-600/30 group animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-spa text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-yellow-400 transition-colors">Peaceful Environment</h3>
+                    <p class="text-gray-300 leading-relaxed">Tranquil gardens, walking trails, and serene landscapes designed for ultimate relaxation and connection with nature.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Preview -->
+    <section class="py-20 bg-stone-900 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400/5 rounded-full -translate-y-32 translate-x-32"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-sky-400/5 rounded-full translate-y-24 -translate-x-24"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Our Charming Rooms</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Each room tells a unique story of comfort, elegance, and countryside charm.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-stone-800 rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-500 group shadow-xl hover:shadow-2xl animate-slide-up">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1722763529109-2bcb289a47c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Garden View Room" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-stone-900 px-3 py-1 rounded-full text-sm font-semibold">
+                            Popular
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-white mb-3 group-hover:text-yellow-400 transition-colors">Garden View Suite</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">Wake up to breathtaking views of our manicured gardens through large bay windows.</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-yellow-400 font-bold text-xl">$249</span>
+                                <span class="text-gray-400 text-sm ml-1">/night</span>
+                            </div>
+                            <button class="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+                                View Details
+                                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-stone-800 rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-500 group shadow-xl hover:shadow-2xl animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1645241910657-15bc4c16e0f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Fireplace Room" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Romantic
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-white mb-3 group-hover:text-yellow-400 transition-colors">Fireplace Retreat</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">Cozy room with a working fireplace, perfect for romantic evenings and winter getaways.</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-yellow-400 font-bold text-xl">$299</span>
+                                <span class="text-gray-400 text-sm ml-1">/night</span>
+                            </div>
+                            <button class="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+                                View Details
+                                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-stone-800 rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-500 group shadow-xl hover:shadow-2xl animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Luxury Suite" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Premium
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-white mb-3 group-hover:text-yellow-400 transition-colors">Luxury Master Suite</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">Spacious suite with private balcony, premium amenities, and panoramic countryside views.</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-yellow-400 font-bold text-xl">$399</span>
+                                <span class="text-gray-400 text-sm ml-1">/night</span>
+                            </div>
+                            <button class="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+                                View Details
+                                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View All Rooms Button -->
+            <div class="text-center mt-12 animate-fade-in" style="animation-delay: 0.3s;">
+                <button class="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-stone-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto group">
+                    <i class="fas fa-eye group-hover:scale-110 transition-transform duration-300"></i>
+                    View All Rooms
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dining Experience -->
+    <section class="py-20 bg-stone-800 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-slide-up">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1688740701421-901185f35072?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Countryside Breakfast" class="rounded-2xl shadow-2xl">
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-utensils text-stone-900 text-3xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate-slide-up" style="animation-delay: 0.2s;">
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Farm-to-Table Dining</h2>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Experience the true taste of the countryside with our farm-to-table dining concept. Every meal is crafted from locally sourced ingredients, ensuring freshness and supporting our community.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-seedling text-yellow-400"></i>
+                            </div>
+                            <span class="text-gray-200">Locally sourced organic produce</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-bread-slice text-yellow-400"></i>
+                            </div>
+                            <span class="text-gray-200">Freshly baked bread daily</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-wine-glass-alt text-yellow-400"></i>
+                            </div>
+                            <span class="text-gray-200">Local wine and craft beer selection</span>
+                        </div>
+                    </div>
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-stone-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/25 flex items-center gap-3">
+                        <i class="fas fa-book-open"></i>
+                        View Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-stone-900 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-20 right-20 w-20 h-20 bg-yellow-400 rounded-full"></div>
+            <div class="absolute bottom-20 left-20 w-16 h-16 bg-sky-400 rounded-full"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Guest Experiences</h2>
+                <p class="text-xl text-gray-300">What our visitors say about their stay</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-stone-800/80 p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-500 group border border-stone-700/50 animate-slide-up">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-sky-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4 shadow-lg">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Sarah Johnson</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic leading-relaxed group-hover:text-gray-200 transition-colors">"The perfect getaway! The breakfast was exceptional and the views were absolutely breathtaking. We can't wait to return!"</p>
+                </div>
+                <div class="bg-stone-800/80 p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-500 group border border-stone-700/50 animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center text-stone-900 font-bold text-xl mr-4 shadow-lg">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Michael Thompson</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic leading-relaxed group-hover:text-gray-200 transition-colors">"Attention to detail was remarkable. The fireplace room was incredibly cozy and the staff went above and beyond. We'll definitely be returning next season!"</p>
+                </div>
+                <div class="bg-stone-800/80 p-8 rounded-2xl hover:transform hover:scale-105 transition-all duration-500 group border border-stone-700/50 animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4 shadow-lg">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Emily Roberts</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic leading-relaxed group-hover:text-gray-200 transition-colors">"The fireplace room was so romantic and perfect for our anniversary celebration. The gardens are absolutely stunning - we spent hours just walking and relaxing."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-stone-800 via-stone-900 to-sky-900 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-72 h-72 bg-yellow-400/10 rounded-full -translate-x-36 -translate-y-36"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-sky-400/10 rounded-full translate-x-32 translate-y-32"></div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10 animate-fade-in">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Ready for Your Countryside Escape?</h2>
+            <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">Book your stay today and experience the perfect blend of luxury, comfort, and nature's tranquility at Whispering Pines.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-stone-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/30 flex items-center gap-3 group">
+                    <i class="fas fa-calendar-alt group-hover:rotate-12 transition-transform duration-300"></i>
+                    Check Availability
+                </button>
+                <button class="border-2 border-white text-white hover:bg-white hover:text-stone-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 group">
+                    <i class="fas fa-phone group-hover:scale-110 transition-transform duration-300"></i>
+                    Contact Us
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 border-t border-stone-700/50 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="animate-slide-up">
+                    <h3 class="text-2xl font-serif font-bold text-yellow-400 mb-6 flex items-center gap-2">
+                        <i class="fas fa-tree"></i>
+                        Whispering Pines
+                    </h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Escape to serenity in the heart of the countryside. Experience luxury, comfort, and nature's beauty.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-stone-700 transition-all duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-stone-700 transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-stone-700 transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="animate-slide-up" style="animation-delay: 0.1s;">
+                    <h4 class="text-white font-semibold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Rooms</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Dining</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Activities</a></li>
+                    </ul>
+                </div>
+                <div class="animate-slide-up" style="animation-delay: 0.2s;">
+                    <h4 class="text-white font-semibold text-lg mb-6">Contact Info</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-gray-400">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            123 Countryside Lane, Serenity Valley
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-400">
+                            <i class="fas fa-phone text-yellow-400"></i>
+                            +1 (555) 123-4567
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-400">
+                            <i class="fas fa-envelope text-yellow-400"></i>
+                            hello@whisperingpines.com
+                        </li>
+                    </ul>
+                </div>
+<div class="animate-slide-up" style="animation-delay: 0.3s;">
+                    <h4 class="text-white font-semibold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for exclusive offers and countryside updates.</p>
+                    <div class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Your email address" class="bg-stone-800 border border-stone-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors duration-300">
+                        <button class="bg-yellow-500 hover:bg-yellow-600 text-stone-900 px-4 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-stone-700/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center animate-fade-in">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    © 2024 Whispering Pines. All rights reserved.
+                </p>
+                <div class="flex space-x-6 text-sm">
+                    <a href="#" class="text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-yellow-400 transition-colors">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-yellow-500 hover:bg-yellow-600 text-stone-900 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 opacity-0 transform translate-y-10">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Back to Top Functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/Hide Back to Top Button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'translate-y-10');
+                backToTop.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTop.classList.remove('opacity-100', 'translate-y-0');
+                backToTop.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+
+        // Add loading animation for images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.classList.add('transition-opacity', 'duration-500');
+                img.addEventListener('load', function() {
+                    this.classList.add('opacity-100');
+                });
+                img.classList.add('opacity-0');
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-slide-up, .animate-fade-in');
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
