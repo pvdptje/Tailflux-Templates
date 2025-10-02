@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCraft Bootcamps - Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                        },
+                        red: {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        },
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            500: '#737373',
+                        },
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            700: '#3f3f46',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral-50 min-h-screen font-sans">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-gradient-to-br from-orange-50/30 to-blue-50/30 -z-10"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-100/20 via-transparent to-transparent -z-10"></div>
+
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl w-full space-y-8">
+            <!-- Header with Hero Section -->
+            <div class="text-center animate-fade-in">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-orange-500 rounded-full mb-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <i class="fas fa-code text-white text-2xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-zinc-800 bg-gradient-to-r from-zinc-800 to-zinc-600 bg-clip-text text-transparent">CodeCraft Bootcamps</h1>
+                <p class="mt-3 text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+                    Transform your career with intensive, hands-on coding programs designed for the modern tech industry
+                </p>
+                <div class="mt-4 flex justify-center space-x-2">
+                    <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse-subtle"></div>
+                    <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse-subtle" style="animation-delay: 0.2s"></div>
+                    <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse-subtle" style="animation-delay: 0.4s"></div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Image Section -->
+                <div class="hidden lg:block animate-slide-up">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-zinc-100 transform hover:shadow-xl transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1630442923896-244dd3717b35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBib290Y2FtcCUyMHByb2dyYW1taW5nJTIwbGFwdG9wfGVufDB8MHx8fDE3NTk0MDY0OTN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=pAgCpLoYXdQ" 
+                             alt="Coding bootcamp students learning" 
+                             class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-zinc-800 mb-3">Why Choose CodeCraft?</h3>
+                            <div class="space-y-3 text-sm text-zinc-600">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-graduation-cap text-orange-500"></i>
+                                    <span>Industry-expert instructors</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-briefcase text-orange-500"></i>
+                                    <span>Career support & job placement</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-users text-orange-500"></i>
+                                    <span>Vibrant community network</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-laptop-code text-orange-500"></i>
+                                    <span>Hands-on project experience</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="animate-slide-up" style="animation-delay: 0.1s">
+                    <form class="bg-white p-8 rounded-2xl shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300" 
+                          x-data="{ selectedBootcamp: '', isSubmitting: false }" 
+                          @submit.prevent="isSubmitting = true; setTimeout(() => isSubmitting = false, 2000)">
+                        
+                        <!-- Personal Information -->
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-zinc-800 mb-4 flex items-center">
+                                    <i class="fas fa-user text-orange-500 mr-2"></i>
+                                    Personal Information
+                                </h3>
+                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                    <div class="space-y-2">
+                                        <label for="firstName" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                            <i class="fas fa-id-card text-orange-400 text-xs mr-1"></i>
+                                            First Name
+                                        </label>
+                                        <input type="text" id="firstName" name="firstName" required 
+                                               class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                               placeholder="Enter your first name">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="lastName" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                            <i class="fas fa-id-card text-orange-400 text-xs mr-1"></i>
+                                            Last Name
+                                        </label>
+                                        <input type="text" id="lastName" name="lastName" required 
+                                               class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                               placeholder="Enter your last name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="space-y-4">
+                                <div class="space-y-2">
+                                    <label for="email" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                        <i class="fas fa-envelope text-orange-400 text-xs mr-1"></i>
+                                        Email Address
+                                    </label>
+                                    <input type="email" id="email" name="email" required 
+                                           class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                           placeholder="your.email@example.com">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="phone" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                        <i class="fas fa-phone text-orange-400 text-xs mr-1"></i>
+                                        Phone Number
+                                    </label>
+                                    <input type="tel" id="phone" name="phone" 
+                                           class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                           placeholder="+1 (555) 123-4567">
+                                </div>
+                            </div>
+
+                            <!-- Bootcamp Selection -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-zinc-800 mb-4 flex items-center">
+                                    <i class="fas fa-laptop-code text-orange-500 mr-2"></i>
+                                    Select Your Bootcamp
+                                </h3>
+                                <div class="space-y-3">
+                                    <template x-for="bootcamp in [
+                                        { id: 'webDev', name: 'Full-Stack Web Development', icon: 'fa-globe' },
+                                        { id: 'dataScience', name: 'Data Science & Machine Learning', icon: 'fa-chart-line' },
+                                        { id: 'mobileDev', name: 'Mobile App Development', icon: 'fa-mobile-alt' },
+                                        { id: 'cybersecurity', name: 'Cybersecurity', icon: 'fa-shield-alt' }
+                                    ]" :key="bootcamp.id">
+                                        <div class="flex items-center p-3 border border-zinc-200 rounded-xl hover:border-orange-300 hover:bg-orange-50/50 transition-all duration-200 cursor-pointer"
+                                             @click="selectedBootcamp = bootcamp.id">
+                                            <input type="radio" :id="bootcamp.id" name="bootcamp" :value="bootcamp.id" x-model="selectedBootcamp" 
+                                                   class="focus:ring-orange-500 h-4 w-4 text-orange-600 border-zinc-300">
+                                            <label :for="bootcamp.id" class="ml-3 flex items-center text-sm font-medium text-zinc-700 cursor-pointer">
+                                                <i :class="['fas', bootcamp.icon, 'text-orange-500 mr-2']"></i>
+                                                <span x-text="bootcamp.name"></span>
+                                            </label>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- Experience Level -->
+                            <div class="space-y-2">
+                                <label for="experience" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                    <i class="fas fa-chart-bar text-orange-400 text-xs mr-1"></i>
+                                    Coding Experience Level
+                                </label>
+                                <select id="experience" name="experience" 
+                                        class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 bg-white appearance-none">
+                                    <option value="">Select your experience</option>
+                                    <option value="beginner">Beginner (0-6 months)</option>
+                                    <option value="intermediate">Intermediate (6-12 months)</option>
+                                    <option value="advanced">Advanced (1+ years)</option>
+                                </select>
+                            </div>
+
+                            <!-- Additional Information -->
+                            <div class="space-y-2">
+                                <label for="goals" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                    <i class="fas fa-bullseye text-orange-400 text-xs mr-1"></i>
+                                    Career Goals
+                                </label>
+                                <textarea id="goals" name="goals" rows="3" 
+                                          class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400 resize-none"
+                                          placeholder="Tell us about your career aspirations and what you hope to achieve..."></textarea>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="flex items-start space-x-3 p-3 bg-orange-50 rounded-xl border border-orange-100">
+                                <input type="checkbox" id="terms" name="terms" required 
+                                       class="focus:ring-orange-500 h-4 w-4 text-orange-600 border-zinc-300 rounded mt-1">
+                                <label for="terms" class="text-sm text-zinc-700 leading-relaxed">
+                                    I agree to the <a href="#" class="text-orange-600 hover:text-orange-500 font-medium underline transition-colors">Terms and Conditions</a> and understand that my data will be processed in accordance with the Privacy Policy.
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-8">
+                            <button type="submit" 
+                                    :disabled="isSubmitting"
+                                    class="group relative w-full flex justify-center items-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-500/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                                    :class="isSubmitting ? 'opacity-75 cursor-not-allowed' : ''">
+                                <span x-show="!isSubmitting" class="flex items-center">
+                                    <i class="fas fa-rocket mr-2"></i>
+                                    Register for Bootcamp
+                                </span>
+                                <span x-show="isSubmitting" class="flex items-center">
+                                    <i class="fas fa-spinner fa-spin mr-2"></i>
+                                    Processing...
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-neutral-500">
+                                Already have an account? 
+                                <a href="#" class="font-semibold text-orange-600 hover:text-orange-500 transition-colors duration-200">
+                                    Sign in to your account
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Note -->
+            <div class="text-center text-sm text-neutral-500 animate-fade-in" style="animation-delay: 0.3s">
+                <p>© 2024 CodeCraft Bootcamps. Empowering the next generation of developers.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCraft Bootcamps - Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                        },
+                        red: {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        },
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            500: '#737373',
+                        },
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            700: '#3f3f46',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral-50 min-h-screen font-sans antialiased">
+    <!-- Background Pattern -->
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-orange-50/30 to-blue-50/30 -z-10"></div>
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-100/20 via-transparent to-transparent -z-10"></div>
+
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl w-full space-y-10">
+            <!-- Header with Hero Section -->
+            <header class="text-center animate-fade-in">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-orange-500 rounded-full mb-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <i class="fas fa-code text-white text-2xl" aria-hidden="true"></i>
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight text-zinc-800 bg-gradient-to-r from-zinc-800 to-zinc-600 bg-clip-text text-transparent">
+                    CodeCraft Bootcamps
+                </h1>
+                <p class="mt-3 text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+                    Transform your career with intensive, hands-on coding programs designed for the modern tech industry
+                </p>
+                <div class="mt-4 flex justify-center space-x-2">
+                    <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse-subtle"></div>
+                    <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse-subtle" style="animation-delay: 0.2s"></div>
+                    <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse-subtle" style="animation-delay: 0.4s"></div>
+                </div>
+
+                <!-- Trust mini-stats -->
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
+                    <div class="flex items-center justify-center space-x-3 rounded-xl bg-white/70 backdrop-blur border border-zinc-100 px-4 py-3 shadow-sm">
+                        <i class="fa-solid fa-star text-orange-500"></i>
+                        <span class="text-sm text-zinc-700">4.8/5 average rating</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-3 rounded-xl bg-white/70 backdrop-blur border border-zinc-100 px-4 py-3 shadow-sm">
+                        <i class="fa-solid fa-user-graduate text-orange-500"></i>
+                        <span class="text-sm text-zinc-700">10k+ graduates</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-3 rounded-xl bg-white/70 backdrop-blur border border-zinc-100 px-4 py-3 shadow-sm">
+                        <i class="fa-solid fa-handshake-angle text-orange-500"></i>
+                        <span class="text-sm text-zinc-700">300+ hiring partners</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Grid -->
+            <main class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Image Section -->
+                <section class="hidden lg:block animate-slide-up">
+                    <div class="group relative bg-white rounded-2xl shadow-lg overflow-hidden border border-zinc-100 transform transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1540058404349-2e5fabf32d75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBib290Y2FtcCUyMHN0dWRlbnRzJTIwY29sbGFib3JhdGlvbiUyMGxhcHRvcHMlMjBjbGFzc3Jvb218ZW58MHwwfHx8MTc1OTQwNjY4M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=DThlV4dYlnE" 
+                                 alt="Students collaborating at a coding bootcamp" 
+                                 class="w-full h-64 object-cover">
+                            <!-- Floating badge -->
+                            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full text-xs font-medium text-zinc-700 border border-zinc-100 shadow-sm">
+                                <i class="fa-regular fa-clock text-orange-500 mr-1.5"></i>
+                                New cohorts monthly
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow">
+                                Scholarships available
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-zinc-800 mb-3">Why Choose CodeCraft?</h3>
+                            <div class="space-y-3 text-sm text-zinc-600">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-graduation-cap text-orange-500"></i>
+                                    <span>Industry-expert instructors</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-briefcase text-orange-500"></i>
+                                    <span>Career support & job placement</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-users text-orange-500"></i>
+                                    <span>Vibrant community network</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-laptop-code text-orange-500"></i>
+                                    <span>Hands-on project experience</span>
+                                </div>
+                            </div>
+                            <div class="mt-5 grid grid-cols-3 divide-x divide-zinc-100 border-t border-zinc-100">
+                                <div class="py-3 text-center">
+                                    <div class="text-zinc-900 font-semibold">12w</div>
+                                    <div class="text-xs text-zinc-500">Avg Program</div>
+                                </div>
+                                <div class="py-3 text-center">
+                                    <div class="text-zinc-900 font-semibold">Remote</div>
+                                    <div class="text-xs text-zinc-500">or In-Person</div>
+                                </div>
+                                <div class="py-3 text-center">
+                                    <div class="text-zinc-900 font-semibold">Mentors</div>
+                                    <div class="text-xs text-zinc-500">1:1 Support</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Registration Form -->
+                <section class="animate-slide-up" style="animation-delay: 0.1s">
+                    <form class="relative bg-white p-8 rounded-2xl shadow-lg border border-zinc-100 hover:shadow-xl transition-all duration-300"
+                          x-data="{
+                            selectedBootcamp: '',
+                            isSubmitting: false,
+                            showSuccess: false,
+                            goals: '',
+                            charLimit: 300,
+                            minDate: '',
+                            progress: 0,
+                            bootcampInfo: {
+                                webDev: { title: 'Full-Stack Web Development', duration: '12 weeks', format: 'Hybrid', stack: 'HTML, CSS, JS, Node, React' },
+                                dataScience: { title: 'Data Science & Machine Learning', duration: '14 weeks', format: 'Remote', stack: 'Python, Pandas, scikit-learn, TensorFlow' },
+                                mobileDev: { title: 'Mobile App Development', duration: '12 weeks', format: 'Remote', stack: 'Flutter, Dart or React Native' },
+                                cybersecurity: { title: 'Cybersecurity', duration: '10 weeks', format: 'In-Person', stack: 'Networking, OWASP, SIEM, Cloud' }
+                            },
+                            init() {
+                                const d = new Date();
+                                this.minDate = d.toISOString().split('T')[0];
+                            },
+                            submit() {
+                                if (this.isSubmitting) return;
+                                this.isSubmitting = true;
+                                this.progress = 0;
+                                const timer = setInterval(() => {
+                                    this.progress = Math.min(100, this.progress + 10);
+                                    if (this.progress >= 100) clearInterval(timer);
+                                }, 120);
+                                setTimeout(() => {
+                                    this.isSubmitting = false;
+                                    this.progress = 100;
+                                    this.showSuccess = true;
+                                    setTimeout(() => { this.showSuccess = false; this.progress = 0; }, 3000);
+                                }, 1500);
+                            }
+                          }"
+                          @submit.prevent="submit()"
+                          aria-labelledby="registrationTitle">
+                        
+                        <!-- Top progress bar -->
+                        <div class="absolute left-0 top-0 h-1 w-full bg-orange-100/60 rounded-t-2xl overflow-hidden">
+                            <div class="h-full bg-orange-500 transition-all duration-200" :style="`width: ${progress}%;`"></div>
+                        </div>
+
+                        <!-- Success toast -->
+                        <div x-cloak x-show="showSuccess" x-transition
+                             class="fixed bottom-6 right-6 z-50 max-w-sm w-[90%] sm:w-auto">
+                            <div class="flex items-start space-x-3 bg-white border border-zinc-200 shadow-xl rounded-xl p-4">
+                                <div class="flex-shrink-0">
+                                    <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-green-100 text-green-700">
+                                        <i class="fa-solid fa-check"></i>
+                                    </span>
+                                </div>
+                                <div class="text-sm text-zinc-700">
+                                    <p class="font-semibold text-zinc-900">Registration received</p>
+                                    <p class="mt-0.5">We’ll email you next steps shortly.</p>
+                                </div>
+                                <button type="button" class="text-zinc-400 hover:text-zinc-600" @click="showSuccess=false" aria-label="Close">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <h2 id="registrationTitle" class="sr-only">Bootcamp Registration Form</h2>
+
+                        <!-- Personal Information -->
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-zinc-800 mb-4 flex items-center">
+                                    <i class="fas fa-user text-orange-500 mr-2"></i>
+                                    Personal Information
+                                </h3>
+                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                    <div class="space-y-2">
+                                        <label for="firstName" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                            <i class="fas fa-id-card text-orange-400 text-xs mr-1"></i>
+                                            First Name
+                                        </label>
+                                        <input type="text" id="firstName" name="firstName" required autocomplete="given-name"
+                                               class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                               placeholder="Enter your first name" aria-required="true">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="lastName" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                            <i class="fas fa-id-card text-orange-400 text-xs mr-1"></i>
+                                            Last Name
+                                        </label>
+                                        <input type="text" id="lastName" name="lastName" required autocomplete="family-name"
+                                               class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                               placeholder="Enter your last name" aria-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="space-y-4">
+                                <div class="space-y-2">
+                                    <label for="email" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                        <i class="fas fa-envelope text-orange-400 text-xs mr-1"></i>
+                                        Email Address
+                                    </label>
+                                    <input type="email" id="email" name="email" required autocomplete="email"
+                                           class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                           placeholder="your.email@example.com" aria-required="true">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <label for="phone" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                            <i class="fas fa-phone text-orange-400 text-xs mr-1"></i>
+                                            Phone Number
+                                        </label>
+                                        <span class="text-xs text-zinc-500">Optional</span>
+                                    </div>
+                                    <input type="tel" id="phone" name="phone" autocomplete="tel"
+                                           class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400"
+                                           placeholder="+1 (555) 123-4567">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="cohortStart" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                        <i class="fa-regular fa-calendar text-orange-400 text-xs mr-1"></i>
+                                        Preferred Cohort Start
+                                    </label>
+                                    <input type="date" id="cohortStart" name="cohortStart" x-bind:min="minDate"
+                                           class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200">
+                                </div>
+                            </div>
+
+                            <!-- Bootcamp Selection -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-zinc-800 mb-4 flex items-center">
+                                    <i class="fas fa-laptop-code text-orange-500 mr-2"></i>
+                                    Select Your Bootcamp
+                                </h3>
+                                <div class="space-y-3">
+                                    <template x-for="bootcamp in [
+                                        { id: 'webDev', name: 'Full-Stack Web Development', icon: 'fa-globe' },
+                                        { id: 'dataScience', name: 'Data Science & Machine Learning', icon: 'fa-chart-line' },
+                                        { id: 'mobileDev', name: 'Mobile App Development', icon: 'fa-mobile-alt' },
+                                        { id: 'cybersecurity', name: 'Cybersecurity', icon: 'fa-shield-halved' }
+                                    ]" :key="bootcamp.id">
+                                        <div class="flex items-center p-3 border rounded-xl transition-all duration-200 cursor-pointer"
+                                             :class="selectedBootcamp === bootcamp.id ? 'border-orange-400 ring-2 ring-orange-200 bg-orange-50/60' : 'border-zinc-200 hover:border-orange-300 hover:bg-orange-50/50'"
+                                             @click="selectedBootcamp = bootcamp.id">
+                                            <input type="radio" :id="bootcamp.id" name="bootcamp" :value="bootcamp.id" x-model="selectedBootcamp" 
+                                                   class="focus:ring-orange-500 h-4 w-4 text-orange-600 border-zinc-300">
+                                            <label :for="bootcamp.id" class="ml-3 flex items-center text-sm font-medium text-zinc-700 cursor-pointer w-full">
+                                                <i :class="['fas', bootcamp.icon, 'text-orange-500 mr-2']" aria-hidden="true"></i>
+                                                <span class="flex-1" x-text="bootcamp.name"></span>
+                                                <i x-show="selectedBootcamp === bootcamp.id" class="fa-solid fa-check text-orange-600"></i>
+                                            </label>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Bootcamp details preview -->
+                                <div x-show="selectedBootcamp" x-transition
+                                     class="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700">
+                                    <template x-if="selectedBootcamp">
+                                        <div class="grid sm:grid-cols-3 gap-3">
+                                            <div>
+                                                <div class="text-zinc-500">Program</div>
+                                                <div class="font-medium text-zinc-800" x-text="bootcampInfo[selectedBootcamp].title"></div>
+                                            </div>
+                                            <div>
+                                                <div class="text-zinc-500">Duration</div>
+                                                <div class="font-medium text-zinc-800" x-text="bootcampInfo[selectedBootcamp].duration"></div>
+                                            </div>
+                                            <div>
+                                                <div class="text-zinc-500">Format</div>
+                                                <div class="font-medium text-zinc-800" x-text="bootcampInfo[selectedBootcamp].format"></div>
+                                            </div>
+                                            <div class="sm:col-span-3">
+                                                <div class="text-zinc-500">Tech Stack</div>
+                                                <div class="font-medium text-zinc-800" x-text="bootcampInfo[selectedBootcamp].stack"></div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- Experience Level -->
+                            <div class="space-y-2">
+                                <label for="experience" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                    <i class="fas fa-chart-bar text-orange-400 text-xs mr-1"></i>
+                                    Coding Experience Level
+                                </label>
+                                <select id="experience" name="experience" 
+                                        class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 bg-white appearance-none">
+                                    <option value="">Select your experience</option>
+                                    <option value="beginner">Beginner (0-6 months)</option>
+                                    <option value="intermediate">Intermediate (6-12 months)</option>
+                                    <option value="advanced">Advanced (1+ years)</option>
+                                </select>
+                                <p class="text-xs text-zinc-500 mt-1">Eligible applicants may qualify for scholarships and financing options.</p>
+                            </div>
+
+                            <!-- Additional Information -->
+                            <div class="space-y-2">
+                                <label for="goals" class="block text-sm font-medium text-zinc-700 flex items-center">
+                                    <i class="fas fa-bullseye text-orange-400 text-xs mr-1"></i>
+                                    Career Goals
+                                </label>
+                                <textarea id="goals" name="goals" rows="3" maxlength="300" x-model="goals"
+                                          class="w-full px-4 py-3 border border-zinc-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 placeholder-zinc-400 resize-none"
+                                          placeholder="Tell us about your career aspirations and what you hope to achieve..."></textarea>
+                                <div class="text-right text-xs">
+                                    <span class="text-zinc-500" :class="goals.length > (charLimit - 40) ? 'text-orange-600 font-medium' : ''" x-text="`${goals.length}/${charLimit}`"></span>
+                                </div>
+                            </div>
+
+                            <!-- Communication preferences -->
+                            <div class="flex items-center justify-between px-4 py-3 rounded-xl border border-zinc-200 bg-zinc-50">
+                                <div class="flex items-start">
+                                    <i class="fa-solid fa-bell text-orange-500 mt-0.5 mr-3"></i>
+                                    <div>
+                                        <div class="text-sm font-medium text-zinc-800">Text me important updates</div>
+                                        <div class="text-xs text-zinc-500">Cohort reminders and deadlines. No spam.</div>
+                                    </div>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" name="smsUpdates" class="sr-only peer">
+                                    <span class="w-10 h-6 bg-zinc-300 rounded-full peer-checked:bg-orange-500 transition-colors relative">
+                                        <span class="absolute left-0.5 top-0.5 h-5 w-5 bg-white rounded-full shadow transition-all peer-checked:translate-x-4"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="flex items-start space-x-3 p-3 bg-orange-50 rounded-xl border border-orange-100">
+                                <input type="checkbox" id="terms" name="terms" required 
+                                       class="focus:ring-orange-500 h-4 w-4 text-orange-600 border-zinc-300 rounded mt-1">
+                                <label for="terms" class="text-sm text-zinc-700 leading-relaxed">
+                                    I agree to the <a href="#" class="text-orange-600 hover:text-orange-500 font-medium underline transition-colors">Terms and Conditions</a> and understand that my data will be processed in accordance with the Privacy Policy.
+                                </label>
+                            </div>
+
+                            <!-- Privacy note -->
+                            <p class="flex items-center text-xs text-zinc-500">
+                                <i class="fa-solid fa-lock mr-2"></i>
+                                Your information is securely encrypted and never shared without consent.
+                            </p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-8">
+                            <button type="submit" 
+                                    :disabled="isSubmitting"
+                                    class="group relative w-full flex justify-center items-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-500/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl disabled:opacity-75 disabled:cursor-not-allowed"
+                                    :aria-busy="isSubmitting">
+                                <span x-show="!isSubmitting" class="flex items-center">
+                                    <i class="fas fa-rocket mr-2"></i>
+                                    Register for Bootcamp
+                                </span>
+                                <span x-show="isSubmitting" class="flex items-center">
+                                    <i class="fas fa-spinner fa-spin mr-2"></i>
+                                    Processing...
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-neutral-500">
+                                Already have an account? 
+                                <a href="#" class="inline-flex items-center font-semibold text-orange-600 hover:text-orange-500 transition-colors duration-200">
+                                    Sign in to your account
+                                    <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </section>
+            </main>
+
+            <!-- FAQ -->
+            <section class="animate-fade-in" style="animation-delay: 0.2s">
+                <div class="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-zinc-800 mb-4 flex items-center">
+                        <i class="fa-regular fa-circle-question text-orange-500 mr-2"></i>
+                        Frequently Asked Questions
+                    </h3>
+                    <div class="divide-y divide-zinc-100">
+                        <details class="group py-3">
+                            <summary class="flex items-center justify-between cursor-pointer list-none text-sm text-zinc-800">
+                                What are the program prerequisites?
+                                <i class="fa-solid fa-chevron-down text-zinc-400 group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <p class="mt-2 text-sm text-zinc-600">
+                                Most programs require basic computer literacy. Beginner tracks start from fundamentals, while advanced tracks expect prior coding experience.
+                            </p>
+                        </details>
+                        <details class="group py-3">
+                            <summary class="flex items-center justify-between cursor-pointer list-none text-sm text-zinc-800">
+                                Do you offer career support?
+                                <i class="fa-solid fa-chevron-down text-zinc-400 group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <p class="mt-2 text-sm text-zinc-600">
+                                Yes. We provide resume reviews, mock interviews, and direct referrals to hiring partners.
+                            </p>
+                        </details>
+                        <details class="group py-3">
+                            <summary class="flex items-center justify-between cursor-pointer list-none text-sm text-zinc-800">
+                                Can I learn part-time?
+                                <i class="fa-solid fa-chevron-down text-zinc-400 group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <p class="mt-2 text-sm text-zinc-600">
+                                Absolutely. We offer flexible schedules and part-time cohorts for select programs.
+                            </p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer Note -->
+            <footer class="text-center text-sm text-neutral-500 animate-fade-in" style="animation-delay: 0.3s">
+                <p>© 2024 CodeCraft Bootcamps. Empowering the next generation of developers.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
