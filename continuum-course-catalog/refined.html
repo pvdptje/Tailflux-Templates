@@ -1,0 +1,662 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Extension Program - Course Catalog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .course-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .filter-checkbox:checked {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #f0f9ff 0%, #fdf2f8 50%, #f0fdf4 100%);
+        }
+        .mobile-menu {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 min-h-screen" x-data="{ mobileMenuOpen: false }">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-slate-800 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">University Extension</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-book-open text-sm"></i>
+                        <span>Courses</span>
+                    </a>
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-certificate text-sm"></i>
+                        <span>Programs</span>
+                    </a>
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-chalkboard-teacher text-sm"></i>
+                        <span>Faculty</span>
+                    </a>
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-tools text-sm"></i>
+                        <span>Resources</span>
+                    </a>
+                </nav>
+
+                <div class="flex items-center space-x-4">
+                    <button class="text-slate-600 hover:text-blue-600 transition-colors duration-200 p-2 rounded-lg hover:bg-slate-100">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-600 p-2 rounded-lg hover:bg-slate-100">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="lg:hidden mobile-menu bg-white border-t border-slate-200 py-4">
+                <nav class="flex flex-col space-y-4">
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-3 py-2">
+                        <i class="fas fa-book-open w-5 text-center"></i>
+                        <span>Courses</span>
+                    </a>
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-3 py-2">
+                        <i class="fas fa-certificate w-5 text-center"></i>
+                        <span>Programs</span>
+                    </a>
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-3 py-2">
+                        <i class="fas fa-chalkboard-teacher w-5 text-center"></i>
+                        <span>Faculty</span>
+                    </a>
+                    <a href="#" class="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 flex items-center space-x-3 py-2">
+                        <i class="fas fa-tools w-5 text-center"></i>
+                        <span>Resources</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <div class="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 shadow-sm">
+                    <i class="fas fa-star text-yellow-500"></i>
+                    <span class="text-sm font-medium text-slate-700">Trusted by 50,000+ professionals</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-6 leading-tight">
+                    Advance Your
+                    <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Career</span>
+                </h1>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    Discover professional development opportunities and continuing education courses designed to advance your career with industry-leading instructors.
+                </p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative group">
+                        <input 
+                            type="text" 
+                            placeholder="Search courses, subjects, or instructors..."
+                            class="w-full px-6 py-4 pl-14 pr-6 rounded-2xl border border-slate-300 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition-all duration-300 text-lg"
+                        >
+                        <i class="fas fa-search text-slate-400 absolute left-5 top-1/2 transform -translate-y-1/2 text-lg group-focus-within:text-blue-500 transition-colors"></i>
+                        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium">
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <div class="flex items-center space-x-2 text-slate-600">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="text-sm">Flexible Learning</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-slate-600">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="text-sm">Expert Instructors</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-slate-600">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="text-sm">Career Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <aside class="lg:w-1/4">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-24">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-slate-800">Filters</h3>
+                        <button class="text-sm text-blue-600 hover:text-blue-700 font-medium">Clear All</button>
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-slate-700 mb-4 flex items-center space-x-2">
+                            <i class="fas fa-layer-group text-blue-500"></i>
+                            <span>Category</span>
+                        </h4>
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Business & Management</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Technology & IT</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Healthcare</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Arts & Humanities</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Format Filter -->
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-slate-700 mb-4 flex items-center space-x-2">
+                            <i class="fas fa-laptop text-blue-500"></i>
+                            <span>Format</span>
+                        </h4>
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Online</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">In-Person</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Hybrid</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Duration Filter -->
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-4 flex items-center space-x-2">
+                            <i class="fas fa-clock text-blue-500"></i>
+                            <span>Duration</span>
+                        </h4>
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">Less than 4 weeks</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">4-8 weeks</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <input type="checkbox" class="filter-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition-colors">
+                                <span class="text-slate-600 group-hover:text-slate-800 transition-colors">8+ weeks</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Course Grid -->
+            <div class="lg:w-3/4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-800 mb-2">Featured Courses</h2>
+                        <p class="text-slate-600">Hand-picked courses to accelerate your career growth</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-slate-600 font-medium">Sort by:</span>
+                        <select class="border border-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm">
+                            <option>Most Popular</option>
+                            <option>Newest First</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <!-- Course Card 1 -->
+                    <div class="course-card bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1758518727707-b023e285b709?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGxlYWRlcnNoaXAlMjB0ZWFtJTIwbWVldGluZ3xlbnwwfDB8fHwxNzU5MzkyMjE5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=F4coHibryBo" 
+                                 alt="Strategic Leadership" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-full shadow-lg">Business</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <button class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-colors shadow-lg">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 text-slate-500">
+                                    <i class="fas fa-clock text-sm"></i>
+                                    <span class="text-sm font-medium">8 weeks</span>
+                                </div>
+                                <div class="flex items-center space-x-1 text-amber-500">
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-sm font-medium">4.8</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">Strategic Leadership</h3>
+                            <p class="text-slate-600 mb-4 leading-relaxed">Develop essential leadership skills and strategic thinking capabilities for modern organizational challenges.</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-slate-800">$495</span>
+                                    <span class="text-slate-500 text-sm line-through ml-2">$595</span>
+                                </div>
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Enroll Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 2 -->
+                    <div class="course-card bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1669023414162-5bb06bbff0ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkYXRhJTIwc2NpZW5jZSUyMGFuYWx5dGljcyUyMGNvbXB1dGVyfGVufDB8MHx8fDE3NTkzOTIyMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=yGQmjh2uOTg" 
+                                 alt="Data Science Fundamentals" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-purple-600 text-white text-sm font-semibold rounded-full shadow-lg">Technology</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <button class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors shadow-lg">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 text-slate-500">
+                                    <i class="fas fa-clock text-sm"></i>
+                                    <span class="text-sm font-medium">6 weeks</span>
+                                </div>
+                                <div class="flex items-center space-x-1 text-amber-500">
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-sm font-medium">4.9</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-purple-600 transition-colors">Data Science Fundamentals</h3>
+                            <p class="text-slate-600 mb-4 leading-relaxed">Learn the core principles of data analysis, visualization, and machine learning using Python.</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-slate-800">$650</span>
+                                </div>
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Enroll Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 3 -->
+                    <div class="course-card bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1666886573590-5815157da865?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwbWVkaWNhbCUyMHByb2Zlc3Npb25hbHN8ZW58MHwwfHx8MTc1OTM5MjIyNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=vkqr2zpOPhQ" 
+                                 alt="Healthcare Management" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-emerald-600 text-white text-sm font-semibold rounded-full shadow-lg">Healthcare</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <button class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors shadow-lg">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 text-slate-500">
+                                    <i class="fas fa-clock text-sm"></i>
+                                    <span class="text-sm font-medium">10 weeks</span>
+                                </div>
+                                <div class="flex items-center space-x-1 text-amber-500">
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-sm font-medium">4.7</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">Healthcare Management</h3>
+                            <p class="text-slate-600 mb-4 leading-relaxed">Comprehensive overview of healthcare systems, policy, and management practices.</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-slate-800">$750</span>
+                                </div>
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Enroll Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 4 -->
+                    <div class="course-card bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1620829829513-db4ce98ecfed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwcGhvdG9ncmFwaHklMjBjYW1lcmElMjBjcmVhdGl2ZXxlbnwwfDB8fHwxNzU5MzkyMjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=PJ0x1WQCF7s" 
+                                 alt="Digital Photography" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-rose-600 text-white text-sm font-semibold rounded-full shadow-lg">Arts</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <button class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors shadow-lg">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 text-slate-500">
+                                    <i class="fas fa-clock text-sm"></i>
+                                    <span class="text-sm font-medium">4 weeks</span>
+                                </div>
+                                <div class="flex items-center space-x-1 text-amber-500">
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-sm font-medium">4.6</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-600 transition-colors">Digital Photography</h3>
+                            <p class="text-slate-600 mb-4 leading-relaxed">Master the art of digital photography, from camera basics to advanced composition techniques.</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-slate-800">$350</span>
+                                    <span class="text-slate-500 text-sm line-through ml-2">$450</span>
+                                </div>
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Enroll Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 5 -->
+                    <div class="course-card bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudCUyMGNvZGluZyUyMGxhcHRvcHxlbnwwfDB8fHwxNzU5MzkyMjMyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=B6JINerWMz0" 
+                                 alt="Web Development Bootcamp" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-purple-600 text-white text-sm font-semibold rounded-full shadow-lg">Technology</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <button class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors shadow-lg">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 text-slate-500">
+                                    <i class="fas fa-clock text-sm"></i>
+                                    <span class="text-sm font-medium">12 weeks</span>
+                                </div>
+                                <div class="flex items-center space-x-1 text-amber-500">
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-sm font-medium">4.9</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-purple-600 transition-colors">Web Development Bootcamp</h3>
+                            <p class="text-slate-600 mb-4 leading-relaxed">Intensive course covering HTML, CSS, JavaScript, and modern frameworks for full-stack development.</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-slate-800">$1,200</span>
+                                    <span class="text-slate-500 text-sm line-through ml-2">$1,500</span>
+                                </div>
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Enroll Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 6 -->
+                    <div class="course-card bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1758876202522-df2c0dbd0d52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9qZWN0JTIwbWFuYWdlbWVudCUyMHBsYW5uaW5nJTIwdGVhbXxlbnwwfDB8fHwxNzU5MzkyMjM1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=sVJ7FbTKqoM" 
+                                 alt="Project Management" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-full shadow-lg">Business</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <button class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors shadow-lg">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 text-slate-500">
+                                    <i class="fas fa-clock text-sm"></i>
+                                    <span class="text-sm font-medium">5 weeks</span>
+                                </div>
+                                <div class="flex items-center space-x-1 text-amber-500">
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-sm font-medium">4.8</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">Project Management</h3>
+                            <p class="text-slate-600 mb-4 leading-relaxed">Learn agile methodologies and traditional project management approaches for successful project delivery.</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-slate-800">$550</span>
+                                </div>
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg transition-all duration-300 font-medium flex items-center space-x-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Enroll Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex justify-center mt-16">
+                    <nav class="flex items-center space-x-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-2">
+                        <button class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors duration-200flex items-center space-x-2">
+                            <i class="fas fa-chevron-left text-sm"></i>
+                            <span>Previous</span>
+                        </button>
+                        <button class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg">1</button>
+                        <button class="w-10 h-10 border border-slate-300 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors duration-200 font-medium">2</button>
+                        <button class="w-10 h-10 border border-slate-300 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors duration-200 font-medium">3</button>
+                        <span class="text-slate-400 px-2">...</span>
+                        <button class="w-10 h-10 border border-slate-300 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors duration-200 font-medium">8</button>
+                        <button class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors duration-200 flex items-center space-x-2">
+                            <span>Next</span>
+                            <i class="fas fa-chevron-right text-sm"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-16 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Transform Your Career?</h2>
+            <p class="text-blue-100 text-xl mb-8 max-w-2xl mx-auto">
+                Join thousands of professionals who have advanced their careers with our expert-led courses.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-blue-600 px-8 py-4 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl flex items-center space-x-3">
+                    <i class="fas fa-play-circle"></i>
+                    <span>View All Courses</span>
+                </button>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl hover:bg-white/10 transition-all duration-300 font-semibold text-lg flex items-center space-x-3">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Schedule Consultation</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">University Extension</span>
+                    </div>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Providing quality continuing education and professional development opportunities since 1995. 
+                        Join our community of lifelong learners and career advancers.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:text-white hover:bg-blue-600 transition-all duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:text-white hover:bg-blue-400 transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:text-white hover:bg-blue-700 transition-all duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:text-white hover:bg-pink-600 transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-white">Quick Links</h4>
+                    <ul class="space-y-3 text-slate-300">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-blue-400"></i>
+                            <span>About Us</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-blue-400"></i>
+                            <span>Contact</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-blue-400"></i>
+                            <span>FAQs</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-blue-400"></i>
+                            <span>Support</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-white">Programs</h4>
+                    <ul class="space-y-3 text-slate-300">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-purple-400"></i>
+                            <span>Certificate Programs</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-purple-400"></i>
+                            <span>Professional Development</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-purple-400"></i>
+                            <span>Custom Corporate Training</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-purple-400"></i>
+                            <span>Online Learning</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-white">Contact</h4>
+                    <address class="not-italic text-slate-300 space-y-3">
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-map-marker-alt text-blue-400"></i>
+                            <span>123 University Avenue<br>City, State 12345</span>
+                        </p>
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <span>info@university.edu</span>
+                        </p>
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <span>(555) 123-4567</span>
+                        </p>
+                    </address>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-400 text-sm mb-4 md:mb-0">
+                    © 2024 University Extension Program. All rights reserved.
+                </p>
+                <div class="flex space-x-6 text-slate-400 text-sm">
+                    <a href="#" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors duration-200">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors duration-200">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 text-white rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 flex items-center justify-center z-40">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
