@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileOpen: false, demoOpen: false }" @keydown.escape="mobileOpen=false; demoOpen=false">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - Online Learning Platform</title>
+    <meta name="description" content="Join millions learning online at LearnHub. Expert-led courses, certificates, and a vibrant community. Start your learning journey today.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#3B82F6',
+                        'brand-violet': '#8B5CF6',
+                        'brand-green': '#10B981',
+                        'brand-emerald': '#059669'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 10px 25px -5px rgba(59,130,246,0.25), 0 8px 10px -6px rgba(139,92,246,0.25)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-violet bg-clip-text text-transparent transition-transform duration-300 hover:scale-105">
+                            <i class="fas fa-graduation-cap mr-2"></i>LearnHub
+                        </span>
+                    </a>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#courses" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md">
+                            Courses
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md">
+                            Paths
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md">
+                            Resources
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#community" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md">
+                            Community
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md">
+                        Sign In
+                    </button>
+                    <button class="bg-gradient-to-r from-brand-blue to-brand-violet text-white px-6 py-2 rounded-lg font-medium hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-500/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue">
+                        Get Started
+                    </button>
+                </div>
+                <!-- Mobile menu button -->
+                <button @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen" aria-controls="mobile-menu" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-brand-blue hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue">
+                    <span class="sr-only">Open main menu</span>
+                    <i :class="mobileOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div x-show="mobileOpen" x-transition.duration.300ms.origin.top id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+            <div class="px-4 py-3 space-y-2">
+                <a @click="mobileOpen=false" href="#courses" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">Courses</a>
+                <a @click="mobileOpen=false" href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">Paths</a>
+                <a @click="mobileOpen=false" href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">Resources</a>
+                <a @click="mobileOpen=false" href="#community" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">Community</a>
+                <div class="pt-3 flex gap-3">
+                    <button class="flex-1 border border-gray-200 text-gray-900 px-4 py-2 rounded-md hover:bg-gray-50">Sign In</button>
+                    <button class="flex-1 bg-gradient-to-r from-brand-blue to-brand-violet text-white px-4 py-2 rounded-md">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-blue-50 to-violet-50 py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left animate-fade-in">
+                    <h1 class="text-5xl md:text-7xl font-bold text-gray-900 mb-6 animate-slide-up">
+                        Learn Without
+                        <span class="bg-gradient-to-r from-brand-blue to-brand-violet bg-clip-text text-transparent animate-float">Limits</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed animate-slide-up">
+                        Join millions of learners worldwide and master new skills with our interactive courses, expert instructors, and vibrant community.
+                    </p>
+
+                    <!-- Search bar -->
+                    <div class="max-w-xl mx-auto lg:mx-0 mb-8 animate-slide-up">
+                        <label for="course-search" class="sr-only">Search courses</label>
+                        <div class="relative group">
+                            <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                            <input id="course-search" type="text" placeholder="Search for courses, topics, or instructors..."
+                                   class="w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur rounded-xl border border-gray-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition">
+                            <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-brand-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up">
+                        <button class="bg-gradient-to-r from-brand-blue to-brand-violet text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-500/30 flex items-center justify-center gap-2">
+                            <i class="fas fa-rocket"></i>Explore Courses
+                        </button>
+                        <button @click="demoOpen=true" class="border-2 border-brand-emerald text-brand-emerald px-8 py-4 rounded-xl font-semibold text-lg hover:bg-brand-emerald hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                            <i class="fas fa-play-circle"></i>Watch Demo
+                        </button>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500 animate-fade-in">
+                        No credit card required. Cancel anytime.
+                    </p>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="relative animate-fade-in">
+                    <div class="absolute -top-6 -left-6 w-24 h-24 rounded-2xl bg-white/70 blur-0 shadow-glow animate-float"></div>
+                    <div class="absolute -bottom-6 -right-6 w-20 h-20 rounded-full bg-white/60 shadow-glow"></div>
+                    <figure class="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-gray-200/60">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1758685733633-a12889098460?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZyUyMHN0dWRlbnRzJTIwbGFwdG9wJTIwY2xhc3Nyb29tJTIwbW9kZXJufGVufDB8MHx8fDE3NTkzNzgwNDR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=0NThr2qkxao" alt="Students learning online on laptops" class="w-full h-[420px] object-cover transition-transform duration-700 hover:scale-105">
+                        <figcaption class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent text-white p-4 text-sm">
+                            Real projects. Real skills. Real results.
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Why Choose LearnHub?</h2>
+                <p class="text-xl text-gray-600">Experience learning like never before</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="text-center p-8 rounded-2xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-brand-blue to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-brand-blue transition-colors">Expert-Led Courses</h3>
+                    <p class="text-gray-600 leading-relaxed">Learn from industry professionals and academic experts with real-world experience and practical insights.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="text-center p-8 rounded-2xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-brand-violet to-violet-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-award text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-brand-violet transition-colors">Certified Learning</h3>
+                    <p class="text-gray-600 leading-relaxed">Earn recognized certificates to showcase your skills and advance your career with industry-validated credentials.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="text-center p-8 rounded-2xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-brand-green to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-users text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-brand-green transition-colors">Vibrant Community</h3>
+                    <p class="text-gray-600 leading-relaxed">Connect with fellow learners, share knowledge, collaborate on projects, and grow together in our active community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Courses -->
+    <section id="courses" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Popular Courses</h2>
+                <p class="text-xl text-gray-600">Start your learning journey with our most popular courses</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Course 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
+                    <div class="h-48 relative overflow-hidden">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1635775017492-1eb935a082a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBwcm9ncmFtbWluZyUyMGNvbXB1dGVyfGVufDB8MHx8fDE3NTkzNzc3NjR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=UjJWhMerJx0" 
+                             alt="Full Stack Web Development" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-brand-blue/90 rounded-full backdrop-blur-sm">Development</span>
+                            <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-amber-500/90 rounded-full">Bestseller</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-blue transition-colors">Full Stack Web Development</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Master modern web development with HTML, CSS, JavaScript, React, Node.js and popular frameworks.</p>
+                        <div class="flex items-center justify-between mb-4 text-sm text-gray-500">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-video text-brand-blue"></i> 120 lessons</span>
+                                <span class="inline-flex items-center gap-1"><i class="fa-regular fa-clock text-brand-violet"></i> 24h</span>
+                                <span class="inline-flex items-center gap-1 text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-brand-emerald">$89</span>
+                                <span class="text-sm text-gray-500 line-through">$149</span>
+                            </div>
+                            <button class="bg-brand-blue text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                <i class="fas fa-shopping-cart"></i>Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
+                    <div class="h-48 relative overflow-hidden">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkYXRhJTIwc2NpZW5jZSUyMGFuYWx5dGljc3xlbnwwfDB8fHwxNzU5Mzc3NzY3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=-WXQm_NTK0U" 
+                             alt="Data Science & Machine Learning" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <span class="absolute top-4 left-4 inline-block px-3 py-1 text-xs font-semibold text-white bg-brand-green/90 rounded-full backdrop-blur-sm">Data Science</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-green transition-colors">Data Science & Machine Learning</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Learn data analysis, visualization, and machine learning algorithms from scratch with Python.</p>
+                        <div class="flex items-center justify-between mb-4 text-sm text-gray-500">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-video text-brand-blue"></i> 90 lessons</span>
+                                <span class="inline-flex items-center gap-1"><i class="fa-regular fa-clock text-brand-violet"></i> 18h</span>
+                                <span class="inline-flex items-center gap-1 text-amber-500"><i class="fa-solid fa-star"></i> 4.7</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-brand-emerald">$99</span>
+                                <span class="text-sm text-gray-500 line-through">$179</span>
+                            </div>
+                            <button class="bg-brand-blue text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                <i class="fas fa-shopping-cart"></i>Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
+                    <div class="h-48 relative overflow-hidden">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx1aSUyMHV4JTIwZGVzaWduJTIwaW50ZXJmYWNlfGVufDB8MHx8fDE3NTkzNzc3NzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=UTk9cXzYWAg" 
+                             alt="UI/UX Design Masterclass" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <span class="absolute top-4 left-4 inline-block px-3 py-1 text-xs font-semibold text-white bg-brand-violet/90 rounded-full backdrop-blur-sm">Design</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-violet transition-colors">UI/UX Design Masterclass</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">Create stunning user interfaces and exceptional user experiences with modern design tools.</p>
+                        <div class="flex items-center justify-between mb-4 text-sm text-gray-500">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-video text-brand-blue"></i> 70 lessons</span>
+                                <span class="inline-flex items-center gap-1"><i class="fa-regular fa-clock text-brand-violet"></i> 12h</span>
+                                <span class="inline-flex items-center gap-1 text-amber-500"><i class="fa-solid fa-star"></i> 4.6</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-brand-emerald">$79</span>
+                                <span class="text-sm text-gray-500 line-through">$129</span>
+                            </div>
+                            <button class="bg-brand-blue text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                <i class="fas fa-shopping-cart"></i>Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-gradient-to-r from-brand-blue to-brand-violet text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center animate-fade-in">
+                <div class="space-y-2">
+                    <div class="text-4xl md:text-5xl font-bold">2M+</div>
+                    <div class="text-blue-100">Active Learners</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl md:text-5xl font-bold">500+</div>
+                    <div class="text-blue-100">Expert Courses</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl md:text-5xl font-bold">98%</div>
+                    <div class="text-blue-100">Success Rate</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl md:text-5xl font-bold">50+</div>
+                    <div class="text-blue-100">Countries</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="community" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Loved by Learners</h2>
+                <p class="text-lg text-gray-600">What our community says about LearnHub</p>
+            </div>
+            <div x-data="{i:0, items:[
+                {name:'Ava, Product Designer', text:'The UI/UX course helped me switch careers in 6 months. The projects felt real and the community is incredibly supportive.', img:'https://images.unsplash.com/photo-1611178206724-76cce39da1d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwd29tYW4lMjBwb3J0cmFpdCUyMGluZG9vciUyMG5hdHVyYWwlMjBsaWdodCUyMHN0dWRlbnR8ZW58MHwwfHx8MTc1OTM3ODA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=XoJCb5goRss'},
+                {name:'Liam, Data Analyst', text:'I landed my first analytics role after completing the ML path. The certificates added real value to my resume.', img:'https://images.unsplash.com/photo-1584762074262-1e0c075f6775?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwbWFuJTIwcG9ydHJhaXQlMjBpbmRvb3IlMjBuYXR1cmFsJTIwbGlnaHQlMjBwcm9mZXNzaW9uYWx8ZW58MHwwfHx8MTc1OTM3ODA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=-_BVr_lS3F8'},
+                {name:'Community Projects', text:'Collaborate on real-world projects with diverse teams and mentors from around the globe.', img:'https://images.unsplash.com/photo-1758691736975-9f7f643d178e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwdGVhbSUyMG1lZXRpbmclMjBjb2xsYWJvcmF0aW9uJTIwb2ZmaWNlfGVufDB8MHx8fDE3NTkzNzgwNDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=q1jHh0MWTFk'}
+            ]}" x-init="setInterval(()=>{ i=(i+1)%items.length },6000)" class="max-w-5xl mx-auto">
+                <div class="relative overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-lg">
+                    <template x-for="(item,idx) in items" :key="idx">
+                        <div x-show="i===idx" x-transition.opacity.duration.500ms class="grid md:grid-cols-3 gap-0">
+                            <div class="md:col-span-1 h-64 md:h-full">
+                                <img :src="item.img" loading="lazy" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="md:col-span-2 p-8">
+                                <i class="fa-solid fa-quote-left text-3xl text-brand-blue/70"></i>
+                                <p class="mt-4 text-lg text-gray-700 leading-relaxed" x-text="item.text"></p>
+                                <div class="mt-6 flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-brand-blue to-brand-violet"></div>
+                                    <span class="text-sm font-medium text-gray-900" x-text="item.name"></span>
+                                </div>
+                                <div class="mt-6 flex items-center gap-2 text-amber-500">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                                    <span class="text-sm text-gray-500 ml-1">4.0/5 average</span>
+                                </div>
+                                <div class="mt-6 flex gap-3">
+                                    <button @click="i=(i-1+items.length)%items.length" class="px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition"><i class="fa-solid fa-chevron-left"></i><span class="sr-only">Previous</span></button>
+                                    <button @click="i=(i+1)%items.length" class="px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition"><i class="fa-solid fa-chevron-right"></i><span class="sr-only">Next</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="mt-4 flex justify-center gap-2">
+                    <template x-for="(item,idx) in items" :key="'dot-'+idx">
+                        <button @click="i=idx" :class="i===idx ? 'bg-brand-blue' : 'bg-gray-300'" class="w-2.5 h-2.5 rounded-full transition" aria-label="Go to testimonial"></button>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-violet-50 relative overflow-hidden">
+        <div class="absolute inset-0" style="background-image: radial-gradient(#dbeafe 1px, transparent 1px); background-size: 22px 22px; opacity: .4;"></div>
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10 animate-fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Ready to Start Your Learning Journey?</h2>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Join over 2 million learners and transform your career today with our comprehensive learning platform.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-gradient-to-r from-brand-blue to-brand-violet text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-500/30 flex items-center justify-center gap-2">
+                    <i class="fas fa-user-plus"></i>Create Free Account
+                </button>
+                <button class="border-2 border-brand-emerald text-brand-emerald px-8 py-4 rounded-xl font-semibold text-lg hover:bg-brand-emerald hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <i class="fas fa-search"></i>Browse All Courses
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-5 gap-10">
+                <div class="md:col-span-2 animate-fade-in">
+                    <h3 class="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-violet bg-clip-text text-transparent mb-4 transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-graduation-cap mr-2"></i>LearnHub
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">Empowering learners worldwide with quality education and cutting-edge learning experiences.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110" aria-label="Twitter">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110" aria-label="Facebook">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="animate-fade-in">
+                    <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-laptop-code"></i>Platform
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#courses" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Courses</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Learning Paths</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Certifications</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>For Business</a></li>
+                    </ul>
+                </div>
+                <div class="animate-fade-in">
+                    <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-building"></i>Company
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div class="animate-fade-in">
+                    <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-headset"></i>Support
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>FAQ</a></li>
+                        <li><a href="#community" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Community</a></li>
+                        <li><a href="#" class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i>Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="mt-12 grid md:grid-cols-2 gap-6 items-center border border-gray-800 rounded-2xl p-6">
+                <div>
+                    <h5 class="text-xl font-semibold">Get learning tips and course updates</h5>
+                    <p class="text-gray-400 mt-1">Join our newsletter for curated content, no spam.</p>
+                </div>
+                <form class="flex gap-3" onsubmit="event.preventDefault()">
+                    <label for="email" class="sr-only">Email</label>
+                    <input id="email" type="email" placeholder="you@example.com" class="flex-1 px-4 py-3 rounded-xl bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-blue" required>
+                    <button class="px-5 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-violet hover:shadow-xl transition">Subscribe</button>
+                </form>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 py-8 text-center text-gray-400 animate-fade-in">
+                <p class="flex items-center justify-center gap-2">
+                    <i class="fas fa-heart text-red-500"></i>
+                    Made with passion for education &copy; 2024 LearnHub. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 bg-gradient-to-r from-brand-blue to-brand-violet text-white p-3 rounded-full shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-1 z-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Demo Modal -->
+    <div x-show="demoOpen" x-transition.opacity class="fixed inset-0 z-[60] bg-black/60 flex items-center justify-center p-4" aria-modal="true" role="dialog" aria-labelledby="demo-title">
+        <div @click.outside="demoOpen=false" x-show="demoOpen" x-transition.scale origin="center" class="w-full max-w-3xl bg-white rounded-2xl overflow-hidden shadow-2xl">
+            <div class="flex justify-between items-center px-5 py-4 border-b">
+                <h3 id="demo-title" class="text-lg font-semibold text-gray-900">LearnHub Demo</h3>
+                <button @click="demoOpen=false" class="p-2 rounded-md hover:bg-gray-100"><i class="fa-solid fa-xmark"></i><span class="sr-only">Close</span></button>
+            </div>
+            <div class="aspect-video bg-black">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="LearnHub Demo Video" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.remove('opacity-100', 'visible');
+                backToTop.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        // Initialize back to top button
+        document.getElementById('backToTop').classList.add('opacity-0', 'invisible');
+    </script>
+</body>
+</html>

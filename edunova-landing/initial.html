@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - Online Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#3B82F6',
+                        'brand-violet': '#8B5CF6',
+                        'brand-green': '#10B981',
+                        'brand-emerald': '#059669'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-violet bg-clip-text text-transparent">
+                            LearnHub
+                        </span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium">Courses</a>
+                        <a href="#" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium">Paths</a>
+                        <a href="#" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium">Resources</a>
+                        <a href="#" class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-900 hover:text-brand-blue px-3 py-2 text-sm font-medium">Sign In</button>
+                    <button class="bg-gradient-to-r from-brand-blue to-brand-violet text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition-shadow">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-50 to-violet-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Learn Without
+                    <span class="bg-gradient-to-r from-brand-blue to-brand-violet bg-clip-text text-transparent">Limits</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Join millions of learners worldwide and master new skills with our interactive courses, expert instructors, and vibrant community.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-brand-blue to-brand-violet text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl transition-all">
+                        Explore Courses
+                    </button>
+                    <button class="border-2 border-brand-emerald text-brand-emerald px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-emerald hover:text-white transition-all">
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose LearnHub?</h2>
+                <p class="text-xl text-gray-600">Experience learning like never before</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-emerald-50">
+                    <div class="w-16 h-16 bg-brand-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Expert-Led Courses</h3>
+                    <p class="text-gray-600">Learn from industry professionals and academic experts with real-world experience.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-violet-50 to-blue-50">
+                    <div class="w-16 h-16 bg-brand-violet rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Certified Learning</h3>
+                    <p class="text-gray-600">Earn recognized certificates to showcase your skills and advance your career.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50">
+                    <div class="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Vibrant Community</h3>
+                    <p class="text-gray-600">Connect with fellow learners, share knowledge, and grow together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Courses -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Popular Courses</h2>
+                <p class="text-xl text-gray-600">Start your learning journey with our most popular courses</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Course 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-brand-blue to-brand-violet"></div>
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 text-xs font-semibold text-brand-blue bg-blue-100 rounded-full mb-4">Development</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Full Stack Web Development</h3>
+                        <p class="text-gray-600 mb-4">Master modern web development with HTML, CSS, JavaScript, and popular frameworks.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-brand-emerald">$89</span>
+                            <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-brand-green to-brand-emerald"></div>
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 text-xs font-semibold text-brand-green bg-green-100 rounded-full mb-4">Data Science</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Data Science & Machine Learning</h3>
+                        <p class="text-gray-600 mb-4">Learn data analysis, visualization, and machine learning algorithms from scratch.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-brand-emerald">$99</span>
+                            <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-brand-violet to-purple-500"></div>
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 text-xs font-semibold text-brand-violet bg-violet-100 rounded-full mb-4">Design</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">UI/UX Design Masterclass</h3>
+                        <p class="text-gray-600 mb-4">Create stunning user interfaces and exceptional user experiences.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-brand-emerald">$79</span>
+                            <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-brand-blue to-brand-violet">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Start Your Learning Journey?</h2>
+            <p class="text-xl text-blue-100 mb-8">Join over 2 million learners and transform your career today.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-brand-blue px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+                    Create Free Account
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-brand-blue transition-all">
+                    Browse All Courses
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-violet bg-clip-text text-transparent mb-4">
+                        LearnHub
+                    </h3>
+                    <p class="text-gray-400">Empowering learners worldwide with quality education.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Courses</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Learning Paths</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Certifications</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">For Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 LearnHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
