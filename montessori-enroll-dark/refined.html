@@ -1,0 +1,365 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montessori Academy | Admissions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fuchsia': {
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                        },
+                        'red': {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        },
+                        'blue': {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        },
+                        'sky': {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800/95 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-fuchsia-500 to-blue-500 rounded-xl shadow-lg flex items-center justify-center">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Montessori Academy</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105">About</a>
+                    <a href="#" class="text-white font-semibold border-b-2 border-sky-500 pb-1 transition-all duration-300">Admissions</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105">Programs</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105">Contact</a>
+                </nav>
+                <button class="md:hidden text-gray-300 hover:text-white transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1730106443463-0fb1512c5e60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBidWlsZGluZyUyMG1vZGVybiUyMGFyY2hpdGVjdHVyZXxlbnwwfDB8fHwxNzU5NDQ5NzU1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=buhCc46eZ9Y')] bg-cover bg-center"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center animate-fade-in-up">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-sky-400 bg-clip-text text-transparent animate-float">
+                    Begin Your Child's Montessori Journey
+                </h1>
+                <p class="text-xl text-gray-200 mb-10 leading-relaxed">
+                    Nurturing independent thinkers and lifelong learners in an environment designed for discovery and growth.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule a Tour</span>
+                    </button>
+                    <button class="border-2 border-gray-600 hover:border-sky-500 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:bg-gray-800/50 flex items-center justify-center space-x-2">
+                        <i class="fas fa-download"></i>
+                        <span>Download Application</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Process -->
+    <section class="py-20 bg-gray-800/50 backdrop-blur-sm">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Our Admissions Process</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center group animate-fade-in-up" style="animation-delay: 0.1s">
+                    <div class="w-20 h-20 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-eye text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-fuchsia-400">Inquiry & Tour</h3>
+                    <p class="text-gray-300 leading-relaxed">Schedule a personalized tour to experience our Montessori environment firsthand and meet our dedicated educators.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center group animate-fade-in-up" style="animation-delay: 0.2s">
+                    <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-file-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-red-400">Application</h3>
+                    <p class="text-gray-300 leading-relaxed">Submit your application along with required documents and comprehensive student information for review.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="text-center group animate-fade-in-up" style="animation-delay: 0.3s">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-child text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-blue-400">Student Visit</h3>
+                    <p class="text-gray-300 leading-relaxed">Your child spends meaningful time in the classroom to ensure the perfect fit for everyone's educational journey.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="text-center group animate-fade-in-up" style="animation-delay: 0.4s">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-sky-400">Enrollment</h3>
+                    <p class="text-gray-300 leading-relaxed">Complete enrollment paperwork and prepare for an exciting educational journey filled with discovery and growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Overview -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1574758324765-a29c77fb9c91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGNoaWxkcmVuJTIwcGxheWluZyUyMHNjaG9vbHxlbnwwfDB8fHwxNzU5NDQ5NzQ4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=x-DkJEpGJ0I')] bg-cover bg-center opacity-5"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Programs We Offer</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Toddler Program -->
+                <div class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-fuchsia-500 hover:border-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-baby text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-fuchsia-400">Toddler Program</h3>
+                    <p class="text-gray-300 mb-4 font-medium">Ages 18 months - 3 years</p>
+                    <p class="text-gray-400 leading-relaxed">Nurturing environment for our youngest learners to develop independence, social skills, and foundational cognitive abilities through hands-on exploration.</p>
+                </div>
+                <!-- Primary Program -->
+                <div class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-red-500 hover:border-red-400 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-puzzle-piece text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-red-400">Primary Program</h3>
+                    <p class="text-gray-300 mb-4 font-medium">Ages 3 - 6 years</p>
+                    <p class="text-gray-400 leading-relaxed">Comprehensive Montessori curriculum focusing on practical life skills, sensorial development, and foundational academic preparation in a prepared environment.</p>
+                </div>
+                <!-- Elementary Program -->
+                <div class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-blue-500 hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-atom text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Elementary Program</h3>
+                    <p class="text-gray-300 mb-4 font-medium">Ages 6 - 12 years</p>
+                    <p class="text-gray-400 leading-relaxed">Advanced studies in cosmic education, mathematics, language arts, and cultural subjects fostering critical thinking and collaborative learning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="py-20 bg-gray-800/50 backdrop-blur-sm">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Request Information</h2>
+                <form class="space-y-8 bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="group">
+                            <label class="block text-gray-300 mb-3 font-medium">Parent's First Name</label>
+                            <input type="text" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                        </div>
+                        <div class="group">
+                            <label class="block text-gray-300 mb-3 font-medium">Parent's Last Name</label>
+                            <input type="text" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label class="block text-gray-300 mb-3 font-medium">Email Address</label>
+                        <input type="email" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                    </div>
+                    <div class="group">
+                        <label class="block text-gray-300 mb-3 font-medium">Child's Name & Age</label>
+                        <input type="text" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500" placeholder="e.g., Emma, 4 years">
+                    </div>
+                    <div class="group">
+                        <label class="block text-gray-300 mb-3 font-medium">Program of Interest</label>
+                        <select class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                            <option class="bg-gray-800">Toddler Program</option>
+                            <option class="bg-gray-800">Primary Program</option>
+                            <option class="bg-gray-800">Elementary Program</option>
+                        </select>
+                    </div>
+                    <div class="group">
+                        <label class="block text-gray-300 mb-3 font-medium">Message</label>
+                        <textarea rows="5" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500 resize-none" placeholder="Tell us about your child and anyspecific interests or needs..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-600 hover:to-fuchsia-600 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3">
+                        <i class="fas fa-paper-plane"></i>
+                        <span class="text-lg">Submit Request</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-fuchsia-500 to-blue-500 rounded-xl shadow-lg flex items-center justify-center">
+                            <i class="fas fa-seedling text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Montessori Academy</h3>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">Inspiring young minds through authentic Montessori education since 1995. Building tomorrow's leaders today.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sky-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-facebook-f text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sky-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sky-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-sky-400">Contact Info</h4>
+                    <div class="space-y-3">
+                        <p class="text-gray-400 flex items-center space-x-3">
+                            <i class="fas fa-map-marker-alt text-sky-400 w-5"></i>
+                            <span>123 Education Lane<br>Learning City, LC 12345</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-3">
+                            <i class="fas fa-phone text-sky-400 w-5"></i>
+                            <span>(555) 123-4567</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-3">
+                            <i class="fas fa-envelope text-sky-400 w-5"></i>
+                            <span>admissions@montessori.edu</span>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-sky-400">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>About Us</span>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>Programs</span>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>Faculty</span>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>Calendar</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-sky-400">Hours</h4>
+                    <div class="space-y-3 text-gray-400">
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-sky-400 w-5"></i>
+                            <span>Monday - Friday: 7:30 AM - 6:00 PM</span>
+                        </p>
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-sky-400 w-5"></i>
+                            <span>Saturday: 9:00 AM - 12:00 PM</span>
+                        </p>
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-times-circle text-sky-400 w-5"></i>
+                            <span>Sunday: Closed</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-heart text-red-400"></i>
+                    <span>&copy; 2024 Montessori Academy. All rights reserved. | Designed with passion for education</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-sky-500 to-fuchsia-500 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center text-white z-40" id="backToTop" style="display: none;">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('button[class*="md:hidden"]');
+            const nav = document.querySelector('nav');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                nav.classList.toggle('hidden');
+                nav.classList.toggle('flex');
+                nav.classList.toggle('flex-col');
+                nav.classList.toggle('absolute');
+                nav.classList.toggle('top-full');
+                nav.classList.toggle('left-0');
+                nav.classList.toggle('right-0');
+                nav.classList.toggle('bg-gray-800');
+                nav.classList.toggle('p-6');
+                nav.classList.toggle('space-y-4');
+                nav.classList.toggle('border-t');
+                nav.classList.toggle('border-gray-700');
+            });
+        });
+    </script>
+</body>
+</html>

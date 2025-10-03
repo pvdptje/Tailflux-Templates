@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montessori Academy | Admissions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fuchsia': {
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                        },
+                        'red': {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        },
+                        'blue': {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        },
+                        'sky': {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-fuchsia-500 to-blue-500 rounded-lg"></div>
+                    <h1 class="text-2xl font-bold">Montessori Academy</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors">About</a>
+                    <a href="#" class="text-white font-semibold border-b-2 border-sky-500">Admissions</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors">Programs</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+                </nav>
+                <button class="md:hidden text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-gray-800 to-gray-900 py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl font-bold mb-6 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">
+                    Begin Your Child's Montessori Journey
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">
+                    Nurturing independent thinkers and lifelong learners in an environment designed for discovery and growth.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                        Schedule a Tour
+                    </button>
+                    <button class="border border-gray-600 hover:border-sky-500 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                        Download Application
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Process -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Admissions Process</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-fuchsia-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Inquiry & Tour</h3>
+                    <p class="text-gray-300">Schedule a personalized tour to experience our Montessori environment firsthand.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Application</h3>
+                    <p class="text-gray-300">Submit your application along with required documents and student information.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Student Visit</h3>
+                    <p class="text-gray-300">Your child spends time in the classroom to ensure the right fit for everyone.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">4</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Enrollment</h3>
+                    <p class="text-gray-300">Complete enrollment paperwork and prepare for an exciting educational journey.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Overview -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Programs We Offer</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Toddler Program -->
+                <div class="bg-gray-800 rounded-lg p-6 border-l-4 border-fuchsia-500">
+                    <h3 class="text-xl font-semibold mb-3 text-fuchsia-400">Toddler Program</h3>
+                    <p class="text-gray-300 mb-4">Ages 18 months - 3 years</p>
+                    <p class="text-gray-400">Nurturing environment for our youngest learners to develop independence and social skills.</p>
+                </div>
+                <!-- Primary Program -->
+                <div class="bg-gray-800 rounded-lg p-6 border-l-4 border-red-500">
+                    <h3 class="text-xl font-semibold mb-3 text-red-400">Primary Program</h3>
+                    <p class="text-gray-300 mb-4">Ages 3 - 6 years</p>
+                    <p class="text-gray-400">Comprehensive Montessori curriculum focusing on practical life, sensorial, and academic skills.</p>
+                </div>
+                <!-- Elementary Program -->
+                <div class="bg-gray-800 rounded-lg p-6 border-l-4 border-blue-500">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-400">Elementary Program</h3>
+                    <p class="text-gray-300 mb-4">Ages 6 - 12 years</p>
+                    <p class="text-gray-400">Advanced studies in cosmic education, mathematics, language, and cultural subjects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-8">Request Information</h2>
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-300 mb-2">Parent's First Name</label>
+                            <input type="text" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2">Parent's Last Name</label>
+                            <input type="text" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 mb-2">Email Address</label>
+                        <input type="email" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 mb-2">Child's Name & Age</label>
+                        <input type="text" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500" placeholder="e.g., Emma, 4 years">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 mb-2">Program of Interest</label>
+                        <select class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500">
+                            <option>Toddler Program</option>
+                            <option>Primary Program</option>
+                            <option>Elementary Program</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 mb-2">Message</label>
+                        <textarea rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-sky-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-600 hover:to-fuchsia-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                        Submit Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Montessori Academy</h3>
+                    <p class="text-gray-400">Inspiring young minds through authentic Montessori education since 1995.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact Info</h4>
+                    <p class="text-gray-400">123 Education Lane</p>
+                    <p class="text-gray-400">Learning City, LC 12345</p>
+                    <p class="text-gray-400">(555) 123-4567</p>
+                    <p class="text-gray-400">admissions@montessori.edu</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-sky-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors">Programs</a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors">Faculty</a></li>
+                        <li><a href="#" class="hover:text-sky-400 transition-colors">Calendar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Hours</h4>
+                    <p class="text-gray-400">Monday - Friday: 7:30 AM - 6:00 PM</p>
+                    <p class="text-gray-400">Saturday: 9:00 AM - 12:00 PM</p>
+                    <p class="text-gray-400">Sunday: Closed</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Montessori Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

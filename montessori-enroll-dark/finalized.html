@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileOpen: false }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montessori Academy | Admissions</title>
+    <meta name="description" content="Montessori Academy Admissions. Begin your child's Montessori journey with our nurturing programs and caring educators. Learn about our process, programs, and request information.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fuchsia': {
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                        },
+                        'red': {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        },
+                        'blue': {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        },
+                        'sky': {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-soft': 'pulseSoft 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: 0.15, transform: 'scale(1)' },
+                            '50%': { opacity: 0.3, transform: 'scale(1.03)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen antialiased scroll-smooth">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-gray-800 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Skip to content</a>
+
+    <!-- Header -->
+    <header class="bg-gray-800/95 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 transition-all duration-300" x-data="{ scrolled: false }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 })" :class="scrolled ? 'bg-gray-900/95 shadow-lg' : ''" role="banner">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3 group" aria-label="Montessori Academy Home">
+                    <div class="w-12 h-12 bg-gradient-to-r from-fuchsia-500 to-blue-500 rounded-xl shadow-lg flex items-center justify-center ring-1 ring-white/10 group-hover:ring-white/20 transition">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Montessori Academy</span>
+                </a>
+                <nav class="hidden md:flex items-center space-x-8" aria-label="Primary menu">
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded">About</a>
+                    <a href="#" aria-current="page" class="text-white font-semibold border-b-2 border-sky-500 pb-1 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded">Admissions</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded">Programs</a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded">Contact</a>
+                </nav>
+                <button @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen.toString()" aria-controls="mobile-menu" class="md:hidden text-gray-300 hover:text-white transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded p-2" aria-label="Toggle menu">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" x-cloak x-show="mobileOpen" x-transition.opacity x-transition.duration.300ms class="md:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-800">
+            <nav class="px-6 py-4 flex flex-col space-y-4" aria-label="Mobile menu">
+                <a href="#" class="text-gray-300 hover:text-white transition flex items-center space-x-2">
+                    <i class="fa-solid fa-house text-sky-400 w-5"></i><span>Home</span>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-white transition flex items-center space-x-2">
+                    <i class="fa-solid fa-building-columns text-sky-400 w-5"></i><span>About</span>
+                </a>
+                <a href="#" class="text-white font-semibold flex items-center space-x-2">
+                    <i class="fa-solid fa-user-graduate text-sky-400 w-5"></i><span>Admissions</span>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-white transition flex items-center space-x-2">
+                    <i class="fa-solid fa-shapes text-sky-400 w-5"></i><span>Programs</span>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-white transition flex items-center space-x-2">
+                    <i class="fa-solid fa-envelope text-sky-400 w-5"></i><span>Contact</span>
+                </a>
+                <a href="#request-info" class="mt-2 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white px-5 py-3 rounded-xl font-semibold transition shadow-lg">
+                    <i class="fa-solid fa-calendar-days"></i> <span>Schedule a Tour</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 py-24 md:py-28 overflow-hidden">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="absolute inset-0">
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1755692880851-f5e013f9dbbd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb250ZXNzb3JpJTIwY2xhc3Nyb29tJTIwbmF0dXJhbCUyMGxpZ2h0JTIwbW9kZXJuJTIwc2Nob29sfGVufDB8MHx8fDE3NTk0NTAwMTB8MA&ixlib=rb-4.1.0&q=80&w=1600');"></div>
+            </div>
+            <!-- subtle glow orbs -->
+            <div class="pointer-events-none absolute -top-10 -left-10 w-64 h-64 bg-fuchsia-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+            <div class="pointer-events-none absolute -bottom-16 -right-16 w-72 h-72 bg-sky-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl mx-auto text-center reveal-on-scroll">
+                    <h1 class="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-sky-400 bg-clip-text text-transparent animate-float">
+                        Begin Your Child's Montessori Journey
+                    </h1>
+                    <p class="text-xl text-gray-200 mb-10 leading-relaxed">
+                        Nurturing independent thinkers and lifelong learners in an environment designed for discovery and growth.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#request-info" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60" aria-label="Schedule a campus tour">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Schedule a Tour</span>
+                        </a>
+                        <button class="border-2 border-gray-600 hover:border-sky-500 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:bg-gray-800/50 flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60" aria-label="Download Application">
+                            <i class="fas fa-download"></i>
+                            <span>Download Application</span>
+                        </button>
+                    </div>
+                    <div class="mt-10 flex items-center justify-center gap-6 text-gray-300/90">
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-shield-heart text-sky-400"></i><span>Safe & Caring</span></div>
+                        <div class="hidden sm:flex items-center gap-2"><i class="fa-solid fa-leaf text-fuchsia-400"></i><span>Hands-on Learning</span></div>
+                        <div class="hidden md:flex items-center gap-2"><i class="fa-solid fa-people-group text-blue-400"></i><span>Community Focused</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Dates / Notice Bar -->
+        <section class="relative bg-gray-900/70 border-y border-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-3 gap-6 py-8">
+                    <div class="flex items-center gap-4 bg-gray-800/70 rounded-xl p-4 border border-gray-700 reveal-on-scroll">
+                        <div class="w-12 h-12 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-400">Applications Open</p>
+                            <p class="font-semibold">Now Accepting 2025-26</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-gray-800/70 rounded-xl p-4 border border-gray-700 reveal-on-scroll">
+                        <div class="w-12 h-12 rounded-lg bg-fuchsia-500/10 text-fuchsia-400 flex items-center justify-center">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-400">Parent Info Night</p>
+                            <p class="font-semibold">Oct 24 · 6:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-gray-800/70 rounded-xl p-4 border border-gray-700 reveal-on-scroll">
+                        <div class="w-12 h-12 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-400">Campus Tours</p>
+                            <p class="font-semibold">Mon–Fri by appointment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admissions Process -->
+        <section class="py-20 bg-gray-800/50 backdrop-blur-sm">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent reveal-on-scroll">Our Admissions Process</h2>
+                <div class="relative">
+                    <div class="hidden md:block absolute top-10 left-0 right-0 h-1 bg-gradient-to-r from-fuchsia-500/40 via-red-500/40 to-sky-500/40 rounded-full"></div>
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <!-- Step 1 -->
+                        <div class="text-center group reveal-on-scroll">
+                            <div class="w-20 h-20 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                                <i class="fas fa-eye text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4 text-fuchsia-400">Inquiry & Tour</h3>
+                            <p class="text-gray-300 leading-relaxed">Schedule a personalized tour to experience our Montessori environment firsthand and meet our dedicated educators.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="text-center group reveal-on-scroll">
+                            <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                                <i class="fas fa-file-alt text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4 text-red-400">Application</h3>
+                            <p class="text-gray-300 leading-relaxed">Submit your application along with required documents and comprehensive student information for review.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="text-center group reveal-on-scroll">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                                <i class="fas fa-child text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4 text-blue-400">Student Visit</h3>
+                            <p class="text-gray-300 leading-relaxed">Your child spends meaningful time in the classroom to ensure the perfect fit for everyone's educational journey.</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="text-center group reveal-on-scroll">
+                            <div class="w-20 h-20 bg-gradient-to-br from-sky-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-all duration-300">
+                                <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4 text-sky-400">Enrollment</h3>
+                            <p class="text-gray-300 leading-relaxed">Complete enrollment paperwork and prepare for an exciting educational journey filled with discovery and growth.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Overview -->
+        <section class="py-20 bg-gray-900 relative overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center opacity-5" style="background-image: url('https://images.unsplash.com/photo-1597075958693-75173d1c837f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjaGlsZHJlbiUyMHBsYXlpbmclMjBjbGFzc3Jvb20lMjBzY2hvb2wlMjBqb3lmdWwlMjBsZWFybmluZ3xlbnwwfDB8fHwxNzU5NDUwMDEwfDA&ixlib=rb-4.1.0&q=80&w=1600');"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent reveal-on-scroll">Programs We Offer</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Toddler Program -->
+                    <article class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-fuchsia-500 hover:border-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl group reveal-on-scroll">
+                        <div class="w-16 h-16 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-baby text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-1 text-fuchsia-400">Toddler Program</h3>
+                        <p class="text-gray-300 mb-4 font-medium">Ages 18 months - 3 years</p>
+                        <p class="text-gray-400 leading-relaxed">Nurturing environment for our youngest learners to develop independence, social skills, and foundational cognitive abilities through hands-on exploration.</p>
+                    </article>
+                    <!-- Primary Program -->
+                    <article class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-red-500 hover:border-red-400 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl group reveal-on-scroll">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-puzzle-piece text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-1 text-red-400">Primary Program</h3>
+                        <p class="text-gray-300 mb-4 font-medium">Ages 3 - 6 years</p>
+                        <p class="text-gray-400 leading-relaxed">Comprehensive Montessori curriculum focusing on practical life skills, sensorial development, and foundational academic preparation in a prepared environment.</p>
+                    </article>
+                    <!-- Elementary Program -->
+                    <article class="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-blue-500 hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl group reveal-on-scroll">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-atom text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-1 text-blue-400">Elementary Program</h3>
+                        <p class="text-gray-300 mb-4 font-medium">Ages 6 - 12 years</p>
+                        <p class="text-gray-400 leading-relaxed">Advanced studies in cosmic education, mathematics, language arts, and cultural subjects fostering critical thinking and collaborative learning.</p>
+                    </article>
+                </div>
+
+                <!-- Mini Gallery -->
+                <div class="mt-16 grid sm:grid-cols-3 gap-6 reveal-on-scroll" aria-label="Campus photo highlights">
+                    <figure class="relative overflow-hidden rounded-2xl bg-gray-800/80 border border-gray-700">
+                        <img src="https://images.unsplash.com/photo-1755692880851-f5e013f9dbbd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb250ZXNzb3JpJTIwY2xhc3Nyb29tJTIwbmF0dXJhbCUyMGxpZ2h0JTIwbW9kZXJuJTIwc2Nob29sfGVufDB8MHx8fDE3NTk0NTAwMTB8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Sunlit Montessori classroom with child-sized furniture" loading="lazy" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                        <figcaption class="px-4 py-3 text-sm text-gray-300">Prepared environments</figcaption>
+                    </figure>
+                    <figure class="relative overflow-hidden rounded-2xl bg-gray-800/80 border border-gray-700">
+                        <img src="https://images.unsplash.com/photo-1597075958693-75173d1c837f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjaGlsZHJlbiUyMHBsYXlpbmclMjBjbGFzc3Jvb20lMjBzY2hvb2wlMjBqb3lmdWwlMjBsZWFybmluZ3xlbnwwfDB8fHwxNzU5NDUwMDEwfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Children collaborating during a joyful classroom activity" loading="lazy" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                        <figcaption class="px-4 py-3 text-sm text-gray-300">Joyful collaboration</figcaption>
+                    </figure>
+                    <figure class="relative overflow-hidden rounded-2xl bg-gray-800/80 border border-gray-700">
+                        <img src="https://images.unsplash.com/photo-1583503352505-c31c31f5e9b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb250ZXNzb3JpJTIwbWF0ZXJpYWxzJTIwc2hlbGYlMjB3b29kZW4lMjBsZWFybmluZyUyMHRvb2xzfGVufDB8MHx8fDE3NTk0NTAwMTF8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Montessori wooden materials neatly arranged on shelves" loading="lazy" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                        <figcaption class="px-4 py-3 text-sm text-gray-300">Authentic materials</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-20 bg-gray-800/50 backdrop-blur-sm">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent reveal-on-scroll">Admissions FAQ</h2>
+                    <div class="space-y-4" x-data="{ open: null }">
+                        <div class="bg-gray-800/80 border border-gray-700 rounded-xl overflow-hidden reveal-on-scroll">
+                            <button @click="open === 1 ? open = null : open = 1" class="w-full flex justify-between items-center text-left px-6 py-5 hover:bg-gray-800/60 transition">
+                                <span class="font-semibold text-white">What ages do you accept?</span>
+                                <i class="fa-solid" :class="open === 1 ? 'fa-chevron-up text-sky-400' : 'fa-chevron-down text-gray-400'"></i>
+                            </button>
+                            <div x-show="open === 1" x-collapse class="px-6 pb-6 text-gray-300">
+                                We enroll students from 18 months through 12 years across our Toddler, Primary, and Elementary programs.
+                            </div>
+                        </div>
+                        <div class="bg-gray-800/80 border border-gray-700 rounded-xl overflow-hidden reveal-on-scroll">
+                            <button @click="open === 2 ? open = null : open = 2" class="w-full flex justify-between items-center text-left px-6 py-5 hover:bg-gray-800/60 transition">
+                                <span class="font-semibold text-white">Do you offer financial aid?</span>
+                                <i class="fa-solid" :class="open === 2 ? 'fa-chevron-up text-sky-400' : 'fa-chevron-down text-gray-400'"></i>
+                            </button>
+                            <div x-show="open === 2" x-collapse class="px-6 pb-6 text-gray-300">
+                                Yes. Limited tuition assistance is available based on need. Please mention interest in the form below to receive details.
+                            </div>
+                        </div>
+                        <div class="bg-gray-800/80 border border-gray-700 rounded-xl overflow-hidden reveal-on-scroll">
+                            <button @click="open === 3 ? open = null : open = 3" class="w-full flex justify-between items-center text-left px-6 py-5 hover:bg-gray-800/60 transition">
+                                <span class="font-semibold text-white">How long is the admissions timeline?</span>
+                                <i class="fa-solid" :class="open === 3 ? 'fa-chevron-up text-sky-400' : 'fa-chevron-down text-gray-400'"></i>
+                            </button>
+                            <div x-show="open === 3" x-collapse class="px-6 pb-6 text-gray-300">
+                                Typically 2–4 weeks from application to decision, depending on visit scheduling and classroom availability.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Request Information Form -->
+        <section id="request-info" class="py-20 bg-gray-900/60">
+            <div class="container mx-auto px-6">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent reveal-on-scroll">Request Information</h2>
+                    <form class="space-y-8 bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl reveal-on-scroll" aria-label="Request information form" x-data="{ submitted: false }" @submit.prevent="submitted = true; $refs.success.focus(); setTimeout(()=>submitted=false, 3500);">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="group">
+                                <label for="parentFirst" class="block text-gray-300 mb-3 font-medium">Parent's First Name</label>
+                                <div class="relative">
+                                    <i class="fa-regular fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input id="parentFirst" name="parentFirst" required type="text" autocomplete="given-name" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl pl-11 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <label for="parentLast" class="block text-gray-300 mb-3 font-medium">Parent's Last Name</label>
+                                <div class="relative">
+                                    <i class="fa-regular fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input id="parentLast" name="parentLast" required type="text" autocomplete="family-name" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl pl-11 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <label for="email" class="block text-gray-300 mb-3 font-medium">Email Address</label>
+                            <div class="relative">
+                                <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input id="email" name="email" required type="email" autocomplete="email" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl pl-11 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <label for="child" class="block text-gray-300 mb-3 font-medium">Child's Name & Age</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-child-reaching absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input id="child" name="child" required type="text" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl pl-11 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500" placeholder="e.g., Emma, 4 years">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <label for="program" class="block text-gray-300 mb-3 font-medium">Program of Interest</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-shapes absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <select id="program" name="program" required class="w-full appearance-none bg-gray-700/50 border-2 border-gray-600 rounded-xl pl-11 pr-12 py-4 text-white focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500">
+                                    <option class="bg-gray-800">Toddler Program</option>
+                                    <option class="bg-gray-800">Primary Program</option>
+                                    <option class="bg-gray-800">Elementary Program</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <label for="message" class="block text-gray-300 mb-3 font-medium">Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full bg-gray-700/50 border-2 border-gray-600 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-sky-500 transition-all duration-300 group-hover:border-gray-500 resize-none" placeholder="Tell us about your child and any specific interests or needs..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-600 hover:to-fuchsia-600 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fas fa-paper-plane"></i>
+                            <span class="text-lg">Submit Request</span>
+                        </button>
+
+                        <!-- Success toast -->
+                        <div x-show="submitted" x-transition.opacity x-trap="submitted" tabindex="-1" x-ref="success" role="status" class="flex items-center gap-3 mt-2 text-sm text-white bg-gray-800 border border-gray-700 rounded-xl px-4 py-3">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Thanks! Your request has been received. We’ll be in touch soon.</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-fuchsia-500 to-blue-500 rounded-xl shadow-lg flex items-center justify-center">
+                            <i class="fas fa-seedling text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-fuchsia-500 bg-clip-text text-transparent">Montessori Academy</h3>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">Inspiring young minds through authentic Montessori education since 1995. Building tomorrow's leaders today.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sky-500 transition-all duration-300 transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500">
+                            <i class="fab fa-facebook-f text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sky-500 transition-all duration-300 transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sky-500 transition-all duration-300 transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-sky-400">Contact Info</h4>
+                    <div class="space-y-3">
+                        <p class="text-gray-400 flex items-start space-x-3">
+                            <i class="fas fa-map-marker-alt text-sky-400 w-5 mt-1"></i>
+                            <span>123 Education Lane<br>Learning City, LC 12345</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-3">
+                            <i class="fas fa-phone text-sky-400 w-5"></i>
+                            <span>(555) 123-4567</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center space-x-3">
+                            <i class="fas fa-envelope text-sky-400 w-5"></i>
+                            <span>admissions@montessori.edu</span>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-sky-400">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>About Us</span>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>Programs</span>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>Faculty</span>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-sky-400 transition-all duration-300 flex items-center space-x-2 group">
+                            <i class="fas fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                            <span>Calendar</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-6 text-sky-400">Hours</h4>
+                    <div class="space-y-3 text-gray-400">
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-sky-400 w-5"></i>
+                            <span>Monday - Friday: 7:30 AM - 6:00 PM</span>
+                        </p>
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-sky-400 w-5"></i>
+                            <span>Saturday: 9:00 AM - 12:00 PM</span>
+                        </p>
+                        <p class="flex items-center space-x-3">
+                            <i class="fas fa-times-circle text-sky-400 w-5"></i>
+                            <span>Sunday: Closed</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-heart text-red-400"></i>
+                    <span>&copy; 2024 Montessori Academy. All rights reserved. | Designed with passion for education</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile sticky CTA -->
+    <div class="md:hidden fixed bottom-0 inset-x-0 z-40">
+        <div class="mx-4 mb-4 rounded-2xl bg-gray-800/95 backdrop-blur border border-gray-700 shadow-2xl">
+            <a href="#request-info" class="flex items-center justify-center gap-3 py-4 text-white font-semibold">
+                <i class="fa-solid fa-calendar-days text-sky-400"></i>
+                <span>Book a Tour</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-sky-500 to-fuchsia-500 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center text-white z-40 opacity-0 pointer-events-none" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Scroll reveal for elements with .reveal-on-scroll
+        (function() {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const els = document.querySelectorAll('.reveal-on-scroll');
+            if (!prefersReduced && 'IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-fade-in-up');
+                            io.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+                els.forEach(el => io.observe(el));
+            } else {
+                els.forEach(el => el.classList.add('animate-fade-in-up'));
+            }
+        })();
+
+        // Back to top functionality with reduced motion respect
+        function scrollToTop() {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+        }
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                backToTop.classList.add('opacity-100');
+            } else {
+                backToTop.classList.add('opacity-0', 'pointer-events-none');
+                backToTop.classList.remove('opacity-100');
+            }
+        });
+    </script>
+</body>
+</html>
