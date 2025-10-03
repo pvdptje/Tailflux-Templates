@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Vision | Digital Photography Mastery</title>
+    <meta name="description" content="Master digital photography with CaptureVision. Learn camera fundamentals, lighting & composition, and professional post-processing from industry experts.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+        }
+        .feature-card {
+            transition: all 0.35s ease;
+            transform: translateY(0);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 44px rgba(0, 0, 0, 0.12);
+        }
+        .stat-counter {
+            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+            backdrop-filter: blur(10px);
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 24px rgba(0, 0, 0, 0.1);
+        }
+        /* Reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* Subtle shimmering highlight on hoverable CTAs */
+        .btn-shine { position: relative; overflow: hidden; }
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: -50%;
+            width: 40%;
+            height: 400%;
+            transform: rotate(25deg);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+            transition: transform .6s ease;
+        }
+        .btn-shine:hover::after { transform: translateX(250%) rotate(25deg); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased" x-data="{ mobileMenuOpen: false, navScrolled: false, videoOpen: false, showTop: false }" 
+      @scroll.window="navScrolled = window.scrollY > 50; showTop = window.scrollY > 600;">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" :class="navScrolled ? 'nav-scrolled' : 'bg-transparent'">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#top" class="flex items-center space-x-2">
+                        <span class="text-2xl font-extrabold text-indigo-600 tracking-tight">CaptureVision</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#courses" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200">Courses</a>
+                        <a href="#features" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200">What You'll Learn</a>
+                        <a href="#projects" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200">Student Work</a>
+                        <a href="#testimonials" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200">Testimonials</a>
+                        <a href="#contact" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#enroll" class="btn-shine bg-indigo-600 text-white px-5 sm:px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition-all duration-300 transform hover:scale-[1.03] shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-white">
+                        Enroll Now
+                    </a>
+                    
+                    <!-- Mobile menu button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen" aria-controls="mobileMenu"
+                            class="md:hidden text-slate-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-md p-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fas" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" 
+                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" 
+                 x-transition:leave-end="opacity-0 scale-95" class="md:hidden bg-white rounded-lg shadow-xl p-4 mt-2">
+                <div class="flex flex-col space-y-4">
+                    <a @click="mobileMenuOpen=false" href="#courses" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors">Courses</a>
+                    <a @click="mobileMenuOpen=false" href="#features" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors">What You'll Learn</a>
+                    <a @click="mobileMenuOpen=false" href="#projects" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors">Student Work</a>
+                    <a @click="mobileMenuOpen=false" href="#testimonials" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors">Testimonials</a>
+                    <a @click="mobileMenuOpen=false" href="#contact" class="text-slate-700 hover:text-indigo-600 font-medium transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="top" class="relative hero-gradient text-white pt-16">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="max-w-2xl">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
+                        Master Digital Photography
+                        <span class="text-yellow-300 block">Like a Pro</span>
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 text-indigo-100 leading-relaxed">
+                        Transform your photography skills with our comprehensive online course. 
+                        Learn from industry experts and capture stunning images that tell powerful stories.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#enroll" class="btn-shine bg-yellow-400 text-slate-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                            Start Your Journey Today
+                        </a>
+                        <button @click="videoOpen=true" class="border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-indigo-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50">
+                            <i class="fas fa-play mr-2"></i><span>Watch Free Preview</span>
+                        </button>
+                    </div>
+                    <!-- Trust badges -->
+                    <div class="mt-8 flex items-center gap-6 text-indigo-100">
+                        <div class="flex items-center gap-2"><i class="fas fa-award text-yellow-300"></i><span>Top-rated course</span></div>
+                        <div class="hidden sm:flex items-center gap-2"><i class="fas fa-user-check text-yellow-300"></i><span>10k+ students</span></div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl transform hover:rotate-0 hover:scale-[1.01] transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1621011764868-21f91571ee84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwaG90b2dyYXBoZXIlMjB0YWtpbmclMjBwaG90b3MlMjB3aXRoJTIwRFNMUiUyMG91dGRvb3JzfGVufDB8MHx8fDE3NTk0Nzg3MzN8MA&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=6whw823u_og" 
+                             alt="Photographer taking a shot outdoors with a DSLR" 
+                             class="w-full h-auto object-cover" loading="eager" fetchpriority="high">
+                        <div class="absolute inset-0 bg-gradient-to-t from-indigo-900/30 via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Floating info chip -->
+                    <div class="absolute -bottom-6 left-6 bg-white/90 text-slate-800 backdrop-blur rounded-xl px-4 py-3 shadow-xl border border-white/50 hidden sm:flex items-center gap-3">
+                        <i class="fas fa-clock text-indigo-600"></i>
+                        <span class="text-sm font-semibold">50+ lessons • 8h 32m total</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll indicator -->
+        <a href="#features" class="absolute bottom-8 left-1/2 -translate-x-1/2 group inline-flex items-center gap-2">
+            <i class="fas fa-chevron-down text-white text-2xl animate-bounce"></i>
+            <span class="sr-only">Scroll to features</span>
+        </a>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">What You'll Master</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
+                    A complete curriculum designed to take you from beginner to professional photographer.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg reveal">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-camera text-2xl text-indigo-600" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Camera Fundamentals</h3>
+                    <p class="text-slate-600 mb-6">
+                        Master exposure, focus modes, and shooting in manual with confidence.
+                    </p>
+                    <div class="overflow-hidden rounded-xl">
+                        <img src="https://images.unsplash.com/photo-1622048369939-63e155741aca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjYW1lcmElMjBsZW5zJTIwa2l0JTIwZmxhdCUyMGxheSUyMHBob3RvZ3JhcGh5JTIwZ2VhcnxlbnwwfDB8fHwxNzU5NDc4NzMzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=IEVaeCmgXag" 
+                             alt="Camera lens and photography gear flatlay" 
+                             class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg reveal">
+                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-lightbulb text-2xl text-purple-600" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Lighting & Composition</h3>
+                    <p class="text-slate-600 mb-6">
+                        Use natural and artificial light, and apply composition rules that make images pop.
+                    </p>
+                    <div class="overflow-hidden rounded-xl">
+                        <img src="https://images.unsplash.com/photo-1704919266447-4d96f517fdbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMGxpZ2h0aW5nJTIwY29tcG9zaXRpb24lMjBzdHVkaW98ZW58MHwwfHx8MTc1OTQ3ODczNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Ogt0FGEzj9I" 
+                             alt="Studio lighting and composition setup" 
+                             class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg reveal">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-sliders-h text-2xl text-yellow-600" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Post-Processing</h3>
+                    <p class="text-slate-600 mb-6">
+                        Professional editing workflows in Lightroom and Photoshop for portfolio-grade results.
+                    </p>
+                    <div class="overflow-hidden rounded-xl">
+                        <img src="https://images.unsplash.com/photo-1636293875439-b3125c0f1fc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwaG90byUyMGVkaXRpbmclMjBzZXR1cCUyMGRlc2slMjBsaWdodHJvb20lMjBwaG90b3Nob3B8ZW58MHwwfHx8MTc1OTQ3ODczNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=fEH9Q9L1m5M" 
+                             alt="Photo editing setup with Lightroom and Photoshop" 
+                             class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-indigo-600 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="stat-counter p-8 rounded-2xl text-center border border-indigo-500/30 reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold mb-3 text-yellow-300">10,000+</div>
+                    <div class="text-indigo-100 font-medium">Students Enrolled</div>
+                </div>
+                <div class="stat-counter p-8 rounded-2xl text-center border border-indigo-500/30 reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold mb-3 text-yellow-300">98%</div>
+                    <div class="text-indigo-100 font-medium">Success Rate</div>
+                </div>
+                <div class="stat-counter p-8 rounded-2xl text-center border border-indigo-500/30 reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold mb-3 text-yellow-300">50+</div>
+                    <div class="text-indigo-100 font-medium">Video Lessons</div>
+                </div>
+                <div class="stat-counter p-8 rounded-2xl text-center border border-indigo-500/30 reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold mb-3 text-yellow-300">24/7</div>
+                    <div class="text-indigo-100 font-medium">Lifetime Access</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Projects Gallery -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 reveal">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Student Projects</h2>
+                    <p class="text-slate-600 mt-2">A showcase of genres you’ll master throughout the course.</p>
+                </div>
+                <a href="#enroll" class="inline-flex items-center text-indigo-600 font-semibold hover:text-indigo-700">
+                    Join the next cohort <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="col-span-2 row-span-2 overflow-hidden rounded-2xl reveal">
+                    <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                         src="https://images.unsplash.com/photo-1729011736258-f46a9256601b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxsYW5kc2NhcGUlMjBwaG90b2dyYXBoeSUyMG1vdW50YWlucyUyMHN1bnJpc2V8ZW58MHwwfHx8MTc1OTQ3ODczN3ww&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=Qp3GDV7Oma4" 
+                         alt="Landscape mountains at sunrise" loading="lazy">
+                </div>
+                <div class="overflow-hidden rounded-2xl reveal">
+                    <img class="w-full h-48 md:h-full object-cover hover:scale-105 transition-transform duration-700"
+                         src="https://images.unsplash.com/photo-1645590850106-2e6e74a33e66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjBwaG90b2dyYXBoeSUyMHVyYmFuJTIwbmlnaHR8ZW58MHwwfHx8MTc1OTQ3ODczOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=roA87dLrjW8" 
+                         alt="Urban street photography at night" loading="lazy">
+                </div>
+                <div class="overflow-hidden rounded-2xl reveal">
+                    <img class="w-full h-48 md:h-full object-cover hover:scale-105 transition-transform duration-700"
+                         src="https://images.unsplash.com/photo-1624006400464-0a0cf29340a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx3aWxkbGlmZSUyMHBob3RvZ3JhcGh5JTIwYmlyZCUyMGluJTIwZmxpZ2h0fGVufDB8MHx8fDE3NTk0Nzg3Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=EBP2i_8XE_o" 
+                         alt="Wildlife bird in flight" loading="lazy">
+                </div>
+                <div class="overflow-hidden rounded-2xl reveal">
+                    <img class="w-full h-48 md:h-full object-cover hover:scale-105 transition-transform duration-700"
+                         src="https://images.unsplash.com/photo-1702632256478-96dafe647b80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtYWNybyUyMHBob3RvZ3JhcGh5JTIwZmxvd2VyJTIwZGV3fGVufDB8MHx8fDE3NTk0Nzg3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=7Z7KX-7NqNM" 
+                         alt="Macro photography of flower with dew" loading="lazy">
+                </div>
+                <div class="overflow-hidden rounded-2xl reveal">
+                    <img class="w-full h-48 md:h-full object-cover hover:scale-105 transition-transform duration-700"
+                         src="https://images.unsplash.com/photo-1673863483872-9c991b2a63c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmUlMjBwaG90b2dyYXBoeSUyMG1vZGVybiUyMGJ1aWxkaW5nfGVufDB8MHx8fDE3NTk0Nzg3NDB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=x7NGlafhTDo" 
+                         alt="Modern architecture photography" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini Curriculum / Courses -->
+    <section id="courses" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Course Pathway</h2>
+                <p class="text-slate-600 mt-2">Three modules with hands-on projects and feedback.</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm reveal">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-slate-900">Module 1: Essentials</h3>
+                        <span class="text-xs bg-indigo-50 text-indigo-600 px-2 py-1 rounded">Beginner</span>
+                    </div>
+                    <ul class="mt-4 space-y-3 text-slate-600">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Exposure triangle deep dive</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Focusing & metering modes</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>RAW vs JPEG workflow</li>
+                    </ul>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm reveal">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-slate-900">Module 2: Creative</h3>
+                        <span class="text-xs bg-purple-50 text-purple-600 px-2 py-1 rounded">Intermediate</span>
+                    </div>
+                    <ul class="mt-4 space-y-3 text-slate-600">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Lighting setups (1–3 lights)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Composition frameworks</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Directing portraits</li>
+                    </ul>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm reveal">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-slate-900">Module 3: Pro Edit</h3>
+                        <span class="text-xs bg-yellow-50 text-yellow-700 px-2 py-1 rounded">Advanced</span>
+                    </div>
+                    <ul class="mt-4 space-y-3 text-slate-600">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Color grading & profiles</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Retouching workflow</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i>Export & delivery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 bg-white" x-data="{ current: 0, total: 3, intervalId: null }" x-init="intervalId = setInterval(() => current = (current+1)%total, 5000)" @mouseenter="clearInterval(intervalId)" @mouseleave="intervalId = setInterval(() => current = (current+1)%total, 5000)">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">What Students Say</h2>
+                <p class="text-slate-600 mt-2">Real stories from photographers who leveled up.</p>
+            </div>
+            <div class="relative bg-slate-50 border border-slate-200 rounded-3xl p-8 md:p-10 reveal overflow-hidden">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-indigo-100 rounded-full opacity-50"></div>
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-100 rounded-full opacity-50"></div>
+
+                <template x-for="(t, i) in [
+                    {name:'Jordan P.', role:'Wedding Photographer', quote:'The lighting module alone was worth the price. My client work improved immediately.', img:'https://images.unsplash.com/photo-1598367886186-71a4e6afc589?crop=faces&fit=crop&w=200&h=200&ixlib=rb-4.1.0&q=80'},
+                    {name:'Amelia R.', role:'Beginner to Pro', quote:'Loved the structure. Clear, practical, and packed with tips you can use right away.', img:'https://images.unsplash.com/photo-1758600587811-e9a20851cf7d?crop=faces&fit=crop&w=200&h=200&ixlib=rb-4.1.0&q=80'},
+                    {name:'Noah L.', role:'Portrait Specialist', quote:'Editing workflows are top-notch. My portraits now have that polished, magazine feel.', img:'https://images.unsplash.com/photo-1741601457599-8b466da785f3?crop=faces&fit=crop&w=200&h=200&ixlib=rb-4.1.0&q=80'}
+                ]" :key="i">
+                    <div x-show="current===i" x-transition.opacity x-transition.duration.500ms class="grid md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-3 flex justify-center">
+                            <img :src="t.img" :alt='`Portrait of ${t.name}`' class="w-24 h-24 rounded-full ring-4 ring-white shadow-lg object-cover">
+                        </div>
+                        <div class="md:col-span-9">
+                            <div class="flex text-yellow-400 text-lg mb-3" aria-hidden="true">
+                                <i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i>
+                            </div>
+                            <p class="text-lg md:text-xl text-slate-800 font-medium">“<span x-text="t.quote"></span>”</p>
+                            <div class="mt-4 text-slate-600"><span class="font-semibold text-slate-800" x-text="t.name"></span> • <span x-text="t.role"></span></div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Controls -->
+                <div class="mt-6 flex items-center justify-center gap-3">
+                    <button @click="current = (current + total - 1) % total" class="w-9 h-9 rounded-full border border-slate-300 hover:bg-white shadow-sm flex items-center justify-center">
+                        <span class="sr-only">Previous</span><i class="fas fa-chevron-left text-slate-600"></i>
+                    </button>
+                    <template x-for="i in [...Array(total).keys()]">
+                        <button @click="current = i" :class="current===i ? 'bg-indigo-600' : 'bg-slate-300/60'" class="w-2.5 h-2.5 rounded-full transition-colors"></button>
+                    </template>
+                    <button @click="current = (current + 1) % total" class="w-9 h-9 rounded-full border border-slate-300 hover:bg-white shadow-sm flex items-center justify-center">
+                        <span class="sr-only">Next</span><i class="fas fa-chevron-right text-slate-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="enroll" class="py-20 bg-gradient-to-br from-purple-500 to-indigo-600 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Ready to Transform Your Photography?</h2>
+            <p class="text-lg md:text-xl mb-8 text-purple-100 max-w-2xl mx-auto">
+                Join thousands of photographers who have already elevated their skills with our proven curriculum.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+                <a href="#checkout" class="btn-shine bg-yellow-400 text-slate-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-rocket mr-2"></i>Enroll Now - $199
+                </a>
+                <a href="#contact" class="border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-indigo-700 transition-all duration-300">
+                    <i class="fas fa-calendar mr-2"></i>Schedule a Call
+                </a>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 text-purple-100">
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt mr-2"></i>
+                    <span>30-day money-back guarantee</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-infinity mr-2"></i>
+                    <span>Lifetime access</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-certificate mr-2"></i>
+                    <span>Professional certificate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Modal -->
+        <div x-show="videoOpen" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" @keydown.escape.window="videoOpen=false" @click.self="videoOpen=false" aria-modal="true" role="dialog">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-3xl">
+                <div class="flex justify-between items-center px-4 sm:px-6 py-4 border-b">
+                    <h3 class="text-lg font-semibold text-slate-900">Course Preview</h3>
+                    <button @click="videoOpen=false" class="text-slate-500 hover:text-slate-700 p-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <span class="sr-only">Close</span><i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="aspect-video bg-black">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+                            title="Course Preview Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 reveal">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <p class="text-slate-600 mt-2">All the details you might be wondering about.</p>
+            </div>
+            <div class="space-y-4">
+                <div x-data="{ open: false }" class="border border-slate-200 rounded-xl p-5 reveal">
+                    <button @click="open=!open" class="w-full flex items-center justify-between text-left">
+                        <span class="font-semibold text-slate-900">Is this course suitable for beginners?</span>
+                        <i class="fas" :class="open ? 'fa-minus' : 'fa-plus'"></i>
+                    </button>
+                    <div x-show="open" x-transition class="mt-3 text-slate-600">
+                        Absolutely. We start with fundamentals, then ramp up to advanced techniques with hands-on projects.
+                    </div>
+                </div>
+                <div x-data="{ open: false }" class="border border-slate-200 rounded-xl p-5 reveal">
+                    <button @click="open=!open" class="w-full flex items-center justify-between text-left">
+                        <span class="font-semibold text-slate-900">How long do I have access to the course?</span>
+                        <i class="fas" :class="open ? 'fa-minus' : 'fa-plus'"></i>
+                    </button>
+                    <div x-show="open" x-transition class="mt-3 text-slate-600">
+                        Lifetime access, including updates and newly added lessons.
+                    </div>
+                </div>
+                <div x-data="{ open: false }" class="border border-slate-200 rounded-xl p-5 reveal">
+                    <button @click="open=!open" class="w-full flex items-center justify-between text-left">
+                        <span class="font-semibold text-slate-900">Do I need specific gear?</span>
+                        <i class="fas" :class="open ? 'fa-minus' : 'fa-plus'"></i>
+                    </button>
+                    <div x-show="open" x-transition class="mt-3 text-slate-600">
+                        Any interchangeable-lens camera works. We provide gear recommendations and budget-friendly options.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-900 text-slate-400 pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-2xl font-extrabold mb-4">CaptureVision</h3>
+                    <p class="mb-6 leading-relaxed">
+                        Transforming amateur photographers into professionals through comprehensive online education.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors" aria-label="YouTube">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#courses" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>Courses
+                        </a></li>
+                        <li><a href="#features" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>What You'll Learn
+                        </a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>Testimonials
+                        </a></li>
+                        <li><a href="#enroll" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>Enroll
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>Help Center
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>FAQs
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>Privacy Policy
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-indigo-400"></i>Terms of Service
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-400 mr-3"></i>
+                            <a href="mailto:hello@capturevision.com" class="hover:text-white transition-colors duration-200">hello@capturevision.com</a>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-indigo-400 mr-3"></i>
+                            <a href="tel:+15551234567" class="hover:text-white transition-colors duration-200">+1 (555) 123-4567</a>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-indigo-400 mr-3"></i>
+                            <span>123 Photography Lane, Studio City</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center">
+                <p class="text-slate-500">&copy; 2024 CaptureVision. All rights reserved. Made with <i class="fas fa-heart text-red-400 mx-1"></i> for photographers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button x-show="showTop" x-transition.opacity x-transition.duration.300ms @click="window.scrollTo({top:0, behavior:'smooth'})"
+            class="fixed bottom-6 right-6 z-50 bg-white text-slate-700 border border-slate-200 shadow-lg rounded-full p-3 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        <span class="sr-only">Back to top</span>
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scroll reveal script -->
+    <script>
+        (function(){
+            const els = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            els.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>
