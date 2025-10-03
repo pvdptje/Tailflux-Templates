@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Resources | University Hub</title>
+    <meta name="description" content="UniHub: Your modern, accessible student resources hub for study materials, academic support, campus life, and more.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        body { font-family: 'Nunito', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .search-shadow {
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .card-hover, .transition-all, .transform {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen" x-data="{ mobileOpen:false, showTop:false }" @scroll.window="showTop = window.scrollY > 300">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white text-purple-700 px-4 py-2 rounded-lg shadow">Skip to content</a>
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-graduation-cap text-white text-lg" aria-hidden="true"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">UniHub</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8" aria-label="Primary">
+                    <a href="#" class="text-gray-600 hover:text-purple-600 font-semibold transition-colors duration-300 relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-purple-600 font-semibold relative" aria-current="page">
+                        Resources
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-purple-600"></span>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-purple-600 font-semibold transition-colors duration-300 relative group">
+                        Events
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-purple-600 font-semibold transition-colors duration-300 relative group">
+                        Support
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button class="hidden md:flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400">
+                        <i class="fas fa-user-circle" aria-hidden="true"></i>
+                        <span>Student Portal</span>
+                    </button>
+                    <button class="md:hidden text-purple-600 hover:text-purple-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-lg p-2" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen.toString()" aria-controls="mobile-menu" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden" x-cloak x-show="mobileOpen" x-transition.origin.top>
+            <div class="px-4 pb-4 pt-2 border-t bg-white">
+                <a href="#" class="block py-2 text-gray-700 hover:text-purple-700">Home</a>
+                <a href="#" class="block py-2 text-purple-700 font-semibold">Resources</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-purple-700">Events</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-purple-700">Support</a>
+                <button class="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400">
+                    <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>Student Portal
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative text-white py-20 overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1643405775386-89cfe9ebfb5e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwbGlicmFyeSUyMHN0dWRlbnRzJTIwc3R1ZHlpbmd8ZW58MHwwfHx8MTc1OTQ2NDQ3Mnww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=7UZpa6SPLTk" alt="University library with students studying" class="w-full h-full object-cover">
+            <div class="absolute inset-0 gradient-bg mix-blend-multiply opacity-90"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-sm">Student Resources Hub</h1>
+                <p class="text-xl md:text-2xl mb-8 text-purple-100">Everything you need to succeed in one modern, accessible place!</p>
+                <div class="max-w-2xl mx-auto relative" x-data="{ q:'', set(v){ this.q=v; $nextTick(()=> $refs.input.focus()) } }">
+                    <div class="relative">
+                        <label for="search" class="sr-only">Search resources</label>
+                        <input x-ref="input" x-model="q" id="search" type="text" placeholder="Search resources, courses, or support..." class="w-full px-8 py-5 rounded-2xl search-shadow text-gray-800 focus:outline-none focus:ring-4 focus:ring-purple-300 text-lg" autocomplete="off">
+                        <button class="absolute right-2 top-2 gradient-bg hover:opacity-90 text-white px-8 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70" aria-label="Search">
+                            <i class="fas fa-search mr-2" aria-hidden="true"></i>Search
+                        </button>
+                    </div>
+                    <div class="mt-4 flex flex-wrap justify-center gap-3">
+                        <button @click="set('Library')" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fas fa-book mr-2" aria-hidden="true"></i>Library
+                        </button>
+                        <button @click="set('Tutoring')" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fas fa-headset mr-2" aria-hidden="true"></i>Tutoring
+                        </button>
+                        <button @click="set('Workshops')" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fas fa-chalkboard-teacher mr-2" aria-hidden="true"></i>Workshops
+                        </button>
+                        <button @click="set('Scholarships')" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fas fa-award mr-2" aria-hidden="true"></i>Scholarships
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content" class="container mx-auto px-4 py-16 -mt-8 relative z-20">
+        <!-- Quick Access Cards -->
+        <div class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">Quick Access</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Get instant access to essential resources and services</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 card-hover border border-gray-100">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 shadow-lg ring-4 ring-purple-100/60">
+                        <i class="fas fa-book-open text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Study Materials</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Lecture notes, textbooks, study guides, and research databases</p>
+                    <button class="w-full bg-purple-50 hover:bg-purple-100 text-purple-700 px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300" aria-label="Explore study materials">
+                        Explore
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 card-hover border border-gray-100">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg ring-4 ring-green-100/60">
+                        <i class="fas fa-hands-helping text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Academic Support</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Tutoring, writing center, academic advising, and workshops</p>
+                    <button class="w-full bg-green-50 hover:bg-green-100 text-green-700 px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-green-300" aria-label="Get academic support">
+                        Get Help
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 card-hover border border-gray-100">
+                    <div class="w-16 h-16 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg ring-4 ring-teal-100/60">
+                        <i class="fas fa-users text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Student Groups</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Clubs, organizations, networking events, and leadership opportunities</p>
+                    <button class="w-full bg-teal-50 hover:bg-teal-100 text-teal-700 px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300" aria-label="Connect with student groups">
+                        Connect
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 card-hover border border-gray-100">
+                    <div class="w-16 h-16 bg-gradient-to-r from-rose-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg ring-4 ring-rose-100/60">
+                        <i class="fas fa-home text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Campus Life</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Housing, dining, events, facilities, and campus services</p>
+                    <button class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300" aria-label="Discover campus life">
+                        Discover
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Resources -->
+        <div class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">Featured Resources</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Check out our most popular and essential resources</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Featured Item 1 -->
+                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl p-0 shadow-lg border border-purple-100 card-hover overflow-hidden">
+                    <div class="aspect-[16/9] w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1579536976002-d19538c18b3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwbGlicmFyeSUyMGVib29rcyUyMHRlY2hub2xvZ3l8ZW58MHwwfHx8MTc1OTQ2NDQ3M3ww&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=f7fsz-4U0PA" alt="Digital library and e-books" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-start mb-6">
+                            <div class="w-20 h-20 gradient-bg rounded-2xl flex items-center justify-center text-white font-bold text-xl mr-6 shadow-lg">
+                                <i class="fas fa-book text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center mb-2">
+                                    <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold mr-3">
+                                        NEW
+                                    </span>
+                                    <span class="text-purple-600 text-sm font-semibold">
+                                        <i class="fas fa-star mr-1" aria-hidden="true"></i>Most Popular
+                                    </span>
+                                </div>
+                                <h3 class="text-3xl font-bold text-gray-800 mb-3">Digital Library Access</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Unlimited access to online journals, research databases, and e-books from anywhere</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                <i class="fas fa-clock mr-1" aria-hidden="true"></i>Available 24/7
+                            </div>
+                            <button class="gradient-bg hover:opacity-90 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300">
+                                <i class="fas fa-external-link-alt mr-2" aria-hidden="true"></i>Explore Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Item 2 -->
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-3xl p-0 shadow-lg border border-green-100 card-hover overflow-hidden">
+                    <div class="aspect-[16/9] w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1586388750948-16833a41ee95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjB0dXRvcmluZyUyMHN0dWRlbnQlMjBsYXB0b3B8ZW58MHwwfHx8MTc1OTQ2NDQ3NHww&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=RoHE_uWWeAA" alt="Student receiving online tutoring on a laptop" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-start mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl mr-6 shadow-lg">
+                                <i class="fas fa-headset text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center mb-2">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold mr-3">
+                                        24/7
+                                    </span>
+                                    <span class="text-green-600 text-sm font-semibold">
+                                        <i class="fas fa-bolt mr-1" aria-hidden="true"></i>Instant Access
+                                    </span>
+                                </div>
+                                <h3 class="text-3xl font-bold text-gray-800 mb-3">Online Tutoring</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Get real-time help with coursework from expert tutors anytime, from anywhere</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                <i class="fas fa-user-check mr-1" aria-hidden="true"></i>Expert Tutors
+                            </div>
+                            <button class="bg-gradient-to-r from-green-500 to-teal-500 hover:opacity-90 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300">
+                                <i class="fas fa-comments mr-2" aria-hidden="true"></i>Get Help Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource Categories -->
+        <div class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">Browse by Category</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Find exactly what you need with our organized categories</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Category 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100 group">
+                    <div class="w-20 h-20 gradient-bg rounded-2xl flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Academic Resources</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Library access, research tools, writing center, and academic databases</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">
+                            12 resources
+                        </span>
+                        <i class="fas fa-arrow-right text-purple-600 transform group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-briefcase" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Career Services</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Internships, job search assistance, resume building, and career counseling</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
+                            8 resources
+                        </span>
+                        <i class="fas fa-arrow-right text-green-600 transform group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Wellness & Health</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Counseling services, health center, fitness programs, and mental health support</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-teal-100 text-teal-700 px-4 py-2 rounded-full text-sm font-semibold">
+                            6 resources
+                        </span>
+                        <i class="fas fa-arrow-right text-teal-600 transform group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <!-- Category 4 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-rose-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Financial Aid</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Scholarships, grants, student loans, work-study programs, and financial counseling</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-rose-100 text-rose-700 px-4 py-2 rounded-full text-sm font-semibold">
+                            10 resources
+                        </span>
+                        <i class="fas fa-arrow-right text-rose-600 transform group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <!-- Category 5 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100 group">
+                    <div class="w-20 h-20 gradient-bg rounded-2xl flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-laptop-code" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Technology</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Software access, IT support, digital tools, online platforms, and tech training</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">
+                            15 resources
+                        </span>
+                        <i class="fas fa-arrow-right text-purple-600 transform group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <!-- Category 6 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Housing & Dining</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Residence life, meal plans, campus housing, dining options, and housing services</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
+                            7 resources
+                        </span>
+                        <i class="fas fa-arrow-right text-green-600 transform group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campus Spotlight -->
+        <div class="bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl p-12 text-white mb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/15"><i class="fas fa-bullhorn"></i></span>
+                        <h2 class="text-4xl font-bold">Campus Spotlight</h2>
+                    </div>
+                    <p class="text-xl mb-8 text-purple-100 leading-relaxed">Discover the vibrant campus life and resources that make our university community thrive. From state-of-the-art facilities to supportive services, we're here to help you succeed.</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold mb-2">500+</div>
+                            <div class="text-purple-200">Study Resources</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold mb-2">24/7</div>
+                            <div class="text-purple-200">Support Available</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold mb-2">50+</div>
+                            <div class="text-purple-200">Student Groups</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold mb-2">100%</div>
+                            <div class="text-purple-200">Student Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1570011777807-bbafc0c27426?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBzdHVkZW50JTIwcG9ydHJhaXQlMjB1bml2ZXJzaXR5fGVufDB8MHx8fDE3NTk0NjQ0NzV8MA&ixlib=rb-4.1.0&q=80&w=120&h=120&utm_source=TailFlux&photo_id=CCu2jbugEWs" alt="Student portrait" class="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-white/40">
+                            <div>
+                                <div class="font-bold">Sarah Johnson</div>
+                                <div class="text-purple-200 text-sm">Computer Science, Class of 2024</div>
+                            </div>
+                        </div>
+                        <p class="text-lg italic">"The resources here have been incredible for my studies. The 24/7 tutoring and digital library access made all the difference during finals week!"</p>
+                    </div>
+                    <!-- decorative image -->
+                    <div class="hidden md:block absolute -right-6 -bottom-10 w-48 rotate-3">
+                        <div class="rounded-xl overflow-hidden shadow-2xl ring-4 ring-white/20">
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1758270704025-0e1a1793e1ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdHVkZW50cyUyMHN0dWR5aW5nJTIwZ3JvdXAlMjBvbiUyMGNhbXB1c3xlbnwwfDB8fHwxNzU5NDY0NDcyfDA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=NKr9f2t8Lgk" alt="Students studying together on campus" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">UniHub</h3>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed mb-6">Your comprehensive destination for university resources, support services, and academic success tools.</p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition-colors duration-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors duration-300" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors duration-300" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-red-500 rounded-lg flex items-center justify-center transition-colors duration-300" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-purple-400" aria-hidden="true"></i>Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-purple-400" aria-hidden="true"></i>Resources</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-purple-400" aria-hidden="true"></i>Events Calendar</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-purple-400" aria-hidden="true"></i>Student Portal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Support Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-green-400" aria-hidden="true"></i>Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-green-400" aria-hidden="true"></i>IT Support</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-green-400" aria-hidden="true"></i>Academic Advising</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-green-400" aria-hidden="true"></i>Counseling Services</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Contact Info</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-purple-400 mt-1 mr-3" aria-hidden="true"></i>
+                            <span class="text-gray-400">123 University Ave<br>Campus City, ST 12345</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-purple-400 mr-3" aria-hidden="true"></i>
+                            <span class="text-gray-400">(555) 123-4567</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-purple-400 mr-3" aria-hidden="true"></i>
+                            <span class="text-gray-400">support@unihub.edu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 UniHub University. All rights reserved. | <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button x-cloak x-show="showTop" x-transition @click="window.scrollTo({top:0, behavior:'smooth'})" class="fixed bottom-6 right-6 z-50 bg-white text-purple-700 shadow-lg hover:shadow-xl border border-gray-200 rounded-full p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</body>
+</html>
