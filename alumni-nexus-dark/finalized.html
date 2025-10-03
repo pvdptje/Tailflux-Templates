@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Alumni Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        pink: {
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        },
+                        red: {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .focus-ring:focus-visible {
+            outline: 2px solid #ec4899;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen selection:bg-pink-600/30" x-data="{ mobileOpen:false, demoOpen:false, signupOpen:false, scrolled:false }" @scroll.window="scrolled = window.scrollY > 300">
+
+    <!-- Navigation -->
+    <nav class="bg-gray-800/80 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50" x-data="{ open:false }" @keydown.escape.window="open=false">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center space-x-2 group">
+                        <i class="fas fa-graduation-cap text-pink-500 text-2xl group-hover:rotate-6 transition-transform"></i>
+                        <h1 class="text-xl font-bold text-pink-500 animate-fade-in">AlumniConnect</h1>
+                    </a>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-1">
+                            <a href="#" class="text-teal-400 hover:text-teal-300 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-gray-700/50 focus-ring">
+                                <i class="fas fa-home mr-2"></i>Dashboard
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-gray-700/50 focus-ring">
+                                <i class="fas fa-users mr-2"></i>Network
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-gray-700/50 focus-ring">
+                                <i class="fas fa-calendar-alt mr-2"></i>Events
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-gray-700/50 focus-ring">
+                                <i class="fas fa-briefcase mr-2"></i>Jobs
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-gray-700/50 focus-ring">
+                                <i class="fas fa-book-open mr-2"></i>Resources
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button @click="signupOpen=true" class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-lg focus-ring">
+                        <i class="fas fa-user-plus mr-2"></i>Join Network
+                    </button>
+                    <button class="md:hidden text-gray-300 hover:text-white focus-ring" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-menu" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-xl" x-show="!open"></i>
+                        <i class="fas fa-times text-xl" x-show="open"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden" id="mobile-menu" x-show="open" x-transition.opacity x-cloak>
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-800/90 border-t border-gray-700">
+                <a href="#" class="block text-teal-400 hover:text-teal-300 px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700/50"><i class="fas fa-home mr-2"></i>Dashboard</a>
+                <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700/50"><i class="fas fa-users mr-2"></i>Network</a>
+                <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700/50"><i class="fas fa-calendar-alt mr-2"></i>Events</a>
+                <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700/50"><i class="fas fa-briefcase mr-2"></i>Jobs</a>
+                <a href="#" class="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700/50"><i class="fas fa-book-open mr-2"></i>Resources</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gray-900 py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black opacity-90"></div>
+        <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1758413351776-cea82eed2176?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwY2FtcHVzJTIwbmlnaHR8ZW58MHwwfHx8MTc1OTUwNzY5M3ww&ixlib=rb-4.1.0&q=80&w=1920'); background-size: cover; background-position: center; opacity: 0.35;"></div>
+        <!-- Decorative blobs -->
+        <div class="absolute -top-10 -right-10 w-72 h-72 bg-pink-600/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-12 -left-12 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center animate-fade-in">
+                <div class="mb-8 animate-float">
+                    <i class="fas fa-graduation-cap text-6xl text-pink-500"></i>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate-slide-up">
+                    Welcome to Your
+                    <span class="gradient-text">Alumni Network</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up" style="animation-delay: 0.2s;">
+                    Connect with fellow graduates, discover career opportunities, and stay engaged with your alma mater. Together, we build a stronger community that spans generations.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 animate-slide-up" style="animation-delay: 0.4s;">
+                    <button class="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center focus-ring">
+                        <i class="fas fa-sign-in-alt mr-3"></i>Sign In
+                    </button>
+                    <button @click="signupOpen=true" class="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center focus-ring">
+                        <i class="fas fa-user-plus mr-3"></i>Create Account
+                    </button>
+                </div>
+
+                <!-- Trusted logos (subtle) -->
+                <div class="mt-10 opacity-80">
+                    <p class="text-gray-400 text-sm mb-4">Trusted by alumni at</p>
+                    <div class="flex flex-wrap items-center justify-center gap-6 text-gray-500">
+                        <i class="fa-brands fa-linkedin text-2xl"></i>
+                        <i class="fa-brands fa-google text-2xl"></i>
+                        <i class="fa-brands fa-microsoft text-2xl"></i>
+                        <i class="fa-brands fa-apple text-2xl"></i>
+                        <i class="fa-brands fa-amazon text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section with Count-up -->
+    <section class="py-16 bg-gray-800/50 backdrop-blur-sm" x-data
+             x-init="
+                const counters = $el.querySelectorAll('[data-count]');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting){
+                            const el = entry.target;
+                            const target = +el.getAttribute('data-count');
+                            let start = 0;
+                            const duration = 1200;
+                            const step = Math.max(1, Math.floor(target / (duration / 16)));
+                            const timer = setInterval(() => {
+                                start += step;
+                                if(start >= target){
+                                    el.textContent = target.toLocaleString();
+                                    clearInterval(timer);
+                                } else {
+                                    el.textContent = start.toLocaleString() + '+';
+                                }
+                            }, 16);
+                            observer.unobserve(el);
+                        }
+                    });
+                }, { threshold: 0.4 });
+                counters.forEach(c => observer.observe(c));
+             ">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center glass-effect p-6 rounded-2xl hover-lift">
+                    <div class="text-4xl font-bold text-pink-500 mb-2"><span data-count="15000">15,000+</span></div>
+                    <div class="text-gray-300"><i class="fas fa-users mr-2"></i>Alumni Members</div>
+                </div>
+                <div class="text-center glass-effect p-6 rounded-2xl hover-lift">
+                    <div class="text-4xl font-bold text-teal-400 mb-2"><span data-count="85">85+</span></div>
+                    <div class="text-gray-300"><i class="fas fa-globe mr-2"></i>Countries</div>
+                </div>
+                <div class="text-center glass-effect p-6 rounded-2xl hover-lift">
+                    <div class="text-4xl font-bold text-red-500 mb-2"><span data-count="2500">2,500+</span></div>
+                    <div class="text-gray-300"><i class="fas fa-briefcase mr-2"></i>Jobs Posted</div>
+                </div>
+                <div class="text-center glass-effect p-6 rounded-2xl hover-lift">
+                    <div class="text-4xl font-bold text-pink-500 mb-2"><span data-count="300">300+</span></div>
+                    <div class="text-gray-300"><i class="fas fa-calendar mr-2"></i>Events Yearly</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">Why Join Our Network?</h2>
+            <p class="text-xl text-gray-400 text-center mb-12 max-w-2xl mx-auto">Discover the powerful benefits of staying connected with your university community</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-effect p-8 rounded-2xl hover-lift border-l-4 border-pink-500">
+                    <div class="w-16 h-16 bg-pink-600/20 rounded-2xl flex items-center justify-center mb-6 shadow-inner ring-1 ring-pink-600/30">
+                        <i class="fas fa-users text-2xl text-pink-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4">Professional Networking</h3>
+                    <p class="text-gray-400 leading-relaxed">Connect with alumni across industries and build valuable professional relationships that last a lifetime.</p>
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-pink-400 text-sm hover:translate-x-1 transition-transform">
+                            <i class="fas fa-arrow-right mr-2"></i>Explore Network
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-effect p-8 rounded-2xl hover-lift border-l-4 border-teal-400">
+                    <div class="w-16 h-16 bg-teal-600/20 rounded-2xl flex items-center justify-center mb-6 shadow-inner ring-1 ring-teal-500/30">
+                        <i class="fas fa-briefcase text-2xl text-teal-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4">Career Opportunities</h3>
+                    <p class="text-gray-400 leading-relaxed">Access exclusive job postings, mentorship programs, and career development resources from fellow alumni.</p>
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-teal-400 text-sm hover:translate-x-1 transition-transform">
+                            <i class="fas fa-arrow-right mr-2"></i>View Opportunities
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-effect p-8 rounded-2xl hover-lift border-l-4 border-red-500">
+                    <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center mb-6 shadow-inner ring-1 ring-red-500/30">
+                        <i class="fas fa-calendar-alt text-2xl text-red-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-4">Events & Reunions</h3>
+                    <p class="text-gray-400 leading-relaxed">Stay updated with alumni events, reunions, and networking opportunities happening worldwide.</p>
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-red-400 text-sm hover:translate-x-1 transition-transform">
+                            <i class="fas fa-arrow-right mr-2"></i>See Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Alumni Section -->
+    <section class="py-20 bg-gray-800/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">Featured Alumni</h2>
+            <p class="text-xl text-gray-400 text-center mb-12 max-w-2xl mx-auto">Meet some of our outstanding alumni making waves in their industries</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Alumni Card 1 -->
+                <div class="glass-effect rounded-2xl overflow-hidden hover-lift group">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1579954775307-5a4d00ce40fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFuJTIwdGVjaHxlbnwwfDB8fHwxNzU5NTA3NjkzfDA&ixlib=rb-4.1.0&q=80&w=240" alt="Sarah Johnson headshot" class="w-20 h-20 rounded-full object-cover ring-2 ring-pink-500/60 shadow-lg" loading="lazy" decoding="async">
+                            </div>
+                            <div class="ml-6">
+                                <h3 class="text-white font-semibold text-xl">Sarah Johnson</h3>
+                                <p class="text-teal-400 text-sm"><i class="fas fa-graduation-cap mr-1"></i>Class of 2018</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Senior Software Engineer at TechCorp, specializing in AI and machine learning solutions.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Technology</span>
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Mentoring</span>
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">AI/ML</span>
+                        </div>
+                        <button class="w-full bg-gray-700/30 hover:bg-gray-600/50 text-gray-300 py-3 rounded-lg transition-all duration-300 border border-gray-600 hover:border-pink-500 focus-ring">
+                            <i class="fas fa-envelope mr-2"></i>Connect
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Alumni Card 2 -->
+                <div class="glass-effect rounded-2xl overflow-hidden hover-lift group">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <img src="https://images.unsplash.com/photo-1622169804256-0eb6873ff441?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMG1hbiUyMG1hcmtldGluZ3xlbnwwfDB8fHwxNzU5NTA3Njk0fDA&ixlib=rb-4.1.0&q=80&w=240" alt="Michael Rodriguez headshot" class="w-20 h-20 rounded-full object-cover ring-2 ring-teal-500/60 shadow-lg" loading="lazy" decoding="async">
+                            <div class="ml-6">
+                                <h3 class="text-white font-semibold text-xl">Michael Rodriguez</h3>
+                                <p class="text-teal-400 text-sm"><i class="fas fa-graduation-cap mr-1"></i>Class of 2015</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Marketing Director at GlobalBrand, driving digital transformation and brand strategy.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Marketing</span>
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Leadership</span>
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Strategy</span>
+                        </div>
+                        <button class="w-full bg-gray-700/30 hover:bg-gray-600/50 text-gray-300 py-3 rounded-lg transition-all duration-300 border border-gray-600 hover:border-teal-500 focus-ring">
+                            <i class="fas fa-envelope mr-2"></i>Connect
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Alumni Card 3 -->
+                <div class="glass-effect rounded-2xl overflow-hidden hover-lift group">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <img src="https://images.unsplash.com/photo-1618053448748-b7251851d014?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFuJTIwc2NpZW50aXN0JTIwbGFifGVufDB8MHx8fDE3NTk1MDc2OTR8MA&ixlib=rb-4.1.0&q=80&w=240" alt="Emily Davis headshot" class="w-20 h-20 rounded-full object-cover ring-2 ring-red-500/60 shadow-lg" loading="lazy" decoding="async">
+                            <div class="ml-6">
+                                <h3 class="text-white font-semibold text-xl">Emily Davis</h3>
+                                <p class="text-teal-400 text-sm"><i class="fas fa-graduation-cap mr-1"></i>Class of 2020</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Research Scientist at BioTech Labs, pioneering breakthroughs in genetic medicine and therapeutics.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Research</span>
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Biotech</span>
+                            <span class="bg-gray-700/50 text-gray-300 px-3 py-2 rounded-lg text-sm border border-gray-600">Genetics</span>
+                        </div>
+                        <button class="w-full bg-gray-700/30 hover:bg-gray-600/50 text-gray-300 py-3 rounded-lg transition-all duration-300 border border-gray-600 hover:border-red-500 focus-ring">
+                            <i class="fas fa-envelope mr-2"></i>Connect
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">What Our Alumni Say</h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Hear from graduates who have leveraged our network to achieve remarkable success</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-effect p-8 rounded-2xl hover-lift">
+                    <div class="flex items-center mb-6">
+                        <img src="https://images.unsplash.com/photo-1548414545-026475d88256?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwcm9kdWN0JTIwbWFuYWdlciUyMGhlYWRzaG90fGVufDB8MHx8fDE3NTk1MDc2OTV8MA&ixlib=rb-4.1.0&q=80&w=160" alt="Alex Kim headshot" class="w-16 h-16 rounded-full object-cover ring-2 ring-purple-500/60">
+                        <div class="ml-4">
+                            <h4 class="text-white font-semibold">Alex Kim</h4>
+                            <p class="text-teal-400 text-sm">Class of 2016 • Product Manager</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic text-lg leading-relaxed">
+                        "The alumni network helped me land my dream job at a Fortune 500 company. The mentorship program was invaluable!"
+                    </p>
+                    <div class="flex text-yellow-400 mt-4" aria-label="5 star rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl hover-lift">
+                    <div class="flex items-center mb-6">
+                        <img src="https://images.unsplash.com/photo-1758691737644-ef8be18256c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdGFydHVwJTIwZm91bmRlciUyMGhlYWRzaG90fGVufDB8MHx8fDE3NTk1MDc2OTV8MA&ixlib=rb-4.1.0&q=80&w=160" alt="Lisa Johnson headshot" class="w-16 h-16 rounded-full object-cover ring-2 ring-blue-500/60">
+                        <div class="ml-4">
+                            <h4 class="text-white font-semibold">Lisa Johnson</h4>
+                            <p class="text-teal-400 text-sm">Class of 2019 • Startup Founder</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic text-lg leading-relaxed">
+                        "Through alumni connections, I found my co-founder and secured funding for our startup. This network is truly powerful."
+                    </p>
+                    <div class="flex text-yellow-400 mt-4" aria-label="5 star rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-teal-600"></div>
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-8">
+                <i class="fas fa-rocket text-6xl text-white mb-6 animate-float"></i>
+            </div>
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Reconnect?</h2>
+            <p class="text-xl text-gray-100 mb-8 leading-relaxed">Join thousands of alumni who are already building connections, advancing their careers, and making a difference in their communities.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <button @click="signupOpen=true" class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center focus-ring">
+                    <i class="fas fa-user-plus mr-3"></i>Create Your Profile
+                </button>
+                <button @click="demoOpen=true" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center focus-ring">
+                    <i class="fas fa-play-circle mr-3"></i>Watch Demo
+                </button>
+            </div>
+            <p class="text-gray-200 mt-6 text-sm">
+                <i class="fas fa-shield-alt mr-2"></i>Secure • Private • Trusted by 15,000+ Alumni
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-pink-500 font-bold text-2xl mb-4 flex items-center">
+                        <i class="fas fa-graduation-cap mr-2"></i>AlumniConnect
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">Connecting graduates worldwide since 2010. Building bridges between past, present, and future.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="mailto:hello@alumniconnect.com" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors duration-300 focus-ring" aria-label="Email">
+                            <i class="fas fa-envelope text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="tel:+10000000000" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors duration-300 focus-ring" aria-label="Phone">
+                            <i class="fas fa-phone text-gray-400 group-hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-lg mb-4 flex items-center">
+                        <i class="fas fa-link mr-2"></i>Quick Links
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-pink-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-pink-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-pink-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-pink-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-lg mb-4 flex items-center">
+                        <i class="fas fa-toolbox mr-2"></i>Resources
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>Mentorship</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>Job Board</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>Newsletter</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 flex items-center focus-ring"><i class="fas fa-chevron-right mr-2 text-xs"></i>FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-lg mb-4 flex items-center">
+                        <i class="fas fa-share-alt mr-2"></i>Connect
+                    </h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 focus-ring" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-400 transition-all duration-300 transform hover:scale-110 focus-ring" aria-label="Twitter">
+                            <i class="fab fa-twitter text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 focus-ring" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-pink-500 transition-all duration-300 transform hover:scale-110 focus-ring" aria-label="Instagram">
+                            <i class="fab fa-instagram text-gray-400 group-hover:text-white"></i>
+                        </a>
+                    </div>
+                    <div class="mt-6 p-4 bg-gray-800/50 rounded-lg">
+                        <p class="text-gray-400 text-sm flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>Stay Updated
+                        </p>
+                        <form class="flex mt-2" onsubmit="event.preventDefault(); this.reset(); const toast=document.getElementById('toast'); toast.classList.remove('hidden'); setTimeout(()=>toast.classList.add('hidden'), 2500);">
+                            <input type="email" placeholder="Your email" required class="flex-1 bg-gray-700 border border-gray-600 rounded-l-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-pink-500">
+                            <button class="bg-pink-600 hover:bg-pink-700 text-white px-4 rounded-r-lg transition-colors duration-300" aria-label="Subscribe">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400 flex items-center justify-center">
+                    <i class="fas fa-heart text-pink-500 mr-2"></i>
+                    Made with passion for our alumni community • &copy; 2024 AlumniConnect. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Signup Modal -->
+    <div x-cloak x-show="signupOpen" x-transition.opacity class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70" @click="signupOpen=false"></div>
+        <div class="relative w-full max-w-lg glass-effect rounded-2xl p-6 shadow-2xl border border-gray-700">
+            <button @click="signupOpen=false" class="absolute top-3 right-3 text-gray-400 hover:text-white focus-ring" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="text-2xl font-semibold text-white mb-2">Create your account</h3>
+            <p class="text-gray-400 mb-6">Join the network in seconds.</p>
+            <form class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" placeholder="First name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-pink-500">
+                    <input type="text" placeholder="Last name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-pink-500">
+                </div>
+                <input type="email" placeholder="Email address" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-pink-500">
+                <input type="password" placeholder="Create password" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-pink-500">
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg font-semibold transition-colors focus-ring">
+                    <i class="fas fa-user-plus mr-2"></i>Join Now
+                </button>
+                <p class="text-xs text-gray-500 text-center">By signing up you agree to our <a href="#" class="text-pink-400 hover:underline">Terms</a> and <a href="#" class="text-pink-400 hover:underline">Privacy Policy</a>.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Demo Modal -->
+    <div x-cloak x-show="demoOpen" x-transition.opacity class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70" @click="demoOpen=false"></div>
+        <div class="relative w-full max-w-4xl bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-gray-700">
+            <div class="flex items-center justify-between p-4 border-b border-gray-800">
+                <h3 class="text-white font-semibold"><i class="fas fa-play-circle mr-2 text-pink-500"></i>AlumniConnect Demo</h3>
+                <button @click="demoOpen=false" class="text-gray-400 hover:text-white focus-ring" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="aspect-video bg-black">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1" title="AlumniConnect Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden z-[70]">
+        <div class="glass-effect px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3 border border-gray-700">
+            <i class="fas fa-check-circle text-teal-400"></i>
+            <span class="text-gray-200">Subscribed! Check your inbox to confirm.</span>
+        </div>
+    </div>
+
+    <!-- Back to top -->
+    <button x-show="scrolled" x-transition.opacity @click="window.scrollTo({top:0, behavior:'smooth'})" class="fixed bottom-6 right-6 bg-pink-600 hover:bg-pink-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center z-[70] focus-ring" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</body>
+</html>
