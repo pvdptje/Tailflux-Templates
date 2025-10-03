@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" x-data>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Minds Tutoring - Pricing</title>
+    <meta name="description" content="Simple, transparent tutoring pricing. Pick from Starter, Pro, and Elite plans with monthly or quarterly billing. No hidden fees, cancel anytime.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%25%27 height=%27100%25%27 rx=%2718%27 fill=%27%2310b981%27/%3E%3Cpath fill=%27white%27 d=%27M50 18l28 12v6l-28-12-28 12v-6l28-12zm-16 24h32v28H34V42zm4 4v20h24V46H38z%27/%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        purple: {
+                            50: '#faf5ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                        },
+                        lime: {
+                            50: '#f7fee7',
+                            400: '#a3e635',
+                            500: '#84cc16',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)' },
+                            '50%': { boxShadow: '0 0 30px rgba(168, 85, 247, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen antialiased">
+    <!-- Header -->
+    <header x-data="{ scrolled: false, mobileOpen: false }" @scroll.window="scrolled = window.scrollY > 10" :class="scrolled ? 'shadow-md bg-white/95 backdrop-blur-sm' : 'bg-white/95'" class="sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#top" class="flex items-center group focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded">
+                    <div class="w-10 h-10 bg-gradient-to-r from-emerald-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <i class="fas fa-graduation-cap text-white text-lg" aria-hidden="true"></i>
+                    </div>
+                    <span class="ml-3 text-xl font-bold text-stone-800">Bright Minds Tutoring</span>
+                </a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#top" class="text-stone-600 hover:text-emerald-600 transition-all duration-300 hover:scale-105">Home</a>
+                    <a href="#pricing" class="text-stone-600 hover:text-emerald-600 transition-all duration-300 hover:scale-105">Plans</a>
+                    <a href="#testimonials" class="text-stone-600 hover:text-emerald-600 transition-all duration-300 hover:scale-105">Testimonials</a>
+                    <a href="#faq" class="text-stone-600 hover:text-emerald-600 transition-all duration-300 hover:scale-105">FAQ</a>
+                    <a href="#contact" class="text-stone-600 hover:text-emerald-600 transition-all duration-300 hover:scale-105">Contact</a>
+                </nav>
+                <div class="flex items-center space-x-3">
+                    <a href="#pricing" class="hidden sm:inline-flex bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        Get Started
+                    </a>
+                    <button @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen" aria-controls="mobile-menu" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-lg border border-stone-200 text-stone-700 hover:text-emerald-600 hover:border-emerald-200 transition focus:outline-none focus:ring-2 focus:ring-emerald-500" aria-label="Toggle menu">
+                        <i :class="mobileOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" x-show="mobileOpen" x-transition.origin.top class="md:hidden bg-white border-t border-stone-200">
+            <div class="px-4 py-3 space-y-2">
+                <a @click="mobileOpen=false" href="#top" class="block py-2 text-stone-700 hover:text-emerald-600">Home</a>
+                <a @click="mobileOpen=false" href="#pricing" class="block py-2 text-stone-700 hover:text-emerald-600">Plans</a>
+                <a @click="mobileOpen=false" href="#testimonials" class="block py-2 text-stone-700 hover:text-emerald-600">Testimonials</a>
+                <a @click="mobileOpen=false" href="#faq" class="block py-2 text-stone-700 hover:text-emerald-600">FAQ</a>
+                <a @click="mobileOpen=false" href="#contact" class="block py-2 text-stone-700 hover:text-emerald-600">Contact</a>
+                <a @click="mobileOpen=false" href="#pricing" class="inline-flex w-full justify-center bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-lg font-semibold transition">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="top" class="relative bg-gradient-to-br from-purple-50 to-emerald-50 py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1623287073837-5b07d79739a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0dXRvcmluZyUyMGVkdWNhdGlvbiUyMHN0dWRlbnRzJTIwbGVhcm5pbmclMjBzdHVkeSUyMGNsYXNzcm9vbSUyMGNoZWVyZnVsfGVufDB8MHx8fDE3NTk0OTM0Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=0ay0f_QcEcM')] bg-cover bg-center opacity-10"></div>
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div class="w-96 h-96 bg-purple-500/10 rounded-full blur-3xl absolute -top-24 -left-24"></div>
+            <div class="w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl absolute -bottom-24 -right-24"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-stone-800 mb-6 animate-slide-up">
+                Simple, Transparent Pricing
+            </h1>
+            <p class="text-lg md:text-2xl text-stone-600 max-w-3xl mx-auto mb-8 animate-fade-in">
+                Choose the perfect tutoring plan for your educational journey. All plans include personalized attention and proven results.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 animate-slide-up">
+                <div class="flex items-center text-emerald-600">
+                    <i class="fas fa-check-circle mr-2" aria-hidden="true"></i>
+                    <span>No hidden fees</span>
+                </div>
+                <div class="hidden sm:block text-stone-300">•</div>
+                <div class="flex items-center text-purple-600">
+                    <i class="fas fa-check-circle mr-2" aria-hidden="true"></i>
+                    <span>Cancel anytime</span>
+                </div>
+                <div class="hidden sm:block text-stone-300">•</div>
+                <div class="flex items-center text-lime-500">
+                    <i class="fas fa-check-circle mr-2" aria-hidden="true"></i>
+                    <span>Free trial available</span>
+                </div>
+            </div>
+            <div class="mt-10">
+                <a href="#pricing" class="inline-flex items-center bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <i class="fas fa-tags mr-2" aria-hidden="true"></i>
+                    Explore Plans
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section id="pricing" class="py-20" x-data="{ billing: 'monthly' }" aria-label="Pricing Plans">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Billing Toggle -->
+            <div class="flex justify-center mb-16 animate-fade-in">
+                <div class="bg-stone-100 rounded-xl p-1 flex border border-stone-200 shadow-sm" role="tablist" aria-label="Billing toggle">
+                    <button 
+                        @click="billing = 'monthly'"
+                        :aria-pressed="billing === 'monthly'"
+                        :class="billing === 'monthly' ? 'bg-white text-stone-800 shadow-md' : 'text-stone-600 hover:text-stone-800'"
+                        class="px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        role="tab"
+                    >
+                        <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+                        Monthly
+                    </button>
+                    <button 
+                        @click="billing = 'quarterly'"
+                        :aria-pressed="billing === 'quarterly'"
+                        :class="billing === 'quarterly' ? 'bg-white text-stone-800 shadow-md' : 'text-stone-600 hover:text-stone-800'"
+                        class="px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        role="tab"
+                    >
+                        <i class="fas fa-gem mr-2 text-lime-500" aria-hidden="true"></i>
+                        Quarterly (Save 15%)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Starter Plan -->
+                <div class="bg-white rounded-2xl shadow-xl border border-stone-200 p-8 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-slide-up">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-seedling text-emerald-500 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-2">Starter</h3>
+                        <p class="text-stone-600 mb-4">Perfect for supplemental learning</p>
+                        <div class="mb-1">
+                            <span class="text-4xl font-bold text-stone-800">
+                                <span x-show="billing === 'monthly'">$49</span>
+                                <span x-cloak x-show="billing === 'quarterly'">$42</span>
+                            </span>
+                            <span class="text-stone-600">/mo</span>
+                        </div>
+                        <div class="text-xs text-stone-500 h-4">
+                            <span x-cloak x-show="billing === 'quarterly'">Billed $125/quarter</span>
+                        </div>
+                        <span class="text-sm text-lime-500 font-semibold inline-flex items-center mt-1" x-cloak x-show="billing === 'quarterly'">
+                            <i class="fas fa-piggy-bank mr-1" aria-hidden="true"></i>
+                            Save $22 quarterly
+                        </span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>2 hours per week</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>1 subject focus</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Weekly progress reports</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Email support</span>
+                        </li>
+                    </ul>
+                    <a href="#cta" class="w-full bg-stone-100 hover:bg-stone-200 text-stone-800 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <i class="fas fa-rocket mr-2" aria-hidden="true"></i>
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="bg-gradient-to-br from-purple-500 to-emerald-500 rounded-2xl shadow-2xl p-8 transform scale-105 relative animate-pulse-glow">
+                    <div class="absolute top-0 right-0 bg-lime-400 text-stone-800 px-6 py-2 rounded-bl-xl rounded-tr-2xl font-semibold text-sm flex items-center">
+                        <i class="fas fa-crown mr-1" aria-hidden="true"></i>
+                        Most Popular
+                    </div>
+                    <div class="text-center mb-8 text-white">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+                            <i class="fas fa-star text-lime-300 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Pro</h3>
+                        <p class="text-purple-100 mb-4">Ideal for comprehensive support</p>
+                        <div class="mb-1">
+                            <span class="text-4xl font-bold">
+                                <span x-show="billing === 'monthly'">$79</span>
+                                <span x-cloak x-show="billing === 'quarterly'">$67</span>
+                            </span>
+                            <span class="text-purple-100">/mo</span>
+                        </div>
+                        <div class="text-xs text-purple-100 h-4">
+                            <span x-cloak x-show="billing === 'quarterly'">Billed $202/quarter</span>
+                        </div>
+                        <span class="text-sm text-lime-300 font-semibold inline-flex items-center" x-cloak x-show="billing === 'quarterly'">
+                            <i class="fas fa-piggy-bank mr-1" aria-hidden="true"></i>
+                            Save $35 quarterly
+                        </span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-white">
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                <i class="fas fa-check text-lime-300 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>4 hours per week</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                <i class="fas fa-check text-lime-300 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Up to 2 subjects</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                <i class="fas fa-check text-lime-300 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Custom learning plan</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                <i class="fas fa-check text-lime-300 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Priority support</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                <i class="fas fa-check text-lime-300 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Exam preparation</span>
+                        </li>
+                    </ul>
+                    <a href="#cta" class="w-full bg-white hover:bg-stone-100 text-purple-600 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/70">
+                        <i class="fas fa-bolt mr-2" aria-hidden="true"></i>
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Elite Plan -->
+                <div class="bg-white rounded-2xl shadow-xl border border-stone-200 p-8 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-slide-up">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-trophy text-emerald-500 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-2">Elite</h3>
+                        <p class="text-stone-600 mb-4">For intensive academic goals</p>
+                        <div class="mb-1">
+                            <span class="text-4xl font-bold text-stone-800">
+                                <span x-show="billing === 'monthly'">$129</span>
+                                <span x-cloak x-show="billing === 'quarterly'">$110</span>
+                            </span>
+                            <span class="text-stone-600">/mo</span>
+                        </div>
+                        <div class="text-xs text-stone-500 h-4">
+                            <span x-cloak x-show="billing === 'quarterly'">Billed $329/quarter</span>
+                        </div>
+                        <span class="text-sm text-lime-500 font-semibold inline-flex items-center" x-cloak x-show="billing === 'quarterly'">
+                            <i class="fas fa-piggy-bank mr-1" aria-hidden="true"></i>
+                            Save $58 quarterly
+                        </span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>8 hours per week</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Unlimited subjects</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>24/7 tutor access</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>College prep included</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-check text-emerald-500 text-sm" aria-hidden="true"></i>
+                            </div>
+                            <span>Dedicated success manager</span>
+                        </li>
+                    </ul>
+                    <a href="#cta" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <i class="fas fa-gem mr-2" aria-hidden="true"></i>
+                        Get Started
+                    </a>
+                </div>
+            </div>
+
+            <!-- Compare features collapsible -->
+            <div x-data="{ open: false }" class="max-w-6xl mx-auto mt-10">
+                <button @click="open = !open" :aria-expanded="open" class="mx-auto flex items-center gap-2 text-emerald-700 hover:text-emerald-600 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 px-4 py-2 rounded-lg">
+                    <i :class="open ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+                    Compare plan features
+                </button>
+                <div x-show="open" x-transition class="mt-6 bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
+                    <ul class="grid sm:grid-cols-3 gap-6 text-sm text-stone-700">
+                        <li>
+                            <h4 class="font-semibold text-stone-900 mb-2 flex items-center"><i class="fas fa-seedling text-emerald-500 mr-2"></i>Starter</h4>
+                            <p>2 hrs/week • 1 subject • Weekly reports • Email support</p>
+                        </li>
+                        <li>
+                            <h4 class="font-semibold text-stone-900 mb-2 flex items-center"><i class="fas fa-star text-amber-400 mr-2"></i>Pro</h4>
+                            <p>4 hrs/week • 2 subjects • Custom plan • Priority support • Exam prep</p>
+                        </li>
+                        <li>
+                            <h4 class="font-semibold text-stone-900 mb-2 flex items-center"><i class="fas fa-trophy text-emerald-500 mr-2"></i>Elite</h4>
+                            <p>8 hrs/week • Unlimited subjects • 24/7 access • College prep • Success manager</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-stone-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-4">Trusted by Students & Parents</h2>
+            <p class="text-xl text-stone-600 text-center mb-12 max-w-2xl mx-auto">See what our community says about their learning journey with Bright Minds</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <figure class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-emerald-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-graduate text-white" aria-hidden="true"></i>
+                        </div>
+                        <figcaption class="ml-4">
+                            <h4 class="font-semibold text-stone-800">Sarah Johnson</h4>
+                            <p class="text-sm text-stone-600">Grade 11 Student</p>
+                        </figcaption>
+                    </div>
+                    <div class="flex text-amber-400 mb-3" aria-label="5 out of 5 stars">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <blockquote class="text-stone-600 italic">"The Pro plan helped me improve my math grade from a C to an A in just 3 months. The personalized attention made all the difference!"</blockquote>
+                </figure>
+
+                <figure class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-purple-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-tie text-white" aria-hidden="true"></i>
+                        </div>
+                        <figcaption class="ml-4">
+                            <h4 class="font-semibold text-stone-800">Michael Chen</h4>
+                            <p class="text-sm text-stone-600">Parent</p>
+                        </figcaption>
+                    </div>
+                    <div class="flex text-amber-400 mb-3" aria-label="5 out of 5 stars">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <blockquote class="text-stone-600 italic">"The Elite plan has been incredible for my daughter's college prep. The 24/7 tutor access and dedicated success manager are game-changers."</blockquote>
+                </figure>
+
+                <figure class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-600 to-emerald-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-graduate text-white" aria-hidden="true"></i>
+                        </div>
+                        <figcaption class="ml-4">
+                            <h4 class="font-semibold text-stone-800">Emily Rodriguez</h4>
+                            <p class="text-sm text-stone-600">Grade 9 Student</p>
+                        </figcaption>
+                    </div>
+                    <div class="flex text-amber-400 mb-3" aria-label="5 out of 5 stars">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <blockquote class="text-stone-600 italic">"Starting with the Starter plan was perfect for me. The weekly progress reports helped me track my improvement and stay motivated!"</blockquote>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-4">Frequently Asked Questions</h2>
+            <p class="text-xl text-stone-600 text-center mb-12">Everything you need to know about our tutoring services</p>
+            <div class="space-y-6">
+                <div x-data="{ open: false }" class="bg-stone-50 rounded-xl shadow-sm border border-stone-200 hover:shadow-md transition-all duration-300">
+                    <button @click="open = !open" :aria-expanded="open" class="w-full px-6 py-5 text-left flex justify-between items-center group focus:outline-none">
+                        <span class="font-semibold text-stone-800 text-lg group-hover:text-emerald-600 transition-colors duration-300">Can I change or cancel my plan at any time?</span>
+                        <svg :class="open ? 'rotate-180 text-emerald-500' : 'text-purple-500'" class="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="px-6 pb-5 text-stone-600 border-t border-stone-200 pt-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-emerald-500 mt-1 mr-3" aria-hidden="true"></i>
+                            <p>Yes, you can change or cancel your plan at any time. Changes take effect at the start of your next billing cycle, and you'll only pay for the time you've used.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div x-data="{ open: false }" class="bg-stone-50 rounded-xl shadow-sm border border-stone-200 hover:shadow-md transition-all duration-300">
+                    <button @click="open = !open" :aria-expanded="open" class="w-full px-6 py-5 text-left flex justify-between items-center group focus:outline-none">
+                        <span class="font-semibold text-stone-800 text-lg group-hover:text-emerald-600 transition-colors duration-300">Are there any hidden fees?</span>
+                        <svg :class="open ? 'rotate-180 text-emerald-500' : 'text-purple-500'" class="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="px-6 pb-5 text-stone-600 border-t border-stone-200 pt-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-shield-alt text-emerald-500 mt-1 mr-3" aria-hidden="true"></i>
+                            <p>No hidden fees. The price you see is the price you pay. All learning materials, resources, and platform access are included with complete transparency.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div x-data="{ open: false }" class="bg-stone-50 rounded-xl shadow-sm border border-stone-200 hover:shadow-md transition-all duration-300">
+                    <button @click="open = !open" :aria-expanded="open" class="w-full px-6 py-5 text-left flex justify-between items-center group focus:outline-none">
+                        <span class="font-semibold text-stone-800 text-lg group-hover:text-emerald-600 transition-colors duration-300">What subjects do you offer tutoring for?</span>
+                        <svg :class="open ? 'rotate-180 text-emerald-500' : 'text-purple-500'" class="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="px-6 pb-5 text-stone-600 border-t border-stone-200 pt-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-book-open text-emerald-500 mt-1 mr-3" aria-hidden="true"></i>
+                            <p>We offer comprehensive tutoring for Mathematics, Sciences, English Language Arts, History, Foreign Languages, and specialized test preparation for SAT/ACT, AP exams, and college entrance tests.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div x-data="{ open: false }" class="bg-stone-50 rounded-xl shadow-sm border border-stone-200 hover:shadow-md transition-all duration-300">
+                    <button @click="open = !open" :aria-expanded="open" class="w-full px-6 py-5 text-left flex justify-between items-center group focus:outline-none">
+                        <span class="font-semibold text-stone-800 text-lg group-hover:text-emerald-600 transition-colors duration-300">How are tutors selected and vetted?</span>
+                        <svg :class="open ? 'rotate-180 text-emerald-500' : 'text-purple-500'" class="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="px-6 pb-5 text-stone-600 border-t border-stone-200 pt-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-user-check text-emerald-500 mt-1 mr-3" aria-hidden="true"></i>
+                            <p>All our tutors undergo a rigorous 5-step vetting process, including background checks, subject matter testing, teaching methodology assessments, mock sessions, and ongoing performance evaluations. Only the top 15% are selected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="py-20 bg-gradient-to-r from-emerald-500 to-purple-600 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1744051518421-1eaf2fbde680?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0ZWFjaGVyJTIwc3R1ZGVudCUyMHN0dWR5aW5nJTIwdG9nZXRoZXIlMjBjb2FjaGluZyUyMG9uZS1vbi1vbmUlMjBkZXNrJTIwbm90ZWJvb2slMjBmb2N1c3xlbnwwfDB8fHwxNzU5NDkzNDMwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=TdgfSyDoWBE')] bg-cover bg-center opacity-15"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
+            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
+                <i class="fas fa-graduation-cap text-white text-3xl" aria-hidden="true"></i>
+            </div>
+            <h2 class="text-4xl font-bold mb-4">Ready to unlock your academic potential?</h2>
+            <p class="text-lg md:text-xl mb-8 text-emerald-100 max-w-2xl mx-auto">Join thousands of students who improved their grades with our personalized tutoring approach and achieved their academic goals.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#pricing" class="bg-white text-emerald-600 hover:bg-stone-100 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/70">
+                    <i class="fas fa-play-circle mr-2" aria-hidden="true"></i>
+                    Start Free Trial
+                </a>
+                <a href="#contact" class="border-2 border-white text-white hover:bg-white hover:text-emerald-600 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/70">
+                    <i class="fas fa-calendar-check mr-2" aria-hidden="true"></i>
+                    Schedule Consultation
+                </a>
+            </div>
+            <p class="mt-6 text-emerald-100 text-sm">
+                <i class="fas fa-lock mr-1" aria-hidden="true"></i>
+                No credit card required • 7-day free trial • Cancel anytime
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-stone-800 text-stone-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-5 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-emerald-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                            <i class="fas fa-graduation-cap text-white" aria-hidden="true"></i>
+                        </div>
+                        <span class="ml-3 text-xl font-bold text-white">Bright Minds</span>
+                    </div>
+                    <p class="text-stone-400 mb-4">Personalized tutoring for academic excellence and lifelong learning.</p>
+                    <form class="mt-6" action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We will be in touch.');">
+                        <label for="newsletter" class="block text-sm font-medium text-stone-300 mb-2">Subscribe for study tips</label>
+                        <div class="flex rounded-lg overflow-hidden shadow-sm">
+                            <input id="newsletter" type="email" placeholder="Your email address" class="w-full px-4 py-2.5 bg-stone-700 placeholder-stone-400 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <button type="submit" class="px-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">Subscribe</button>
+                        </div>
+                    </form>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 bg-stone-700 hover:bg-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-700 hover:bg-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-700 hover:bg-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-stone-700 hover:bg-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-book-open mr-2" aria-hidden="true"></i>
+                        Services
+                    </h4>
+                    <ul class="space-y-3 text-stone-400">
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-calculator mr-2 text-emerald-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            Math Tutoring
+                        </a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-flask mr-2 text-purple-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            Science Tutoring
+                        </a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-pencil-alt mr-2 text-lime-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            Test Preparation
+                        </a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-university mr-2 text-emerald-400 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            College Counseling
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-building mr-2" aria-hidden="true"></i>
+                        Company
+                    </h4>
+                    <ul class="space-y-3 text-stone-400">
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-info-circle mr-2 text-emerald-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            About Us
+                        </a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-briefcase mr-2 text-purple-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            Careers
+                        </a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-blog mr-2 text-lime-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            Blog
+                        </a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-all duration-300 flex items-center group">
+                            <i class="fas fa-envelope mr-2 text-emerald-400 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            Contact
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-headset mr-2" aria-hidden="true"></i>
+                        Contact
+                    </h4>
+                    <ul class="space-y-3 text-stone-400">
+                        <li class="flex items-center group">
+                            <i class="fas fa-envelope mr-3 text-emerald-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            <span>hello@brightminds.com</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <i class="fas fa-phone mr-3 text-purple-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <i class="fas fa-clock mr-3 text-lime-500 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            <span>Mon-Fri: 8AM-8PM EST</span>
+                        </li>
+                        <li class="flex items-center group">
+                            <i class="fas fa-map-marker-alt mr-3 text-emerald-400 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                            <span>123 Education St, Learn City</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-12 pt-8 text-center text-stone-400">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>&copy; 2024 Bright Minds Tutoring. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-emerald-400 transition-colors duration-300">Privacy Policy</a>
+                        <a href="#" class="hover:text-emerald-400 transition-colors duration-300">Terms of Service</a>
+                        <a href="#" class="hover:text-emerald-400 transition-colors duration-300">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Chat Button + Panel -->
+    <div class="fixed bottom-6 right-6 z-50" x-data="{ open: false }">
+        <button @click="open = !open" :aria-expanded="open" class="w-14 h-14 bg-gradient-to-r from-emerald-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl hover:shadow-2xl/50 transition-all duration-300 transform hover:scale-110 animate-pulse-glow focus:outline-none focus:ring-2 focus:ring-emerald-400" aria-label="Open chat">
+            <i :class="open ? 'fas fa-times' : 'fas fa-comments'" class="text-white text-xl" aria-hidden="true"></i>
+        </button>
+        <div x-show="open" x-transition class="absolute bottom-16 right-0 w-80 bg-white border border-stone-200 rounded-2xl shadow-2xl p-4">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-r from-emerald-500 to-purple-600 flex items-center justify-center text-white">
+                        <i class="fas fa-headset" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="font-semibold text-stone-800">Need help?</h5>
+                </div>
+                <span class="text-xs text-stone-500">We typically reply in minutes</span>
+            </div>
+            <div class="space-y-2">
+                <a href="#faq" @click="open=false" class="flex items-center gap-3 p-2 rounded-lg hover:bg-stone-100 transition">
+                    <i class="fas fa-question-circle text-emerald-500" aria-hidden="true"></i>
+                    <span>Browse FAQs</span>
+                </a>
+                <a href="mailto:hello@brightminds.com" class="flex items-center gap-3 p-2 rounded-lg hover:bg-stone-100 transition">
+                    <i class="fas fa-envelope text-purple-500" aria-hidden="true"></i>
+                    <span>Email us</span>
+                </a>
+                <a href="#contact" @click="open=false" class="flex items-center gap-3 p-2 rounded-lg hover:bg-stone-100 transition">
+                    <i class="fas fa-calendar-check text-lime-500" aria-hidden="true"></i>
+                    <span>Schedule a call</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button onclick="scrollToTop()" id="scrollToTop" class="fixed bottom-6 left-6 z-50 w-12 h-12 bg-stone-800 hover:bg-emerald-500 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-110 opacity-0 pointer-events-none focus:outline-none focus:ring-2 focus:ring-emerald-400" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up text-white" aria-hidden="true"></i>
+    </button>
+
+    <script>
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        // Add smooth scrolling to all on-page links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
