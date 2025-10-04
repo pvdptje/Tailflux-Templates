@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" x-data>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Theater - Ticket Purchase</title>
+    <meta name="description" content="Purchase tickets for A Midsummer Night's Dream at The Grand Theater. Choose your seats, apply promo codes, and enjoy a seamless checkout experience.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-gentle': 'pulseGentle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGentle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 min-h-screen text-gray-900">
+    <!-- Header -->
+    <header x-data="{ open:false }" class="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 shadow-sm border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center space-x-2 group">
+                    <div class="w-9 h-9 bg-indigo-600 rounded-full flex items-center justify-center ring-1 ring-indigo-500/20 group-hover:rotate-6 transition">
+                        <i class="fas fa-theater-masks text-white text-sm"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-indigo-700">The Grand Theater</h1>
+                </a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors duration-200">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors duration-200">Shows</a>
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors duration-200">About</a>
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors duration-200">Contact</a>
+                    <span class="hidden lg:inline-flex items-center text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
+                        <i class="fa-solid fa-mobile-screen mr-1.5"></i> eTickets available
+                    </span>
+                </nav>
+                <button @click="open = !open" :aria-expanded="open" aria-controls="mobile-nav" class="md:hidden text-gray-600 p-2 rounded-lg hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i :class="open ? 'fas fa-xmark' : 'fas fa-bars'" class="text-xl"></i>
+                </button>
+            </div>
+            <!-- Mobile Nav -->
+            <div x-cloak x-show="open" x-transition.opacity x-transition.duration.200 id="mobile-nav" class="md:hidden pb-4">
+                <div class="space-y-2">
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-indigo-50 text-gray-700">Home</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-indigo-50 text-gray-700">Shows</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-indigo-50 text-gray-700">About</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-indigo-50 text-gray-700">Contact</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Show Information -->
+        <section class="bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden animate-slide-up">
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-2/5 relative">
+                    <img src="https://images.unsplash.com/photo-1605203305294-07005a231a90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwc3RhZ2UlMjBTaGFrZXNwZWFyZSUyMG1pZHN1bW1lciUyMG5pZ2h0JTI3cyUyMGRyZWFtJTIwcGVyZm9ybWFuY2UlMjBuaWdodCUyMGxpZ2h0aW5nJTIwZHJhbWF0aWN8ZW58MHwwfHx8MTc1OTUzNjQzMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=1Cl26NP6E1o" 
+                         alt="Stage set for A Midsummer Night's Dream with dramatic night lighting" 
+                         class="w-full h-64 lg:h-full object-cover" fetchpriority="high" decoding="async">
+                    <div class="absolute top-4 left-4 bg-indigo-600/95 text-white px-3 py-1 rounded-full text-sm font-semibold shadow">
+                        <i class="fas fa-star mr-1"></i> Featured Show
+                    </div>
+                </div>
+                <div class="lg:w-3/5 p-8">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-calendar-alt text-indigo-500 mr-2"></i>
+                        <span class="text-sm text-indigo-600 font-medium">Limited Engagement</span>
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-3">A Midsummer Night's Dream</h2>
+                    <p class="text-gray-600 text-lg mb-6">By William Shakespeare</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clock text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-700 mb-1">Date & Time</h3>
+                                <p class="text-gray-900">Saturday, December 14, 2024 • 7:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-hourglass-half text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-700 mb-1">Duration</h3>
+                                <p class="text-gray-900">2 hours 30 minutes (with intermission)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-700 mb-1">Location</h3>
+                                <p class="text-gray-900">Main Stage • The Grand Theater</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-friends text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-700 mb-1">Rating</h3>
+                                <p class="text-gray-900">PG-13 • Suitable for ages 13+</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-700 leading-relaxed text-lg">
+                        Experience Shakespeare's beloved comedy like never before. This enchanting production brings to life the magical world of fairies, lovers, and mischievous spirits in a stunning contemporary setting.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ticket Selection -->
+        <section x-data="ticketSelection()" class="bg-white rounded-xl shadow-lg border border-stone-200 p-6 sm:p-8 mt-8 animate-fade-in" aria-labelledby="ticket-selection-heading">
+            <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-ticket-alt text-indigo-600 text-xl" aria-hidden="true"></i>
+                </div>
+                <h2 id="ticket-selection-heading" class="text-3xl font-bold text-gray-900">Select Your Tickets</h2>
+            </div>
+
+            <!-- Grid: Ticket Types + Summary -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Ticket Types -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Standard -->
+                    <div class="flex items-center justify-between p-5 sm:p-6 border-2 border-stone-200 rounded-xl hover:border-indigo-400 hover:shadow-md transition-all duration-300 group">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                <i class="fas fa-chair text-blue-600" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 text-lg">Standard Admission</h3>
+                                <p class="text-gray-600 text-sm">General seating with great views</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-5">
+                            <span class="text-xl font-bold text-indigo-600">$45.00</span>
+                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                <button @click="decrement('standard')" 
+                                        :class="tickets.standard === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-50 hover:border-red-300'"
+                                        class="w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                        :aria-disabled="tickets.standard===0" aria-label="Decrease Standard tickets">
+                                    <i class="fas fa-minus text-gray-600"></i>
+                                </button>
+                                <input type="number" inputmode="numeric" min="0" :max="maxPerType" x-model.number="tickets.standard"
+                                       class="w-16 md:w-20 text-center font-bold text-lg md:text-xl text-gray-900 border border-stone-200 rounded-md py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                       aria-label="Standard ticket quantity">
+                                <button @click="increment('standard')" 
+                                        class="w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-green-50 hover:border-green-300 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                        aria-label="Increase Standard tickets">
+                                    <i class="fas fa-plus text-gray-600"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Premium -->
+                    <div class="flex items-center justify-between p-5 sm:p-6 border-2 border-stone-200 rounded-xl hover:border-indigo-400 hover:shadow-md transition-all duration-300 group">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                                <i class="fas fa-crown text-purple-600" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 text-lg">Premium Seating</h3>
+                                <p class="text-gray-600 text-sm">Center orchestra with premium view</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-5">
+                            <span class="text-xl font-bold text-indigo-600">$75.00</span>
+                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                <button @click="decrement('premium')" 
+                                        :class="tickets.premium === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-50 hover:border-red-300'"
+                                        class="w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                        aria-label="Decrease Premium tickets">
+                                    <i class="fas fa-minus text-gray-600"></i>
+                                </button>
+                                <input type="number" inputmode="numeric" min="0" :max="maxPerType" x-model.number="tickets.premium"
+                                       class="w-16 md:w-20 text-center font-bold text-lg md:text-xl text-gray-900 border border-stone-200 rounded-md py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                       aria-label="Premium ticket quantity">
+                                <button @click="increment('premium')" 
+                                        class="w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-green-50 hover:border-green-300 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                        aria-label="Increase Premium tickets">
+                                    <i class="fas fa-plus text-gray-600"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student/Senior -->
+                    <div class="flex items-center justify-between p-5 sm:p-6 border-2 border-stone-200 rounded-xl hover:border-indigo-400 hover:shadow-md transition-all duration-300 group">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                                <i class="fas fa-graduation-cap text-green-600" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 text-lg">Student/Senior</h3>
+                                <p class="text-gray-600 text-sm">Valid ID required at entrance</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-5">
+                            <span class="text-xl font-bold text-indigo-600">$35.00</span>
+                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                <button @click="decrement('student')" 
+                                        :class="tickets.student === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-50 hover:border-red-300'"
+                                        class="w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                        aria-label="Decrease Student/Senior tickets">
+                                    <i class="fas fa-minus text-gray-600"></i>
+                                </button>
+                                <input type="number" inputmode="numeric" min="0" :max="maxPerType" x-model.number="tickets.student"
+                                       class="w-16 md:w-20 text-center font-bold text-lg md:text-xl text-gray-900 border border-stone-200 rounded-md py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                       aria-label="Student/Senior ticket quantity">
+                                <button @click="increment('student')" 
+                                        class="w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-green-50 hover:border-green-300 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                        aria-label="Increase Student/Senior tickets">
+                                    <i class="fas fa-plus text-gray-600"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button @click="clearAll()" class="text-sm font-medium text-gray-700 hover:text-red-600 inline-flex items-center px-3 py-2 rounded-lg hover:bg-red-50 transition">
+                            <i class="fa-solid fa-trash-can mr-2"></i> Clear selection
+                        </button>
+                        <span class="text-sm text-gray-500 flex items-center">
+                            <i class="fa-solid fa-circle-info text-indigo-500 mr-1.5"></i>
+                            Max <span class="font-semibold mx-1" x-text="maxPerType"></span> per ticket type
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <aside class="lg:col-span-1">
+                    <div class="border border-stone-200 rounded-xl p-6 lg:sticky lg:top-24">
+                        <h3 class="font-semibold text-gray-900 text-xl mb-4 flex items-center">
+                            <i class="fas fa-receipt text-indigo-600 mr-3"></i>
+                            Order Summary
+                        </h3>
+                        <div class="space-y-4 mb-4" aria-live="polite">
+                            <div x-show="tickets.standard > 0" x-transition.opacity class="flex justify-between items-center py-2 px-4 bg-blue-50 rounded-lg">
+                                <span class="text-gray-700 font-medium">Standard Admission x <span x-text="tickets.standard" class="text-gray-900"></span></span>
+                                <span class="font-semibold text-gray-900">$<span x-text="(tickets.standard * 45).toFixed(2)"></span></span>
+                            </div>
+                            <div x-show="tickets.premium > 0" x-transition.opacity class="flex justify-between items-center py-2 px-4 bg-purple-50 rounded-lg">
+                                <span class="text-gray-700 font-medium">Premium Seating x <span x-text="tickets.premium" class="text-gray-900"></span></span>
+                                <span class="font-semibold text-gray-900">$<span x-text="(tickets.premium * 75).toFixed(2)"></span></span>
+                            </div>
+                            <div x-show="tickets.student > 0" x-transition.opacity class="flex justify-between items-center py-2 px-4 bg-green-50 rounded-lg">
+                                <span class="text-gray-700 font-medium">Student/Senior x <span x-text="tickets.student" class="text-gray-900"></span></span>
+                                <span class="font-semibold text-gray-900">$<span x-text="(tickets.student * 35).toFixed(2)"></span></span>
+                            </div>
+                            <p x-show="subtotal === 0" class="text-sm text-gray-500">Your selections will appear here.</p>
+                        </div>
+
+                        <!-- Promo code -->
+                        <div class="mb-4">
+                            <label for="promo" class="block text-sm font-medium text-gray-700 mb-1">Promo code</label>
+                            <div class="flex gap-2">
+                                <input id="promo" x-model="promoCode" placeholder="Enter code (e.g., MIDSUMMER10)" class="flex-1 rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                                <button @click="applyPromo()" class="px-4 py-2 rounded-lg border border-indigo-200 text-indigo-700 font-semibold hover:bg-indigo-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                                    Apply
+                                </button>
+                            </div>
+                            <p x-show="promoApplied" class="text-sm text-green-700 mt-2 flex items-center">
+                                <i class="fa-solid fa-badge-check fa-check mr-2"></i> Promo applied: 10% off orders $100+
+                            </p>
+                        </div>
+
+                        <!-- Totals -->
+                        <div class="space-y-2 text-sm text-gray-700 mb-4">
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span>$<span x-text="subtotal.toFixed(2)"></span></span>
+                            </div>
+                            <div x-show="discount > 0" x-transition.opacity class="flex justify-between text-green-700">
+                                <span>Discount</span>
+                                <span>- $<span x-text="discount.toFixed(2)"></span></span>
+                            </div>
+                            <div class="border-t border-stone-200 my-2"></div>
+                            <div class="flex justify-between items-center text-lg font-bold text-gray-900 bg-indigo-50 py-3 px-4 rounded-lg">
+                                <span>Total</span>
+                                <span class="text-indigo-700">$<span x-text="grandTotal.toFixed(2)"></span></span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                <i class="fa-solid fa-shield-halved text-indigo-500 mr-1"></i>
+                                No hidden fees. Secure checkout.
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                            <button type="button" :disabled="grandTotal === 0" 
+                                    :class="grandTotal === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg hover:-translate-y-0.5'"
+                                    class="flex-1 bg-indigo-600 text-white py-3 px-5 rounded-xl font-bold text-base transition-all duration-200 transform focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                                <i class="fas fa-lock mr-2"></i>
+                                Continue to Checkout
+                            </button>
+                            <button type="button" @click="saveForLater()" class="flex-1 border-2 border-gray-300 text-gray-700 py-3 px-5 rounded-xl font-bold text-base hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                                <i class="fas fa-bookmark mr-2"></i>
+                                Save for Later
+                            </button>
+                        </div>
+
+                        <!-- Accepted cards -->
+                        <div class="mt-4 flex items-center gap-2 text-gray-500">
+                            <i class="fa-brands fa-cc-visa text-2xl"></i>
+                            <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+                            <i class="fa-brands fa-cc-amex text-2xl"></i>
+                            <i class="fa-brands fa-cc-apple-pay text-2xl"></i>
+                        </div>
+                    </div>
+
+                    <!-- Toast -->
+                    <div x-cloak x-show="toast.show" x-transition.opacity class="fixed bottom-4 right-4 z-50">
+                        <div :class="toast.type === 'error' ? 'bg-red-600' : 'bg-indigo-600'"
+                             class="text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3">
+                            <i :class="toast.type === 'error' ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-circle-check'"></i>
+                            <span x-text="toast.message"></span>
+                            <button @click="toast.show=false" class="ml-2 text-white/80 hover:text-white">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Additional Information -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <div class="bg-white rounded-xl shadow-lg border border-stone-200 p-8 animate-fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-info-circle text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">Theater Policies</h3>
+                </div>
+                <ul class="space-y-4 text-gray-700">
+                    <li class="flex items-start space-x-3 p-3 hover:bg-red-50 rounded-lg transition-colors">
+                        <i class="fas fa-door-open text-red-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Doors open 45 minutes before showtime</span>
+                            <p class="text-sm text-gray-600 mt-1">Please arrive early to find your seats comfortably</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3 p-3 hover:bg-red-50 rounded-lg transition-colors">
+                        <i class="fas fa-clock text-red-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Latecomers will be seated at appropriate breaks</span>
+                            <p class="text-sm text-gray-600 mt-1">To ensure minimal disruption to the performance</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3 p-3 hover:bg-red-50 rounded-lg transition-colors">
+                        <i class="fas fa-exchange-alt text-red-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">No refunds or exchanges after purchase</span>
+                            <p class="text-sm text-gray-600 mt-1">All sales are final unless show is cancelled</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3 p-3 hover:bg-red-50 rounded-lg transition-colors">
+                        <i class="fas fa-camera text-red-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Photography and recording prohibited</span>
+                            <p class="text-sm text-gray-600 mt-1">To protect the artists' intellectual property</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg border border-stone-200 p-8 animate-fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-universal-access text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">Accessibility</h3>
+                </div>
+                <ul class="space-y-4 text-gray-700">
+                    <li class="flex items-start space-x-3 p-3 hover:bg-green-50 rounded-lg transition-colors">
+                        <i class="fas fa-wheelchair text-green-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Wheelchair accessible seating available</span>
+                            <p class="text-sm text-gray-600 mt-1">Reserved spaces with optimal viewing angles</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3 p-3 hover:bg-green-50 rounded-lg transition-colors">
+                        <i class="fas fa-headphones text-green-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Assisted listening devices provided</span>
+                            <p class="text-sm text-gray-600 mt-1">Available at the concierge desk free of charge</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3 p-3 hover:bg-green-50 rounded-lg transition-colors">
+                        <i class="fas fa-elevator text-green-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Elevator access to all levels</span>
+                            <p class="text-sm text-gray-600 mt-1">Easy access to balcony and mezzanine seating</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-3 p-3 hover:bg-green-50 rounded-lg transition-colors">
+                        <i class="fas fa-restroom text-green-500 mt-1"></i>
+                        <div>
+                            <span class="font-medium">Accessible restrooms on every floor</span>
+                            <p class="text-sm text-gray-600 mt-1">Spacious facilities with grab bars</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Theater Preview Section -->
+        <section class="bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden mt-8">
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1690131054295-6d1f8d2d65df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxncmFuZCUyMHRoZWF0ZXIlMjBpbnRlcmlvciUyMG9ybmF0ZSUyMGF1ZGl0b3JpdW0lMjBiYWxjb255JTIwc2VhdHMlMjB3YXJtJTIwbGlnaHRpbmd8ZW58MHwwfHx8MTc1OTUzNjQzMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=6Pz9uyP5d0I" 
+                         alt="The Grand Theater interior with ornate balconies and warm lighting" 
+                         class="w-full h-64 lg:h-full object-cover" loading="lazy" decoding="async">
+                </div>
+                <div class="lg:w-1/2 p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Experience The Grand Theater</h3>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Step into our historic venue, where every detail has been carefully preserved to create an unforgettable theatrical experience. From the ornate architecture to the state-of-the-art acoustics, every element is designed to transport you into the world of the performance.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-users text-indigo-600"></i>
+                            <span class="text-sm text-gray-600">1,200 Seat Capacity</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-history text-indigo-600"></i>
+                            <span class="text-sm text-gray-600">Est. 1928</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-music text-indigo-600"></i>
+                            <span class="text-sm text-gray-600">Live Orchestra</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-parking text-indigo-600"></i>
+                            <span class="text-sm text-gray-600">Valet Parking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-theater-masks text-white text-sm"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">The Grand Theater</h3>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">
+                        123 Theater District<br>
+                        New York, NY 10001<br>
+                        <span class="text-indigo-300 font-medium">Historic Landmark Since 1928</span>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-ticket-alt mr-2 text-indigo-400"></i>
+                        Box Office
+                    </h3>
+                    <p class="text-gray-300 mb-2">
+                        <i class="fas fa-phone mr-2 text-gray-400"></i>
+                        (555) 123-4567
+                    </p>
+                    <p class="text-gray-300">
+                        <i class="fas fa-envelope mr-2 text-gray-400"></i>
+                        boxoffice@grandtheater.com
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-clock mr-2 text-indigo-400"></i>
+                        Hours
+                    </h3>
+                    <p class="text-gray-300 mb-2">
+                        <span class="font-medium">Mon-Fri:</span> 10AM-6PM
+                    </p>
+                    <p class="text-gray-300">
+                        <span class="font-medium">Sat-Sun:</span> 12PM-8PM
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-share-alt mr-2 text-indigo-400"></i>
+                        Connect
+                    </h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors duration-200" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors duration-200" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors duration-200" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <button class="text-sm text-indigo-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            Get Directions
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-heart text-red-400 animate-pulse-gentle"></i>
+                    <span>&copy; 2024 The Grand Theater. All rights reserved. | Made with passion for the arts</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function ticketSelection() {
+            return {
+                tickets: {
+                    standard: 0,
+                    premium: 0,
+                    student: 0
+                },
+                promoCode: '',
+                promoApplied: false,
+                maxPerType: 10,
+                toast: { show: false, message: '', type: 'info', timer: null },
+
+                get subtotal() {
+                    return (this.tickets.standard * 45) + 
+                           (this.tickets.premium * 75) + 
+                           (this.tickets.student * 35);
+                },
+                get discount() {
+                    if (!this.promoApplied) return 0;
+                    // 10% off orders $100+
+                    return this.subtotal >= 100 ? +(this.subtotal * 0.10).toFixed(2) : 0;
+                },
+                get grandTotal() {
+                    const total = this.subtotal - this.discount;
+                    return total > 0 ? total : 0;
+                },
+
+                increment(type) {
+                    if (this.tickets[type] >= this.maxPerType) {
+                        this.showToast('Maximum ' + this.maxPerType + ' tickets per type', 'error');
+                        return;
+                    }
+                    this.tickets[type]++;
+                    this.persist();
+                },
+                decrement(type) {
+                    if (this.tickets[type] > 0) {
+                        this.tickets[type]--;
+                        this.persist();
+                    }
+                },
+                clearAll() {
+                    this.tickets.standard = 0;
+                    this.tickets.premium = 0;
+                    this.tickets.student = 0;
+                    this.promoApplied = false;
+                    this.promoCode = '';
+                    this.persist();
+                    this.showToast('Selection cleared', 'info');
+                },
+                applyPromo() {
+                    const code = (this.promoCode || '').trim().toUpperCase();
+                    if (code === 'MIDSUMMER10') {
+                        this.promoApplied = true;
+                        this.showToast('Promo applied: 10% off eligible orders', 'info');
+                    } else if (code.length) {
+                        this.promoApplied = false;
+                        this.showToast('Invalid promo code', 'error');
+                    }
+                },
+                saveForLater() {
+                    this.persist();
+                    this.showToast('Your selection has been saved', 'info');
+                },
+                persist() {
+                    const data = {
+                        tickets: this.tickets,
+                        promoApplied: this.promoApplied,
+                        promoCode: this.promoCode
+                    };
+                    try {
+                        localStorage.setItem('grandtheater_tickets', JSON.stringify(data));
+                    } catch (e) {}
+                },
+                restore() {
+                    try {
+                        const raw = localStorage.getItem('grandtheater_tickets');
+                        if (raw) {
+                            const data = JSON.parse(raw);
+                            if (data && data.tickets) {
+                                this.tickets = data.tickets;
+                                this.promoApplied = !!data.promoApplied;
+                                this.promoCode = data.promoCode || '';
+                            }
+                        }
+                    } catch (e) {}
+                },
+                showToast(message, type = 'info') {
+                    clearTimeout(this.toast.timer);
+                    this.toast.message = message;
+                    this.toast.type = type;
+                    this.toast.show = true;
+                    this.toast.timer = setTimeout(() => this.toast.show = false, 2200);
+                },
+                init() {
+                    this.restore();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
