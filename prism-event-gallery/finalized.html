@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" x-data="galleryApp()" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Gallery | Corporate Event Planning</title>
+    <meta name="description" content="Browse EventCraft’s curated gallery of conferences, gala dinners, team building retreats, and product launches.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyan: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        },
+                        purple: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'scale': 'scale 0.3s ease-in-out',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        scale: {
+                            '0%': { transform: 'scale(0.98)' },
+                            '100%': { transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .event-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+        }
+        .filter-btn { transition: all 0.25s ease; }
+        .filter-btn:hover { transform: translateY(-2px); }
+        .image-overlay {
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.75) 100%);
+        }
+    </style>
+    <script>
+        function galleryApp() {
+            return {
+                navOpen: false,
+                activeFilter: 'all',
+                query: '',
+                modalOpen: false,
+                modalImage: '',
+                modalTitle: '',
+                modalCategory: '',
+                modalDate: '',
+                modalMeta: '',
+                handleView(image, title, category, date, meta) {
+                    this.modalImage = image;
+                    this.modalTitle = title;
+                    this.modalCategory = category;
+                    this.modalDate = date;
+                    this.modalMeta = meta;
+                    this.modalOpen = true;
+                    setTimeout(() => {
+                        const btn = document.getElementById('modalCloseBtn');
+                        if (btn) btn.focus();
+                    }, 50);
+                },
+                closeModal() {
+                    this.modalOpen = false;
+                },
+                onKeydown(e) {
+                    if (e.key === 'Escape') this.closeModal();
+                },
+                showCard(category, text) {
+                    const matchFilter = (this.activeFilter === 'all' || this.activeFilter === category);
+                    const matchQuery = text.toLowerCase().includes(this.query.toLowerCase());
+                    return matchFilter && matchQuery;
+                },
+                showScrollTop: false,
+                init() {
+                    window.addEventListener('scroll', () => {
+                        this.showScrollTop = window.scrollY > 300;
+                    });
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen antialiased" @keydown.window="onKeydown">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center space-x-2 group" aria-label="EventCraft home">
+                    <div class="w-10 h-10 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition">
+                        <i class="fas fa-calendar-star text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 leading-none">EventCraft</h1>
+                        <span class="text-sm text-cyan-600 font-medium">Corporate Events</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex space-x-8" role="navigation" aria-label="Primary">
+                    <a href="#" class="text-gray-600 hover:text-cyan-600 transition-all duration-200 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded">
+                        <i class="fas fa-home text-sm"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-cyan-600 transition-all duration-200 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded">
+                        <i class="fas fa-concierge-bell text-sm"></i>
+                        <span>Services</span>
+                    </a>
+                    <a href="#" class="text-cyan-600 font-semibold transition-all duration-200 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded">
+                        <i class="fas fa-images text-sm"></i>
+                        <span>Past Events</span>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-cyan-600 transition-all duration-200 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded">
+                        <i class="fas fa-envelope text-sm"></i>
+                        <span>Contact</span>
+                    </a>
+                </nav>
+                <button @click="navOpen = !navOpen" class="md:hidden text-gray-700 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-2" :aria-expanded="navOpen.toString()" aria-controls="mobileMenu" aria-label="Toggle navigation">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" x-cloak x-show="navOpen" x-transition.origin.top class="md:hidden border-t border-gray-200 pb-4">
+                <div class="flex flex-col pt-2 space-y-1">
+                    <a href="#" class="px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2">
+                        <i class="fas fa-home w-5"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2">
+                        <i class="fas fa-concierge-bell w-5"></i>
+                        <span>Services</span>
+                    </a>
+                    <a href="#" class="px-3 py-2 text-cyan-700 bg-cyan-50 rounded-md flex items-center space-x-2">
+                        <i class="fas fa-images w-5"></i>
+                        <span>Past Events</span>
+                    </a>
+                    <a href="#" class="px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2">
+                        <i class="fas fa-envelope w-5"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" role="main">
+        <!-- Page Header -->
+        <div class="text-center mb-12 md:mb-16 animate-slide-up">
+            <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-6 rounded-full"></div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Event Gallery</h2>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Discover the memorable corporate events we've crafted for our clients.
+                Each event tells a unique story of success and celebration.
+            </p>
+        </div>
+
+        <!-- Filters + Search -->
+        <div class="mb-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                    <button 
+                        @click="activeFilter = 'all'" 
+                        :class="activeFilter === 'all' ? 'bg-cyan-500 text-white shadow' : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm'"
+                        class="filter-btn px-5 py-2.5 rounded-full font-medium transition-all duration-200 border border-gray-200 flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                        :aria-pressed="(activeFilter==='all').toString()"
+                    >
+                        <i class="fas fa-layer-group"></i>
+                        <span>All</span>
+                    </button>
+                    <button 
+                        @click="activeFilter = 'conferences'" 
+                        :class="activeFilter === 'conferences' ? 'bg-fuchsia-500 text-white shadow' : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm'"
+                        class="filter-btn px-5 py-2.5 rounded-full font-medium transition-all duration-200 border border-gray-200 flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500"
+                        :aria-pressed="(activeFilter==='conferences').toString()"
+                    >
+                        <i class="fas fa-users"></i>
+                        <span>Conferences</span>
+                    </button>
+                    <button 
+                        @click="activeFilter = 'gala'" 
+                        :class="activeFilter === 'gala' ? 'bg-teal-500 text-white shadow' : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm'"
+                        class="filter-btn px-5 py-2.5 rounded-full font-medium transition-all duration-200 border border-gray-200 flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+                        :aria-pressed="(activeFilter==='gala').toString()"
+                    >
+                        <i class="fas fa-glass-cheers"></i>
+                        <span>Gala Dinners</span>
+                    </button>
+                    <button 
+                        @click="activeFilter = 'team'" 
+                        :class="activeFilter === 'team' ? 'bg-purple-500 text-white shadow' : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm'"
+                        class="filter-btn px-5 py-2.5 rounded-full font-medium transition-all duration-200 border border-gray-200 flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                        :aria-pressed="(activeFilter==='team').toString()"
+                    >
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Team Building</span>
+                    </button>
+                    <button 
+                        @click="activeFilter = 'product'" 
+                        :class="activeFilter === 'product' ? 'bg-cyan-500 text-white shadow' : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm'"
+                        class="filter-btn px-5 py-2.5 rounded-full font-medium transition-all duration-200 border border-gray-200 flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                        :aria-pressed="(activeFilter==='product').toString()"
+                    >
+                        <i class="fas fa-rocket"></i>
+                        <span>Product Launches</span>
+                    </button>
+                </div>
+                <!-- Search -->
+                <div class="relative max-w-md w-full mx-auto md:mx-0">
+                    <label for="search" class="sr-only">Search events</label>
+                    <input id="search" x-model.debounce.200ms="query" type="search" placeholder="Search events..."
+                           class="w-full pl-11 pr-4 py-2.5 rounded-full border border-gray-200 bg-white shadow-sm focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100"
+                           autocomplete="off">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Event Card 1 -->
+            <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in group"
+                     x-show="showCard('conferences', 'Tech Summit 2024 Annual technology conference featuring industry leaders and innovative workshops.')"
+                     x-transition.duration.250ms
+                     x-cloak>
+                <div class="relative overflow-hidden">
+                    <div class="aspect-[16/9]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1560523159-94c9d18bcf27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080&utm_source=TailFlux&photo_id=r1wHNmAPWKA"
+                            srcset="
+                                https://images.unsplash.com/photo-1560523159-94c9d18bcf27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=640 640w,
+                                https://images.unsplash.com/photo-1560523159-94c9d18bcf27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=960 960w,
+                                https://images.unsplash.com/photo-1560523159-94c9d18bcf27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1280 1280w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            alt="Tech Summit 2024 keynote stage at a corporate conference"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <button @click="handleView('https://images.unsplash.com/photo-1560523159-94c9d18bcf27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1600&utm_source=TailFlux&photo_id=r1wHNmAPWKA','Tech Summit 2024','Conference','March 15, 2024','500+ attendees')"
+                                class="bg-white text-cyan-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-cyan-50 transition-colors shadow">
+                            <i class="fas fa-expand mr-1"></i>
+                            <span>View Gallery</span>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+                            <i class="fas fa-users mr-1"></i> Conference
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Tech Summit 2024</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Annual technology conference featuring industry leaders and innovative workshops.</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-cyan-700 font-medium flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i> March 15, 2024
+                        </span>
+                        <span class="text-gray-500 flex items-center">
+                            <i class="fas fa-user-friends mr-2"></i> 500+ attendees
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 2 -->
+            <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in group"
+                     x-show="showCard('gala', 'Annual Awards Night Elegant evening celebrating outstanding achievements and contributions.')"
+                     x-transition.duration.250ms
+                     x-cloak>
+                <div class="relative overflow-hidden">
+                    <div class="aspect-[16/9]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1750277104281-5df6e5a4bad6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080&utm_source=TailFlux&photo_id=QmfR5ydwjGU"
+                            srcset="
+                                https://images.unsplash.com/photo-1750277104281-5df6e5a4bad6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=640 640w,
+                                https://images.unsplash.com/photo-1750277104281-5df6e5a4bad6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=960 960w,
+                                https://images.unsplash.com/photo-1750277104281-5df6e5a4bad6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1280 1280w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            alt="Elegant ballroom setup for an awards night gala"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <button @click="handleView('https://images.unsplash.com/photo-1750277104281-5df6e5a4bad6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1600&utm_source=TailFlux&photo_id=QmfR5ydwjGU','Annual Awards Night','Gala Dinner','February 28, 2024','200+ attendees')"
+                                class="bg-white text-fuchsia-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-fuchsia-50 transition-colors shadow">
+                            <i class="fas fa-expand mr-1"></i>
+                            <span>View Gallery</span>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+                            <i class="fas fa-glass-cheers mr-1"></i> Gala Dinner
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Annual Awards Night</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Elegant evening celebrating outstanding achievements and contributions.</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-fuchsia-700 font-medium flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i> February 28, 2024
+                        </span>
+                        <span class="text-gray-500 flex items-center">
+                            <i class="fas fa-user-friends mr-2"></i> 200+ attendees
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 3 -->
+            <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in group"
+                     x-show="showCard('team', 'Leadership Retreat Strategic planning and team bonding in a serene mountain resort.')"
+                     x-transition.duration.250ms
+                     x-cloak>
+                <div class="relative overflow-hidden">
+                    <div class="aspect-[16/9]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1622467731046-c22f11a94cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080&utm_source=TailFlux&photo_id=TWxNr5ZpxJM"
+                            srcset="
+                                https://images.unsplash.com/photo-1622467731046-c22f11a94cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=640 640w,
+                                https://images.unsplash.com/photo-1622467731046-c22f11a94cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=960 960w,
+                                https://images.unsplash.com/photo-1622467731046-c22f11a94cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1280 1280w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            alt="Team building retreat with outdoor activities in nature"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <button @click="handleView('https://images.unsplash.com/photo-1622467731046-c22f11a94cbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1600&utm_source=TailFlux&photo_id=TWxNr5ZpxJM','Leadership Retreat','Team Building','January 20, 2024','50+ executives')"
+                                class="bg-white text-teal-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-teal-50 transition-colors shadow">
+                            <i class="fas fa-expand mr-1"></i>
+                            <span>View Gallery</span>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+                            <i class="fas fa-hands-helping mr-1"></i> Team Building
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Leadership Retreat</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Strategic planning and team bonding in a serene mountain resort.</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-teal-700 font-medium flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i> January 20, 2024
+                        </span>
+                        <span class="text-gray-500 flex items-center">
+                            <i class="fas fa-user-friends mr-2"></i> 50+ executives
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 4 -->
+            <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in group"
+                     x-show="showCard('product', 'Innovation Reveal Grand unveiling of next-generation products with immersive experiences.')"
+                     x-transition.duration.250ms
+                     x-cloak>
+                <div class="relative overflow-hidden">
+                    <div class="aspect-[16/9]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1560439514-0fc9d2cd5e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080&utm_source=TailFlux&photo_id=xeEukPZjZi0"
+                            srcset="
+                                https://images.unsplash.com/photo-1560439514-0fc9d2cd5e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=640 640w,
+                                https://images.unsplash.com/photo-1560439514-0fc9d2cd5e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=960 960w,
+                                https://images.unsplash.com/photo-1560439514-0fc9d2cd5e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1280 1280w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            alt="Product launch keynote reveal on a modern stage"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <button @click="handleView('https://images.unsplash.com/photo-1560439514-0fc9d2cd5e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1600&utm_source=TailFlux&photo_id=xeEukPZjZi0','Innovation Reveal','Product Launch','April 5, 2024','300+ guests')"
+                                class="bg-white text-purple-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-purple-50 transition-colors shadow">
+                            <i class="fas fa-expand mr-1"></i>
+                            <span>View Gallery</span>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+                            <i class="fas fa-rocket mr-1"></i> Product Launch
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Innovation Reveal</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Grand unveiling of next-generation products with immersive experiences.</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-purple-700 font-medium flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i> April 5, 2024
+                        </span>
+                        <span class="text-gray-500 flex items-center">
+                            <i class="fas fa-user-friends mr-2"></i> 300+ guests
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 5 -->
+            <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in group"
+                     x-show="showCard('conferences', 'Marketing Forum Global marketing leaders sharing insights and future trends.')"
+                     x-transition.duration.250ms
+                     x-cloak>
+                <div class="relative overflow-hidden">
+                    <div class="aspect-[16/9]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080&utm_source=TailFlux&photo_id=F2KRf_QfCqw"
+                            srcset="
+                                https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=640 640w,
+                                https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=960 960w,
+                                https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1280 1280w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            alt="Marketing forum with audience and speaker on stage"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <button @click="handleView('https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1600&utm_source=TailFlux&photo_id=F2KRf_QfCqw','Marketing Forum','Conference','May 12, 2024','400+ marketers')"
+                                class="bg-white text-cyan-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-cyan-50 transition-colors shadow">
+                            <i class="fas fa-expand mr-1"></i>
+                            <span>View Gallery</span>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+                            <i class="fas fa-users mr-1"></i> Conference
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Marketing Forum</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Global marketing leaders sharing insights and future trends.</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-cyan-700 font-medium flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i> May 12, 2024
+                        </span>
+                        <span class="text-gray-500 flex items-center">
+                            <i class="fas fa-user-friends mr-2"></i> 400+ marketers
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 6 -->
+            <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in group"
+                     x-show="showCard('gala', 'Charity Ball Fundraising gala supporting local community initiatives.')"
+                     x-transition.duration.250ms
+                     x-cloak>
+                <div class="relative overflow-hidden">
+                    <div class="aspect-[16/9]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080&utm_source=TailFlux&photo_id=-3pvRUfQc-c"
+                            srcset="
+                                https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=640 640w,
+                                https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=960 960w,
+                                https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1280 1280w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            alt="Charity ball with elegant table setting and ambient lighting"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <button @click="handleView('https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1600&utm_source=TailFlux&photo_id=-3pvRUfQc-c','Charity Ball','Gala Dinner','June 8, 2024','150+ donors')"
+                                class="bg-white text-fuchsia-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-fuchsia-50 transition-colors shadow">
+                            <i class="fas fa-expand mr-1"></i>
+                            <span>View Gallery</span>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow">
+                            <i class="fas fa-glass-cheers mr-1"></i> Gala Dinner
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Charity Ball</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Fundraising gala supporting local community initiatives.</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-fuchsia-700 font-medium flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i> June 8, 2024
+                        </span>
+                        <span class="text-gray-500 flex items-center">
+                            <i class="fas fa-user-friends mr-2"></i> 150+ donors
+                        </span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- CTA Section -->
+        <section class="mt-20 text-center bg-gradient-to-r from-cyan-50 to-purple-50 rounded-2xl p-10 md:p-12 animate-slide-up relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-32 h-32 bg-cyan-200 rounded-full -translate-x-16 -translate-y-16 opacity-30 animate-pulse-slow"></div>
+            <div class="absolute bottom-0 right-0 w-40 h-40 bg-purple-200 rounded-full translate-x-20 translate-y-20 opacity-30 animate-pulse-slow"></div>
+            <div class="relative z-10">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ready to Create Your Next Memorable Event?</h3>
+                <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Let us help you design and execute an unforgettable corporate experience that exceeds expectations.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#contact" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-4 rounded-full font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Schedule Consultation</span>
+                    </a>
+                    <a href="#services" class="bg-white hover:bg-gray-50 text-cyan-700 px-8 py-4 rounded-full font-medium border border-cyan-200 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>View Our Services</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div x-cloak x-show="modalOpen" x-transition.opacity class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60">
+        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden"
+             @click.away="closeModal()" x-transition.scale>
+            <button id="modalCloseBtn" @click="closeModal()" class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 bg-white/70 backdrop-blur px-3 py-2 rounded-full shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="aspect-[16/9] bg-gray-100">
+                <img :src="modalImage" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <h4 class="text-2xl font-bold text-gray-900" x-text="modalTitle"></h4>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white"
+                        :class="{
+                            'bg-cyan-500': modalCategory === 'Conference',
+                            'bg-fuchsia-500': modalCategory === 'Gala Dinner',
+                            'bg-teal-500': modalCategory === 'Team Building',
+                            'bg-purple-500': modalCategory === 'Product Launch'
+                        }">
+                        <i class="fas fa-tag mr-2"></i>
+                        <span x-text="modalCategory"></span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-4 text-sm text-gray-600">
+                    <span class="inline-flex items-center"><i class="fas fa-calendar-alt mr-2 text-cyan-600"></i><span x-text="modalDate"></span></span>
+                    <span class="inline-flex items-center"><i class="fas fa-user-friends mr-2 text-gray-500"></i><span x-text="modalMeta"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll To Top -->
+    <button x-show="showScrollTop" x-cloak @click="window.scrollTo({top:0, behavior:'smooth'})"
+            class="fixed bottom-6 right-6 z-50 bg-gray-900 text-white rounded-full p-3 shadow-lg hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+            aria-label="Scroll to top" x-transition.scale>
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-20" id="contact">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg flex items-center justify-center shadow">
+                            <i class="fas fa-calendar-star text-white text-sm"></i>
+                        </div>
+                        <h4 class="text-lg font-bold">EventCraft</h4>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">Creating unforgettable corporate experiences since 2010.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200" aria-label="Twitter">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200" aria-label="Instagram">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200" aria-label="Facebook">
+                            <i class="fab fa-facebook text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="services">
+                    <h5 class="font-semibold mb-4 flex items-center">
+                        <i class="fas fa-concierge-bell mr-2 text-cyan-400"></i>
+                        Services
+                    </h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Conference Planning</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Gala Dinners</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Team Building</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Product Launches</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4 flex items-center">
+                        <i class="fas fa-building mr-2 text-cyan-400"></i>
+                        Company
+                    </h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>About Us</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Our Team</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Testimonials</span>
+                        </a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                            <i class="fas fa-chevron-right text-xs text-cyan-400"></i>
+                            <span>Careers</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-cyan-400"></i>
+                        Contact
+                    </h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-cyan-400"></i>
+                            <span>hello@eventcraft.com</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-phone text-cyan-400"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-map-marker-alt text-cyan-400"></i>
+                            <span>123 Business Ave, Suite 100</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-city text-cyan-400"></i>
+                            <span>New York, NY 10001</span>
+                        </li>
+                    </ul>
+                    <!-- Newsletter -->
+                    <div class="mt-6">
+                        <form action="#" class="space-y-3">
+                            <label for="newsletter" class="text-sm text-gray-300">Subscribe for updates</label>
+                            <div class="flex">
+                                <input id="newsletter" type="email" required placeholder="Your email"
+                                       class="w-full rounded-l-md px-4 py-2 bg-gray-800 border border-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:border-cyan-400">
+                                <button class="rounded-r-md bg-cyan-600 hover:bg-cyan-500 px-4 text-white font-semibold border border-cyan-600">Join</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-10 pt-8 text-center text-gray-400">
+                <p class="flex items-center justify-center gap-2">
+                    <i class="fas fa-heart text-red-400 animate-pulse-slow"></i>
+                    <span>&copy; 2024 EventCraft. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

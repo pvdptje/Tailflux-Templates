@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Gallery | Corporate Event Planning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyan: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        },
+                        fuchsia: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                        },
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        },
+                        purple: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900">EventCraft</h1>
+                    <span class="ml-2 text-sm text-cyan-600 font-medium">Corporate Events</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-500 hover:text-cyan-600 transition-colors">Home</a>
+                    <a href="#" class="text-gray-500 hover:text-cyan-600 transition-colors">Services</a>
+                    <a href="#" class="text-cyan-600 font-medium">Past Events</a>
+                    <a href="#" class="text-gray-500 hover:text-cyan-600 transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Page Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Event Gallery</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Discover the memorable corporate events we've crafted for our clients. 
+                Each event tells a unique story of success and celebration.
+            </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12" x-data="{ activeFilter: 'all' }">
+            <button 
+                @click="activeFilter = 'all'" 
+                :class="activeFilter === 'all' ? 'bg-cyan-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                class="px-6 py-3 rounded-full font-medium transition-all duration-200 shadow-sm border border-gray-200"
+            >
+                All Events
+            </button>
+            <button 
+                @click="activeFilter = 'conferences'" 
+                :class="activeFilter === 'conferences' ? 'bg-fuchsia-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                class="px-6 py-3 rounded-full font-medium transition-all duration-200 shadow-sm border border-gray-200"
+            >
+                Conferences
+            </button>
+            <button 
+                @click="activeFilter = 'gala'" 
+                :class="activeFilter === 'gala' ? 'bg-teal-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                class="px-6 py-3 rounded-full font-medium transition-all duration-200 shadow-sm border border-gray-200"
+            >
+                Gala Dinners
+            </button>
+            <button 
+                @click="activeFilter = 'team'" 
+                :class="activeFilter === 'team' ? 'bg-purple-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                class="px-6 py-3 rounded-full font-medium transition-all duration-200 shadow-sm border border-gray-200"
+            >
+                Team Building
+            </button>
+            <button 
+                @click="activeFilter = 'product'" 
+                :class="activeFilter === 'product' ? 'bg-cyan-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                class="px-6 py-3 rounded-full font-medium transition-all duration-200 shadow-sm border border-gray-200"
+            >
+                Product Launches
+            </button>
+        </div>
+
+        <!-- Event Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-data="{ activeFilter: 'all' }">
+            <!-- Event Card 1 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" 
+                 x-show="activeFilter === 'all' || activeFilter === 'conferences'">
+                <div class="h-48 bg-gradient-to-r from-cyan-50 to-cyan-100 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium">Conference</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Tech Summit 2024</h3>
+                    <p class="text-gray-600 mb-4">Annual technology conference featuring industry leaders and innovative workshops.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-cyan-600 font-medium">March 15, 2024</span>
+                        <span class="text-gray-500">500+ attendees</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" 
+                 x-show="activeFilter === 'all' || activeFilter === 'gala'">
+                <div class="h-48 bg-gradient-to-r from-fuchsia-50 to-fuchsia-100 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium">Gala Dinner</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Annual Awards Night</h3>
+                    <p class="text-gray-600 mb-4">Elegant evening celebrating outstanding achievements and contributions.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-fuchsia-600 font-medium">February 28, 2024</span>
+                        <span class="text-gray-500">200+ attendees</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" 
+                 x-show="activeFilter === 'all' || activeFilter === 'team'">
+                <div class="h-48 bg-gradient-to-r from-teal-50 to-teal-100 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">Team Building</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Leadership Retreat</h3>
+                    <p class="text-gray-600 mb-4">Strategic planning and team bonding in a serene mountain resort.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-teal-600 font-medium">January 20, 2024</span>
+                        <span class="text-gray-500">50+ executives</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 4 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" 
+                 x-show="activeFilter === 'all' || activeFilter === 'product'">
+                <div class="h-48 bg-gradient-to-r from-purple-50 to-purple-100 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">Product Launch</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Innovation Reveal</h3>
+                    <p class="text-gray-600 mb-4">Grand unveiling of next-generation products with immersive experiences.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-purple-600 font-medium">April 5, 2024</span>
+                        <span class="text-gray-500">300+ guests</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 5 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" 
+                 x-show="activeFilter === 'all' || activeFilter === 'conferences'">
+                <div class="h-48 bg-gradient-to-r from-cyan-50 to-cyan-100 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium">Conference</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Marketing Forum</h3>
+                    <p class="text-gray-600 mb-4">Global marketing leaders sharing insights and future trends.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-cyan-600 font-medium">May 12, 2024</span>
+                        <span class="text-gray-500">400+ marketers</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 6 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" 
+                 x-show="activeFilter === 'all' || activeFilter === 'gala'">
+                <div class="h-48 bg-gradient-to-r from-fuchsia-50 to-fuchsia-100 relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-medium">Gala Dinner</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Charity Ball</h3>
+                    <p class="text-gray-600 mb-4">Fundraising gala supporting local community initiatives.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-fuchsia-600 font-medium">June 8, 2024</span>
+                        <span class="text-gray-500">150+ donors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-20 text-center bg-gradient-to-r from-cyan-50 to-purple-50 rounded-2xl p-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-4">Ready to Create Your Next Memorable Event?</h3>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Let us help you design and execute an unforgettable corporate experience that exceeds expectations.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-medium transition-colors duration-200">
+                    Schedule Consultation
+                </button>
+                <button class="bg-white hover:bg-gray-50 text-cyan-600 px-8 py-3 rounded-full font-medium border border-cyan-200 transition-colors duration-200">
+                    View Our Services
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">EventCraft</h4>
+                    <p class="text-gray-400">Creating unforgettable corporate experiences since 2010.</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Services</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Conference Planning</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Gala Dinners</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Team Building</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Product Launches</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Company</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Our Team</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Testimonials</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Contact</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>hello@eventcraft.com</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>123 Business Ave, Suite 100</li>
+                        <li>New York, NY 10001</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 EventCraft. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
