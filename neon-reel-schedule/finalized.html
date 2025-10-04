@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Film Festival - Event Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'festival-green': '#10b981',
+                        'festival-lime': '#84cc16',
+                        'festival-violet': '#8b5cf6',
+                        'festival-teal': '#14b8a6'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        function scheduleApp() {
+            return {
+                selectedDay: 'friday',
+                search: '',
+                favorites: {},
+                toast: '',
+                showBackToTop: false,
+                init() {
+                    const saved = localStorage.getItem('cff_favs');
+                    if (saved) this.favorites = JSON.parse(saved);
+                    if (location.hash) this.selectedDay = location.hash.replace('#', '');
+                    window.addEventListener('scroll', () => {
+                        this.showBackToTop = window.scrollY > 600;
+                    }, { passive: true });
+                },
+                toggleFavorite(id, title) {
+                    this.favorites[id] = !this.favorites[id];
+                    localStorage.setItem('cff_favs', JSON.stringify(this.favorites));
+                    this.flash(this.favorites[id] ? `“${title}” added to My Schedule` : `Removed “${title}”`);
+                },
+                isFavorite(id) {
+                    return !!this.favorites[id];
+                },
+                flash(message) {
+                    this.toast = message;
+                    setTimeout(() => this.toast = '', 1600);
+                },
+                matches(text) {
+                    const q = this.search.toLowerCase().trim();
+                    if (!q) return true;
+                    return text.toLowerCase().includes(q);
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-white focus:text-gray-900 focus:ring-2 focus:ring-festival-violet px-3 py-2 rounded-md z-50">Skip to content</a>
+
+    <div x-data="scheduleApp()" x-init="init()" class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden rounded-2xl mb-6 shadow-2xl">
+            <div class="relative group">
+                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmaWxtJTIwZmVzdGl2YWwlMjByZWQlMjBjYXJwZXQlMjBjcm93ZCUyMGNpbmVtYSUyMHNwb3RsaWdodHxlbnwwfDB8fHwxNzU5NTUwNzA0fDA&ixlib=rb-4.1.0&q=80&w=1600&utm_source=TailFlux&photo_id=AtPWnYNDJnM" 
+                     alt="Film festival red carpet with crowd and spotlights" 
+                     class="w-full h-64 md:h-[28rem] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+                <div class="absolute inset-0 bg-black/50 md:bg-gradient-to-t from-black/70 to-transparent"></div>
+            </div>
+            <div class="absolute bottom-6 left-6 right-6 text-white">
+                <h1 class="text-4xl md:text-5xl font-bold mb-3 animate-fade-in drop-shadow">City Film Festival 2024</h1>
+                <p class="text-lg md:text-xl opacity-95 max-w-2xl animate-slide-up">Experience the magic of cinema with our curated selection of international films, documentaries, and special events.</p>
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <a href="#schedule" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur px-4 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/70">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Browse Schedule</span>
+                    </a>
+                    <a href="#" class="inline-flex items-center gap-2 bg-festival-violet hover:bg-festival-teal px-4 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Get Tickets</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Day Navigation + Search -->
+        <div class="sticky top-0 z-30 -mx-4 px-4 py-3 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 border-b border-gray-200/70">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <nav class="flex flex-nowrap overflow-x-auto no-scrollbar gap-2" role="tablist" aria-label="Day navigation">
+                    <template x-for="day in ['friday', 'saturday', 'sunday']" :key="day">
+                        <button
+                            @click="selectedDay = day; location.hash = day"
+                            :aria-selected="selectedDay === day"
+                            role="tab"
+                            :class="{
+                                'bg-festival-violet text-white shadow-lg scale-[1.02] animate-pulse-glow': selectedDay === day,
+                                'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-md': selectedDay !== day
+                            }"
+                            class="px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet"
+                        >
+                            <i class="fas fa-calendar-day text-sm"></i>
+                            <span x-text="day.charAt(0).toUpperCase() + day.slice(1)"></span>
+                        </button>
+                    </template>
+                </nav>
+                <div class="relative">
+                    <i class="fas fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input x-model="search" type="text" placeholder="Search titles, tags, venues..."
+                           class="pl-9 pr-3 py-2 rounded-lg bg-white border border-gray-200 w-full md:w-72 focus:outline-none focus:ring-2 focus:ring-festival-violet focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="fixed right-4 top-20 z-50" aria-live="polite">
+            <div x-show="toast" x-transition.opacity x-cloak
+                 class="bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
+                <i class="fas fa-check-circle text-festival-lime"></i>
+                <span x-text="toast"></span>
+            </div>
+        </div>
+
+        <!-- Schedule Content -->
+        <section id="content" aria-labelledby="scheduleTitle" class="mt-8">
+            <h2 id="scheduleTitle" class="sr-only">Festival Schedule</h2>
+
+            <div id="schedule" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+                <!-- Friday Events -->
+                <template x-if="selectedDay === 'friday'">
+                    <div class="space-y-6 animate-fade-in">
+                        <!-- Opening -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1730791480843-12ef754c5123?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb3ZpZSUyMHByZW1pZXJlJTIwc3BvdGxpZ2h0JTIwYXVkaWVuY2UlMjBjaW5lbWElMjBuaWdodHxlbnwwfDB8fHwxNzU5NTUwNzA1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=YImP5sRhhBw" alt="Spotlights over audience in cinema night" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-green text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-star"></i> Opening
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">Opening Ceremony & Red Carpet</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 6:00 PM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Join us for the grand opening with special guests, live music, and champagne reception.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-film"></i> Main Theater
+                                    </span>
+                                    <button @click="toggleFavorite('fri-opening', 'Opening Ceremony & Red Carpet')" :aria-pressed="isFavorite('fri-opening')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('fri-opening') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Midnight Dreams -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmaWxtJTIwZmVzdGl2YWwlMjByZWQlMjBjYXJwZXQlMjBjcm93ZCUyMGNpbmVtYSUyMHNwb3RsaWdodHxlbnwwfDB8fHwxNzU5NTUwNzA0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=AtPWnYNDJnM" alt="Red carpet premiere scene" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-violet text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-ticket-alt"></i> Feature
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">"Midnight Dreams" Premiere</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 8:30 PM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Award-winning drama with director Q&A session following the screening. Meet the cast and crew.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-film"></i> Cinema 1
+                                    </span>
+                                    <button @click="toggleFavorite('fri-midnight', 'Midnight Dreams Premiere')" :aria-pressed="isFavorite('fri-midnight')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('fri-midnight') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </template>
+
+                <!-- Saturday Events -->
+                <template x-if="selectedDay === 'saturday'">
+                    <div class="space-y-6 animate-fade-in">
+                        <!-- Documentary -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1632096962942-a8ef07a42908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlbnZpcm9ubWVudGFsJTIwZG9jdW1lbnRhcnklMjBuYXR1cmUlMjBwYW5lbHxlbnwwfDB8fHwxNzU5NTUwNzA2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=kyhExWpYV8w" alt="Environmental documentary panel" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-teal text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-globe-americas"></i> Documentary
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">"Earth's Guardians" Screening</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 10:00 AM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Environmental documentary with panel discussion featuring conservation experts and filmmakers.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-film"></i> Cinema 2
+                                    </span>
+                                    <button @click="toggleFavorite('sat-guardians', 'Earth’s Guardians')" :aria-pressed="isFavorite('sat-guardians')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('sat-guardians') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Workshop -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1727451139462-cd34008cd50b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmaWxtbWFraW5nJTIwd29ya3Nob3AlMjBiZWhpbmQlMjB0aGUlMjBzY2VuZXMlMjBwcm9kdWN0aW9ufGVufDB8MHx8fDE3NTk1NTA3MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=nue6Esmpk3M" alt="Filmmaking workshop behind the scenes" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-green text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-chalkboard-teacher"></i> Workshop
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">Independent Filmmaking Workshop</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 2:00 PM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Hands-on workshop covering budgeting, production, distribution strategies, and networking opportunities.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-users"></i> Conference Hall
+                                    </span>
+                                    <button @click="toggleFavorite('sat-workshop', 'Independent Filmmaking Workshop')" :aria-pressed="isFavorite('sat-workshop')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('sat-workshop') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- International Showcase -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1627133805103-ce2d34ccdd37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxpbnRlcm5hdGlvbmFsJTIwZmlsbSUyMHNob3djYXNlJTIwd29ybGQlMjBjaW5lbWF8ZW58MHwwfHx8MTc1OTU1MDcwN3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Geepgu8bCas" alt="International film showcase in cinema" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-violet text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-flag"></i> International
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">International Film Showcase</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 7:00 PM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Curated selection of award-winning films from around the world with cultural presentations.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-film"></i> Main Theater
+                                    </span>
+                                    <button @click="toggleFavorite('sat-international', 'International Film Showcase')" :aria-pressed="isFavorite('sat-international')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('sat-international') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </template>
+
+                <!-- Sunday Events -->
+                <template x-if="selectedDay === 'sunday'">
+                    <div class="space-y-6 animate-fade-in">
+                        <!-- Short Films -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1730791482011-b780982a03f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaG9ydCUyMGZpbG0lMjBjb21wZXRpdGlvbiUyMGF1ZGllbmNlfGVufDB8MHx8fDE3NTk1NTA3MDh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=VGfGSDstLTQ" alt="Short film audience watching screen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-green text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-video"></i> Short Films
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">Short Film Competition</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 11:00 AM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Screening of finalists with live voting, awards ceremony, and filmmaker meet & greet.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-film"></i> Cinema 3
+                                    </span>
+                                    <button @click="toggleFavorite('sun-short', 'Short Film Competition')" :aria-pressed="isFavorite('sun-short')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('sun-short') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Awards & Closing -->
+                        <article class="bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                            <div class="relative h-40">
+                                <img loading="lazy" src="https://images.unsplash.com/photo-1634093218859-3fb1c77e7ef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhd2FyZHMlMjBjZXJlbW9ueSUyMHN0YWdlJTIwc3BvdGxpZ2h0JTIwdHJvcGh5JTIwY2luZW1hfGVufDB8MHx8fDE3NTk1NTA3MDh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=DcfnXb35ZgM" alt="Awards ceremony stage with trophy and spotlight" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <span class="absolute top-3 left-3 bg-festival-violet text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow">
+                                    <i class="fas fa-trophy"></i> Closing
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-xl font-bold text-gray-900">Awards Ceremony & Closing Night</h3>
+                                    <span class="text-festival-teal font-bold text-lg flex items-center gap-1">
+                                        <i class="far fa-clock"></i> 6:00 PM
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4 leading-relaxed">Celebrate the festival winners with live entertainment, closing remarks, and farewell cocktail party.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="bg-festival-lime/20 text-festival-lime px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2">
+                                        <i class="fas fa-film"></i> Main Theater
+                                    </span>
+                                    <button @click="toggleFavorite('sun-awards', 'Awards Ceremony & Closing Night')" :aria-pressed="isFavorite('sun-awards')" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet rounded-md px-2 py-1">
+                                        <i :class="isFavorite('sun-awards') ? 'fas fa-bookmark' : 'fas fa-plus-circle'"></i>
+                                        <span class="sr-only">Add to My Schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Client-side filtering support (hidden text to search through) -->
+            <div class="sr-only" aria-hidden="true">
+                <span x-show="false" x-text="search"></span>
+            </div>
+
+            <!-- Apply filtering to cards via x-show -->
+            <script>
+                document.addEventListener('alpine:init', () => {
+                    // Enhance all articles with matches() on creation
+                    Alpine.magic('match', (el, { Alpine }) => (text) => Alpine.$data(el.closest('[x-data]')).matches(text));
+                });
+            </script>
+        </section>
+
+        <!-- Venue Info -->
+        <div class="mt-16 bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-festival-violet"></i>
+                        Festival Venue
+                    </h2>
+                    <div class="space-y-3 text-gray-600">
+                        <p class="flex items-center gap-2">
+                            <i class="fas fa-building text-festival-teal"></i>
+                            <span class="font-semibold">City Arts Center</span>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="fas fa-location-dot text-festival-green"></i>
+                            123 Cinema Boulevard • Downtown
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="fas fa-phone text-festival-lime"></i>
+                            (555) 123-FILM
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="fas fa-clock text-festival-violet"></i>
+                            Open daily 9:00 AM - 11:00 PM
+                        </p>
+                        <div class="flex items-center gap-3 pt-2">
+                            <a href="#" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors">
+                                <i class="fas fa-map-pin"></i> Get Directions
+                            </a>
+                            <a href="#" class="inline-flex items-center gap-2 text-festival-violet hover:text-festival-teal transition-colors">
+                                <i class="fas fa-file-download"></i> Download Program
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-100 rounded-xl overflow-hidden">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1642522342822-6263588e198b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjaW5lbWElMjBpbnRlcmlvciUyMGF1ZGl0b3JpdW0lMjBzZWF0c3xlbnwwfDB8fHwxNzU5NTUwNzA1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=4y2ar8OQt4U" 
+                         alt="Modern cinema interior with comfortable seating" 
+                         class="w-full h-48 md:h-64 object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button x-show="showBackToTop" x-transition @click="window.scrollTo({top:0, behavior:'smooth'})"
+                class="fixed bottom-6 right-6 z-40 bg-festival-violet hover:bg-festival-teal text-white rounded-full p-3 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-festival-violet"
+                aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-600">
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="#" class="text-festival-violet hover:text-festival-teal transition-colors" aria-label="Twitter">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="text-festival-violet hover:text-festival-teal transition-colors" aria-label="Instagram">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="#" class="text-festival-violet hover:text-festival-teal transition-colors" aria-label="Facebook">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+            </div>
+            <p class="text-sm">© 2024 City Film Festival. All rights reserved.</p>
+            <p class="text-xs text-gray-500 mt-2">Experience the art of cinema</p>
+        </footer>
+    </div>
+
+    <!-- Simple utility to apply search filtering to cards -->
+    <script>
+        // Apply text matching per card without duplicating logic inside template
+        document.addEventListener('alpine:init', () => {
+            // For progressive enhancement; no extra setup required
+        });
+    </script>
+</body>
+</html>

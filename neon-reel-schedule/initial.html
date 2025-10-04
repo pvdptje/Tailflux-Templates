@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Film Festival - Event Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'festival-green': '#10b981',
+                        'festival-lime': '#84cc16',
+                        'festival-violet': '#8b5cf6',
+                        'festival-teal': '#14b8a6'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="{ selectedDay: 'friday' }" class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">City Film Festival 2024</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Experience the magic of cinema with our curated selection of international films, documentaries, and special events.</p>
+        </header>
+
+        <!-- Day Navigation -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <template x-for="day in ['friday', 'saturday', 'sunday']" :key="day">
+                <button
+                    @click="selectedDay = day"
+                    :class="{
+                        'bg-festival-violet text-white': selectedDay === day,
+                        'bg-white text-gray-700 hover:bg-gray-100': selectedDay !== day
+                    }"
+                    class="px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md"
+                >
+                    <span x-text="day.charAt(0).toUpperCase() + day.slice(1)"></span>
+                </button>
+            </template>
+        </div>
+
+        <!-- Schedule Content -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Friday Events -->
+            <template x-if="selectedDay === 'friday'">
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-green">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-green text-white px-3 py-1 rounded-full text-sm font-semibold">Opening</span>
+                            <span class="text-festival-teal font-bold">6:00 PM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Opening Ceremony & Red Carpet</h3>
+                        <p class="text-gray-600 mb-4">Join us for the grand opening with special guests and live music.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Main Theater</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-violet">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-violet text-white px-3 py-1 rounded-full text-sm font-semibold">Feature</span>
+                            <span class="text-festival-teal font-bold">8:30 PM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">"Midnight Dreams" Premiere</h3>
+                        <p class="text-gray-600 mb-4">Award-winning drama with director Q&A session following the screening.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Cinema 1</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Saturday Events -->
+            <template x-if="selectedDay === 'saturday'">
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-teal">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-teal text-white px-3 py-1 rounded-full text-sm font-semibold">Documentary</span>
+                            <span class="text-festival-teal font-bold">10:00 AM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">"Earth's Guardians" Screening</h3>
+                        <p class="text-gray-600 mb-4">Environmental documentary with panel discussion featuring conservation experts.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Cinema 2</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-green">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-green text-white px-3 py-1 rounded-full text-sm font-semibold">Workshop</span>
+                            <span class="text-festival-teal font-bold">2:00 PM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Independent Filmmaking Workshop</h3>
+                        <p class="text-gray-600 mb-4">Hands-on workshop covering budgeting, production, and distribution strategies.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Conference Hall</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-violet">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-violet text-white px-3 py-1 rounded-full text-sm font-semibold">International</span>
+                            <span class="text-festival-teal font-bold">7:00 PM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">International Film Showcase</h3>
+                        <p class="text-gray-600 mb-4">Curated selection of award-winning films from around the world.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Main Theater</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Sunday Events -->
+            <template x-if="selectedDay === 'sunday'">
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-green">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-green text-white px-3 py-1 rounded-full text-sm font-semibold">Short Films</span>
+                            <span class="text-festival-teal font-bold">11:00 AM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Short Film Competition</h3>
+                        <p class="text-gray-600 mb-4">Screening of finalists with live voting and awards ceremony.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Cinema 3</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-festival-violet">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-festival-violet text-white px-3 py-1 rounded-full text-sm font-semibold">Closing</span>
+                            <span class="text-festival-teal font-bold">6:00 PM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Awards Ceremony & Closing Night</h3>
+                        <p class="text-gray-600 mb-4">Celebrate the festival winners with live entertainment and closing remarks.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="bg-festival-lime bg-opacity-20 text-festival-lime px-2 py-1 rounded">Main Theater</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Footer Info -->
+        <footer class="mt-12 text-center text-gray-600">
+            <p class="mb-2">All screenings and events take place at the City Arts Center</p>
+            <p>123 Cinema Boulevard • Downtown • (555) 123-FILM</p>
+        </footer>
+    </div>
+</body>
+</html>
