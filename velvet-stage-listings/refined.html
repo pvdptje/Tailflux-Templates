@@ -1,0 +1,334 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's On | Performing Arts Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: '#0ea5e9',
+                        violet: '#8b5cf6',
+                        teal: '#14b8a6',
+                        green: '#22c55e'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div x-data="{ selectedCategory: 'all' }" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12 animate-slide-up">
+            <div class="mb-6">
+                <i class="fas fa-theater-masks text-6xl text-sky-500 mb-4"></i>
+            </div>
+            <h1 class="text-5xl font-light mb-4 bg-gradient-to-r from-sky-400 to-violet-500 bg-clip-text text-transparent">What's On</h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">Discover upcoming performances and events at our world-class performing arts center</p>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in">
+            <button 
+                @click="selectedCategory = 'all'"
+                :class="selectedCategory === 'all' ? 'bg-sky-600 text-white shadow-lg shadow-sky-500/25' : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-lg'"
+                class="px-6 py-3 rounded-full transition-all duration-300 flex items-center gap-2"
+            >
+                <i class="fas fa-calendar-alt"></i>
+                All Events
+            </button>
+            <button 
+                @click="selectedCategory = 'theater'"
+                :class="selectedCategory === 'theater' ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/25' : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-lg'"
+                class="px-6 py-3 rounded-full transition-all duration-300 flex items-center gap-2"
+            >
+                <i class="fas fa-mask"></i>
+                Theater
+            </button>
+            <button 
+                @click="selectedCategory = 'music'"
+                :class="selectedCategory === 'music' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/25' : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-lg'"
+                class="px-6 py-3 rounded-full transition-all duration-300 flex items-center gap-2"
+            >
+                <i class="fas fa-music"></i>
+                Music
+            </button>
+            <button 
+                @click="selectedCategory = 'dance'"
+                :class="selectedCategory === 'dance' ? 'bg-green-600 text-white shadow-lg shadow-green-500/25' : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-lg'"
+                class="px-6 py-3 rounded-full transition-all duration-300 flex items-center gap-2"
+            >
+                <i class="fas fa-shoe-prints"></i>
+                Dance
+            </button>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Event 1 - Theater -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'theater'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+            >
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1539964604210-db87088e0c2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwcGVyZm9ybWFuY2UlMjBzdGFnZXxlbnwwfDB8fHwxNzU5NjM2OTEwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=lQTf50hbg2Y" 
+                         alt="Theater stage performance" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <span class="inline-block px-3 py-1 bg-violet-600 text-white text-sm rounded-full mb-4 shadow-lg">Theater</span>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-violet-300 transition-colors">Hamlet</h3>
+                    <p class="text-gray-400 mb-4">Shakespeare's timeless tragedy performed by the Royal Theater Company.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-violet-400"></i>
+                            <span>June 15, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-violet-400"></i>
+                            <span>Main Stage</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-violet-600 hover:bg-violet-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-ticket-alt"></i>
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 2 - Music -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'music'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+            >
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1519682886610-a78e3d518e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzeW1waG9ueSUyMG9yY2hlc3RyYSUyMG11c2ljfGVufDB8MHx8fDE3NTk2MzY5MTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=_Wv88h0iXc8" 
+                         alt="Symphony orchestra performance" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <span class="inline-block px-3 py-1 bg-teal-600 text-white text-sm rounded-full mb-4 shadow-lg">Music</span>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-teal-300 transition-colors">Symphony No. 9</h3>
+                    <p class="text-gray-400 mb-4">Beethoven's masterpiece performed by the City Philharmonic Orchestra.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-teal-400"></i>
+                            <span>June 22, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-teal-400"></i>
+                            <span>Concert Hall</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-ticket-alt"></i>
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 3 - Dance -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'dance'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+            >
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1686435386310-92ee42a3580f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiYWxsZXQlMjBkYW5jZSUyMHBlcmZvcm1hbmNlfGVufDB8MHx8fDE3NTk2MzY5MTF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=V0_qNPA8x8c" 
+                         alt="Ballet dance performance" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <span class="inline-block px-3 py-1 bg-green-600 text-white text-sm rounded-full mb-4 shadow-lg">Dance</span>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-green-300 transition-colors">Swan Lake</h3>
+                    <p class="text-gray-400 mb-4">Tchaikovsky's classic ballet performed by the National Ballet Company.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-green-400"></i>
+                            <span>June 28, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-green-400"></i>
+                            <span>Grand Theater</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-ticket-alt"></i>
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 4 - Theater -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'theater'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+            >
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1600401270469-70d442209efb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB0aGVhdGVyJTIwc3RhZ2V8ZW58MHwwfHx8MTc1OTYzNjkxMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=0tUtCmkEzdU" 
+                         alt="Modern theater stage" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <span class="inline-block px-3 py-1 bg-violet-600 text-white text-sm rounded-full mb-4 shadow-lg">Theater</span>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-violet-300 transition-colors">Death of a Salesman</h3>
+                    <p class="text-gray-400 mb-4">Arthur Miller's American classic in a modern interpretation.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-violet-400"></i>
+                            <span>July 5, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-violet-400"></i>
+                            <span>Studio Theater</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-violet-600 hover:bg-violet-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-ticket-alt"></i>
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 5 - Music -->
+            <div 
+                x-show="selectedCategory === 'all' || selectedCategory === 'music'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+            >
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1758597294781-48e6c13a5933?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxqYXp6JTIwY2x1YiUyMHBlcmZvcm1hbmNlfGVufDB8MHx8fDE3NTk2MzY5MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=2_SjHyIi7hw" 
+                         alt="Jazz club performance" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <span class="inline-block px-3 py-1 bg-teal-600 text-white text-sm rounded-full mb-4 shadow-lg">Music</span>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-teal-300 transition-colors">Jazz Night</h3>
+                    <p class="text-gray-400 mb-4">An evening of contemporary jazz featuring local artists and special guests.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-teal-400"></i>
+                            <span>July 12, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-teal-400"></i>
+                            <span>Jazz Club</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-ticket-alt"></i>
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 6 - Dance -->
+            <div 
+                x-show="selectedCategory === 'all' |||| selectedCategory === 'dance'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+            >
+                <div class="h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1758526387721-8210d1eb8868?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBkYW5jZSUyMHBlcmZvcm1hbmNlfGVufDB8MHx8fDE3NTk2MzY5MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=H9aVSSMgG5o" 
+                         alt="Contemporary dance performance" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <span class="inline-block px-3 py-1 bg-green-600 text-white text-sm rounded-full mb-4 shadow-lg">Dance</span>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-green-300 transition-colors">Contemporary Expressions</h3>
+                    <p class="text-gray-400 mb-4">Modern dance performance exploring themes of identity and transformation.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-green-400"></i>
+                            <span>July 19, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-green-400"></i>
+                            <span>Black Box Theater</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-ticket-alt"></i>
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="mt-16 bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-8 text-center shadow-2xl animate-fade-in">
+            <div class="mb-6">
+                <i class="fas fa-envelope-open-text text-4xl text-sky-400"></i>
+            </div>
+            <h2 class="text-3xl font-light mb-4">Stay Updated</h2>
+            <p class="text-gray-300 mb-6 max-w-md mx-auto text-lg">Subscribe to our newsletter to receive updates on new performances and exclusive offers.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    class="flex-1 px-4 py-3 bg-gray-600 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-gray-500 transition-all duration-200"
+                >
+                <button class="px-8 py-3 bg-sky-600 hover:bg-sky-700 text-white rounded-xl transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl hover:transform hover:scale-105">
+                    <i class="fas fa-paper-plane"></i>
+                    Subscribe
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t border-gray-700 text-center text-gray-400">
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+                <a href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-youtube text-xl"></i>
+                </a>
+            </div>
+            <p class="text-sm">&copy; 2024 Performing Arts Center. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

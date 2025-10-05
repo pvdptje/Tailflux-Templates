@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's On | Performing Arts Center</title>
+    <meta name="description" content="Discover upcoming performances and events at our world-class performing arts center. Theater, Music, and Dance highlights with tickets and details.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: '#0ea5e9',
+                        violet: '#8b5cf6',
+                        teal: '#14b8a6',
+                        green: '#22c55e'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div 
+        x-data="{
+            selectedCategory: 'all',
+            isModalOpen: false,
+            modalEvent: null,
+            categoryColors: {
+                theater: { bg: 'bg-violet-600', hover: 'hover:bg-violet-700', text: 'text-violet-300', icon: 'text-violet-400', ring: 'ring-violet-500/30' },
+                music:   { bg: 'bg-teal-600',   hover: 'hover:bg-teal-700',   text: 'text-teal-300',   icon: 'text-teal-400',   ring: 'ring-teal-500/30' },
+                dance:   { bg: 'bg-green-600',  hover: 'hover:bg-green-700',  text: 'text-green-300',  icon: 'text-green-400',  ring: 'ring-green-500/30' }
+            },
+            openModal(e){ this.modalEvent = e; this.isModalOpen = true; },
+            closeModal(){ this.isModalOpen = false; this.modalEvent = null; },
+            toTopVisible: false
+        }"
+        x-init="window.addEventListener('scroll', () => { toTopVisible = window.scrollY > 300 })"
+        class="container mx-auto px-4 py-8"
+    >
+        <!-- Header -->
+        <header class="relative overflow-hidden rounded-3xl mb-12 ring-1 ring-gray-800/60">
+            <img src="https://images.unsplash.com/photo-1668619383160-e163c585a50e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwZXJmb3JtaW5nJTIwYXJ0cyUyMHRoZWF0ZXIlMjBzdGFnZSUyMGxpZ2h0cyUyMGF1ZGllbmNlfGVufDB8MHx8fDE3NTk2MzcxMjR8MA&ixlib=rb-4.1.0&q=80&w=1600"
+                 alt="" class="absolute inset-0 w-full h-full object-cover opacity-20">
+            <div class="relative p-10 md:p-14 bg-gradient-to-b from-gray-900/30 via-gray-900/50 to-gray-900/80">
+                <div class="mb-6 animate-slide-up">
+                    <i class="fas fa-theater-masks text-6xl text-sky-500 drop-shadow"></i>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-light mb-3 bg-gradient-to-r from-sky-400 to-violet-500 bg-clip-text text-transparent animate-slide-up">What's On</h1>
+                <p class="text-gray-300/90 max-w-3xl text-lg animate-fade-in">Discover upcoming performances and events at our world-class performing arts center</p>
+            </div>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="sticky top-0 z-30 -mx-4 px-4 py-4 bg-gray-900/80 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60 border-y border-gray-800 animate-fade-in">
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                <button 
+                    @click="selectedCategory = 'all'"
+                    :aria-pressed="selectedCategory === 'all'"
+                    :class="selectedCategory === 'all' ? 'bg-sky-600 text-white shadow-lg shadow-sky-500/25 ring-1 ring-sky-400/30' : 'bg-gray-800/90 text-gray-300 hover:bg-gray-700 hover:shadow-lg ring-1 ring-gray-700/60'"
+                    class="px-5 sm:px-6 py-2.5 rounded-full transition-all duration-300 flex items-center gap-2"
+                >
+                    <i class="fas fa-calendar-alt"></i>
+                    All Events
+                </button>
+                <button 
+                    @click="selectedCategory = 'theater'"
+                    :aria-pressed="selectedCategory === 'theater'"
+                    :class="selectedCategory === 'theater' ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/25 ring-1 ring-violet-400/30' : 'bg-gray-800/90 text-gray-300 hover:bg-gray-700 hover:shadow-lg ring-1 ring-gray-700/60'"
+                    class="px-5 sm:px-6 py-2.5 rounded-full transition-all duration-300 flex items-center gap-2"
+                >
+                    <i class="fas fa-mask"></i>
+                    Theater
+                </button>
+                <button 
+                    @click="selectedCategory = 'music'"
+                    :aria-pressed="selectedCategory === 'music'"
+                    :class="selectedCategory === 'music' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/25 ring-1 ring-teal-400/30' : 'bg-gray-800/90 text-gray-300 hover:bg-gray-700 hover:shadow-lg ring-1 ring-gray-700/60'"
+                    class="px-5 sm:px-6 py-2.5 rounded-full transition-all duration-300 flex items-center gap-2"
+                >
+                    <i class="fas fa-music"></i>
+                    Music
+                </button>
+                <button 
+                    @click="selectedCategory = 'dance'"
+                    :aria-pressed="selectedCategory === 'dance'"
+                    :class="selectedCategory === 'dance' ? 'bg-green-600 text-white shadow-lg shadow-green-500/25 ring-1 ring-green-400/30' : 'bg-gray-800/90 text-gray-300 hover:bg-gray-700 hover:shadow-lg ring-1 ring-gray-700/60'"
+                    class="px-5 sm:px-6 py-2.5 rounded-full transition-all duration-300 flex items-center gap-2"
+                >
+                    <i class="fas fa-shoe-prints"></i>
+                    Dance
+                </button>
+            </div>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+            <!-- Event 1 - Theater -->
+            <article 
+                x-show="selectedCategory === 'all' || selectedCategory === 'theater'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                class="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-gray-700/60 hover:ring-gray-600/60 group"
+            >
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1565388364543-c756ef352c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwc3RhZ2UlMjBwZXJmb3JtYW5jZSUyMGRyYW1hdGljJTIwcGxheXxlbnwwfDB8fHwxNzU5NjM3MTI1fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Theater stage performance" 
+                         loading="lazy"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-violet-600 text-white text-xs rounded-full shadow">Theater</span>
+                    <button @click="openModal({ 
+                                title: 'Hamlet',
+                                category: 'theater',
+                                date: 'June 15, 2024',
+                                venue: 'Main Stage',
+                                desc: `Shakespeare's timeless tragedy performed by the Royal Theater Company.`,
+                                image: 'https://images.unsplash.com/photo-1565388364543-c756ef352c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwc3RhZ2UlMjBwZXJmb3JtYW5jZSUyMGRyYW1hdGljJTIwcGxheXxlbnwwfDB8fHwxNzU5NjM3MTI1fDA&ixlib=rb-4.1.0&q=80&w=1600'
+                            })"
+                            class="absolute bottom-3 left-3 px-3 py-1.5 text-xs rounded-md bg-gray-900/70 text-white backdrop-blur border border-white/10 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                        View details
+                    </button>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-violet-300 transition-colors">Hamlet</h3>
+                    <p class="text-gray-400 mb-4">Shakespeare's timeless tragedy performed by the Royal Theater Company.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-violet-400"></i>
+                            <span>June 15, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-violet-400"></i>
+                            <span>Main Stage</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button @click="openModal({ 
+                                    title: 'Hamlet',
+                                    category: 'theater',
+                                    date: 'June 15, 2024',
+                                    venue: 'Main Stage',
+                                    desc: `Shakespeare's timeless tragedy performed by the Royal Theater Company.`,
+                                    image: 'https://images.unsplash.com/photo-1565388364543-c756ef352c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwc3RhZ2UlMjBwZXJmb3JtYW5jZSUyMGRyYW1hdGljJTIwcGxheXxlbnwwfDB8fHwxNzU5NjM3MTI1fDA&ixlib=rb-4.1.0&q=80&w=1600'
+                                })" class="flex-1 bg-violet-600 hover:bg-violet-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                        </button>
+                        <button class="px-4 py-2 rounded-lg bg-gray-700/70 hover:bg-gray-700 text-gray-100 transition-colors duration-200">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 2 - Music -->
+            <article 
+                x-show="selectedCategory === 'all' || selectedCategory === 'music'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                class="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-gray-700/60 hover:ring-gray-600/60 group"
+            >
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1519682718457-c82ce8296645?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzeW1waG9ueSUyMG9yY2hlc3RyYSUyMGNvbmNlcnQlMjBoYWxsJTIwY29uZHVjdG9yfGVufDB8MHx8fDE3NTk2MzcxMjV8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Symphony orchestra performance" 
+                         loading="lazy"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-teal-600 text-white text-xs rounded-full shadow">Music</span>
+                    <button @click="openModal({ 
+                                title: 'Symphony No. 9',
+                                category: 'music',
+                                date: 'June 22, 2024',
+                                venue: 'Concert Hall',
+                                desc: `Beethoven's masterpiece performed by the City Philharmonic Orchestra.`,
+                                image: 'https://images.unsplash.com/photo-1519682718457-c82ce8296645?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzeW1waG9ueSUyMG9yY2hlc3RyYSUyMGNvbmNlcnQlMjBoYWxsJTIwY29uZHVjdG9yfGVufDB8MHx8fDE3NTk2MzcxMjV8MA&ixlib=rb-4.1.0&q=80&w=1600'
+                            })"
+                            class="absolute bottom-3 left-3 px-3 py-1.5 text-xs rounded-md bg-gray-900/70 text-white backdrop-blur border border-white/10 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                        View details
+                    </button>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-teal-300 transition-colors">Symphony No. 9</h3>
+                    <p class="text-gray-400 mb-4">Beethoven's masterpiece performed by the City Philharmonic Orchestra.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-teal-400"></i>
+                            <span>June 22, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-teal-400"></i>
+                            <span>Concert Hall</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button @click="openModal({ 
+                                    title: 'Symphony No. 9',
+                                    category: 'music',
+                                    date: 'June 22, 2024',
+                                    venue: 'Concert Hall',
+                                    desc: `Beethoven's masterpiece performed by the City Philharmonic Orchestra.`,
+                                    image: 'https://images.unsplash.com/photo-1519682718457-c82ce8296645?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzeW1waG9ueSUyMG9yY2hlc3RyYSUyMGNvbmNlcnQlMjBoYWxsJTIwY29uZHVjdG9yfGVufDB8MHx8fDE3NTk2MzcxMjV8MA&ixlib=rb-4.1.0&q=80&w=1600'
+                                })" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                        </button>
+                        <button class="px-4 py-2 rounded-lg bg-gray-700/70 hover:bg-gray-700 text-gray-100 transition-colors duration-200">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 3 - Dance -->
+            <article 
+                x-show="selectedCategory === 'all' || selectedCategory === 'dance'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                class="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-gray-700/60 hover:ring-gray-600/60 group"
+            >
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1700063078660-dc0835440c26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiYWxsZXQlMjBwZXJmb3JtYW5jZSUyMHN0YWdlJTIwZGFuY2VycyUyMHR1dHV8ZW58MHwwfHx8MTc1OTYzNzEyNnww&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Ballet dance performance" 
+                         loading="lazy"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-green-600 text-white text-xs rounded-full shadow">Dance</span>
+                    <button @click="openModal({ 
+                                title: 'Swan Lake',
+                                category: 'dance',
+                                date: 'June 28, 2024',
+                                venue: 'Grand Theater',
+                                desc: `Tchaikovsky's classic ballet performed by the National Ballet Company.`,
+                                image: 'https://images.unsplash.com/photo-1700063078660-dc0835440c26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiYWxsZXQlMjBwZXJmb3JtYW5jZSUyMHN0YWdlJTIwZGFuY2VycyUyMHR1dHV8ZW58MHwwfHx8MTc1OTYzNzEyNnww&ixlib=rb-4.1.0&q=80&w=1600'
+                            })"
+                            class="absolute bottom-3 left-3 px-3 py-1.5 text-xs rounded-md bg-gray-900/70 text-white backdrop-blur border border-white/10 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                        View details
+                    </button>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-green-300 transition-colors">Swan Lake</h3>
+                    <p class="text-gray-400 mb-4">Tchaikovsky's classic ballet performed by the National Ballet Company.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-green-400"></i>
+                            <span>June 28, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-green-400"></i>
+                            <span>Grand Theater</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button @click="openModal({ 
+                                    title: 'Swan Lake',
+                                    category: 'dance',
+                                    date: 'June 28, 2024',
+                                    venue: 'Grand Theater',
+                                    desc: `Tchaikovsky's classic ballet performed by the National Ballet Company.`,
+                                    image: 'https://images.unsplash.com/photo-1700063078660-dc0835440c26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiYWxsZXQlMjBwZXJmb3JtYW5jZSUyMHN0YWdlJTIwZGFuY2VycyUyMHR1dHV8ZW58MHwwfHx8MTc1OTYzNzEyNnww&ixlib=rb-4.1.0&q=80&w=1600'
+                                })" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                        </button>
+                        <button class="px-4 py-2 rounded-lg bg-gray-700/70 hover:bg-gray-700 text-gray-100 transition-colors duration-200">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 4 - Theater -->
+            <article 
+                x-show="selectedCategory === 'all' || selectedCategory === 'theater'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                class="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-gray-700/60 hover:ring-gray-600/60 group"
+            >
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1613210434051-4b00d62d03fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB0aGVhdGVyJTIwc3RhZ2UlMjBtaW5pbWFsJTIwc2V0fGVufDB8MHx8fDE3NTk2MzcxMjd8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Modern theater stage" 
+                         loading="lazy"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-violet-600 text-white text-xs rounded-full shadow">Theater</span>
+                    <button @click="openModal({ 
+                                title: 'Death of a Salesman',
+                                category: 'theater',
+                                date: 'July 5, 2024',
+                                venue: 'Studio Theater',
+                                desc: `Arthur Miller's American classic in a modern interpretation.`,
+                                image: 'https://images.unsplash.com/photo-1613210434051-4b00d62d03fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB0aGVhdGVyJTIwc3RhZ2UlMjBtaW5pbWFsJTIwc2V0fGVufDB8MHx8fDE3NTk2MzcxMjd8MA&ixlib=rb-4.1.0&q=80&w=1600'
+                            })"
+                            class="absolute bottom-3 left-3 px-3 py-1.5 text-xs rounded-md bg-gray-900/70 text-white backdrop-blur border border-white/10 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                        View details
+                    </button>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-violet-300 transition-colors">Death of a Salesman</h3>
+                    <p class="text-gray-400 mb-4">Arthur Miller's American classic in a modern interpretation.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-violet-400"></i>
+                            <span>July 5, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-violet-400"></i>
+                            <span>Studio Theater</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button @click="openModal({ 
+                                    title: 'Death of a Salesman',
+                                    category: 'theater',
+                                    date: 'July 5, 2024',
+                                    venue: 'Studio Theater',
+                                    desc: `Arthur Miller's American classic in a modern interpretation.`,
+                                    image: 'https://images.unsplash.com/photo-1613210434051-4b00d62d03fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB0aGVhdGVyJTIwc3RhZ2UlMjBtaW5pbWFsJTIwc2V0fGVufDB8MHx8fDE3NTk2MzcxMjd8MA&ixlib=rb-4.1.0&q=80&w=1600'
+                                })" class="flex-1 bg-violet-600 hover:bg-violet-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                        </button>
+                        <button class="px-4 py-2 rounded-lg bg-gray-700/70 hover:bg-gray-700 text-gray-100 transition-colors duration-200">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 5 - Music -->
+            <article 
+                x-show="selectedCategory === 'all' || selectedCategory === 'music'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                class="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-gray-700/60 hover:ring-gray-600/60 group"
+            >
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1698151923964-22149b074f8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxqYXp6JTIwY2x1YiUyMGxpdmUlMjBtdXNpYyUyMHNheG9waG9uZXxlbnwwfDB8fHwxNzU5NjM3MTI3fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Jazz club performance" 
+                         loading="lazy"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-teal-600 text-white text-xs rounded-full shadow">Music</span>
+                    <button @click="openModal({ 
+                                title: 'Jazz Night',
+                                category: 'music',
+                                date: 'July 12, 2024',
+                                venue: 'Jazz Club',
+                                desc: `An evening of contemporary jazz featuring local artists and special guests.`,
+                                image: 'https://images.unsplash.com/photo-1698151923964-22149b074f8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxqYXp6JTIwY2x1YiUyMGxpdmUlMjBtdXNpYyUyMHNheG9waG9uZXxlbnwwfDB8fHwxNzU5NjM3MTI3fDA&ixlib=rb-4.1.0&q=80&w=1600'
+                            })"
+                            class="absolute bottom-3 left-3 px-3 py-1.5 text-xs rounded-md bg-gray-900/70 text-white backdrop-blur border border-white/10 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                        View details
+                    </button>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-teal-300 transition-colors">Jazz Night</h3>
+                    <p class="text-gray-400 mb-4">An evening of contemporary jazz featuring local artists and special guests.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-teal-400"></i>
+                            <span>July 12, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-teal-4 00"></i>
+                            <span>Jazz Club</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button @click="openModal({ 
+                                    title: 'Jazz Night',
+                                    category: 'music',
+                                    date: 'July 12, 2024',
+                                    venue: 'Jazz Club',
+                                    desc: `An evening of contemporary jazz featuring local artists and special guests.`,
+                                    image: 'https://images.unsplash.com/photo-1698151923964-22149b074f8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxqYXp6JTIwY2x1YiUyMGxpdmUlMjBtdXNpYyUyMHNheG9waG9uZXxlbnwwfDB8fHwxNzU5NjM3MTI3fDA&ixlib=rb-4.1.0&q=80&w=1600'
+                                })" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                        </button>
+                        <button class="px-4 py-2 rounded-lg bg-gray-700/70 hover:bg-gray-700 text-gray-100 transition-colors duration-200">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 6 - Dance -->
+            <article 
+                x-show="selectedCategory === 'all' || selectedCategory === 'dance'"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                class="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-gray-700/60 hover:ring-gray-600/60 group"
+            >
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1625630744905-21418ab16d35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBkYW5jZSUyMHBlcmZvcm1hbmNlJTIwc2lsaG91ZXR0ZXxlbnwwfDB8fHwxNzU5NjM3MTI4fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Contemporary dance performance" 
+                         loading="lazy"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-green-600 text-white text-xs rounded-full shadow">Dance</span>
+                    <button @click="openModal({ 
+                                title: 'Contemporary Expressions',
+                                category: 'dance',
+                                date: 'July 19, 2024',
+                                venue: 'Black Box Theater',
+                                desc: `Modern dance performance exploring themes of identity and transformation.`,
+                                image: 'https://images.unsplash.com/photo-1625630744905-21418ab16d35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBkYW5jZSUyMHBlcmZvcm1hbmNlJTIwc2lsaG91ZXR0ZXxlbnwwfDB8fHwxNzU5NjM3MTI4fDA&ixlib=rb-4.1.0&q=80&w=1600'
+                            })"
+                            class="absolute bottom-3 left-3 px-3 py-1.5 text-xs rounded-md bg-gray-900/70 text-white backdrop-blur border border-white/10 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                        View details
+                    </button>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-green-300 transition-colors">Contemporary Expressions</h3>
+                    <p class="text-gray-400 mb-4">Modern dance performance exploring themes of identity and transformation.</p>
+                    <div class="flex justify-between items-center text-sm text-gray-300">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-green-400"></i>
+                            <span>July 19, 2024</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-green-400"></i>
+                            <span>Black Box Theater</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button @click="openModal({ 
+                                    title: 'Contemporary Expressions',
+                                    category: 'dance',
+                                    date: 'July 19, 2024',
+                                    venue: 'Black Box Theater',
+                                    desc: `Modern dance performance exploring themes of identity and transformation.`,
+                                    image: 'https://images.unsplash.com/photo-1625630744905-21418ab16d35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBkYW5jZSUyMHBlcmZvcm1hbmNlJTIwc2lsaG91ZXR0ZXxlbnwwfDB8fHwxNzU5NjM3MTI4fDA&ixlib=rb-4.1.0&q=80&w=1600'
+                                })" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <i class="fas fa-ticket-alt"></i>
+                            Get Tickets
+                        </button>
+                        <button class="px-4 py-2 rounded-lg bg-gray-700/70 hover:bg-gray-700 text-gray-100 transition-colors duration-200">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Newsletter Section -->
+        <section x-data="{ email:'', subscribed:false }" class="mt-16 bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-8 text-center shadow-2xl animate-fade-in relative overflow-hidden">
+            <div class="mb-6 relative z-10">
+                <i class="fas fa-envelope-open-text text-4xl text-sky-400"></i>
+            </div>
+            <h2 class="text-3xl font-light mb-2 relative z-10">Stay Updated</h2>
+            <p class="text-gray-300 mb-6 max-w-md mx-auto text-lg relative z-10">Subscribe to our newsletter to receive updates on new performances and exclusive offers.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto relative z-10">
+                <input 
+                    type="email" 
+                    x-model="email"
+                    placeholder="Enter your email" 
+                    class="flex-1 px-4 py-3 bg-gray-600 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-gray-500 transition-all duration-200"
+                >
+                <button 
+                    @click="if(email){ subscribed = true; setTimeout(()=> subscribed=false, 3000); }"
+                    class="px-8 py-3 bg-sky-600 hover:bg-sky-700 text-white rounded-xl transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                >
+                    <i class="fas fa-paper-plane"></i>
+                    Subscribe
+                </button>
+            </div>
+            <div x-cloak x-show="subscribed" x-transition
+                 class="absolute inset-x-0 bottom-3 mx-auto w-max px-4 py-2 rounded-full bg-gray-900/80 text-sm text-white border border-white/10 shadow-lg">
+                <i class="fa-solid fa-check text-green-400 mr-2"></i> Thanks for subscribing!
+            </div>
+            <div class="pointer-events-none absolute -right-10 -bottom-10 w-56 h-56 rounded-full bg-sky-500/10 blur-3xl"></div>
+            <div class="pointer-events-none absolute -left-10 -top-10 w-56 h-56 rounded-full bg-violet-500/10 blur-3xl"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t border-gray-800 text-center text-gray-400">
+            <div class="flex justify-center gap-6 mb-4">
+                <a aria-label="Facebook" href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+                <a aria-label="Twitter" href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a aria-label="Instagram" href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a aria-label="YouTube" href="#" class="hover:text-sky-400 transition-colors duration-200">
+                    <i class="fab fa-youtube text-xl"></i>
+                </a>
+            </div>
+            <p class="text-sm">&copy; 2024 Performing Arts Center. All rights reserved.</p>
+        </footer>
+
+        <!-- Back to top -->
+        <button x-show="toTopVisible" x-transition
+                @click="window.scrollTo({top:0, behavior:'smooth'})"
+                class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-gray-800/90 text-white border border-white/10 shadow-xl hover:shadow-2xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+
+        <!-- Modal -->
+        <div x-cloak x-show="isModalOpen" class="fixed inset-0 z-50">
+            <div @click.self="closeModal()" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative mx-auto my-10 w-[92%] max-w-3xl bg-gray-900 rounded-2xl overflow-hidden ring-1 ring-gray-700/60 shadow-2xl animate-slide-up">
+                <button @click="closeModal()" class="absolute top-3 right-3 z-10 p-2 rounded-full bg-gray-800/80 text-gray-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="grid md:grid-cols-2">
+                    <div class="relative h-56 md:h-full">
+                        <img :src="modalEvent?.image" :alt="modalEvent?.title" class="absolute inset-0 w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 px-3 py-1 text-xs rounded-full shadow"
+                              :class="{
+                                  'bg-violet-600 text-white': modalEvent?.category === 'theater',
+                                  'bg-teal-600 text-white': modalEvent?.category === 'music',
+                                  'bg-green-600 text-white': modalEvent?.category === 'dance'
+                              }"
+                        >{{ modalEvent?.category?.charAt(0).toUpperCase() + modalEvent?.category?.slice(1) }}</span>
+                    </div>
+                    <div class="p-6 md:p-7">
+                        <h3 class="text-2xl font-semibold mb-2" x-text="modalEvent?.title"></h3>
+                        <p class="text-gray-300 mb-5" x-text="modalEvent?.desc"></p>
+                        <div class="space-y-3 text-gray-300">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-calendar"
+                                   :class="{
+                                       'text-violet-400': modalEvent?.category === 'theater',
+                                       'text-teal-400': modalEvent?.category === 'music',
+                                       'text-green-400': modalEvent?.category === 'dance'
+                                   }"></i>
+                                <span x-text="modalEvent?.date"></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt"
+                                   :class="{
+                                       'text-violet-400': modalEvent?.category === 'theater',
+                                       'text-teal-400': modalEvent?.category === 'music',
+                                       'text-green-400': modalEvent?.category === 'dance'
+                                   }"></i>
+                                <span x-text="modalEvent?.venue"></span>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                            <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-lg text-white transition-colors"
+                               :class="{
+                                   'bg-violet-600 hover:bg-violet-700': modalEvent?.category === 'theater',
+                                   'bg-teal-600 hover:bg-teal-700': modalEvent?.category === 'music',
+                                   'bg-green-600 hover:bg-green-700': modalEvent?.category === 'dance'
+                               }">
+                                <i class="fa-solid fa-chair"></i>
+                                Select seats
+                            </a>
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-100 border border-gray-700 transition-colors">
+                                <i class="fa-regular fa-calendar-plus"></i>
+                                Add to calendar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
