@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athletic United | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                        },
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-rose-500 to-amber-500 rounded-lg"></div>
+                        <span class="ml-2 text-xl font-bold text-stone-800">Athletic United</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="border-b-2 border-indigo-500 text-stone-900 inline-flex items-center px-1 pt-1 text-sm font-medium">Home</a>
+                        <a href="#" class="border-transparent text-stone-500 hover:text-stone-700 inline-flex items-center px-1 pt-1 text-sm font-medium">Team</a>
+                        <a href="#" class="border-transparent text-stone-500 hover:text-stone-700 inline-flex items-center px-1 pt-1 text-sm font-medium">Schedule</a>
+                        <a href="#" class="border-transparent text-stone-500 hover:text-stone-700 inline-flex items-center px-1 pt-1 text-sm font-medium">News</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Get Tickets
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-rose-50 to-amber-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-stone-800 mb-4">Athletic United</h1>
+                <p class="text-xl text-stone-600 mb-8 max-w-2xl mx-auto">Champions on and off the field. Join us for an unforgettable season of thrilling matches and unforgettable moments.</p>
+                <div class="flex justify-center space-x-4">
+                    <button class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        View Schedule
+                    </button>
+                    <button class="border border-stone-300 hover:bg-white text-stone-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Latest News
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Upcoming Games -->
+            <section>
+                <h2 class="text-2xl font-bold text-stone-800 mb-6 flex items-center">
+                    <span class="w-2 h-6 bg-amber-500 rounded mr-3"></span>
+                    Upcoming Games
+                </h2>
+                <div class="bg-white rounded-xl shadow-sm border border-stone-100 overflow-hidden">
+                    <div class="divide-y divide-stone-100">
+                        <!-- Game 1 -->
+                        <div class="p-6 hover:bg-stone-50 transition-colors">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-2">
+                                        Home Game
+                                    </span>
+                                    <h3 class="font-semibold text-stone-800">vs Thunder FC</h3>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-stone-800">Sat, Mar 15</div>
+                                    <div class="text-stone-500">3:00 PM</div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-stone-600">United Stadium</span>
+                                <button class="text-indigo-500 hover:text-indigo-600 font-medium text-sm">
+                                    Get Tickets →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Game 2 -->
+                        <div class="p-6 hover:bg-stone-50 transition-colors">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-sm font-medium mb-2">
+                                        Away Game
+                                    </span>
+                                    <h3 class="font-semibold text-stone-800">@ City Rovers</h3>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-stone-800">Sat, Mar 22</div>
+                                    <div class="text-stone-500">7:30 PM</div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-stone-600">Rovers Arena</span>
+                                <button class="text-indigo-500 hover:text-indigo-600 font-medium text-sm">
+                                    Get Tickets →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Game 3 -->
+                        <div class="p-6 hover:bg-stone-50 transition-colors">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-2">
+                                        Home Game
+                                    </span>
+                                    <h3 class="font-semibold text-stone-800">vs Northern Stars</h3>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-stone-800">Sat, Apr 5</div>
+                                    <div class="text-stone-500">2:00 PM</div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-stone-600">United Stadium</span>
+                                <button class="text-indigo-500 hover:text-indigo-600 font-medium text-sm">
+                                    Get Tickets →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-stone-50 px-6 py-4 border-t border-stone-100">
+                        <button class="w-full text-center text-indigo-500 hover:text-indigo-600 font-medium">
+                            View Full Schedule →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest News -->
+            <section>
+                <h2 class="text-2xl font-bold text-stone-800 mb-6 flex items-center">
+                    <span class="w-2 h-6 bg-indigo-500 rounded mr-3"></span>
+                    Latest News
+                </h2>
+                <div class="space-y-6">
+                    <!-- News 1 -->
+                    <article class="bg-white rounded-xl shadow-sm border border-stone-100 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+                                    Team Update
+                                </span>
+                                <span class="ml-3 text-stone-500 text-sm">March 10, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-stone-800 mb-3">New Signing: Marco Rodriguez Joins the Squad</h3>
+                            <p class="text-stone-600 mb-4">We're thrilled to announce the signing of Marco Rodriguez, a dynamic midfielder who brings exceptional talent and experience to our team.</p>
+                            <button class="text-rose-500 hover:text-rose-600 font-medium">
+                                Read More →
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- News 2 -->
+                    <article class="bg-white rounded-xl shadow-sm border border-stone-100 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">
+                                    Match Report
+                                </span>
+                                <span class="ml-3 text-stone-500 text-sm">March 8, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-stone-800 mb-3">Victory Against Rivals: 3-1 Win Secures Top Spot</h3>
+                            <p class="text-stone-600 mb-4">A spectacular performance from our team secured a decisive 3-1 victory against our long-standing rivals, putting us at the top of the league table.</p>
+                            <button class="text-rose-500 hover:text-rose-600 font-medium">
+                                Read More →
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- News 3 -->
+                    <article class="bg-white rounded-xl shadow-sm border border-stone-100 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-sm font-medium">
+                                    Community
+                                </span>
+                                <span class="ml-3 text-stone-500 text-sm">March 5, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-stone-800 mb-3">Youth Academy Launches Summer Training Program</h3>
+                            <p class="text-stone-600 mb-4">Our youth development program is expanding with a new summer training initiative designed to nurture the next generation of football stars.</p>
+                            <button class="text-rose-500 hover:text-rose-600 font-medium">
+                                Read More →
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-stone-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-rose-500 to-amber-500 rounded-lg"></div>
+                        <span class="ml-2 text-xl font-bold text-white">Athletic United</span>
+                    </div>
+                    <p class="text-stone-400 mb-4 max-w-md">Dedicated to excellence on the field and building strong connections with our community off the field.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors">Facebook</a>
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors">Twitter</a>
+                        <a href="#" class="text-stone-400 hover:text-white transition-colors">Instagram</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Schedule</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Team Roster</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Tickets</a></li>
+                        <li><a href="#" class="text-stone-400 hover:text-white transition-colors">Merchandise</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-stone-400">
+                        <li>United Stadium</li>
+                        <li>123 Sports Avenue</li>
+                        <li>City, State 12345</li>
+                        <li>info@athleticunited.com</li>
+                        <li>(555) 123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-8 pt-8 text-center text-stone-500">
+                <p>&copy; 2024 Athletic United. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
