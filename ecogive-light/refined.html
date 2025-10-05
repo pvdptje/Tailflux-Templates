@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Action Now - Support Our Mission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
+        }
+        .impact-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .impact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .amount-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .amount-btn:hover {
+            transform: scale(1.05);
+        }
+        .amount-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6, #0ea5e9);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+        .testimonial-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1), -5px -5px 15px rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div x-data="donationApp()" class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Hero Header -->
+        <header class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full hero-gradient mb-6 shadow-lg">
+                <i class="fas fa-leaf text-white text-2xl"></i>
+            </div>
+            <h1 class="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Climate Action <span class="bg-gradient-to-r from-cyan-500 to-violet-500 bg-clip-text text-transparent">Now</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Join thousands of supporters in our mission to combat climate change and build a sustainable future for generations to come. Every contribution makes a difference.
+            </p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <!-- Donation Form -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 transform transition-all duration-300 hover:shadow-2xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-xl flex items-center justify-center mr-4">
+                        <i class="fas fa-hand-holding-heart text-white text-lg"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900">Make Your Impact</h2>
+                </div>
+                
+                <!-- Amount Selection -->
+                <div class="mb-8">
+                    <label class="block text-gray-800 font-semibold mb-4 text-lg">Select Donation Amount</label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <template x-for="amount in presetAmounts" :key="amount">
+                            <button
+                                @click="selectedAmount = amount; customAmount = ''"
+                                :class="selectedAmount === amount ? 
+                                    'amount-btn active bg-gradient-to-r from-violet-500 to-purple-600 text-white border-violet-500 shadow-lg' : 
+                                    'amount-btn bg-white text-gray-700 border-gray-200 hover:border-violet-300 hover:shadow-md'"
+                                class="border-2 rounded-xl py-4 px-6 transition-all duration-300 font-semibold text-lg"
+                            >
+                                $<span x-text="amount"></span>
+                            </button>
+                        </template>
+                    </div>
+                    
+                    <!-- Custom Amount -->
+                    <div class="mt-6">
+                        <label class="block text-gray-800 font-semibold mb-3 text-lg">Or Enter Custom Amount</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl">$</span>
+                            <input
+                                type="number"
+                                x-model="customAmount"
+                                @input="selectedAmount = customAmount"
+                                placeholder="Enter your amount"
+                                class="w-full pl-12 pr-6 py-4 border-2 border-gray-200 rounded-xl focus:border-violet-500 focus:ring-2 focus:ring-violet-200 transition-all duration-300 text-lg font-medium"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="mb-8">
+                    <label class="block text-gray-800 font-semibold mb-4 text-lg">Payment Method</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex items-center justify-center space-x-3 cursor-pointer p-4 border-2 border-gray-200 rounded-xl hover:border-violet-300 transition-colors duration-200" 
+                               :class="paymentMethod === 'card' ? 'border-violet-500 bg-violet-50' : ''">
+                            <input type="radio" name="payment" value="card" x-model="paymentMethod" class="text-violet-500 focus:ring-violet-500">
+                            <i class="fas fa-credit-card text-gray-600"></i>
+                            <span class="text-gray-700 font-medium">Credit Card</span>
+                        </label>
+                        <label class="flex items-center justify-center space-x-3 cursor-pointer p-4 border-2 border-gray-200 rounded-xl hover:border-violet-300 transition-colors duration-200"
+                               :class="paymentMethod === 'paypal' ? 'border-violet-500 bg-violet-50' : ''">
+                            <input type="radio" name="payment" value="paypal" x-model="paymentMethod" class="text-violet-500 focus:ring-violet-500">
+                            <i class="fab fa-paypal text-blue-600"></i>
+                            <span class="text-gray-700 font-medium">PayPal</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Donate Button -->
+                <button
+                    @click="processDonation"
+                    :disabled="!selectedAmount || processing"
+                    :class="processing ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 transform hover:scale-105'"
+                    class="w-full py-5 text-white rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center"
+                >
+                    <span x-show="!processing" class="flex items-center">
+                        <i class="fas fa-heart mr-3"></i>
+                        Donate $<span x-text="selectedAmount"></span>
+                    </span>
+                    <span x-show="processing" class="flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing Your Generosity...
+                    </span>
+                </button>
+
+                <!-- Security & Trust -->
+                <div class="mt-6 flex items-center justify-center space-x-6 text-gray-500">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-shield-alt text-green-500"></i>
+                        <span class="text-sm font-medium">Bank-level Security</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-lock text-green-500"></i>
+                        <span class="text-sm font-medium">SSL Encrypted</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Section -->
+            <div class="space-y-8">
+                <!-- Hero Image -->
+                <div class="rounded-3xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1625619456890-b907126970f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjbGltYXRlJTIwY2hhbmdlJTIwbmF0dXJlJTIwZm9yZXN0fGVufDB8MHx8fDE3NTk2ODAwOTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=F2MsRM7Z2as" 
+                         alt="Climate change impact on nature" class="w-full h-48 object-cover">
+                </div>
+
+                <!-- Impact Stats -->
+                <div class="bg-white rounded-3xl shadow-lg p-8 impact-card border-l-4 border-cyan-500">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-chart-line text-cyan-500 mr-3"></i>
+                        Your Impact Matters
+                    </h3>
+                    <div class="space-y-5">
+                        <div class="flex items-center space-x-4 p-3 rounded-lg bg-cyan-50">
+                            <div class="w-4 h-4 bg-cyan-500 rounded-full flex-shrink-0"></div>
+                            <div>
+                                <span class="text-gray-800 font-semibold">$50 = 25 Trees Planted</span>
+                                <p class="text-gray-600 text-sm mt-1">Helping restore natural carbon sinks</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 p-3 rounded-lg bg-yellow-50">
+                            <div class="w-4 h-4 bg-yellow-500 rounded-full flex-shrink-0"></div>
+                            <div>
+                                <span class="text-gray-800 font-semibold">$100 = Clean Energy Research</span>
+                                <p class="text-gray-600 text-sm mt-1">Funding breakthrough renewable technologies</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 p-3 rounded-lg bg-red-50">
+                            <div class="w-4 h-4 bg-red-500 rounded-full flex-shrink-0"></div>
+                            <div>
+                                <span class="text-gray-800 font-semibold">$250 = Climate Education</span>
+                                <p class="text-gray-600 text-sm mt-1">Empowering the next generation of leaders</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="bg-white rounded-3xl shadow-lg p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-trophy text-violet-500 mr-3"></i>
+                        Monthly Goal Progress
+                    </h3>
+                    <div class="mb-4 flex justify-between items-center">
+                        <span class="text-gray-700 font-semibold">$15,000 raised</span>
+                        <span class="text-gray-700 font-semibold">$25,000 goal</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mb-3">
+                        <div class="progress-bar h-3 rounded-full" style="width: 60%"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-violet-600 font-bold text-lg">60% Complete!</p>
+                        <div class="flex items-center space-x-2 text-gray-600">
+                            <i class="fas fa-users"></i>
+                            <span class="text-sm">1,247 supporters</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="testimonial-card rounded-3xl p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-comments text-purple-500 mr-3"></i>
+                        What Our Supporters Say
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://images.unsplash.com/photo-1589201529153-5297335c1684?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXN0YWluYWJsZSUyMGVuZXJneSUyMHNvbGFyJTIwcGFuZWxzfGVufDB8MHx8fDE3NTk2ODAxMDF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=VC-m6ULjJ6Y" 
+                                 alt="Solar energy" class="w-16 h-16 rounded-full object-cover flex-shrink-0">
+                            <div>
+                                <p class="text-gray-700 italic mb-2">"Seeing my contribution help fund solar projects gives me hope for a cleaner future. Transparent and effective!"</p>
+                                <div class="flex items-center space-x-1 text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm font-medium">- Sarah M., Monthly Donor</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <img src="https://images.unsplash.com/photo-1733766903731-d171d1c1b0ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx0cmVlJTIwcGxhbnRpbmclMjByZWZvcmVzdGF0aW9ufGVufDB8MHx8fDE3NTk2ODAxMDV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=isTl14LcvL0" 
+                                 alt="Tree planting" class="w-16 h-16 rounded-full object-cover flex-shrink-0">
+                            <div>
+                                <p class="text-gray-700 italic mb-2">"Knowing my donation plants real trees and creates lasting impact makes me feel part of something bigger."</p>
+                                <div class="flex items-center space-x-1 text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm font-medium">- Michael T., Environmentalist</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 pt-12 border-t border-gray-200">
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-12 mb-6">
+                <div class="flex items-center space-x-2 text-gray-600">
+                    <i class="fas fa-certificate text-green-500"></i>
+                    <span class="font-medium">501(c)(3) Nonprofit</span>
+                </div>
+                <div class="flex items-center space-x-2 text-gray-600">
+                   <i class="fas fa-receipt text-blue-500"></i>
+                    <span class="font-medium">Tax-Deductible Donations</span>
+                </div>
+                <div class="flex items-center space-x-2 text-gray-600">
+                    <i class="fas fa-globe-americas text-cyan-500"></i>
+                    <span class="font-medium">Global Impact Since 2010</span>
+                </div>
+            </div>
+            <p class="text-gray-600 text-sm max-w-2xl mx-auto">
+                Climate Action Now is committed to transparency and accountability. 92% of every dollar goes directly to climate programs. 
+                <a href="#" class="text-violet-600 hover:text-violet-700 font-medium underline">View our annual report</a> for detailed financial information.
+            </p>
+            <div class="mt-6 flex justify-center space-x-6">
+                <a href="#" class="text-gray-500 hover:text-violet-600 transition-colors duration-200">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-violet-600 transition-colors duration-200">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-violet-600 transition-colors duration-200">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-violet-600 transition-colors duration-200">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function donationApp() {
+            return {
+                presetAmounts: [25, 50, 100, 250, 500],
+                selectedAmount: 50,
+                customAmount: '',
+                paymentMethod: 'card',
+                processing: false,
+                
+                processDonation() {
+                    if (!this.selectedAmount || this.selectedAmount <= 0) {
+                        return;
+                    }
+                    
+                    this.processing = true;
+                    
+                    // Simulate API call with enhanced UX
+                    setTimeout(() => {
+                        this.processing = false;
+                        
+                        // Create success notification
+                        const successMessage = `
+                            <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                                <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center transform transition-all duration-500 scale-95 animate-scaleIn">
+                                    <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <i class="fas fa-check text-white text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Thank You!</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Your generous donation of <span class="font-bold text-green-600">$${this.selectedAmount}</span> 
+                                        will make a real difference in our fight against climate change.
+                                    </p>
+                                    <p class="text-gray-500 text-sm mb-6">
+                                        A confirmation email has been sent to you with your tax receipt.
+                                    </p>
+                                    <button 
+                                        @click="$el.parentElement.parentElement.remove()"
+                                        class="bg-gradient-to-r from-violet-500 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-violet-600 hover:to-purple-700 transition-all duration-300"
+                                    >
+                                        Continue Making Impact
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Add the success message to the DOM
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = successMessage;
+                        document.body.appendChild(tempDiv.firstElementChild);
+                        
+                        // Reset form
+                        this.selectedAmount = 50;
+                        this.customAmount = '';
+                        
+                    }, 2000);
+                }
+            }
+        }
+        
+        // Add CSS animation for scale-in effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes scaleIn {
+                from { transform: scale(0.8); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+            }
+            .animate-scaleIn {
+                animation: scaleIn 0.5s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
