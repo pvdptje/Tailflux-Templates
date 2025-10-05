@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Name - Latest Release</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            900: '#111827',
+                            800: '#1f2937',
+                            700: '#374151',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                        violet: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        },
+                        zinc: {
+                            800: '#27272a',
+                            900: '#18181b',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-900 border-b border-violet-600/30 sticky top-0 z-50 backdrop-blur-sm bg-gray-900/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold text-cyan-400 flex items-center space-x-2">
+                    <i class="fas fa-feather-alt text-violet-500"></i>
+                    <span>AuthorName</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:scale-105">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:scale-105">Books</a>
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:scale-105">About</a>
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:scale-105">Contact</a>
+                </div>
+                <button class="md:hidden text-gray-300 hover:text-cyan-400 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gray-900 py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1607305050328-df3f9f107efb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmYW50YXN5JTIwbGFuZHNjYXBlJTIwZGFyayUyMG1vdW50YWlucyUyMG1pc3R8ZW58MHwwfHx8MTc1OTY1MTMyNHww&ixlib=rb-4.1.0&q=80&w=1080')"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Book Cover -->
+                <div class="relative animate-fade-in">
+                    <div class="bg-violet-600/20 p-8 rounded-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-violet-500/20">
+                        <div class="bg-gradient-to-br from-violet-600 to-cyan-500 p-1 rounded-xl shadow-2xl">
+                            <div class="bg-gray-900 p-8 rounded-lg text-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://images.unsplash.com/photo-1676976196886-c785a3ecd083?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmYW50YXN5JTIwYm9vayUyMGNvdmVyJTIwZGFyayUyMG15c3RlcmlvdXN8ZW58MHwwfHx8MTc1OTY1MTMxN3ww&ixlib=rb-4.1.0&q=80&w=1080')"></div>
+                                <div class="relative z-10">
+                                    <h3 class="text-2xl font-bold text-cyan-400 mb-2 tracking-wider">SHADOW REALM</h3>
+                                    <p class="text-gray-300 mb-4 font-light">A Novel of Dark Fantasy</p>
+                                    <div class="w-20 h-1 bg-gradient-to-r from-violet-600 to-cyan-500 mx-auto mb-4 rounded-full"></div>
+                                    <p class="text-sm text-gray-400 flex items-center justify-center space-x-2">
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <span>Available Now</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 w-8 h-8 bg-cyan-400 rounded-full animate-pulse"></div>
+                    <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-violet-500 rounded-full animate-pulse delay-300"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="space-y-6 animate-slide-up">
+                    <h1 class="text-5xl md:text-6xl font-bold">
+                        <span class="text-cyan-400 bg-gradient-to-r from-cyan-400 to-cyan-300 bg-clip-text text-transparent">SHADOW</span>
+                        <span class="text-violet-500 bg-gradient-to-r from-violet-500 to-violet-400 bg-clip-text text-transparent">REALM</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 leading-relaxed font-light">
+                        The epic conclusion to the award-winning fantasy series. Journey through realms unseen and battles unimagined in this stunning finale that will leave you breathless.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-gradient-to-r from-violet-600 to-cyan-500 text-white px-8 py-3 rounded-lg font-bold hover:shadow-2xl hover:shadow-violet-500/30 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center space-x-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Buy Now</span>
+                        </button>
+                        <button class="border border-cyan-400 text-cyan-400 px-8 py-3 rounded-lg font-bold hover:bg-cyan-400/10 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center space-x-2">
+                            <i class="fas fa-book-open"></i>
+                            <span>Read Excerpt</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                        <span class="bg-violet-500/20 px-3 py-1 rounded-full">Fantasy</span>
+                        <span class="bg-cyan-400/20 px-3 py-1 rounded-full">Adventure</span>
+                        <span class="bg-violet-600/20 px-3 py-1 rounded-full">Epic</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="text-gray-400 ml-2">4.9/5 from 2,347 reviews</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-gray-800/50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold text-cyan-400 mb-4">What Readers Are Saying</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+                    Discover why critics and fans alike are calling this the fantasy novel of the year.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-zinc-800 p-6 rounded-xl border border-violet-600/30 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-105 group animate-slide-up">
+                    <div class="text-cyan-400 text-2xl mb-4 flex">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "A masterpiece of modern fantasy. The world-building is unparalleled and the characters will stay with you long after you finish reading."
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-quote-left text-white text-sm"></i>
+                        </div>
+                        <div class="text-violet-400 font-semibold">Fantasy Book Review</div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-zinc-800 p-6 rounded-xl border border-violet-600/30 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-105 group animate-slide-up delay-200">
+                    <div class="text-cyan-400 text-2xl mb-4 flex">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "The perfect blend of heart-pounding action and emotional depth. This author continues to redefine the fantasy genre with every release."
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-quote-left text-white text-sm"></i>
+                        </div>
+                        <div class="text-violet-400 font-semibold">Literary Times</div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-zinc-800 p-6 rounded-xl border border-violet-600/30 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-105 group animate-slide-up delay-400">
+                    <div class="text-cyan-400 text-2xl mb-4 flex">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "An unforgettable journey that will capture your imagination from the first page to the last. Simply breathtaking storytelling."
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-quote-left text-white text-sm"></i>
+                        </div>
+                        <div class="text-violet-400 font-semibold">Bookworm Gazette</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Author Section -->
+    <section class="py-20 bg-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <div class="relative">
+                        <div class="w-64 h-64 mx-auto bg-gradient-to-br from-violet-600 to-cyan-500 rounded-full p-1">
+                            <div class="w-full h-full bg-gray-900 rounded-full overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1617174699241-f461180aa2b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhdXRob3IlMjB3cml0ZXIlMjBwb3J0cmFpdCUyMGZhbnRhc3l8ZW58MHwwfHx8MTc1OTY1MTMyMHww&ixlib=rb-4.1.0&q=80&w=1080" 
+                                     alt="Author Portrait" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center animate-float">
+                            <i class="fas fa-feather-alt text-gray-900 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6 animate-slide-up">
+                    <h2 class="text-4xl font-bold text-cyan-400">About the Author</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed font-light">
+                        With over a decade of experience in crafting immersive fantasy worlds, AuthorName has become one of the most celebrated voices in modern fantasy literature. Their unique blend of intricate world-building, complex characters, and breathtaking storytelling has earned them numerous awards and a dedicated global following.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-zinc-800 rounded-lg border border-violet-600/30">
+                            <div class="text-2xl font-bold text-cyan-400">12+</div>
+                            <div class="text-gray-400 text-sm">Published Books</div>
+                        </div>
+                        <div class="text-center p-4 bg-zinc-800 rounded-lg border border-violet-600/30">
+                            <div class="text-2xl font-bold text-cyan-400">2M+</div>
+                            <div class="text-gray-400 text-sm">Books Sold</div>
+                        </div>
+                    </div>
+                    <button class="border border-violet-500 text-violet-400 px-6 py-3 rounded-lg font-bold hover:bg-violet-500/10 transition-all duration-300 transform hover:scale-105">
+                        Learn More About the Author
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-violet-600/20 to-cyan-500/20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-cyan-500/10"></div>
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold text-cyan-400 mb-6 animate-fade-in">Get Your Copy Today</h2>
+            <p class="text-xltext-gray-300 mb-8 max-w-2xl mx-auto font-light animate-slide-up">
+                Join thousands of readers who have already embarked on this epic adventure. Available in hardcover, ebook, and audiobook formats.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 animate-fade-in">
+                <button class="bg-cyan-500 text-gray-900 px-8 py-4 rounded-lg font-bold hover:bg-cyan-400 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center space-x-2 shadow-lg">
+                    <i class="fas fa-book"></i>
+                    <span>Hardcover - $24.99</span>
+                </button>
+                <button class="bg-violet-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-violet-500 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center space-x-2 shadow-lg">
+                    <i class="fas fa-tablet-alt"></i>
+                    <span>Ebook - $9.99</span>
+                </button>
+                <button class="border border-cyan-400 text-cyan-400 px-8 py-4 rounded-lg font-bold hover:bg-cyan-400/10 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center space-x-2">
+                    <i class="fas fa-headphones"></i>
+                    <span>Audiobook - $14.99</span>
+                </button>
+            </div>
+            <div class="mt-8 text-gray-400 text-sm animate-fade-in">
+                <p class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-shipping-fast text-cyan-400"></i>
+                    <span>Free shipping on orders over $35</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-violet-600/30 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-4 flex items-center space-x-2">
+                        <i class="fas fa-feather-alt text-violet-500"></i>
+                        <span>AuthorName</span>
+                    </h3>
+                    <p class="text-gray-400 max-w-md font-light">
+                        Award-winning fantasy author crafting immersive worlds and unforgettable characters for over a decade.
+                    </p>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center border border-violet-600/30 hover:border-cyan-400/50 transition-colors cursor-pointer">
+                            <i class="fab fa-twitter text-cyan-400"></i>
+                        </div>
+                        <div class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center border border-violet-600/30 hover:border-cyan-400/50 transition-colors cursor-pointer">
+                            <i class="fab fa-facebook-f text-cyan-400"></i>
+                        </div>
+                        <div class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center border border-violet-600/30 hover:border-cyan-400/50 transition-colors cursor-pointer">
+                            <i class="fab fa-instagram text-cyan-400"></i>
+                        </div>
+                        <div class="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center border border-violet-600/30 hover:border-cyan-400/50 transition-colors cursor-pointer">
+                            <i class="fab fa-goodreads text-cyan-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-violet-400 mb-4 flex items-center space-x-2">
+                        <i class="fas fa-link"></i>
+                        <span>Quick Links</span>
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Home</span></a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Books</span></a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Events</span></a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center space-x-2"><i class="fas fa-chevron-right text-xs"></i><span>Contact</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-violet-400 mb-4 flex items-center space-x-2">
+                        <i class="fas fa-envelope"></i>
+                        <span>Newsletter</span>
+                    </h4>
+                    <p class="text-gray-400 text-sm mb-4 font-light">Stay updated with new releases and exclusive content.</p>
+                    <div class="flex space-x-2">
+                        <input type="email" placeholder="Your email" class="bg-zinc-800 border border-violet-600/30 rounded-lg px-4 py-2 text-gray-300 focus:outline-none focus:border-cyan-400 transition-colors flex-1">
+                        <button class="bg-cyan-500 text-gray-900 px-4 py-2 rounded-lg font-bold hover:bg-cyan-400 transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500">
+                <p class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-copyright"></i>
+                    <span>2024 AuthorName. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button class="w-14 h-14 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full flex items-center justify-center text-white shadow-2xl hover:shadow-violet-500/30 transition-all duration-300 transform hover:scale-110 animate-float">
+            <i class="fas fa-shopping-cart text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button onclick="scrollToTop()" class="fixed bottom-8 left-8 z-50 w-12 h-12 bg-zinc-800 border border-violet-600/30 rounded-full flex items-center justify-center text-cyan-400 hover:text-cyan-300 hover:border-cyan-400/50 transition-all duration-300 opacity-0" id="scrollToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove('opacity-0');
+                scrollToTopBtn.classList.add('opacity-100');
+            } else {
+                scrollToTopBtn.classList.remove('opacity-100');
+                scrollToTopBtn.classList.add('opacity-0');
+            }
+        });
+
+        // Add loading animation to buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.3);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                    `;
+                    
+                    button.style.position = 'relative';
+                    button.style.overflow = 'hidden';
+                    button.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>

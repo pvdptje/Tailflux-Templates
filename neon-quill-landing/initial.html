@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Name - Latest Release</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            900: '#111827',
+                            800: '#1f2937',
+                            700: '#374151',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                        violet: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        },
+                        zinc: {
+                            800: '#27272a',
+                            900: '#18181b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-900 border-b border-violet-600/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold text-cyan-400">AuthorName</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-colors">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-colors">Books</a>
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-colors">About</a>
+                    <a href="#" class="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
+                </div>
+                <button class="md:hidden text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-900 to-zinc-800 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Book Cover -->
+                <div class="relative">
+                    <div class="bg-violet-600/20 p-8 rounded-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <div class="bg-gradient-to-br from-violet-600 to-cyan-500 p-1 rounded-xl shadow-2xl">
+                            <div class="bg-gray-900 p-8 rounded-lg text-center">
+                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">SHADOW REALM</h3>
+                                <p class="text-gray-300 mb-4">A Novel of Dark Fantasy</p>
+                                <div class="w-20 h-1 bg-gradient-to-r from-violet-600 to-cyan-500 mx-auto mb-4"></div>
+                                <p class="text-sm text-gray-400">Available Now</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="space-y-6">
+                    <h1 class="text-5xl md:text-6xl font-bold">
+                        <span class="text-cyan-400">SHADOW</span>
+                        <span class="text-violet-500">REALM</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 leading-relaxed">
+                        The epic conclusion to the award-winning fantasy series. Journey through realms unseen and battles unimagined in this stunning finale that will leave you breathless.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-gradient-to-r from-violet-600 to-cyan-500 text-white px-8 py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-300">
+                            Buy Now
+                        </button>
+                        <button class="border border-cyan-400 text-cyan-400 px-8 py-3 rounded-lg font-bold hover:bg-cyan-400/10 transition-colors duration-300">
+                            Read Excerpt
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                        <span>Fantasy</span>
+                        <span>•</span>
+                        <span>Adventure</span>
+                        <span>•</span>
+                        <span>Epic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-cyan-400 mb-4">What Readers Are Saying</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Discover why critics and fans alike are calling this the fantasy novel of the year.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-zinc-800 p-6 rounded-xl border border-violet-600/30 hover:border-cyan-400/50 transition-colors duration-300">
+                    <div class="text-cyan-400 text-2xl mb-4">"★★★★★"</div>
+                    <p class="text-gray-300 mb-4">
+                        "A masterpiece of modern fantasy. The world-building is unparalleled and the characters will stay with you long after you finish reading."
+                    </p>
+                    <div class="text-violet-400 font-semibold">- Fantasy Book Review</div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-zinc-800 p-6 rounded-xl border border-violet-600/30 hover:border-cyan-400/50 transition-colors duration-300">
+                    <div class="text-cyan-400 text-2xl mb-4">"★★★★★"</div>
+                    <p class="text-gray-300 mb-4">
+                        "The perfect blend of heart-pounding action and emotional depth. This author continues to redefine the fantasy genre with every release."
+                    </p>
+                    <div class="text-violet-400 font-semibold">- Literary Times</div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-zinc-800 p-6 rounded-xl border border-violet-600/30 hover:border-cyan-400/50 transition-colors duration-300">
+                    <div class="text-cyan-400 text-2xl mb-4">"★★★★★"</div>
+                    <p class="text-gray-300 mb-4">
+                        "An unforgettable journey that will capture your imagination from the first page to the last. Simply breathtaking storytelling."
+                    </p>
+                    <div class="text-violet-400 font-semibold">- Bookworm Gazette</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-violet-600/20 to-cyan-500/20">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-cyan-400 mb-6">Get Your Copy Today</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Join thousands of readers who have already embarked on this epic adventure. Available in hardcover, ebook, and audiobook formats.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <button class="bg-cyan-500 text-gray-900 px-8 py-4 rounded-lg font-bold hover:bg-cyan-400 transition-colors duration-300 transform hover:scale-105">
+                    Buy Hardcover - $24.99
+                </button>
+                <button class="bg-violet-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-violet-500 transition-colors duration-300 transform hover:scale-105">
+                    Buy Ebook - $9.99
+                </button>
+                <button class="border border-cyan-400 text-cyan-400 px-8 py-4 rounded-lg font-bold hover:bg-cyan-400/10 transition-colors duration-300">
+                    Audiobook - $14.99
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-violet-600/30 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-4">AuthorName</h3>
+                    <p class="text-gray-400 max-w-md">
+                        Award-winning fantasy author crafting immersive worlds and unforgettable characters for over a decade.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-violet-400 mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Home</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Books</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Events</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-violet-400 mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">Twitter Icon</svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">Facebook Icon</svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">Instagram Icon</svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 AuthorName. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
