@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Events Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-neutral-50 to-blue-50 min-h-screen">
+    <!-- Background Pattern -->
+    <div class="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWY1ZjkiIGZpbGwtb3BhY2l0eT0iMC40Ij48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+    
+    <div x-data="calendarApp()" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" @keydown.window.arrow-left.prevent="previousMonth" @keydown.window.arrow-right.prevent="nextMonth" @keydown.window.slash.prevent="$refs.search?.focus()">
+        <!-- Header with Hero Section -->
+        <header class="mb-10">
+            <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100/40 rounded-full -translate-y-32 translate-x-32"></div>
+                <div class="relative z-10">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                        <div class="flex-1">
+                            <h1 class="text-4xl lg:text-5xl font-bold text-neutral-900 mb-3 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                Library Events Calendar
+                            </h1>
+                            <p class="text-lg text-neutral-600 max-w-2xl">
+                                Discover upcoming programs, workshops, and activities at your local library
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4 bg-white/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 shadow-sm border border-neutral-200">
+                            <button aria-label="Previous month" @click="previousMonth" class="p-3 rounded-xl border border-neutral-300 hover:bg-neutral-50 hover:border-neutral-400 transition-all duration-300 hover:scale-105 active:scale-95">
+                                <i class="fas fa-chevron-left text-neutral-600 text-lg"></i>
+                            </button>
+                            <div class="text-center min-w-[12rem]">
+                                <h2 class="text-xl font-semibold text-neutral-800" x-text="`${monthNames[currentMonth]} ${currentYear}`"></h2>
+                                <div class="text-xs text-neutral-500" aria-live="polite" x-text="`${visibleEventsCount()} events this month`"></div>
+                            </div>
+                            <button aria-label="Next month" @click="nextMonth" class="p-3 rounded-xl border border-neutral-300 hover:bg-neutral-50 hover:border-neutral-400 transition-all duration-300 hover:scale-105 active:scale-95">
+                                <i class="fas fa-chevron-right text-neutral-600 text-lg"></i>
+                            </button>
+                            <button aria-label="Jump to today" @click="jumpToToday" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100">
+                                <i class="fas fa-calendar-day"></i>
+                                Today
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Filters / Search -->
+                    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="lg:col-span-2 flex items-stretch gap-3">
+                            <div class="relative flex-1">
+                                <label for="search" class="sr-only">Search events</label>
+                                <input x-ref="search" id="search" type="text" placeholder="Search events by title, description, or location" x-model.debounce.200ms="searchQuery"
+                                       class="w-full pl-11 pr-3 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 text-neutral-700 placeholder-neutral-400">
+                                <i class="fas fa-search text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                            </div>
+                            <button @click="clearFilters" class="px-4 py-3 rounded-xl border border-neutral-300 text-neutral-700 hover:bg-neutral-50">
+                                <i class="fas fa-eraser mr-2"></i>Clear
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                            <button @click="setFilter('all')" :class="chipClass('all')" class="whitespace-nowrap">
+                                <i class="fas fa-star mr-2"></i>All
+                            </button>
+                            <button @click="setFilter('workshop')" :class="chipClass('workshop')" class="whitespace-nowrap">
+                                <i class="fas fa-laptop-code mr-2"></i>Workshops
+                            </button>
+                            <button @click="setFilter('storytime')" :class="chipClass('storytime')" class="whitespace-nowrap">
+                                <i class="fas fa-book-open mr-2"></i>Story Time
+                            </button>
+                            <button @click="setFilter('lecture')" :class="chipClass('lecture')" class="whitespace-nowrap">
+                                <i class="fas fa-chalkboard-teacher mr-2"></i>Lectures
+                            </button>
+                            <button @click="setFilter('other')" :class="chipClass('other')" class="whitespace-nowrap">
+                                <i class="fas fa-calendar-alt mr-2"></i>Other
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hero image -->
+                    <div class="mt-6 hidden md:block">
+                        <div class="relative rounded-xl overflow-hidden ring-1 ring-blue-100 shadow-sm">
+                            <img :src="heroImage" alt="Library events banner" class="w-full h-48 object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-white/80 via-white/30 to-transparent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Calendar Grid -->
+        <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden mb-8 transform transition-all duration-300 hover:shadow-xl">
+            <!-- Weekday Headers -->
+            <div class="grid grid-cols-7 bg-gradient-to-r from-blue-600 to-indigo-600 text-white sticky top-0 z-10">
+                <template x-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" :key="day">
+                    <div class="p-4 text-center font-semibold text-sm uppercase tracking-wide" x-text="day"></div>
+                </template>
+            </div>
+
+            <!-- Calendar Days (wrapped for mobile scroll) -->
+            <div class="overflow-x-auto">
+                <div class="grid grid-cols-7 min-w-[48rem]">
+                    <template x-for="(week, weekIndex) in calendar" :key="weekIndex">
+                        <template x-for="(day, dayIndex) in week" :key="dayIndex">
+                            <div class="min-h-[8.5rem] border-r border-b border-neutral-200 last:border-r-0 transition-all duration-200 hover:bg-neutral-50 focus-within:bg-neutral-50 outline-none"
+                                 tabindex="0"
+                                 :aria-label="`Date ${monthNames[day.fullDate.getMonth()]} ${day.date}, ${day.fullDate.getFullYear()}`"
+                                 :class="{ 'bg-blue-50': day.isCurrentMonth && day.date === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear() }">
+                                <div class="p-3 border-b border-neutral-100 flex justify-between items-center">
+                                    <span class="text-sm font-medium"
+                                          :class="{
+                                              'text-neutral-400': !day.isCurrentMonth,
+                                              'text-neutral-700': day.isCurrentMonth,
+                                              'bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center': day.isCurrentMonth && day.date === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()
+                                          }"
+                                          x-text="day.date"></span>
+                                    <template x-if="day.isCurrentMonth && day.date === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()">
+                                        <span class="text-xs text-blue-600 font-medium">Today</span>
+                                    </template>
+                                </div>
+                                <div class="p-2 space-y-2 max-h-24 overflow-y-auto">
+                                    <template x-if="day.events.length === 0">
+                                        <div class="text-[11px] text-neutral-400 text-center py-1">No events</div>
+                                    </template>
+                                    <template x-for="event in day.events" :key="event.id">
+                                        <div class="text-xs p-2 rounded-lg cursor-pointer transition-all duration-300 hover:shadow-md hover:scale-[1.02] border-l-4 group"
+                                             :title="event.description"
+                                             :class="{
+                                                 'bg-blue-50 text-blue-800 border-blue-400 hover:bg-blue-100': event.type === 'workshop',
+                                                 'bg-purple-50 text-purple-800 border-purple-400 hover:bg-purple-100': event.type === 'storytime',
+                                                 'bg-indigo-50 text-indigo-800 border-indigo-400 hover:bg-indigo-100': event.type === 'lecture',
+                                                 'bg-neutral-50 text-neutral-800 border-neutral-400 hover:bg-neutral-100': event.type === 'other'
+                                             }"
+                                             @click="openEvent(event)">
+                                            <div class="font-semibold flex items-center space-x-1">
+                                                <i class="fas"
+                                                   :class="{
+                                                       'fa-laptop-code': event.type === 'workshop',
+                                                       'fa-book-open': event.type === 'storytime',
+                                                       'fa-chalkboard-teacher': event.type === 'lecture',
+                                                       'fa-calendar-alt': event.type === 'other'
+                                                   }"></i>
+                                                <span class="truncate" x-text="event.title"></span>
+                                            </div>
+                                            <div class="opacity-70 mt-1 flex items-center gap-1">
+                                                <i class="far fa-clock"></i>
+                                                <span x-text="event.time"></span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Categories Legend (interactive) -->
+        <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 mb-8">
+            <h3 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center">
+                <i class="fas fa-tags text-blue-600 mr-2"></i>
+                Event Categories
+            </h3>
+            <div class="flex flex-wrap gap-3 justify-center">
+                <button @click="setFilter('workshop')" :class="legendChipClass('workshop')" class="flex items-center space-x-3 px-4 py-2 rounded-lg border">
+                    <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                    <span class="text-sm font-medium">Workshops</span>
+                </button>
+                <button @click="setFilter('storytime')" :class="legendChipClass('storytime')" class="flex items-center space-x-3 px-4 py-2 rounded-lg border">
+                    <div class="w-4 h-4 bg-purple-500 rounded-full"></div>
+                    <span class="text-sm font-medium">Story Time</span>
+                </button>
+                <button @click="setFilter('lecture')" :class="legendChipClass('lecture')" class="flex items-center space-x-3 px-4 py-2 rounded-lg border">
+                    <div class="w-4 h-4 bg-indigo-500 rounded-full"></div>
+                    <span class="text-sm font-medium">Lectures</span>
+                </button>
+                <button @click="setFilter('other')" :class="legendChipClass('other')" class="flex items-center space-x-3 px-4 py-2 rounded-lg border">
+                    <div class="w-4 h-4 bg-neutral-500 rounded-full"></div>
+                    <span class="text-sm font-medium">Other Events</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 text-center transform transition-all duration-300 hover:scale-105">
+                <i class="fas fa-calendar-check text-3xl text-blue-600 mb-3"></i>
+                <div class="text-2xl font-bold text-neutral-800" x-text="events.length"></div>
+                <div class="text-sm text-neutral-600">Total Events</div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 text-center transform transition-all duration-300 hover:scale-105">
+                <i class="fas fa-book-open text-3xl text-purple-600 mb-3"></i>
+                <div class="text-2xl font-bold text-neutral-800" x-text="events.filter(e => e.type === 'storytime').length"></div>
+                <div class="text-sm text-neutral-600">Story Times</div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 text-center transform transition-all duration-300 hover:scale-105">
+                <i class="fas fa-laptop-code text-3xl text-indigo-600 mb-3"></i>
+                <div class="text-2xl font-bold text-neutral-800" x-text="events.filter(e => e.type === 'workshop').length"></div>
+                <div class="text-sm text-neutral-600">Workshops</div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 text-center transform transition-all duration-300 hover:scale-105">
+                <i class="fas fa-users text-3xl text-green-600 mb-3"></i>
+                <div class="text-2xl font-bold text-neutral-800" x-text="events.filter(e => e.type === 'lecture').length"></div>
+                <div class="text-sm text-neutral-600">Lectures</div>
+            </div>
+        </div>
+
+        <!-- Event Modal -->
+        <div x-show="selectedEvent" x-transition:enter="transition ease-out duration-300" 
+             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" 
+             x-transition:leave-end="opacity-0 scale-95"
+             class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" x-cloak aria-modal="true" role="dialog">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all duration-300" 
+                 @click.outside="selectedEvent = null">
+                <template x-if="selectedEvent">
+                    <div>
+                        <div class="relative h-40 w-full overflow-hidden">
+                            <img :src="typeImage(selectedEvent.type)" :alt="`${selectedEvent.type} event image`" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mb-2"
+                                         :class="{
+                                             'bg-blue-100 text-blue-800': selectedEvent.type === 'workshop',
+                                             'bg-purple-100 text-purple-800': selectedEvent.type === 'storytime',
+                                             'bg-indigo-100 text-indigo-800': selectedEvent.type === 'lecture',
+                                             'bg-neutral-100 text-neutral-800': selectedEvent.type === 'other'
+                                         }">
+                                        <i class="fas mr-1" 
+                                           :class="{
+                                               'fa-laptop-code': selectedEvent.type === 'workshop',
+                                               'fa-book-open': selectedEvent.type === 'storytime',
+                                               'fa-chalkboard-teacher': selectedEvent.type === 'lecture',
+                                               'fa-calendar-alt': selectedEvent.type === 'other'
+                                           }"></i>
+                                        <span x-text="selectedEvent.type.charAt(0).toUpperCase() + selectedEvent.type.slice(1)"></span>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-neutral-900" x-text="selectedEvent.title"></h3>
+                                </div>
+                                <button aria-label="Close" @click="selectedEvent = null" class="text-neutral-400 hover:text-neutral-600 transition-colors duration-200 p-1 rounded-lg hover:bg-neutral-100">
+                                    <i class="fas fa-times text-xl"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-4 mb-6">
+                                <div class="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
+                                    <i class="fas fa-calendar text-blue-600 w-5"></i>
+                                    <div>
+                                        <div class="text-sm text-neutral-500">Date</div>
+                                        <div class="font-medium text-neutral-800" x-text="selectedEvent.date"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
+                                    <i class="fas fa-clock text-purple-600 w-5"></i>
+                                    <div>
+                                        <div class="text-sm text-neutral-500">Time</div>
+                                        <div class="font-medium text-neutral-800" x-text="selectedEvent.time"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
+                                    <i class="fas fa-map-marker-alt text-indigo-600 w-5"></i>
+                                    <div>
+                                        <div class="text-sm text-neutral-500">Location</div>
+                                        <div class="font-medium text-neutral-800" x-text="selectedEvent.location"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-neutral-800 mb-3 flex items-center">
+                                    <i class="fas fa-info-circle text-green-600 mr-2"></i>
+                                    About this Event
+                                </h4>
+                                <p class="text-neutral-600 leading-relaxed" x-text="selectedEvent.description"></p>
+                            </div>
+                            
+                            <div class="flex space-x-3">
+                                <button class="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all duration-300 font-semibold hover:shadow-lg transform hover:-translate-y-0.5">
+                                    <i class="fas fa-user-plus mr-2"></i>
+                                    Register Now
+                                </button>
+                                <button @click="shareEvent(selectedEvent)" class="px-4 py-3 border border-neutral-300 text-neutral-700 rounded-xl hover:bg-neutral-50 transition-all duration-300 font-medium">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-neutral-500 text-sm mt-12 pb-8">
+            <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-book text-blue-600"></i>
+                    <span>Your Local Library</span>
+                </div>
+                <div class="hidden sm:block">•</div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-phone text-green-600"></i>
+                    <span>(555) 123-4567</span>
+                </div>
+                <div class="hidden sm:block">•</div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-envelope text-purple-600"></i>
+                    <span>events@library.org</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function calendarApp() {
+            return {
+                // Images from Unsplash for enhancing visuals
+                heroImage: "https://images.unsplash.com/photo-1606733803396-1d028f0e6f43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwdWJsaWMlMjBsaWJyYXJ5JTIwZXZlbnRzfGVufDB8MHx8fDE3NTk3Mzc5ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=zHgyrDmhGVo",
+                imagesByType: {
+                    storytime: "https://images.unsplash.com/photo-1469013078550-305e63b7c8f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjaGlsZHJlbiUyMHN0b3J5JTIwdGltZSUyMGxpYnJhcnl8ZW58MHwwfHx8MTc1OTczNzk4N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=3jRGSA2IH0c",
+                    workshop: "https://images.unsplash.com/photo-1598978028953-799807c097b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjB3b3Jrc2hvcCUyMGxpYnJhcnl8ZW58MHwwfHx8MTc1OTczNzk4N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=fLVEijXXhJM",
+                    lecture: "https://images.unsplash.com/photo-1702974915123-16739a9c3577?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwdWJsaWMlMjBsZWN0dXJlJTIwbGlicmFyeXxlbnwwfDB8fHwxNzU5NzM3OTg4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=opPMZgpkfnY",
+                    other: "https://images.unsplash.com/photo-1606733803396-1d028f0e6f43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBib29rJTIwY2x1YiUyMGxpYnJhcnl8ZW58MHwwfHx8MTc1OTczNzk4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=zHgyrDmhGVo"
+                },
+
+                currentMonth: new Date().getMonth(),
+                currentYear: new Date().getFullYear(),
+                selectedEvent: null,
+
+                // Filters
+                filterType: 'all',
+                searchQuery: '',
+
+                monthNames: [
+                    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+                ],
+                
+                get calendar() {
+                    const firstDay = new Date(this.currentYear, this.currentMonth, 1);
+                    const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
+                    const startDate = new Date(firstDay);
+                    startDate.setDate(startDate.getDate() - firstDay.getDay());
+                    
+                    const calendar = [];
+                    let currentWeek = [];
+                    
+                    for (let i = 0; i < 42; i++) {
+                        const date = new Date(startDate);
+                        date.setDate(startDate.getDate() + i);
+                        const iso = date.toISOString().split('T')[0];
+
+                        const dayEvents = this.events.filter(event => {
+                            const matchesDate = event.date === iso;
+                            const matchesType = this.filterType === 'all' ? true : event.type === this.filterType;
+                            const q = this.searchQuery.trim().toLowerCase();
+                            const matchesQuery = q === '' ? true : (
+                                (event.title && event.title.toLowerCase().includes(q)) ||
+                                (event.description && event.description.toLowerCase().includes(q)) ||
+                                (event.location && event.location.toLowerCase().includes(q))
+                            );
+                            return matchesDate && matchesType && matchesQuery;
+                        });
+                        
+                        currentWeek.push({
+                            date: date.getDate(),
+                            fullDate: date,
+                            events: dayEvents,
+                            isCurrentMonth: date.getMonth() === this.currentMonth
+                        });
+                        
+                        if (currentWeek.length === 7) {
+                            calendar.push(currentWeek);
+                            currentWeek = [];
+                        }
+                    }
+                    
+                    return calendar;
+                },
+
+                visibleEventsCount() {
+                    // Count events for current month that match filters
+                    const start = new Date(this.currentYear, this.currentMonth, 1);
+                    const end = new Date(this.currentYear, this.currentMonth + 1, 0);
+                    const q = this.searchQuery.trim().toLowerCase();
+                    return this.events.filter(e => {
+                        const d = new Date(e.date);
+                        const inMonth = d >= start && d <= end;
+                        const typeOk = this.filterType === 'all' ? true : e.type === this.filterType;
+                        const queryOk = q === '' ? true : (
+                            (e.title && e.title.toLowerCase().includes(q)) ||
+                            (e.description && e.description.toLowerCase().includes(q)) ||
+                            (e.location && e.location.toLowerCase().includes(q))
+                        );
+                        return inMonth && typeOk && queryOk;
+                    }).length;
+                },
+
+                chipClass(type) {
+                    const isActive = this.filterType === type;
+                    const base = "px-4 py-2 rounded-xl border text-sm font-medium inline-flex items-center";
+                    const active = "bg-blue-600 text-white border-blue-600";
+                    const inactive = "bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50";
+                    return `${base} ${isActive ? active : inactive}`;
+                },
+
+                legendChipClass(type) {
+                    const isActive = this.filterType === type;
+                    const base = "border-neutral-200 hover:border-neutral-300 transition-colors";
+                    const active = "ring-2 ring-blue-300";
+                    return `${base} ${isActive ? active : ''}`;
+                },
+
+                setFilter(type) {
+                    this.filterType = type;
+                },
+
+                clearFilters() {
+                    this.filterType = 'all';
+                    this.searchQuery = '';
+                },
+
+                openEvent(event) {
+                    this.selectedEvent = event;
+                },
+
+                typeImage(type) {
+                    return this.imagesByType[type] || this.imagesByType.other;
+                },
+
+                shareEvent(event) {
+                    const text = `${event.title} • ${event.date} • ${event.time} @ ${event.location}`;
+                    if (navigator.share) {
+                        navigator.share({ title: event.title, text, url: window.location.href }).catch(() => {});
+                    } else {
+                        navigator.clipboard.writeText(`${text}\n${window.location.href}`).then(() => {
+                            alert('Event details copied to clipboard!');
+                        });
+                    }
+                },
+
+                jumpToToday() {
+                    const now = new Date();
+                    this.currentMonth = now.getMonth();
+                    this.currentYear = now.getFullYear();
+                },
+                
+                events: [
+                    {
+                        id: 1,
+                        title: "Children's Story Time",
+                        type: "storytime",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 5).toISOString().split('T')[0],
+                        time: "10:00 AM - 11:00 AM",
+                        location: "Children's Section",
+                        description: "Join us for a magical story time session with our librarian. Perfect for children ages 3-6. Bring your little ones for an hour of enchanting stories, songs, and fun activities that will spark their imagination and love for reading."
+                    },
+                    {
+                        id: 2,
+                        title: "Digital Literacy Workshop",
+                        type: "workshop",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 8).toISOString().split('T')[0],
+                        time: "2:00 PM - 4:00 PM",
+                        location: "Computer Lab",
+                        description: "Learn essential computer skills including email, internet browsing, and online safety. This hands-on workshop is perfect for beginners. Our experienced instructors will guide you through setting up email accounts, safe web browsing practices, and protecting your personal information online."
+                    },
+                    {
+                        id: 3,
+                        title: "Local History Lecture",
+                        type: "lecture",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 12).toISOString().split('T')[0],
+                        time: "6:30 PM - 8:00 PM",
+                        location: "Community Room",
+                        description: "Professor Johnson presents on the rich history of our local community from settlement to present day. Discover fascinating stories about our town's founding families, historic landmarks, and cultural heritage. Includes Q&A session and historical photographs."
+                    },
+                    {
+                        id: 4,
+                        title: "Book Club Meeting",
+                        type: "other",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 15).toISOString().split('T')[0],
+                        time: "7:00 PM - 8:30 PM",
+                        location: "Reading Nook",
+                        description: "Monthly book club discussion. This month's selection: 'The Midnight Library' by Matt Haig. Join fellow book lovers for a lively discussion about this thought-provoking novel. Refreshments provided. New members always welcome!"
+                    },
+                    {
+                        id: 5,
+                        title: "Teen Coding Workshop",
+                        type: "workshop",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 18).toISOString().split('T')[0],
+                        time: "3:00 PM - 5:00 PM",
+                        location: "Teen Space",
+                        description: "Introduction to Python programming for teens. No prior experience required. Learn the basics of coding through fun projects and games. Perfect for students interested in technology, gaming, or future STEM careers. Laptops provided."
+                    },
+                    {
+                        id: 6,
+                        title: "Family Movie Night",
+                        type: "other",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 20).toISOString().split('T')[0],
+                        time: "6:00 PM - 8:00 PM",
+                        location: "Community Room",
+                        description: "Join us for a family-friendly movie screening. This month's feature: An animated adventure suitable for all ages. Bring your own blankets and pillows for comfortable seating. Popcorn and drinks provided. Free admission!"
+                    },
+                    {
+                        id: 7,
+                        title: "Author Talk: Local Writers",
+                        type: "lecture",
+                        date: new Date(new Date().getFullYear(), new Date().getMonth(), 22).toISOString().split('T')[0],
+                        time: "7:00 PM - 8:30 PM",
+                        location: "Authors' Corner",
+                        description: "Meet local authors and hear about their writing journeys. Three published authors from our community will share their experiences, read excerpts from their works, and answer questions about the writing and publishing process."
+                    }
+                ],
+                
+                previousMonth() {
+                    if (this.currentMonth === 0) {
+                        this.currentMonth = 11;
+                        this.currentYear--;
+                    } else {
+                        this.currentMonth--;
+                    }
+                },
+                
+                nextMonth() {
+                    if (this.currentMonth === 11) {
+                        this.currentMonth = 0;
+                        this.currentYear++;
+                    } else {
+                        this.currentMonth++;
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+
+        /* Hide horizontal chips scrollbar on WebKit */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Custom scrollbar for calendar events */
+        .max-h-24::-webkit-scrollbar {
+            width: 4px;
+        }
+        .max-h-24::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .max-h-24::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .max-h-24::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Smooth animations */
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+    </style>
+</body>
+</html>
