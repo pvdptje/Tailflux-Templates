@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ openHelp:false }" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Resources | Help & Guidance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                            600: '#475569'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-gentle': 'pulseGentle 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGentle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-slate-200 min-h-screen selection:bg-blue-500/30 selection:text-blue-200">
+    <a href="#content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-blue-600 text-white px-3 py-2 rounded-lg">Skip to content</a>
+
+    <div class="container mx-auto px-4 py-8" id="content">
+        <!-- Header with Hero Section -->
+        <header class="text-center mb-16 animate-fade-in motion-reduce:animate-none">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/30 to-purple-900/30 p-8 mb-8 border border-slate-700/50 backdrop-blur-sm">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1758273240403-052b3c99f636?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtZW50YWwlMjBoZWFsdGglMjBzdXBwb3J0JTIwY2FsbSUyMHBlYWNlZnVsfGVufDB8MHx8fDE3NTk3ODA5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080')] bg-cover bg-center opacity-10"></div>
+                <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 relative z-10 leading-tight">
+                    Support Resources
+                </h1>
+                <p class="text-slate-300 text-xl max-w-2xl mx-auto relative z-10 leading-relaxed">
+                    Find helpful resources, guides, and tools to support your mental health journey
+                </p>
+                <div class="mt-6 flex justify-center space-x-4 relative z-10">
+                    <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse-gentle motion-reduce:animate-none"></div>
+                    <div class="w-3 h-3 bg-purple-400 rounded-full animate-pulse-gentle motion-reduce:animate-none" style="animation-delay: 0.2s"></div>
+                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse-gentle motion-reduce:animate-none" style="animation-delay: 0.4s"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search + Filter + Count -->
+        <div class="mb-12 animate-slide-up motion-reduce:animate-none" x-data="resourcesComponent()">
+            <div class="flex flex-col md:flex-row gap-4 mb-4">
+                <div class="flex-1 relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input 
+                        type="text"
+                        aria-label="Search resources"
+                        placeholder="Search resources..."
+                        x-model.debounce.200ms="search"
+                        class="w-full pl-12 pr-12 py-4 bg-dark-800 border border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-200 transition-all duration-300 placeholder-slate-500"
+                    >
+                    <button @click="search=''" x-show="search.length" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors" aria-label="Clear search">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <i class="fas fa-filter absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <select 
+                        x-model="category"
+                        aria-label="Filter by category"
+                        class="pl-12 pr-8 py-4 bg-dark-800 border border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-slate-200 transition-all duration-300 appearance-none cursor-pointer"
+                    >
+                        <option value="all">All Categories</option>
+                        <option value="mental-health">Mental Health</option>
+                        <option value="crisis">Crisis Support</option>
+                        <option value="community">Community</option>
+                        <option value="tools">Tools & Worksheets</option>
+                        <option value="education">Education</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                </div>
+            </div>
+            <div class="flex items-center justify-between text-sm text-slate-400 mb-6">
+                <div aria-live="polite">Showing <span class="text-slate-200 font-medium" x-text="filtered.length"></span> resource(s)</div>
+                <div class="flex items-center gap-2">
+                    <button @click="reset()" class="px-3 py-1.5 rounded-lg border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white transition-colors">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resources Grid (dynamic) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <template x-for="(r, idx) in filtered" :key="r.id">
+                    <div 
+                        class="group bg-dark-800 rounded-2xl border border-slate-700 transition-all duration-500 transform hover:-translate-y-2 focus-within:-translate-y-2 hover:shadow-2xl p-0 overflow-hidden"
+                        :class="{
+                            'hover:border-blue-500 hover:shadow-blue-500/20': r.accent === 'blue',
+                            'hover:border-green-500 hover:shadow-green-500/20': r.accent === 'green',
+                            'hover:border-lime-500 hover:shadow-lime-500/20': r.accent === 'lime'
+                        }"
+                        x-show="true"
+                        x-transition.opacity.scale.duration.300
+                        :style="`animation-delay: ${idx * 0.1}s`"
+                        tabindex="0"
+                        @keyup.enter="$event.target.querySelector('a[data-primary]').click()"
+                        role="article"
+                        :aria-label="r.title"
+                    >
+                        <!-- Card image -->
+                        <div class="relative h-40 w-full overflow-hidden">
+                            <img :src="r.image" :alt="r.imageAlt" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-dark-900/0 to-transparent"></div>
+                            <div class="absolute top-3 left-3 flex items-center">
+                                <span class="px-3 py-1.5 rounded-full text-xs font-medium border/50"
+                                      :class="{
+                                        'bg-blue-900/60 text-blue-200 border border-blue-700/50': r.accent === 'blue',
+                                        'bg-green-900/60 text-green-200 border border-green-700/50': r.accent === 'green',
+                                        'bg-lime-900/60 text-lime-200 border border-lime-700/50': r.accent === 'lime'
+                                      }"
+                                      x-text="r.badge"></span>
+                            </div>
+                        </div>
+                        <!-- Card body -->
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center mr-4 shadow-lg transition-transform duration-300 group-hover:scale-110"
+                                    :class="{
+                                        'bg-gradient-to-br from-blue-500 to-blue-600': r.accent === 'blue',
+                                        'bg-gradient-to-br from-green-500 to-green-600': r.accent === 'green',
+                                        'bg-gradient-to-br from-lime-500 to-lime-600': r.accent === 'lime'
+                                    }">
+                                    <i class="text-white text-lg" :class="r.icon"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-slate-100 group-hover:text-slate-50 transition-colors duration-300" x-text="r.title"></h3>
+                            </div>
+                            <p class="text-slate-400 mb-5 leading-relaxed" x-text="r.description"></p>
+                            <a :href="r.link" data-primary class="inline-flex items-center font-medium group/link"
+                               :class="{
+                                   'text-blue-400 hover:text-blue-300': r.accent === 'blue',
+                                   'text-green-400 hover:text-green-300': r.accent === 'green',
+                                   'text-lime-400 hover:text-lime-300': r.accent === 'lime'
+                               }" :aria-label="`${r.linkText} - ${r.title}`">
+                                <span x-text="r.linkText"></span>
+                                <i class="fas fa-arrow-right ml-2 transform transition-transform duration-300 group-hover/link:translate-x-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- No results -->
+            <div x-show="filtered.length === 0" x-transition.opacity class="rounded-2xl border border-slate-700 bg-dark-800 p-8 text-center">
+                <div class="mx-auto w-16 h-16 rounded-full bg-slate-700/40 flex items-center justify-center mb-4">
+                    <i class="fas fa-magnifying-glass text-slate-300 text-2xl"></i>
+                </div>
+                <h3 class="text-slate-100 font-semibold mb-2">No resources found</h3>
+                <p class="text-slate-400 mb-4">Try adjusting your search or selecting a different category.</p>
+                <button @click="reset()" class="px-4 py-2 rounded-lg border border-slate-600 hover:border-blue-500 text-slate-200 hover:text-white transition-colors">
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Help Section -->
+        <div class="bg-dark-800 rounded-2xl p-8 border border-slate-700 hover:shadow-xl transition-all duration-500 mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">Need Immediate Help?</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">We're here for you 24/7. Choose the support option that works best for you.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-phone-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100 mb-3 group-hover:text-blue-300 transition-colors duration-300">Crisis Hotline</h3>
+                    <p class="text-slate-400 mb-4 leading-relaxed">Available 24/7 for immediate support and guidance</p>
+                    <a href="tel:1-800-123-4567" class="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium group/link bg-blue-900/30 px-4 py-2 rounded-lg border border-blue-700/50 hover:border-blue-500 transition-all duration-300" aria-label="Call Crisis Hotline 1-800-123-4567">
+                        <i class="fas fa-phone mr-2"></i>
+                        1-800-123-4567
+                    </a>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-comment-dots text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100 mb-3 group-hover:text-green-300 transition-colors duration-300">Chat Support</h3>
+                    <p class="text-slate-400 mb-4 leading-relaxed">Live chat with trained professionals in real-time</p>
+                    <button @click="openHelp=true" class="inline-flex items-center text-green-400 hover:text-green-300 font-medium group/link bg-green-900/30 px-4 py-2 rounded-lg border border-green-700/50 hover:border-green-500 transition-all duration-300" aria-haspopup="dialog" aria-controls="helpDialog">
+                        <i class="fas fa-comment mr-2"></i>
+                        Start Chat
+                    </button>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-gradient-to-br from-lime-500 to-lime-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100 mb-3 group-hover:text-lime-300 transition-colors duration-300">Email Support</h3>
+                    <p class="text-slate-400 mb-4 leading-relaxed">Get personalized help within 24 hours via email</p>
+                    <a href="mailto:support@helpgroup.org" class="inline-flex items-center text-lime-400 hover:text-lime-300 font-medium group/link bg-lime-900/30 px-4 py-2 rounded-lg border border-lime-700/50 hover:border-lime-500 transition-all duration-300" aria-label="Email support at support@helpgroup.org">
+                        <i class="fas fa-envelope mr-2"></i>
+                        support@helpgroup.org
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Spotlight -->
+        <div class="bg-gradient-to-br from-purple-900/30 to-blue-900/30 rounded-2xl p-8 border border-slate-700 mb-16">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-1">
+                    <h2 class="text-3xl font-bold text-slate-100 mb-4">Join Our Community</h2>
+                    <p class="text-slate-300 text-lg mb-6 leading-relaxed">Connect with others who understand your journey. Share experiences, find support, and grow together in a safe, moderated environment.</p>
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <span class="bg-white/10 text-slate-200 px-3 py-1.5 rounded-full text-sm border border-white/20">
+                            <i class="fas fa-users mr-1"></i> 5,000+ Members
+                        </span>
+                        <span class="bg-white/10 text-slate-200 px-3 py-1.5 rounded-full text-sm border border-white/20">
+                            <i class="fas fa-shield-alt mr-1"></i> Safe Space
+                        </span>
+                        <span class="bg-white/10 text-slate-200 px-3 py-1.5 rounded-full text-sm border border-white/20">
+                            <i class="fas fa-clock mr-1"></i> 24/7 Access
+                        </span>
+                    </div>
+                    <a href="#" class="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Join Community
+                    </a>
+                </div>
+                <div class="flex-1 w-full">
+                    <div class="relative rounded-xl overflow-hidden border border-slate-600">
+                        <img src="https://images.unsplash.com/photo-1585984968562-1443b72fb0dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBzdXBwb3J0JTIwZ3JvdXAlMjB0b2dldGhlcnxlbnwwfDB8fHwxNzU5NzgxMjcxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=CrTVcBoFlxc" 
+                             alt="Community support group together" 
+                             class="w-full h-64 object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent flex items-end p-6">
+                            <p class="text-white text-sm italic">"Finding this community changed everything for me"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Banner -->
+        <div class="bg-gradient-to-r from-red-900/40 to-orange-900/40 rounded-2xl p-6 border border-red-500/50 mb-8 animate-pulse-gentle motion-reduce:animate-none" role="region" aria-label="Emergency support">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-red-200">Emergency Support Available</h3>
+                        <p class="text-red-300 text-sm">If you're in immediate danger, call emergency services</p>
+                    </div>
+                </div>
+                <a href="tel:911" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300 w-full sm:w-auto text-center" aria-label="Call 911">
+                    <i class="fas fa-phone mr-2"></i>
+                    Call 911
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t border-slate-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-lg font-semibold text-slate-100 mb-4">Support Resources</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Providing accessible mental health resources and support for everyone who needs it.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-slate-100 mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-blue-300 transition-colors duration-300">Home</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-300 transition-colors duration-300">Resources</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-300 transition-colors duration-300">Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-300 transition-colors duration-300">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-slate-100 mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-green-300 transition-colors duration-300">FAQ</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-green-300 transition-colors duration-300">Contact</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-green-300 transition-colors duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-green-300 transition-colors duration-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-slate-100 mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-slate-700 hover:bg-blue-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-slate-300"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-700 hover:bg-blue-400 rounded-full flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-300" aria-label="Twitter">
+                            <i class="fab fa-twitter text-slate-300"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-700 hover:bg-pink-500 rounded-full flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="Instagram">
+                            <i class="fab fa-instagram text-slate-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-8 border-t border-slate-700">
+                <p class="text-slate-500 text-sm mb-2">
+                    <i class="fas fa-heart text-red-400 mr-1"></i>
+                    You are not alone. Reach out anytime you need support.
+                </p>
+                <p class="text-slate-400 text-xs">
+                    &copy; 2024 Support Resources. All rights reserved. | 
+                    <span class="text-blue-400">Crisis Text Line: Text HOME to 741741</span>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Help Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button @click="openHelp=true" class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-110 group focus:outline-none focus:ring-4 focus:ring-blue-400/40" aria-haspopup="dialog" aria-controls="helpDialog" aria-label="Open quick help">
+            <i class="fas fa-hands-helping text-white text-xl"></i>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-pulse motion-reduce:animate-none">
+                <span class="text-white text-xs font-bold">!</span>
+            </div>
+        </button>
+    </div>
+
+    <!-- Help Modal -->
+    <div x-show="openHelp" x-transition.opacity class="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+        <div @click="openHelp=false" class="absolute inset-0 bg-black/60"></div>
+        <div id="helpDialog" role="dialog" aria-modal="true" aria-label="Quick Help" class="relative w-full sm:max-w-lg bg-dark-800 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden"
+             x-trap.noscroll.inert="openHelp"
+             x-transition.duration.300>
+            <div class="p-6">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+                            <i class="fas fa-headset text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Quick Help</h3>
+                    </div>
+                    <button @click="openHelp=false" class="text-slate-400 hover:text-slate-200 transition-colors" aria-label="Close quick help">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+                <p class="text-slate-400 mt-3">
+                    Choose a support option below. Our team is here to assist you.
+                </p>
+                <div class="mt-6 space-y-3">
+                    <a href="tel:1-800-123-4567" class="flex items-center justify-between p-4 rounded-xl border border-slate-700 hover:border-green-500 bg-slate-800/40 transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-green-600/20 text-green-300 flex items-center justify-center"><i class="fas fa-phone"></i></span>
+                            <div>
+                                <div class="font-medium">Call Hotline</div>
+                                <div class="text-sm text-slate-400">1-800-123-4567</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-500"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between p-4 rounded-xl border border-slate-700 hover:border-blue-500 bg-slate-800/40 transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-blue-600/20 text-blue-300 flex items-center justify-center"><i class="fas fa-comment"></i></span>
+                            <div>
+                                <div class="font-medium">Live Chat</div>
+                                <div class="text-sm text-slate-400">Connect now</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-500"></i>
+                    </a>
+                    <a href="mailto:support@helpgroup.org" class="flex items-center justify-between p-4 rounded-xl border border-slate-700 hover:border-lime-500 bg-slate-800/40 transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-lime-600/20 text-lime-300 flex items-center justify-center"><i class="fas fa-envelope"></i></span>
+                            <div>
+                                <div class="font-medium">Email Us</div>
+                                <div class="text-sm text-slate-400">support@helpgroup.org</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-500"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function resourcesComponent() {
+            return {
+                search: '',
+                category: 'all',
+                resources: [
+                    {
+                        id: 1,
+                        title: 'Coping Strategies Guide',
+                        category: 'mental-health',
+                        badge: 'Mental Health',
+                        accent: 'blue',
+                        icon: 'fas fa-brain',
+                        description: 'Learn effective techniques to manage stress and anxiety in daily life with evidence-based approaches.',
+                        linkText: 'Access Resource',
+                        link: '#',
+                        image: 'https://images.unsplash.com/photo-1627582549810-d9a29e9bc950?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb3BpbmclMjBzdHJhdGVnaWVzJTIwY2FsbSUyMG5hdHVyZXxlbnwwfDB8fHwxNzU5NzgxMjg0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=NtkZLaK4_ms',
+                        imageAlt: 'Calm nature scene for coping strategies'
+                    },
+                    {
+                        id: 2,
+                        title: 'Support Group Meetings',
+                        category: 'community',
+                        badge: 'Community',
+                        accent: 'green',
+                        icon: 'fas fa-users',
+                        description: 'Weekly virtual meetings where you can share experiences and find support in a safe environment.',
+                        linkText: 'Join Meeting',
+                        link: '#',
+                        image: 'https://images.unsplash.com/photo-1653212883731-4d5bc66e0181?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXBwb3J0JTIwZ3JvdXAlMjBvbmxpbmUlMjBtZWV0aW5nJTIwdmlkZW8lMjBjYWxsfGVufDB8MHx8fDE3NTk3ODEyODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=-2nwxLayROA',
+                        imageAlt: 'Online video call for support group'
+                    },
+                    {
+                        id: 3,
+                        title: 'Mood Tracking Worksheet',
+                        category: 'tools',
+                        badge: 'Tools',
+                        accent: 'lime',
+                        icon: 'fas fa-chart-line',
+                        description: 'Printable worksheet to help track your emotional patterns and identify triggers for better self-awareness.',
+                        linkText: 'Download PDF',
+                        link: '#',
+                        image: 'https://images.unsplash.com/photo-1703861238419-fdea58d243d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb29kJTIwdHJhY2tpbmclMjBqb3VybmFsJTIwbm90ZWJvb2slMjBwZW58ZW58MHwwfHx8MTc1OTc4MTI4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=j76zUEF1HTI',
+                        imageAlt: 'Notebook and pen for mood tracking'
+                    },
+                    {
+                        id: 4,
+                        title: '24/7 Helpline Directory',
+                        category: 'crisis',
+                        badge: 'Crisis Support',
+                        accent: 'blue',
+                        icon: 'fas fa-phone-alt',
+                        description: 'Immediate support contacts for when you need someone to talk to right now, available anytime.',
+                        linkText: 'View Contacts',
+                        link: '#',
+                        image: 'https://images.unsplash.com/photo-1653130891927-50b864d32e3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoZWxwbGluZSUyMHBob25lJTIwc3VwcG9ydHxlbnwwfDB8fHwxNzU5NzgxMjg2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=IHa2Ulby7CY',
+                        imageAlt: 'Phone support helpline'
+                    },
+                    {
+                        id: 5,
+                        title: 'Understanding Recovery',
+                        category: 'education',
+                        badge: 'Education',
+                        accent: 'green',
+                        icon: 'fas fa-book-open',
+                        description: 'Comprehensive guide to the recovery process and what to expect at each stage of your journey.',
+                        linkText: 'Read Guide',
+                        link: '#',
+                        image: 'https://images.unsplash.com/photo-1621887348744-6b0444f8a058?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtZW50YWwlMjBoZWFsdGglMjByZWNvdmVyeSUyMGxlYXJuaW5nJTIwYm9va3xlbnwwfDB8fHwxNzU5NzgxMjg2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Ko3EMBFggok',
+                        imageAlt: 'Learning book about recovery'
+                    },
+                    {
+                        id: 6,
+                        title: 'Peer Support Forum',
+                        category: 'community',
+                        badge: 'Community',
+                        accent: 'lime',
+                        icon: 'fas fa-comments',
+                        description: 'Safe space to connect with others who understand what you\'re going through and share experiences.',
+                        linkText: 'Visit Forum',
+                        link: '#',
+                        image: 'https://images.unsplash.com/photo-1683104691469-7b40f22caec1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwZWVyJTIwc3VwcG9ydCUyMGZvcnVtJTIwY29udmVyc2F0aW9uJTIwY29tbXVuaXR5fGVufDB8MHx8fDE3NTk3ODEyODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=eQsuFl7jNRA',
+                        imageAlt: 'Forum conversation representing peer support'
+                    }
+                ],
+                get filtered() {
+                    const s = this.search.trim().toLowerCase();
+                    return this.resources.filter(r => {
+                        const matchesCategory = this.category === 'all' || r.category === this.category;
+                        const matchesSearch = !s || r.title.toLowerCase().includes(s) || r.description.toLowerCase().includes(s) || r.badge.toLowerCase().includes(s);
+                        return matchesCategory && matchesSearch;
+                    });
+                },
+                reset() {
+                    this.search = '';
+                    this.category = 'all';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
