@@ -1,0 +1,616 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(34, 197, 94, 0.3)' },
+                            '50%': { boxShadow: '0 0 15px rgba(34, 197, 94, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-zinc-800/95 backdrop-blur-sm border-b border-zinc-700 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-yellow-400 to-green-400 rounded-lg flex items-center justify-center mr-3 shadow-lg">
+                            <i class="fas fa-users text-zinc-900 text-sm"></i>
+                        </div>
+                        <span class="text-yellow-400 font-bold text-xl tracking-tight">CommunityHub</span>
+                    </div>
+                    <div class="hidden md:ml-8 md:flex md:space-x-6">
+                        <a href="#" class="text-green-400 border-b-2 border-green-400 px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-comments mr-2"></i>Forums
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-users mr-2"></i>Members
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-calendar-alt mr-2"></i>Events
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-book mr-2"></i>Resources
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        New Post
+                    </button>
+                    <div class="relative group">
+                        <div class="w-10 h-10 bg-gradient-to-r from-yellow-400 to-green-400 rounded-full flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 shadow-lg">
+                            <span class="text-zinc-900 font-bold text-sm">JD</span>
+                        </div>
+                        <div class="absolute right-0 mt-2 w-48 bg-zinc-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-zinc-700">
+                            <div class="py-2">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-700 hover:text-white transition-colors">
+                                    <i class="fas fa-user mr-2"></i>Profile
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-700 hover:text-white transition-colors">
+                                    <i class="fas fa-cog mr-2"></i>Settings
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-red-400 hover:bg-zinc-700 transition-colors">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative bg-gradient-to-br from-zinc-800 to-zinc-900 border-b border-zinc-700">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+            <div class="text-center animate-fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-green-400">CommunityHub</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Connect, share, and grow with like-minded individuals in our vibrant community space
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fas fa-rocket"></i>
+                        Join Community
+                    </button>
+                    <button class="border border-green-400 text-green-400 hover:bg-green-400/10 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                        Explore Forums
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-8 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 animate-slide-up">
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-green-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-users text-green-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Total Members</p>
+                            <p class="text-2xl font-bold text-white">2,847</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-yellow-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-yellow-400/20 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-comments text-yellow-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Active Threads</p>
+                            <p class="text-2xl font-bold text-white">589</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-blue-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-eye text-blue-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Daily Views</p>
+                            <p class="text-2xl font-bold text-white">12.4k</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-purple-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-heart text-purple-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Helpful Votes</p>
+                            <p class="text-2xl font-bold text-white">8,923</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forum Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Category 1 -->
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-green-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg group animate-slide-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg group-hover:animate-pulse-glow">
+                            <i class="fas fa-comments text-zinc-900 text-lg"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-white group-hover:text-green-400 transition-colors">General Discussion</h3>
+                            <p class="text-gray-400 text-sm">Chat about anything community-related</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-folder"></i>
+                            245 Topics
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-comment"></i>
+                            1.2k Posts
+                        </span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-zinc-700">
+                        <div class="flex items-center text-xs text-gray-500">
+                            <i class="fas fa-clock mr-1"></i>
+                            Latest: 2 hours ago
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-green-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg group animate-slide-up" style="animation-delay: 0.1s">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg group-hover:animate-pulse-glow">
+                            <i class="fas fa-question-circle text-white text-lg"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-white group-hover:text-green-400 transition-colors">Questions & Answers</h3>
+                            <p class="text-gray-400 text-sm">Get help from the community</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-folder"></i>
+                            189 Topics
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-comment"></i>
+                            856 Posts
+                        </span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-zinc-700">
+                        <div class="flex items-center text-xs text-gray-500">
+                            <i class="fas fa-clock mr-1"></i>
+                            Latest: 5 hours ago
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="bg-zinc-800 rounded-xl p-6 border border-zinc-700 hover:border-green-400 transition-all duration-300 hover:transform hover:scale-105 shadow-lg group animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:animate-pulse-glow">
+                            <i class="fas fa-palette text-white text-lg"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-white group-hover:text-green-400 transition-colors">Show & Tell</h3>
+                            <p class="text-gray-400 text-sm">Share your projects and creations</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-folder"></i>
+                            156 Topics
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-comment"></i>
+                            723 Posts
+                        </span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-zinc-700">
+                        <div class="flex items-center text-xs text-gray-500">
+                            <i class="fas fa-clock mr-1"></i>
+                            Latest: 1 day ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Recent Activity -->
+                <div class="lg:col-span-2">
+                    <div class="bg-zinc-800 rounded-xl border border-zinc-700 shadow-lg">
+                        <div class="px-6 py-4 border-b border-zinc-700 bg-zinc-750/50 rounded-t-xl">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-xl font-semibold text-white flex items-center gap-2">
+                                    <i class="fas fa-bolt text-yellow-400"></i>
+                                    Recent Activity
+                                </h2>
+                                <div class="flex items-center text-sm text-gray-400">
+                                    <i class="fas fa-fire text-red-400 mr-1"></i>
+                                    Hot Topics
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Thread List -->
+                        <div class="divide-y divide-zinc-700">
+                            <!-- Thread 1 -->
+                            <div class="px-6 py-4 hover:bg-zinc-750/50 transition-all duration-300 group">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">Pinned</span>
+                                            <span class="bg-yellow-400/20 text-yellow-400 px-2 py-1 rounded text-xs font-medium">Important</span>
+                                        </div>
+                                        <h3 class="text-green-400 font-medium hover:text-green-300 cursor-pointer group-hover:translate-x-1 transition-transform">
+                                            <i class="fas fa-thumbtack text-green-400 mr-2"></i>
+                                            Welcome to our community! Please read this first
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2">
+                                            Started by <span class="text-yellow-400 font-medium">Admin</span> • 2 hours ago • <span class="text-green-400">42 replies</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                                        <div class="text-center">
+                                            <div class<div class="text-white font-semibold text-lg">42</div>
+                                            <div class="text-xs">Replies</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">128</div>
+                                            <div class="text-xs">Views</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thread 2 -->
+                            <div class="px-6 py-4 hover:bg-zinc-750/50 transition-all duration-300 group">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="text-white font-medium hover:text-gray-300 cursor-pointer group-hover:translate-x-1 transition-transform">
+                                            <i class="fas fa-question-circle text-blue-400 mr-2"></i>
+                                            Looking for recommendations on beginner tools
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2">
+                                            Started by <span class="text-yellow-400 font-medium">NewMember23</span> • 5 hours ago • Last reply by <span class="text-green-400 font-medium">ExpertUser</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">15</div>
+                                            <div class="text-xs">Replies</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">89</div>
+                                            <div class="text-xs">Views</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thread 3 -->
+                            <div class="px-6 py-4 hover:bg-zinc-750/50 transition-all duration-300 group">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="bg-purple-500/20 text-purple-400 px-2 py-1 rounded text-xs font-medium">Showcase</span>
+                                        </div>
+                                        <h3 class="text-white font-medium hover:text-gray-300 cursor-pointer group-hover:translate-x-1 transition-transform">
+                                            <i class="fas fa-star text-yellow-400 mr-2"></i>
+                                            My latest project showcase - what do you think?
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2">
+                                            Started by <span class="text-yellow-400 font-medium">CreativeSoul</span> • 1 day ago • <span class="text-green-400">28 replies</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">28</div>
+                                            <div class="text-xs">Replies</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">214</div>
+                                            <div class="text-xs">Views</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thread 4 -->
+                            <div class="px-6 py-4 hover:bg-zinc-750/50 transition-all duration-300 group">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="text-white font-medium hover:text-gray-300 cursor-pointer group-hover:translate-x-1 transition-transform">
+                                            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                                            Amazing productivity hack I discovered!
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2">
+                                            Started by <span class="text-yellow-400 font-medium">ProductivityPro</span> • 2 days ago • <span class="text-green-400">67 replies</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">67</div>
+                                            <div class="text-xs">Replies</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-white font-semibold text-lg">421</div>
+                                            <div class="text-xs">Views</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- View All Button -->
+                        <div class="px-6 py-4 border-t border-zinc-700 bg-zinc-750/30 rounded-b-xl">
+                            <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-list"></i>
+                                View All Threads
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Online Users -->
+                    <div class="bg-zinc-800 rounded-xl border border-zinc-700 shadow-lg">
+                        <div class="px-6 py-4 border-b border-zinc-700 bg-zinc-750/50 rounded-t-xl">
+                            <h2 class="text-xl font-semibold text-white flex items-center gap-2">
+                                <i class="fas fa-circle text-green-400"></i>
+                                Currently Online
+                            </h2>
+                            <p class="text-gray-400 text-sm mt-1">42 members and 123 guests</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex flex-wrap gap-3">
+                                <span class="bg-green-500/20 text-green-400 px-3 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all hover:scale-105">
+                                    <i class="fas fa-crown"></i>
+                                    Admin
+                                </span>
+                                <span class="bg-yellow-400/20 text-yellow-400 px-3 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all hover:scale-105">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Moderator
+                                </span>
+                                <span class="bg-zinc-600 text-gray-300 px-3 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 hover:bg-zinc-500">
+                                    User123
+                                </span>
+                                <span class="bg-zinc-600 text-gray-300 px-3 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 hover:bg-zinc-500">
+                                    TechGuru
+                                </span>
+                                <span class="bg-zinc-600 text-gray-300 px-3 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 hover:bg-zinc-500">
+                                    CreativeMind
+                                </span>
+                                <span class="bg-zinc-700 text-gray-400 px-3 py-2 rounded-full text-sm font-medium transition-all hover:scale-105">
+                                    +37 more
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Spotlight -->
+                    <div class="bg-zinc-800 rounded-xl border border-zinc-700 shadow-lg">
+                        <div class="px-6 py-4 border-b border-zinc-700 bg-zinc-750/50 rounded-t-xl">
+                            <h2 class="text-xl font-semibold text-white flex items-center gap-2">
+                                <i class="fas fa-award text-yellow-400"></i>
+                                Community Spotlight
+                            </h2>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 p-3 bg-zinc-750/50 rounded-lg hover:bg-zinc-700 transition-all duration-300">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-star text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-medium">Member of the Month</h4>
+                                        <p class="text-gray-400 text-sm">@CreativeSoul</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-zinc-750/50 rounded-lg hover:bg-zinc-700 transition-all duration-300">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-trophy text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-medium">Most Helpful</h4>
+                                        <p class="text-gray-400 text-sm">@ExpertUser</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-zinc-750/50 rounded-lg hover:bg-zinc-700 transition-all duration-300">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-seedling text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-medium">Newcomer Award</h4>
+                                        <p class="text-gray-400 text-sm">@NewMember23</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-zinc-800 rounded-xl border border-zinc-700 shadow-lg">
+                        <div class="px-6 py-4 border-b border-zinc-700 bg-zinc-750/50 rounded-t-xl">
+                            <h2 class="text-xl font-semibold text-white flex items-center gap-2">
+                                <i class="fas fa-bolt text-yellow-400"></i>
+                                Quick Actions
+                            </h2>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-plus"></i>
+                                Create New Thread
+                            </button>
+                            <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-search"></i>
+                                Search Community
+                            </button>
+                            <button class="w-full bg-zinc-700 hover:bg-zinc-600 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-bell"></i>
+                                Notification Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Features -->
+            <div class="mt-12 bg-zinc-800 rounded-xl border border-zinc-700 shadow-lg overflow-hidden">
+                <div class="px-6 py-8 border-b border-zinc-700 bg-zinc-750/50">
+                    <h2 class="text-2xl font-bold text-white text-center mb-4">Why Join Our Community?</h2>
+                    <p class="text-gray-400 text-center max-w-2xl mx-auto">Connect with passionate individuals, share knowledge, and grow together in a supportive environment</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-zinc-700">
+                    <div class="p-8 text-center hover:bg-zinc-750/30 transition-all duration-300">
+                        <div class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-hands-helping text-blue-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Supportive Community</h3>
+                        <p class="text-gray-400">Get help from experienced members and mentors who genuinely want to see you succeed</p>
+                    </div>
+                    <div class="p-8 text-center hover:bg-zinc-750/30 transition-all duration-300">
+                        <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-graduation-cap text-green-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Learn & Grow</h3>
+                        <p class="text-gray-400">Access valuable resources, tutorials, and discussions to enhance your skills and knowledge</p>
+                    </div>
+                    <div class="p-8 text-center hover:bg-zinc-750/30 transition-all duration-300">
+                        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-network-wired text-purple-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Build Connections</h3>
+                        <p class="text-gray-400">Network with professionals, collaborators, and friends who share your interests and passions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-800 border-t border-zinc-700 mt-16">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-yellow-400 to-green-400 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-users text-zinc-900 text-sm"></i>
+                        </div>
+                        <span class="text-yellow-400 font-bold text-xl">CommunityHub</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Building connections, sharing knowledge, and growing together in a vibrant community space.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-discord text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Community</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Forums</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Members</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Community Guidelines</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Report Issues</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Contact Moderators</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Stay Updated</h3>
+                    <p class="text-gray-400 text-sm mb-4">Subscribe to our newsletter for community updates</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="bg-zinc-700 border border-zinc-600 rounded-l-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-green-400 flex-1">
+                        <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-r-lg text-sm font-medium transition-colors">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-zinc-700 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 text-sm">
+                    © 2024 CommunityHub. All rights reserved.
+                </div>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
