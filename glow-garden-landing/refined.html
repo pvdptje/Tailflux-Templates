@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloomfield Community Garden</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        },
+                        stone: {
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        pink: {
+                            400: '#f472b6',
+                            500: '#ec4899',
+                        },
+                        lime: {
+                            400: '#a3e635',
+                            500: '#84cc16',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-900 text-white font-sans">
+    <!-- Navigation -->
+    <nav class="bg-stone-800/95 backdrop-blur-sm border-b border-teal-700/30 sticky top-0 z-50 transition-all duration-300" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-lime-400 flex items-center gap-2">
+                            <i class="fas fa-leaf text-lime-400 animate-pulse-slow"></i>
+                            Bloomfield Garden
+                        </h1>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-teal-400 hover:text-teal-300 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-teal-500/10">Home</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/5">About</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/5">Events</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/5">Volunteer</a>
+                        <a href="#" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-pink-500/25">Join Us</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-300 hover:text-white p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" 
+                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" 
+                 x-transition:leave-end="opacity-0 scale-95" class="md:hidden py-4 border-t border-stone-700">
+                <div class="flex flex-col space-y-2">
+                    <a href="#" class="text-teal-400 hover:text-teal-300 px-3 py-2 rounded-md font-medium transition-all duration-300 hover:bg-teal-500/10">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md font-medium transition-all duration-300 hover:bg-white/5">About</a>
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md font-medium transition-all duration-300 hover:bg-white/5">Events</a>
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md font-medium transition-all duration-300 hover:bg-white/5">Volunteer</a>
+                    <a href="#" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md font-medium transition-all duration-300 mt-2 text-center">Join Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-stone-900 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-teal-900/20 to-pink-900/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate-float">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        Grow Together in
+                        <span class="text-lime-400 bg-gradient-to-r from-lime-400 to-lime-500 bg-clip-text text-transparent">Our Community</span>
+                        Garden
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 max-w-lg leading-relaxed">
+                        Join neighbors in cultivating fresh produce, building friendships, and nurturing our local ecosystem. Everyone is welcome!
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-teal-500/25 flex items-center gap-2">
+                            <i class="fas fa-hands-helping"></i>
+                            Get Involved
+                        </button>
+                        <button class="border-2 border-pink-500 text-pink-400 hover:bg-pink-500 hover:text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25 flex items-center gap-2">
+                            <i class="fas fa-info-circle"></i>
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-teal-600/80 rounded-2xl p-1 transform rotate-3 shadow-2xl">
+                        <div class="bg-stone-800/95 backdrop-blur-sm rounded-xl p-4 transform -rotate-1 border border-teal-500/30">
+                            <img src="https://images.unsplash.com/photo-1708354056878-5bbdc1626a59?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBnYXJkZW4lMjBwZW9wbGUlMjBwbGFudGluZyUyMHZlZ2V0YWJsZXN8ZW58MHwwfHx8MTc1OTcyMzMyMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=Oa-cn1QQd40" 
+                                 alt="Community garden with people working together planting vegetables" 
+                                 class="rounded-lg w-full h-80 object-cover shadow-lg">
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-pink-500 text-white p-4 rounded-lg shadow-xl animate-pulse-slow">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold">150+</div>
+                            <div class="text-sm">Active Members</div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 bg-lime-500 text-white p-3 rounded-lg shadow-xl">
+                        <div class="text-center">
+                            <div class="text-lg font-bold">5⭐</div>
+                            <div class="text-xs">Community Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-stone-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">What We Offer</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Our garden is more than just plants - it's a thriving community space with something for everyone.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-stone-700/80 backdrop-blur-sm rounded-xl p-8 hover:transform hover:scale-105 transition-all duration-500 border-l-4 border-lime-400 shadow-lg hover:shadow-xl hover:shadow-lime-500/10 group">
+                    <div class="w-12 h-12 bg-lime-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Garden Plots</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Reserve your own garden plot to grow vegetables, herbs, and flowers. All skill levels welcome with tools and guidance provided!
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-stone-700/80 backdrop-blur-sm rounded-xl p-8 hover:transform hover:scale-105 transition-all duration-500 border-l-4 border-teal-500 shadow-lg hover:shadow-xl hover:shadow-teal-500/10 group">
+                    <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Community Events</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Join workshops, harvest festivals, and social gatherings throughout the growing season. Build connections while you grow!
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-stone-700/80 backdrop-blur-sm rounded-xl p-8 hover:transform hover:scale-105 transition-all duration-500 border-l-4 border-pink-500 shadow-lg hover:shadow-xl hover:shadow-pink-500/10 group">
+                    <div class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Education Programs</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Learn sustainable gardening practices, composting, and environmental stewardship from expert gardeners.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-stone-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Our Garden in Bloom</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    See the beauty and bounty our community has cultivated together
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1648090229186-6188eaefcc6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiZWF1dGlmdWwlMjB2ZWdldGFibGUlMjBnYXJkZW4lMjBmcmVzaCUyMHByb2R1Y2V8ZW58MHwwfHx8MTc1OTcyMzMyNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=6PFqjxsHMOU" 
+                         alt="Beautiful vegetable garden with fresh produce" 
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white font-bold text-lg">Fresh Harvest</h3>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1733388972592-ec1da2ddc432?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxnYXJkZW4lMjB3b3Jrc2hvcCUyMHBlb3BsZSUyMGxlYXJuaW5nfGVufDB8MHx8fDE3NTk3MjMzMjh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=QocB54tebTI" 
+                         alt="Garden workshop with people learning" 
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white font-bold text-lg">Learning Together</h3>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1591871937573-74dbba515c4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Community garden volunteers working together" 
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <h3 class="text-white font-bold text-lg">Community Spirit</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-teal-700 via-teal-600 to-pink-600 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold mb-6">Ready to Get Your Hands Dirty?</h2>
+            <p class="text-xl mb-8 text-teal-100 max-w-2xl mx-auto leading-relaxed">
+                Join our growing community today. No experience necessary - just bring your enthusiasm and we'll provide the rest!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-teal-700 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-white/25 flex items-center justify-center gap-2">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up Now
+                </button>
+                <button class="border-2 border-white text-white hover:bg-white hover:text-teal-700 font-bold py-4 px-8 rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-calendar-alt"></i>
+                    Schedule a Tour
+                </button>
+            </div>
+            <p class="text-teal-200 mt-6 text-sm">
+                <i class="fas fa-star text-yellow-300 mr-1"></i>
+                Free trial plot available for first-time gardeners
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 border-t border-stone-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold text-lime-400 mb-4 flex items-center gap-2">
+                        <i class="fas fa-leaf"></i>
+                        Bloomfield Community Garden
+                    </h3>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        Cultivating community, one seed at a time. Located in the heart of Bloomfield since 2015.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-teal-600 hover:bg-teal-500 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-pink-500 hover:bg-pink-400 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-blue-500 hover:bg-blue-400 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-link text-teal-400"></i>
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-lime-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> About Us</a></li>
+                        <li><a href="#" class="hover:text-lime-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Events Calendar</a></li>
+                        <li><a href="#" class="hover:text-lime-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Volunteer</a></li>
+                        <li><a href="#" class="hover:text-lime-400 transition-colors duration-300 flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Donate</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-envelope text-pink-400"></i>
+                        Contact
+                    </h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-teal-400 text-sm"></i>
+                            123 Garden Lane
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-city text-teal-400 text-sm"></i>
+                            Bloomfield, BL 12345
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-teal-400 text-sm"></i>
+                            info@bloomfieldgarden.org
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone text-teal-400 text-sm"></i>
+                            (555) 123-4567
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-stone-700 mt-8 pt-8 text-center text-gray-400">
+                <p class="flex items-center justify-center gap-2">
+                    <i class="fas fa-heart text-pink-400"></i>
+                    &copy; 2024 Bloomfield Community Garden. All rights reserved.
+                    <i class="fas fa-leaf text-lime-400"></i>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="bg-lime-500 hover:bg-lime-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 animate-bounce">
+            <i class="fas fa-seedling text-xl"></i>
+        </button>
+    </div>
+</body>
+</html>
