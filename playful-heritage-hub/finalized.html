@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Haven Historical Society</title>
+    <meta name="description" content="Heritage Haven Historical Society: Preserving our community's rich history with archives, living history events, and museum tours.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .playful-font { font-family: 'Playfair Display', serif; }
+
+        /* Hero background with overlay */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.86) 0%, rgba(16, 185, 129, 0.86) 100%), url('https://images.unsplash.com/photo-1693728590862-737606416043?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoaXN0b3JpYyUyMG11c2V1bSUyMGJ1aWxkaW5nJTIwZXh0ZXJpb3IlMjB2aW50YWdlfGVufDB8MHx8fDE3NTk3NjY3OTl8MA&ixlib=rb-4.1.0&q=80&w=1600&utm_source=TailFlux&photo_id=_bcbNqm7cnk') center/cover no-repeat;
+        }
+
+        /* Card interactions */
+        .feature-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+        .event-card { transition: all 0.3s ease; }
+        .event-card:hover { transform: translateY(-5px); }
+
+        /* Nav underline effect */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 50%;
+            background-color: #fbbf24; transition: all 0.3s ease; transform: translateX(-50%);
+        }
+        .nav-link:hover::after, .nav-link[aria-current="page"]::after { width: 100%; }
+
+        /* Reveal animation */
+        .reveal { opacity: 0; transform: translateY(16px); }
+        .reveal.in-view { opacity: 1; transform: translateY(0); transition: opacity 600ms ease, transform 600ms ease; }
+
+        /* Custom fade-in for hero text */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeInUp 0.9s ease-out both; }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .feature-card, .event-card, .nav-link::after, .reveal, .animate-fade-in { transition: none !important; animation: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-800" x-data="{ navOpen:false, showTop:false }" @scroll.window="showTop = window.scrollY > 300">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-white focus:text-teal-700 focus:px-4 focus:py-2 focus:rounded focus:shadow">Skip to content</a>
+
+    <!-- Header -->
+    <header class="bg-teal-600 text-white sticky top-0 z-50 shadow-lg" x-data>
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="#top" class="w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center transform hover:scale-110 transition-transform duration-300 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                        <span class="text-teal-800 playful-font text-xl font-bold">HH</span>
+                    </a>
+                    <h1 class="text-2xl md:text-3xl playful-font font-bold tracking-tight">Heritage Haven Historical Society</h1>
+                </div>
+
+                <!-- Desktop nav -->
+                <nav class="hidden md:flex items-center space-x-6" role="navigation" aria-label="Main">
+                    <a href="#top" class="nav-link hover:text-amber-300 transition-colors duration-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded" aria-current="page">Home</a>
+                    <a href="#events" class="nav-link hover:text-amber-300 transition-colors duration-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded">Events</a>
+                    <a href="#features" class="nav-link hover:text-amber-300 transition-colors duration-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded">Collections</a>
+                    <a href="#about" class="nav-link hover:text-amber-300 transition-colors duration-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded">About</a>
+                    <a href="#footer" class="nav-link hover:text-amber-300 transition-colors duration-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded">Contact</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button @click="navOpen = !navOpen" :aria-expanded="navOpen.toString()" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-md bg-teal-700 hover:bg-teal-500 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" aria-label="Toggle navigation">
+                    <i :class="navOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+                </button>
+            </div>
+
+            <!-- Mobile nav panel -->
+            <nav x-show="navOpen" x-transition.origin.top.left class="md:hidden mt-4 bg-teal-700/60 backdrop-blur rounded-xl shadow-lg overflow-hidden" role="navigation" aria-label="Mobile">
+                <ul class="divide-y divide-teal-600">
+                    <li><a @click="navOpen=false" href="#top" class="block px-5 py-3 hover:bg-teal-700 focus:bg-teal-700 transition-colors">Home</a></li>
+                    <li><a @click="navOpen=false" href="#events" class="block px-5 py-3 hover:bg-teal-700 focus:bg-teal-700 transition-colors">Events</a></li>
+                    <li><a @click="navOpen=false" href="#features" class="block px-5 py-3 hover:bg-teal-700 focus:bg-teal-700 transition-colors">Collections</a></li>
+                    <li><a @click="navOpen=false" href="#about" class="block px-5 py-3 hover:bg-teal-700 focus:bg-teal-700 transition-colors">About</a></li>
+                    <li><a @click="navOpen=false" href="#footer" class="block px-5 py-3 hover:bg-teal-700 focus:bg-teal-700 transition-colors">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-20 md:py-28">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl md:text-6xl playful-font font-bold mb-6 leading-tight animate-fade-in">Preserving Our Past, Inspiring Our Future</h2>
+                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed/relaxed opacity-95 reveal">Discover the rich tapestry of our community's history through artifacts, stories, and shared memories.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 reveal">
+                    <a href="#features" class="inline-flex items-center justify-center bg-amber-400 hover:bg-amber-500 text-teal-900 px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
+                        <i class="fas fa-search mr-2"></i>Explore Our Collections
+                    </a>
+                    <a href="#newsletter" class="inline-flex items-center justify-center bg-white hover:bg-neutral-100 text-teal-700 px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
+                        <i class="fas fa-user-plus mr-2"></i>Become a Member
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white scroll-mt-24">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl playful-font font-bold text-center mb-6 text-teal-700 reveal">What We Offer</h2>
+                <p class="text-neutral-600 text-center max-w-2xl mx-auto mb-12 reveal">From meticulously preserved archives to immersive experiences, explore how we keep our shared history alive.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <article class="feature-card bg-white p-8 rounded-2xl border border-amber-100 hover:border-teal-300 shadow-lg reveal">
+                        <div class="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
+                            <i class="fas fa-archive text-3xl text-teal-600" aria-hidden="true"></i>
+                            <span class="sr-only">Historical Archives</span>
+                        </div>
+                        <h3 class="text-2xl playful-font font-semibold mb-4 text-teal-700 text-center">Historical Archives</h3>
+                        <p class="text-neutral-600 text-center leading-relaxed">Access our extensive collection of documents, photographs, and records dating back to the 1800s.</p>
+                        <div class="mt-6 flex justify-center">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1723014563370-fb62697ae0e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxvbGQlMjBhcmNoaXZlcyUyMGRvY3VtZW50cyUyMGxpYnJhcnklMjBzaGVsdmVzfGVufDB8MHx8fDE3NTk3NjY3OTl8MA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=t2w1n1jdUlY" alt="Rows of vintage archival documents and ledgers on library shelves" class="w-full h-48 object-cover rounded-lg shadow-md">
+                        </div>
+                    </article>
+
+                    <!-- Feature 2 -->
+                    <article class="feature-card bg-white p-8 rounded-2xl border border-amber-100 hover:border-teal-300 shadow-lg reveal">
+                        <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
+                            <i class="fas fa-theater-masks text-3xl text-amber-600" aria-hidden="true"></i>
+                            <span class="sr-only">Living History Events</span>
+                        </div>
+                        <h3 class="text-2xl playful-font font-semibold mb-4 text-teal-700 text-center">Living History Events</h3>
+                        <p class="text-neutral-600 text-center leading-relaxed">Experience history come alive through our interactive reenactments and educational programs.</p>
+                        <div class="mt-6 flex justify-center">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1583774642469-b2ab43f07fff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxsaXZpbmclMjBoaXN0b3J5JTIwcmVlbmFjdG1lbnQlMjBwZW9wbGUlMjBjb3N0dW1lc3xlbnwwfDB8fHwxNzU5NzY2ODAwfDA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=IxrfnH1uVZ0" alt="Costumed interpreters at a living history reenactment" class="w-full h-48 object-cover rounded-lg shadow-md">
+                        </div>
+                    </article>
+
+                    <!-- Feature 3 -->
+                    <article class="feature-card bg-white p-8 rounded-2xl border border-amber-100 hover:border-teal-300 shadow-lg reveal">
+                        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
+                            <i class="fas fa-landmark text-3xl text-emerald-600" aria-hidden="true"></i>
+                            <span class="sr-only">Museum Tours</span>
+                        </div>
+                        <h3 class="text-2xl playful-font font-semibold mb-4 text-teal-700 text-center">Museum Tours</h3>
+                        <p class="text-neutral-600 text-center leading-relaxed">Explore our carefully curated exhibits showcasing the artifacts and stories of our community.</p>
+                        <div class="mt-6 flex justify-center">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1759687221996-04f86b475b0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtdXNldW0lMjBhcnRpZmFjdHMlMjBleGhpYml0JTIwZ2xhc3MlMjBjYXNlc3xlbnwwfDB8fHwxNzU5NzY2ODAxfDA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=gsChtdUwez8" alt="Historical artifacts displayed in museum glass cases" class="w-full h-48 object-cover rounded-lg shadow-md">
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events -->
+        <section id="events" class="py-20 bg-teal-50 scroll-mt-24">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl playful-font font-bold text-center mb-6 text-teal-700 reveal">Upcoming Events</h2>
+                <p class="text-neutral-600 text-center max-w-2xl mx-auto mb-12 reveal">Mark your calendar and join us for guided tours, appraisals, and immersive experiences.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Event 1 -->
+                    <article class="event-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 reveal">
+                        <div class="relative h-48 overflow-hidden group">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1745816698779-4b43418cf432?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx2aWN0b3JpYW4lMjB0ZWElMjBwYXJ0eSUyMHZpbnRhZ2V8ZW58MHwwfHx8MTc1OTc2NjgwMXww&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=jKHqXRUiPj8" alt="Victorian tea service with china and lace table setting" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <span class="absolute top-3 left-3 bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-semibold shadow-sm">
+                                <i class="fas fa-calendar-alt mr-1"></i>June 15
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl playful-font font-semibold text-teal-700">Victorian Era Tea Party</h3>
+                                <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold">Limited Spots</span>
+                            </div>
+                            <p class="text-neutral-600 mb-4 leading-relaxed">Step back in time for an authentic Victorian afternoon tea experience with period costumes and traditional etiquette.</p>
+                            <button class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400">
+                                <i class="fas fa-info-circle mr-2"></i>Learn More
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Event 2 -->
+                    <article class="event-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 reveal">
+                        <div class="relative h-48 overflow-hidden group">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1528006529432-ad49efe871e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxoaXN0b3JpYyUyMHdhbGtpbmclMjB0b3VyJTIwZG93bnRvd258ZW58MHwwfHx8MTc1OTc2NjgwMnww&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=uMx6jgmnR2s" alt="Guided historical walking tour through downtown" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <span class="absolute top-3 left-3 bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-semibold shadow-sm">
+                                <i class="fas fa-calendar-alt mr-1"></i>June 22
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl playful-font font-semibold text-teal-700">Local History Walk</h3>
+                                <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold">Free Event</span>
+                            </div>
+                            <p class="text-neutral-600 mb-4 leading-relaxed">Guided walking tour through historic downtown landmarks and sites with expert commentary on architectural significance.</p>
+                            <button class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400">
+                                <i class="fas fa-info-circle mr-2"></i>Learn More
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Event 3 -->
+                    <article class="event-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 reveal">
+                        <div class="relative h-48 overflow-hidden group">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1581342995886-14044cadee77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxhbnRpcXVlJTIwYXBwcmFpc2FsJTIwZXZlbnR8ZW58MHwwfHx8MTc1OTc2NjgwMnww&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=Pf_gp0IPZ5k" alt="Vintage items being appraised by an expert" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <span class="absolute top-3 left-3 bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-semibold shadow-sm">
+                                <i class="fas fa-calendar-alt mr-1"></i>July 5
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl playful-font font-semibold text-teal-700">Antique Appraisal Day</h3>
+                                <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">Expert Appraisers</span>
+                            </div>
+                            <p class="text-neutral-600 mb-4 leading-relaxed">Bring your family heirlooms for professional appraisal and historical context from certified antique specialists.</p>
+                            <button class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400">
+                                <i class="fas fa-info-circle mr-2"></i>Learn More
+                            </button>
+                        </div>
+                    </article>
+                </div>
+                <div class="text-center mt-12 reveal">
+                    <a href="#events" class="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-teal-900 px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
+                        <i class="fas fa-calendar-check mr-2"></i>View All Events
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About: slim section -->
+        <section id="about" class="py-16 bg-white scroll-mt-24">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2 reveal">
+                        <h2 class="text-3xl playful-font font-bold mb-4 text-teal-700">About Heritage Haven</h2>
+                        <p class="text-neutral-700 leading-relaxed">We are a volunteer-driven organization dedicated to collecting, preserving, and sharing the stories that shaped our region. Through exhibitions, publications, and collaborative programs, we bring the past to life for learners of all ages.</p>
+                    </div>
+                    <div class="reveal">
+                        <div class="rounded-2xl border border-teal-100 p-5 shadow-sm bg-teal-50/40">
+                            <ul class="space-y-3 text-neutral-700">
+                                <li class="flex items-center"><i class="fa-solid fa-feather mr-3 text-teal-600"></i>Founded in 1974</li>
+                                <li class="flex items-center"><i class="fa-solid fa-book-open mr-3 text-teal-600"></i>10,000+ archived items</li>
+                                <li class="flex items-center"><i class="fa-solid fa-people-group mr-3 text-teal-600"></i>200+ active members</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section id="newsletter" class="py-20 bg-amber-50 scroll-mt-24">
+            <div class="container mx-auto px-4 text-center">
+                <div class="max-w-3xl mx-auto">
+                    <h2 class="text-4xl playful-font font-bold mb-6 text-teal-700 reveal">Stay Connected with History</h2>
+                    <p class="text-neutral-600 mb-10 text-lg max-w-2xl mx-auto leading-relaxed reveal">Join our newsletter to receive updates on events, new exhibits, and historical discoveries delivered to your inbox.</p>
+                    <form action="#" method="post" class="max-w-md mx-auto flex shadow-lg rounded-lg overflow-hidden reveal" aria-label="Newsletter signup">
+                        <label for="email" class="sr-only">Email address</label>
+                        <input id="email" name="email" type="email" required placeholder="Your email address" class="flex-1 px-6 py-4 border-0 focus:outline-none focus:ring-2 focus:ring-teal-400 text-lg" autocomplete="email">
+                        <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400">
+                            <i class="fas fa-paper-plane mr-2"></i>Subscribe
+                        </button>
+                    </form>
+                    <p class="text-sm text-neutral-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-teal-800 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="reveal">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-amber-400 rounded-full flex items-center justify-center">
+                            <span class="text-teal-800 playful-font font-bold">HH</span>
+                        </div>
+                        <h3 class="text-xl playful-font font-bold">Heritage Haven</h3>
+                    </div>
+                    <p class="text-teal-200 leading-relaxed">Preserving our community's rich history for future generations through education, preservation, and celebration.</p>
+                </div>
+                <div class="reveal">
+                    <h4 class="font-semibold mb-4 text-lg">Quick Links</h4>
+                    <ul class="space-y-3 text-teal-200">
+                        <li><a href="#about" class="hover:text-amber-300 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>About Us</a></li>
+                        <li><a href="#features" class="hover:text-amber-300 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Collections</a></li>
+                        <li><a href="#events" class="hover:text-amber-300 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Research</a></li>
+                        <li><a href="#newsletter" class="hover:text-amber-300 transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Volunteer</a></li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <h4 class="font-semibold mb-4 text-lg">Visit Us</h4>
+                    <address class="not-italic text-teal-200 leading-relaxed">
+                        <div class="flex items-start mb-2">
+                            <i class="fas fa-map-marker-alt mr-3 mt-1 text-amber-300"></i>
+                            <span>123 History Lane<br>Heritage City, HC 12345</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-phone mr-3 text-amber-300"></i>
+                            <a href="tel:+15551234567" class="hover:text-amber-300">(555) 123-4567</a>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-amber-300"></i>
+                            <a href="mailto:info@heritagehaven.org" class="hover:text-amber-300">info@heritagehaven.org</a>
+                        </div>
+                    </address>
+                </div>
+                <div class="reveal">
+                    <h4 class="font-semibold mb-4 text-lg">Follow Us</h4>
+                    <p class="text-teal-200 mb-4">Stay updated with our latest discoveries and events.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Facebook" class="w-12 h-12 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="w-12 h-12 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-12 h-12 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="w-12 h-12 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-teal-700 mt-12 pt-8 text-center text-teal-300">
+                <p>&copy; 2024 Heritage Haven Historical Society. All rights reserved. | <a href="#" class="hover:text-amber-300 transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-amber-300 transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button x-show="showTop" x-transition.opacity @click="window.scrollTo({top:0, behavior:'smooth'})" class="fixed bottom-5 right-5 z-40 w-12 h-12 rounded-full bg-amber-400 text-teal-900 shadow-lg hover:bg-amber-500 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Simple fade-in animation for hero section and intersection reveals
+        document.addEventListener('DOMContentLoaded', function() {
+            const hero = document.querySelector('.hero-bg');
+            hero.style.opacity = '0';
+            hero.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                hero.style.transition = 'all 0.8s ease-out';
+                hero.style.opacity = '1';
+                hero.style.transform = 'translateY(0)';
+            }, 100);
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

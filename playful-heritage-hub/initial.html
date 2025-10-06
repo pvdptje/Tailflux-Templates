@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Haven Historical Society</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .playful-font {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-800">
+    <!-- Header -->
+    <header class="bg-teal-600 text-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                    <div class="w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center">
+                        <span class="text-teal-800 playful-font text-xl font-bold">HH</span>
+                    </div>
+                    <h1 class="text-2xl md:text-3xl playful-font font-bold">Heritage Haven Historical Society</h1>
+                </div>
+                <nav class="flex space-x-6">
+                    <a href="#" class="hover:text-amber-300 transition-colors">Home</a>
+                    <a href="#" class="hover:text-amber-300 transition-colors">Events</a>
+                    <a href="#" class="hover:text-amber-300 transition-colors">Collections</a>
+                    <a href="#" class="hover:text-amber-300 transition-colors">About</a>
+                    <a href="#" class="hover:text-amber-300 transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-teal-500 to-emerald-500 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl playful-font font-bold mb-4">Preserving Our Past, Inspiring Our Future</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Discover the rich tapestry of our community's history through artifacts, stories, and shared memories.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button class="bg-amber-400 hover:bg-amber-500 text-teal-900 px-6 py-3 rounded-full font-semibold transition-colors">
+                    Explore Our Collections
+                </button>
+                <button class="bg-white hover:bg-neutral-100 text-teal-700 px-6 py-3 rounded-full font-semibold transition-colors">
+                    Become a Member
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl playful-font font-bold text-center mb-12 text-teal-700">What We Offer</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-neutral-50 p-6 rounded-2xl border-2 border-amber-200 hover:border-teal-300 transition-all duration-300">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">📚</span>
+                    </div>
+                    <h3 class="text-xl playful-font font-semibold mb-3 text-teal-700">Historical Archives</h3>
+                    <p class="text-neutral-600">Access our extensive collection of documents, photographs, and records dating back to the 1800s.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-neutral-50 p-6 rounded-2xl border-2 border-amber-200 hover:border-teal-300 transition-all duration-300">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">🎭</span>
+                    </div>
+                    <h3 class="text-xl playful-font font-semibold mb-3 text-teal-700">Living History Events</h3>
+                    <p class="text-neutral-600">Experience history come alive through our interactive reenactments and educational programs.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-neutral-50 p-6 rounded-2xl border-2 border-amber-200 hover:border-teal-300 transition-all duration-300">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">🏛️</span>
+                    </div>
+                    <h3 class="text-xl playful-font font-semibold mb-3 text-teal-700">Museum Tours</h3>
+                    <p class="text-neutral-600">Explore our carefully curated exhibits showcasing the artifacts and stories of our community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="py-16 bg-teal-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl playful-font font-bold text-center mb-12 text-teal-700">Upcoming Events</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Event 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-40 bg-gradient-to-r from-amber-300 to-amber-400"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-semibold">June 15</span>
+                        </div>
+                        <h3 class="text-xl playful-font font-semibold mb-2 text-teal-700">Victorian Era Tea Party</h3>
+                        <p class="text-neutral-600 mb-4">Step back in time for an authentic Victorian afternoon tea experience.</p>
+                        <button class="text-teal-600 hover:text-teal-700 font-semibold">Learn More →</button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-40 bg-gradient-to-r from-emerald-300 to-emerald-400"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-semibold">June 22</span>
+                        </div>
+                        <h3 class="text-xl playful-font font-semibold mb-2 text-teal-700">Local History Walk</h3>
+                        <p class="text-neutral-600 mb-4">Guided walking tour through historic downtown landmarks and sites.</p>
+                        <button class="text-teal-600 hover:text-teal-700 font-semibold">Learn More →</button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-40 bg-gradient-to-r from-teal-300 to-teal-400"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-semibold">July 5</span>
+                        </div>
+                        <h3 class="text-xl playful-font font-semibold mb-2 text-teal-700">Antique Appraisal Day</h3>
+                        <p class="text-neutral-600 mb-4">Bring your family heirlooms for professional appraisal and historical context.</p>
+                        <button class="text-teal-600 hover:text-teal-700 font-semibold">Learn More →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-amber-50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl playful-font font-bold mb-4 text-teal-700">Stay Connected with History</h2>
+            <p class="text-neutral-600 mb-8 max-w-2xl mx-auto">Join our newsletter to receive updates on events, new exhibits, and historical discoveries.</p>
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-l-lg border-2 border-amber-300 focus:outline-none focus:border-teal-400">
+                <button class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-r-lg font-semibold transition-colors">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-teal-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl playful-font font-bold mb-4">Heritage Haven</h3>
+                    <p class="text-teal-200">Preserving our community's rich history for future generations.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-teal-200">
+                        <li><a href="#" class="hover:text-amber-300 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-amber-300 transition-colors">Collections</a></li>
+                        <li><a href="#" class="hover:text-amber-300 transition-colors">Research</a></li>
+                        <li><a href="#" class="hover:text-amber-300 transition-colors">Volunteer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Visit Us</h4>
+                    <address class="not-italic text-teal-200">
+                        123 History Lane<br>
+                        Heritage City, HC 12345<br>
+                        (555) 123-4567
+                    </address>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">📘</a>
+                        <a href="#" class="w-10 h-10 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">📷</a>
+                        <a href="#" class="w-10 h-10 bg-teal-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">🐦</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-teal-700 mt-8 pt-8 text-center text-teal-300">
+                <p>&copy; 2024 Heritage Haven Historical Society. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
