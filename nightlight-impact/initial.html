@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Impact - Children's Literacy Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#1a1a1a',
+                        'dark-light': '#2d2d2d'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark text-gray-200 min-h-screen">
+    <!-- Header -->
+    <header class="bg-dark-light border-b border-emerald-800/30">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-emerald-400">ReadBright</div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-emerald-400 transition-colors">Home</a>
+                    <a href="#" class="text-emerald-400 font-medium">Our Impact</a>
+                    <a href="#" class="text-gray-300 hover:text-emerald-400 transition-colors">Programs</a>
+                    <a href="#" class="text-gray-300 hover:text-emerald-400 transition-colors">Get Involved</a>
+                </nav>
+                <button class="md:hidden text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-teal-900/20 to-emerald-900/20 py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Our Impact</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Transforming young lives through the power of literacy. Every book opened is a future changed.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-dark-light">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-dark rounded-lg border border-emerald-800/30">
+                    <div class="text-4xl font-bold text-emerald-400 mb-2">25,000+</div>
+                    <div class="text-gray-300">Children Reached</div>
+                </div>
+                <div class="text-center p-6 bg-dark rounded-lg border border-teal-800/30">
+                    <div class="text-4xl font-bold text-teal-400 mb-2">150+</div>
+                    <div class="text-gray-300">Schools Partnered</div>
+                </div>
+                <div class="text-center p-6 bg-dark rounded-lg border border-green-800/30">
+                    <div class="text-4xl font-bold text-green-400 mb-2">85%</div>
+                    <div class="text-gray-300">Improved Reading Scores</div>
+                </div>
+                <div class="text-center p-6 bg-dark rounded-lg border border-emerald-800/30">
+                    <div class="text-4xl font-bold text-emerald-400 mb-2">50,000+</div>
+                    <div class="text-gray-300">Books Distributed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Stories -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-white text-center mb-12">Success Stories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Story 1 -->
+                <div class="bg-dark-light rounded-lg p-6 border border-gray-700 hover:border-emerald-500/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Maria's Journey</h3>
+                    <p class="text-gray-300 mb-4">
+                        Maria struggled with reading until she joined our after-school program. Today, she's reading two grades above her level and dreams of becoming a librarian.
+                    </p>
+                    <div class="text-emerald-400 text-sm">Reading Level: Advanced</div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="bg-dark-light rounded-lg p-6 border border-gray-700 hover:border-teal-500/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">James' Confidence</h3>
+                    <p class="text-gray-300 mb-4">
+                        James was too shy to read aloud in class. Through our mentorship program, he gained confidence and now leads reading circles for younger students.
+                    </p>
+                    <div class="text-teal-400 text-sm">Confidence Level: High</div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="bg-dark-light rounded-lg p-6 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Community Growth</h3>
+                    <p class="text-gray-300 mb-4">
+                        An entire community transformed as parents joined our family literacy nights, creating a culture of reading that spans generations.
+                    </p>
+                    <div class="text-green-400 text-sm">Community Impact: 200+ Families</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Timeline -->
+    <section class="py-16 bg-dark-light">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-white text-center mb-12">Our Journey</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="space-y-8">
+                    <!-- Timeline Item 1 -->
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-4 h-4 bg-emerald-500 rounded-full mt-2"></div>
+                        <div class="ml-6">
+                            <div class="text-emerald-400 font-semibold">2020</div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Program Launch</h3>
+                            <p class="text-gray-300">Started with 5 schools and 500 children in underserved communities.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-4 h-4 bg-teal-500 rounded-full mt-2"></div>
+                        <div class="ml-6">
+                            <div class="text-teal-400 font-semibold">2021</div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Expansion Phase</h3>
+                            <p class="text-gray-300">Grew to 50 schools and reached 10,000 children across the state.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-4 h-4 bg-green-500 rounded-full mt-2"></div>
+                        <div class="ml-6">
+                            <div class="text-green-400 font-semibold">2023</div>
+                            <h3 class="text-xl font-semibold text-white mb-2">National Recognition</h3>
+                            <p class="text-gray-300">Received national award for excellence in childhood literacy programs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-teal-900/30 to-emerald-900/30">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">Join Our Mission</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Help us reach more children and create lasting change through the power of reading.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                    Donate Now
+                </button>
+                <button class="border border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 px-8 py-3 rounded-lg font-semibold transition-colors">
+                    Volunteer
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark border-t border-gray-800 py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-2xl font-bold text-emerald-400 mb-4 md:mb-0">ReadBright</div>
+                <div class="text-gray-400 text-center md:text-right">
+                    <p>Transforming lives through literacy since 2020</p>
+                    <p class="mt-2">contact@readbright.org | (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 ReadBright Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
