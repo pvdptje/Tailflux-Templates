@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr" x-data>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Restaurant Élégant | Cuisine Raffinée</title>
+    <meta name="description" content="Le Restaurant Élégant à Paris. Cuisine raffinée, cave à vin sélectionnée et service d'exception. Réservez votre table pour une expérience culinaire mémorable.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.35)), url('https://images.unsplash.com/photo-1698614082118-8e6eaecb08ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZmluZSUyMGRpbmluZyUyMHJlc3RhdXJhbnQlMjBpbnRlcmlvciUyMGV2ZW5pbmclMjB3YXJtJTIwbGlnaHRpbmd8ZW58MHwwfHx8MTc2NDQ0NjcyOHww&ixlib=rb-4.1.0&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) {
+            .hero-bg { background-attachment: scroll; }
+        }
+        .menu-item:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        .feature-icon { transition: all 0.3s ease; }
+        .feature-card:hover .feature-icon { transform: scale(1.08); background-color: #1f2937; }
+        .feature-card:hover .feature-icon i { color: white; }
+        /* simple reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.show { opacity: 1; transform: none; }
+        /* subtle focus */
+        .focus-ring:focus { outline: 3px solid rgba(245, 158, 11, .6); outline-offset: 2px; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header -->
+    <header x-data="{ open:false, scrolled:false }" @scroll.window="scrolled = window.scrollY > 10" :class="scrolled ? 'bg-white/90 backdrop-blur shadow-sm' : 'bg-white'" class="sticky top-0 z-50 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#accueil" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center ring-2 ring-amber-500/0 group-hover:ring-amber-500/40 transition">
+                        <i class="fas fa-utensils text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Le Restaurant Élégant</h1>
+                </a>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#accueil" class="text-gray-700 hover:text-gray-900 font-medium transition duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-800 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full">Accueil</a>
+                    <a href="#menu" class="text-gray-700 hover:text-gray-900 font-medium transition duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-800 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full">Menu</a>
+                    <a href="#reservation" class="text-gray-700 hover:text-gray-900 font-medium transition duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-800 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full">Réservation</a>
+                    <a href="#apropos" class="text-gray-700 hover:text-gray-900 font-medium transition duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-800 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full">À propos</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900 font-medium transition duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-800 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full">Contact</a>
+                </nav>
+                
+                <button @click="open = !open" class="md:hidden text-gray-700 hover:text-gray-900 transition duration-300" aria-label="Ouvrir le menu">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <!-- Mobile menu -->
+            <div x-cloak x-show="open" x-transition.origin.top class="md:hidden pt-3 pb-4">
+                <div class="flex flex-col space-y-2 bg-white rounded-xl shadow border border-gray-100 p-4">
+                    <a @click="open=false" href="#accueil" class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">Accueil</a>
+                    <a @click="open=false" href="#menu" class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">Menu</a>
+                    <a @click="open=false" href="#reservation" class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">Réservation</a>
+                    <a @click="open=false" href="#apropos" class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">À propos</a>
+                    <a @click="open=false" href="#contact" class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">Contact</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero-bg py-24 md:py-32 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">Une Expérience Culinaire Exceptionnelle</h2>
+                <p class="text-lg md:text-2xl text-gray-200 mb-10 leading-relaxed">Découvrez notre cuisine raffinée préparée avec des ingrédients frais et locaux dans un cadre élégant et chaleureux.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#menu" class="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 transform hover:scale-105 shadow-lg inline-flex items-center justify-center focus-ring">
+                        <i class="fas fa-book-open mr-2"></i>Voir le Menu
+                    </a>
+                    <a href="#reservation" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300 transform hover:scale-105 inline-flex items-center justify-center focus-ring">
+                        <i class="fas fa-calendar-alt mr-2"></i>Réserver une Table
+                    </a>
+                </div>
+                <div class="mt-8 flex items-center justify-center space-x-3 text-sm text-gray-200">
+                    <i class="fas fa-star text-amber-400"></i>
+                    <span>Chef étoilé • Produits de saison • Service d'exception</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16 reveal">Pourquoi Nous Choisir</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card text-center p-8 rounded-2xl hover:shadow-2xl transition duration-500 border border-gray-100 reveal">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 feature-icon ring-1 ring-gray-200">
+                        <i class="fas fa-utensils text-gray-700 text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Cuisine Raffinée</h3>
+                    <p class="text-gray-600 leading-relaxed">Notre chef étoilé prépare des plats exceptionnels avec des ingrédients de première qualité.</p>
+                </div>
+                
+                <div class="feature-card text-center p-8 rounded-2xl hover:shadow-2xl transition duration-500 border border-gray-100 reveal">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 feature-icon ring-1 ring-gray-200">
+                        <i class="fas fa-wine-glass text-gray-700 text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Cave à Vin Sélectionnée</h3>
+                    <p class="text-gray-600 leading-relaxed">Découvrez notre sélection de vins soigneusement choisis pour accompagner vos plats.</p>
+                </div>
+                
+                <div class="feature-card text-center p-8 rounded-2xl hover:shadow-2xl transition duration-500 border border-gray-100 reveal">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 feature-icon ring-1 ring-gray-200">
+                        <i class="fas fa-concierge-bell text-gray-700 text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Service d'Exception</h3>
+                    <p class="text-gray-600 leading-relaxed">Notre équipe dévouée s'engage à vous offrir une expérience mémorable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section id="apropos" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative reveal">
+                    <img src="https://images.unsplash.com/photo-1609559376775-38cdfa504de1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjaGVmJTIwcGxhdGluZyUyMGRpc2glMjBpbiUyMHJlc3RhdXJhbnQlMjBraXRjaGVufGVufDB8MHx8fDE3NjQ0NDY3Mjl8MA&ixlib=rb-4.1.0&q=80&w=1200" alt="Notre Chef en dressage d'assiette" class="rounded-2xl shadow-2xl w-full h-auto object-cover" loading="lazy" decoding="async">
+                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl">
+                        <div class="text-amber-500 text-4xl mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-800 font-semibold">Chef Étoilé Michelin</p>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Rencontrez Notre Chef</h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">Avec plus de 20 ans d'expérience dans les plus grandes tables de France, notre chef Jean‑Luc Dubois vous propose une cuisine créative et raffinée.</p>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">Passionné par les produits locaux et de saison, il réinvente la gastronomie française avec une touche contemporaine.</p>
+                    <a href="#menu" class="bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition duration-300 transform hover:scale-105 inline-flex items-center focus-ring">
+                        <i class="fas fa-user-tie mr-2"></i>En Savoir Plus
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16 reveal">Notre Menu</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl p-8 menu-item border border-gray-100 reveal">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-leaf text-amber-500 mr-3"></i>Entrées
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-semibold text-gray-800 text-lg">Tartare de Saumon</h4>
+                                <span class="font-bold text-amber-600 text-xl">€18</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">Saumon frais, avocat, citron vert et fines herbes.</p>
+                        </div>
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-semibold text-gray-800 text-lg">Foie Gras Maison <span class="ml-2 inline-block text-xs font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Signature</span></h4>
+                                <span class="font-bold text-amber-600 text-xl">€24</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">Accompagné de pain brioché toasté et confiture d'oignons.</p>
+                        </div>
+                        <div class="">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-semibold text-gray-800 text-lg">Soupe de Cèpes</h4>
+                                <span class="font-bold text-amber-600 text-xl">€16</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">Velouté de cèpes frais, crème fouettée et truffe.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl p-8 menu-item border border-gray-100 reveal">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-drumstick-bite text-amber-500 mr-3"></i>Plats Principaux
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-semibold text-gray-800 text-lg">Filet de Bœuf</h4>
+                                <span class="font-bold text-amber-600 text-xl">€36</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">Avec sauce au poivre vert et gratin dauphinois.</p>
+                        </div>
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-semibold text-gray-800 text-lg">Bar de Ligne</h4>
+                                <span class="font-bold text-amber-600 text-xl">€32</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">Rôti au four avec légumes de saison et beurre blanc.</p>
+                        </div>
+                        <div class="">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-semibold text-gray-800 text-lg">Risotto aux Truffes <span class="ml-2 inline-block text-xs font-semibold text-green-700 bg-green-100 px-2 py-0.5 rounded">Végétarien</span></h4>
+                                <span class="font-bold text-amber-600 text-xl">€28</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed">Risotto crémeux aux truffes noires et parmesan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal">
+                <a href="#menu" class="bg-amber-500 text-white px-10 py-4 rounded-lg font-semibold hover:bg-amber-600 transition duration-300 transform hover:scale-105 shadow-lg inline-flex items-center focus-ring">
+                    <i class="fas fa-book mr-2"></i>Voir le Menu Complet
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-gray-100" x-data="{ lightbox:false, img:'', caption:'' }" @keydown.escape.window="lightbox=false">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16 reveal">Notre Univers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <figure class="relative group overflow-hidden rounded-2xl cursor-pointer reveal" @click="lightbox=true; img=$event.currentTarget.querySelector('img').src; caption='Notre Cuisine'">
+                    <img src="https://images.unsplash.com/photo-1763867641117-0c1f154ee9a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwZmluZSUyMGRpbmluZyUyMGRpc2glMjBwbGF0ZWR8ZW58MHwwfHx8MTc2NDQ0NjczMHww&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Plat gastronomique" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async">
+                    <figcaption class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <span class="text-white font-semibold text-lg">Notre Cuisine</span>
+                    </figcaption>
+                </figure>
+                <figure class="relative group overflow-hidden rounded-2xl cursor-pointer reveal" @click="lightbox=true; img=$event.currentTarget.querySelector('img').src; caption='Notre Ambiance'">
+                    <img src="https://images.unsplash.com/photo-1743793055775-3c07ab847ad0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwZGluaW5nJTIwcm9vbSUyMGFtYmlhbmNlJTIwZWxlZ2FudHxlbnwwfDB8fHwxNzY0NDQ2NzMzfDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Intérieur du restaurant" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async">
+                    <figcaption class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <span class="text-white font-semibold text-lg">Notre Ambiance</span>
+                    </figcaption>
+                </figure>
+                <figure class="relative group overflow-hidden rounded-2xl cursor-pointer reveal" @click="lightbox=true; img=$event.currentTarget.querySelector('img').src; caption='Notre Équipe'">
+                    <img src="https://images.unsplash.com/photo-1578366941741-9e517759c620?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwc3RhZmYlMjB0ZWFtJTIwc21pbGluZ3xlbnwwfDB8fHwxNzY0NDQ2NzM2fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Notre équipe" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async">
+                    <figcaption class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <span class="text-white font-semibold text-lg">Notre Équipe</span>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <!-- Lightbox -->
+            <div x-cloak x-show="lightbox" x-transition.opacity class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+                <button @click="lightbox=false" class="absolute top-4 right-4 text-white text-2xl hover:text-amber-400" aria-label="Fermer">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="max-w-4xl w-full">
+                    <img :src="img" :alt="caption" class="w-full h-auto rounded-xl shadow-2xl object-contain">
+                    <p class="text-center text-white mt-4" x-text="caption"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-10 border border-gray-100 reveal">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-6">Réserver une Table</h2>
+                <p class="text-gray-600 text-center text-lg mb-8">Planifiez votre visite et garantissez votre place pour une expérience culinaire inoubliable.</p>
+                
+                <form class="space-y-8" x-data x-init="
+                    (() => {
+                        const d = new Date(); d.setHours(0,0,0,0);
+                        const pad = n => String(n).padStart(2,'0');
+                        const today = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+                        $el.querySelector('#date').min = today;
+                    })()
+                ">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium" for="name">Nom complet</label>
+                            <input required type="text" id="name" name="name" autocomplete="name" placeholder="Ex: Marie Dupont" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium" for="email">Email</label>
+                            <input required type="email" id="email" name="email" autocomplete="email" placeholder="vous@exemple.com" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium" for="date">Date</label>
+                            <input required type="date" id="date" name="date" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium" for="time">Heure</label>
+                            <input required type="time" id="time" name="time" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium" for="guests">Nombre de personnes</label>
+                        <select id="guests" name="guests" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300">
+                            <option>1 personne</option>
+                            <option>2 personnes</option>
+                            <option>3 personnes</option>
+                            <option>4 personnes</option>
+                            <option>5 personnes</option>
+                            <option>6 personnes ou plus</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium" for="message">Message spécial</label>
+                        <textarea id="message" name="message" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300" placeholder="Anniversaire, occasion spéciale..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-amber-500 text-white py-4 rounded-xl font-semibold hover:bg-amber-600 transition duration-300 transform hover:scale-105 shadow-lg inline-flex items-center justify-center">
+                        <i class="fas fa-check-circle mr-2"></i>Réserver Maintenant
+                    </button>
+                </form>
+                <p class="text-xs text-gray-400 mt-4 text-center">En soumettant ce formulaire, vous acceptez nos conditions générales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16 reveal">Ce Que Disent Nos Clients</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 reveal">
+                    <div class="text-amber-400 text-2xl mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Une expérience gastronomique exceptionnelle. Le filet de bœuf était parfaitement cuit et le service impeccable."</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1694184674930-235148b9beac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMGZyZW5jaCUyMHdvbWFuJTIwcmVzdGF1cmFudCUyMHBhdHJvbnxlbnwwfDB8fHwxNzY0NDQ2NzM3fDA&ixlib=rb-4.1.0&q=80&w=200" alt="Portrait de Marie Dubois" class="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-amber-300" loading="lazy" decoding="async">
+                        <div>
+                            <p class="font-semibold text-gray-800">Marie Dubois</p>
+                            <p class="text-gray-500 text-sm">Google Review</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 reveal">
+                    <div class="text-amber-400 text-2xl mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"L'ambiance est magnifique et la cuisine sublime. Un véritable voyage culinaire. Nous reviendrons !"</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1696626710800-f5f4e98eaac3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMGZyZW5jaCUyMG1hbiUyMHJlc3RhdXJhbnQlMjBwYXRyb258ZW58MHwwfHx8MTc2NDQ0NjczOHww&ixlib=rb-4.1.0&q=80&w=200" alt="Portrait de Pierre Martin" class="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-amber-300" loading="lazy" decoding="async">
+                        <div>
+                            <p class="font-semibold text-gray-800">Pierre Martin</p>
+                            <p class="text-gray-500 text-sm">TripAdvisor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 reveal">
+                    <div class="text-amber-400 text-2xl mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Service attentionné, cadre élégant et plats délicieux. Parfait pour une soirée romantique."</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1622962733255-935a059e5578?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMGZyZW5jaCUyMHdvbWFuJTIwc21pbGluZ3xlbnwwfDB8fHwxNzY0NDQ2NzM5fDA&ixlib=rb-4.1.0&q=80&w=200" alt="Portrait de Sophie Laurent" class="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-amber-300" loading="lazy" decoding="async">
+                        <div>
+                            <p class="font-semibold text-gray-800">Sophie Laurent</p>
+                            <p class="text-gray-500 text-sm">Facebook</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="reveal">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-utensils text-white text-lg"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Le Restaurant Élégant</h3>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">Une expérience culinaire raffinée au cœur de la ville, où chaque détail compte pour votre plaisir.</p>
+                </div>
+                
+                <div class="reveal">
+                    <h4 class="font-semibold text-lg mb-6">Horaires</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-amber-500 mr-3 w-5"></i>
+                            <span>Lundi - Vendredi: 12h-14h30, 19h-22h30</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-amber-500 mr-3 w-5"></i>
+                            <span>Samedi: 12h-15h, 19h-23h</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-amber-500 mr-3 w-5"></i>
+                            <span>Dimanche: 12h-15h</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="reveal">
+                    <h4 class="font-semibold text-lg mb-6">Contact</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-amber-500 mr-3 w-5"></i>
+                            <span>123 Avenue de la Gastronomie</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-amber-500 mr-3 w-5"></i>
+                            <span>75001 Paris, France</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-amber-500 mr-3 w-5"></i>
+                            <a href="tel:+33123456789" class="hover:text-amber-400 transition">+33 1 23 45 67 89</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-amber-500 mr-3 w-5"></i>
+                            <a href="mailto:contact@lerestaurantelegant.fr" class="hover:text-amber-400 transition">contact@lerestaurantelegant.fr</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-location-arrow text-amber-500 mr-3 w-5"></i>
+                            <a target="_blank" rel="noopener" href="https://maps.google.com/?q=123+Avenue+de+la+Gastronomie+75001+Paris" class="hover:text-amber-400 transition">Itinéraire</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="reveal">
+                    <h4 class="font-semibold text-lg mb-6">Suivez-nous</h4>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition duration-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition duration-300" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition duration-300" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <p class="text-sm text-gray-300 mb-2">Newsletter</p>
+                        <div class="flex">
+                            <input type="email" placeholder="Votre email" class="flex-1 px-3 py-2 bg-gray-700 text-white rounded-l-lg focus:outline-none" aria-label="Adresse email">
+                            <button class="bg-amber-500 px-4 py-2 rounded-r-lg hover:bg-amber-600 transition duration-300" aria-label="S'inscrire à la newsletter">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; <span id="year"></span> Le Restaurant Élégant. Tous droits réservés. | <a href="#" class="hover:text-amber-500 transition duration-300">Mentions légales</a> | <a href="#" class="hover:text-amber-500 transition duration-300">Politique de confidentialité</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <a href="tel:+33123456789" class="w-14 h-14 bg-amber-500 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-amber-600 transition duration-300 transform hover:scale-110 focus-ring" aria-label="Appeler le restaurant">
+            <i class="fas fa-phone text-xl"></i>
+        </a>
+    </div>
+
+    <script>
+        // Intersection reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); observer.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
