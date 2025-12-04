@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Academy | Online Quran Teaching</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .arabic-font {
+            font-family: 'Amiri', serif;
+        }
+        
+        /* Custom animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-delay-1 { animation-delay: 0.1s; }
+        .section-delay-2 { animation-delay: 0.2s; }
+        .section-delay-3 { animation-delay: 0.3s; }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 glass-effect shadow-sm" x-data="{ mobileMenuOpen: false }">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <i class="fas fa-book-quran text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-800 tracking-tight">Quran<span class="gradient-text">Academy</span></span>
+                </div>
+                
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#courses" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group">
+                        Courses
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group">
+                        Teachers
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group">
+                        Pricing
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="px-5 py-2.5 rounded-lg font-medium text-blue-600 border border-blue-600 hover:bg-blue-50 transition-all duration-300 hover:shadow-sm">
+                        Sign In
+                    </button>
+                    <button class="px-5 py-2.5 rounded-lg font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                        Start Learning
+                    </button>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-bars text-xl" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                class="lg:hidden mt-4 pb-4 border-t pt-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-blue-50">Home</a>
+                    <a href="#courses" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-blue-50">Courses</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-blue-50">Teachers</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-blue-50">Pricing</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 py-2 px-3 rounded-lg hover:bg-blue-50">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main x-data="{ activeTab: 'courses' }">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50"></div>
+            <div class="container mx-auto px-4 py-16 md:py-24 relative">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <div class="lg:w-1/2 mb-12 lg:mb-0 animate-fadeInUp">
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-700 font-medium mb-6">
+                            <i class="fas fa-star mr-2"></i> Trusted by 5,000+ students worldwide
+                        </div>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                            Learn <span class="gradient-text">Quran</span> Online with Expert <span class="text-purple-600">Teachers</span>
+                        </h1>
+                        <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                            Join thousands of students worldwide learning Quran recitation, Tajweed, and Islamic studies from certified teachers in personalized one-on-one or group sessions.
+                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <button class="px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                <i class="fas fa-play-circle mr-2"></i> Start Free Trial
+                            </button>
+                            <button class="px-8 py-4 rounded-xl font-semibold text-blue-600 border-2 border-blue-600 hover:bg-blue-50 transition-all duration-300 hover:shadow-md">
+                                <i class="fas fa-calendar-alt mr-2"></i> Book Demo Class
+                            </button>
+                        </div>
+                        
+                        <div class="mt-12 flex flex-wrap items-center gap-6">
+                            <div class="flex -space-x-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-200 border-2 border-white shadow"></div>
+                                <div class="w-10 h-10 rounded-full bg-purple-200 border-2 border-white shadow"></div>
+                                <div class="w-10 h-10 rounded-full bg-blue-300 border-2 border-white shadow"></div>
+                                <div class="w-10 h-10 rounded-full bg-purple-300 border-2 border-white shadow"></div>
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 border-2 border-white shadow flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">5K+</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">Join 5,000+ students from 50+ countries</p>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">4.8/5 based on 1,200+ reviews</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2 flex justify-center relative">
+                        <div class="relative w-full max-w-lg">
+                            <div class="relative z-10 w-full h-96 rounded-3xl overflow-hidden shadow-2xl hover-lift">
+                                <img src="https://images.unsplash.com/photo-1652751207037-f6f5097fdb9a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800&q=80" 
+                                     alt="Student learning Quran online" 
+                                     class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                                    <div class="arabic-font text-3xl mb-2">﷽</div>
+                                    <h3 class="text-xl font-bold mb-1">Live Online Classes</h3>
+                                    <p class="text-blue-100">Interactive sessions with certified teachers</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating elements -->
+                            <div class="absolute -top-6 -left-6 w-24 h-24 rounded-2xl bg-white shadow-xl flex items-center justify-center animate-float hover-lift">
+                                <div class="text-center p-3">
+                                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-2">
+                                        <i class="fas fa-user-graduate text-blue-600 text-xl"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold text-gray-800">Certified Teachers</p>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute -bottom-6 -right-6 w-24 h-24 rounded-2xl bg-white shadow-xl flex items-center justify-center animate-float hover-lift" style="animation-delay: 1.5s;">
+                                <div class="text-center p-3">
+                                    <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-2">
+                                        <i class="fas fa-laptop-house text-purple-600 text-xl"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold text-gray-800">Flexible Schedule</p>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute top-1/2 -left-12 w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg flex items-center justify-center animate-float" style="animation-delay: 0.5s;">
+                                <i class="fas fa-headphones text-white text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 animate-fadeInUp">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Our Platform</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg">We provide a comprehensive online Quran learning experience with modern tools and traditional teaching methods.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 hover-lift border border-gray-100 animate-fadeInUp section-delay-1">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-chalkboard-teacher text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Certified Teachers</h3>
+                        <p class="text-gray-600 leading-relaxed">All our teachers are certified with Ijazah and have years of experience teaching Quran to students of all ages and backgrounds.</p>
+                        <div class="mt-6 pt-6 border-t border-gray-100">
+                            <div class="flex items-center text-blue-600 font-medium">
+                                <span>Meet Our Teachers</span>
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 hover-lift border border-gray-100 animate-fadeInUp section-delay-2">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-user-clock text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Flexible Schedule</h3>
+                        <p class="text-gray-600 leading-relaxed">Choose class timings that fit your schedule. We offer 24/7 availability with teachers in different time zones worldwide.</p>
+                        <div class="mt-6 pt-6 border-t border-gray-100">
+                            <div class="flex items-center text-purple-600 font-medium">
+                                <span>View Schedule</span>
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 hover-lift border border-gray-100 animate-fadeInUp section-delay-3">
+                        <<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-laptop-code text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Interactive Platform</h3>
+                        <p class="text-gray-600 leading-relaxed">Our platform includes screen sharing, digital whiteboard, and Quran software to enhance your learning experience.</p>
+                        <div class="mt-6 pt-6 border-t border-gray-100">
+                            <div class="flex items-center text-gradient font-medium">
+                                <span>Explore Platform</span>
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 animate-fadeInUp">
+                    <div class="mb-8 lg:mb-0">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Our Quran Courses</h2>
+                        <p class="text-gray-600 text-lg">Choose from a variety of courses tailored to different levels and ages</p>
+                    </div>
+                    
+                    <div class="flex space-x-2 bg-gray-100 p-1.5 rounded-xl">
+                        <button 
+                            @click="activeTab = 'courses'" 
+                            :class="activeTab === 'courses' ? 'bg-white shadow text-blue-600' : 'text-gray-700 hover:text-gray-900'"
+                            class="px-5 py-2.5 rounded-lg font-medium transition-all duration-300"
+                        >
+                            All Courses
+                        </button>
+                        <button 
+                            @click="activeTab = 'kids'" 
+                            :class="activeTab === 'kids' ? 'bg-white shadow text-blue-600' : 'text-gray-700 hover:text-gray-900'"
+                            class="px-5 py-2.5 rounded-lg font-medium transition-all duration-300"
+                        >
+                            For Kids
+                        </button>
+                        <button 
+                            @click="activeTab = 'adults'" 
+                            :class="activeTab === 'adults' ? 'bg-white shadow text-blue-600' : 'text-gray-700 hover:text-gray-900'"
+                            class="px-5 py-2.5 rounded-lg font-medium transition-all duration-300"
+                        >
+                            For Adults
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Course 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift group animate-fadeInUp section-delay-1">
+                        <div class="h-3 bg-gradient-to-r from-blue-500 to-blue-600"></div>
+                        <div class="p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <span class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3 inline-block">Beginner</span>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Quran Recitation (Noorani Qaida)</h3>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                    <i class="fas fa-book-open text-blue-600 text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-6 leading-relaxed">Learn the basics of Arabic letters, pronunciation, and Quran recitation rules from scratch.</p>
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-clock text-blue-500 mr-3"></i>
+                                    <span>4 weeks program</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-user-friends text-blue-500 mr-3"></i>
+                                    <span>1-on-1 or group classes</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-certificate text-blue-500 mr-3"></i>
+                                    <span>Completion certificate</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+                                <div class="text-2xl font-bold text-blue-600">$49<span class="text-sm text-gray-500 font-normal">/month</span></div>
+                                <button class="px-5 py-2.5 rounded-lg font-medium text-blue-600 border border-blue-600 hover:bg-blue-50 transition-all duration-300">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift group animate-fadeInUp section-delay-2">
+                        <div class="h-3 bg-gradient-to-r from-purple-500 to-purple-600"></div>
+                        <div class="p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <span class="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-3 inline-block">Intermediate</span>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">Tajweed & Memorization</h3>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                                    <i class="fas fa-microphone-alt text-purple-600 text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-6 leading-relaxed">Master the rules of Tajweed and begin memorizing selected Surahs from the Quran with proper pronunciation.</p>
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-clock text-purple-500 mr-3"></i>
+                                    <span>12 weeks program</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-user-friends text-purple-500 mr-3"></i>
+                                    <span>Personalized coaching</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-certificate text-purple-500 mr-3"></i>
+                                    <span>Tajweed certification</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+                                <div class="text-2xl font-bold text-purple-600">$69<span class="text-sm text-gray-500 font-normal">/month</span></div>
+                                <button class="px-5 py-2.5 rounded-lg font-medium text-purple-600 border border-purple-600 hover:bg-purple-50 transition-all duration-300">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift group animate-fadeInUp section-delay-3">
+                        <div class="h-3 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                        <div class="p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <span class="px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-gray-800 rounded-full text-sm font-semibold mb-3 inline-block">Advanced</span>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Hifz Program (Memorization)</h3>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 flex items-center justify-center group-hover:from-blue-100 group-hover:to-purple-100 transition-colors">
+                                    <i class="fas fa-brain text-gradient text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-6 leading-relaxed">Complete Quran memorization program with revision schedule and Ijazah certification from qualified scholars.</p>
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-clock text-gradient mr-3"></i>
+                                    <span>Custom timeline</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-user-friends text-gradient mr-3"></i>
+                                    <span>Dedicated mentor</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-award text-gradient mr-3"></i>
+                                    <span>Ijazah certification</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+                                <div class="text-2xl font-bold gradient-text">$99<span class="text-sm text-gray-500 font-normal">/month</span></div>
+                                <button class="px-5 py-2.5 rounded-lg font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-16 animate-fadeInUp">
+                    <button class="px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <i class="fas fa-list mr-2"></i> View All Courses
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonial Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 animate-fadeInUp">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg">Join thousands of satisfied students who have transformed their Quran learning journey with us.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 rounded-2xl p-8 hover-lift animate-fadeInUp section-delay-1">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold mr-4">
+                                AS
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Ahmed S.</h4>
+                                <p class="text-gray-600 text-sm">Hifz Program Student</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 italic mb-6">"The Hifz program changed my life. My teacher was incredibly patient and supportive throughout the entire journey. I've now memorized 15 juz with perfect Tajweed!"</p>
+                        <div class="text-sm text-gray-500">Completed: 8 months ago</div>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-2xl p-8 hover-lift animate-fadeInUp section-delay-2">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold mr-4">
+                                MF
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Maryam F.</h4>
+                                <p class="text-gray-600 text-sm">Tajweed Course Student</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="text-gray-700 italic mb-6">"As a working professional, the flexible schedule was perfect for me. The interactive platform made learning Tajweed rules so much easier than I expected."</p>
+                        <div class="text-sm text-gray-500">Completed: 3 months ago</div>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-2xl p-8 hover-lift animate-fadeInUp section-delay-3">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold mr-4">
+                                YK
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Yusuf K.</h4>
+                                <p class="text-gray-600 text-sm">Parent of Student</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 italic mb-6">"My 8-year-old daughter looks forward to her Quran classes every week. The teachers are amazing with kids and make learning fun and engaging."</p>
+                        <div class="text-sm text-gray-500">Active student: 6 months</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-10 left-10 w-64 h-64 rounded-full bg-blue-300"></div>
+                <div class="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-purple-300"></div>
+            </div>
+            <div class="container mx-auto px-4 relative">
+                <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mx-auto mb-8 shadow-lg">
+                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Start Your Quran Learning Journey Today</h2>
+                    <p class="text-gray-700 mb-10 text-lg max-w-2xl mx-auto">Get your first lesson free with no obligation. Experience our teaching methodology and see if it's right for you.</p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10">
+                        <button class="px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            <i class="fas fa-calendar-check mr-2"></i> Book Free Trial Class
+                        </button>
+                        <button class="px-8 py-4 rounded-xl font-semibold text-blue-600 bg-white border-2 border-blue-600 hover:bg-blue-50 transition-all duration-300 hover:shadow-md">
+                            <i class="fas fa-phone-alt mr-2"></i> Schedule a Call
+                        </button>
+                    </div>
+                    
+                    <div class="inline-flex items-center space-x-6 text-gray-600">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>No credit card required</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Cancel anytime</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Money-back guarantee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+   <footer class="bg-gray-900 text-white pt-16 pb-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md">
+                            <i class="fas fa-book-quran text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Quran<span class="gradient-text">Academy</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-8 leading-relaxed max-w-md">
+                        Teaching the Quran online with excellence since 2015. Join thousands of satisfied students worldwide in their journey to connect with the Holy Quran.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gradient-to-r from-purple-600 to-pink-600 transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Home
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            About Us
+                        </a></li>
+                        <li><a href="#courses" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Courses
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Teachers
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Pricing
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Courses</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Quran Recitation
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Tajweed Rules
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Hifz Program
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Islamic Studies
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            Arabic Language
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Contact Us</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-blue-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">123 Learning Street, Knowledge City</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-blue-400 mr-3"></i>
+                            <span class="text-gray-400">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                            <span class="text-gray-400">info@quranacademy.com</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-bold mb-4 text-white">Subscribe to Newsletter</h4>
+                        <p class="text-gray-400 text-sm mb-4">Get updates on new courses and Islamic content</p>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="px-4 py-3 rounded-l-lg bg-gray-800 text-white w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button class="px-5 py-3 rounded-r-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2024 Quran Academy. All rights reserved.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-300">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-300">Cookie Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-300">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 transform translate-y-10 z-40 hover:scale-110">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Initialize Alpine.js data
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('main', () => ({
+                mobileMenuOpen: false,
+                activeTab: 'courses'
+            }));
+        });
+
+        // Back to top button
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'translate-y-10');
+                    backToTopButton.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'translate-y-0');
+                    backToTopButton.classList.add('opacity-0', 'translate-y-10');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Add animation to elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeInUp');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements with animation classes
+            document.querySelectorAll('.animate-fadeInUp').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
