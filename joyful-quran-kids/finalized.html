@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Muslims - Learn Al-Quran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            scroll-behavior: smooth;
+        }
+        .arabic-font {
+            font-family: 'Amiri', serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0abfc 0%, #c084fc 25%, #a855f7 50%, #7c3aed 75%, #4f46e5 100%);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .pattern-bg {
+            background-image: url('https://images.unsplash.com/photo-1739477274806-ee6d24f3d8a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwZ2VvbWV0cmljJTIwcGF0dGVybiUyMHBhc3RlbCUyMGJhY2tncm91bmR8ZW58MHwwfHx8MTc2NDkwNzc0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=ITyIfuUemAc');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+        [x-cloak] { display: none !important; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pulse-animation, .float-animation, .fade-in-up, .hover-lift, .reveal {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-white to-indigo-50 min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="sticky top-0 z-50 shadow-lg glass-effect" x-data="{ mobileMenuOpen: false }">
+        <nav class="bg-white/90 border-b-4 border-fuchsia-500" role="navigation" aria-label="Main">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <a href="#" class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded">
+                        <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-mosque text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold text-indigo-800 text-shadow">Little<span class="text-fuchsia-600">Muslims</span></h1>
+                    </a>
+                    
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex space-x-8">
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors duration-300 relative group focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded">
+                            Home
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors duration-300 relative group focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded">
+                            Learn Quran
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors duration-300 relative group focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded">
+                            Islamic Stories
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors duration-300 relative group focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded">
+                            Games
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors duration-300 relative group focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded">
+                            Parents
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen.toString()" aria-controls="mobile-menu" class="md:hidden text-indigo-700 text-2xl hover:text-fuchsia-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded" aria-label="Toggle menu">
+                        <i class="fas fa-bars" x-show="!mobileMenuOpen" x-cloak aria-hidden="true"></i>
+                        <i class="fas fa-times" x-show="mobileMenuOpen" x-cloak aria-hidden="true"></i>
+                    </button>
+                </div>
+                
+                <!-- Mobile Navigation -->
+                <div id="mobile-menu" x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 -translate-y-4"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-4"
+                     class="md:hidden mt-4 space-y-3 bg-white rounded-lg p-4 shadow-xl">
+                    <a href="#" class="block font-bold text-indigo-700 hover:text-violet-600 hover:bg-indigo-50 p-2 rounded transition-colors duration-300">Home</a>
+                    <a href="#" class="block font-bold text-indigo-700 hover:text-violet-600 hover:bg-indigo-50 p-2 rounded transition-colors duration-300">Learn Quran</a>
+                    <a href="#" class="block font-bold text-indigo-700 hover:text-violet-600 hover:bg-indigo-50 p-2 rounded transition-colors duration-300">Islamic Stories</a>
+                    <a href="#" class="block font-bold text-indigo-700 hover:text-violet-600 hover:bg-indigo-50 p-2 rounded transition-colors duration-300">Games</a>
+                    <a href="#" class="block font-bold text-indigo-700 hover:text-violet-600 hover:bg-indigo-50 p-2 rounded transition-colors duration-300">Parents</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-12 md:py-20 pattern-bg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in-up">
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-indigo-900 mb-4 leading-tight">
+                        Learn <span class="text-fuchsia-600">Al-Quran</span> with <span class="text-violet-600">Joy</span> & <span class="text-pink-500">Fun</span>!
+                    </h2>
+                    <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                        An interactive platform where children can learn Quranic verses, Arabic letters, and Islamic values through engaging games, stories, and activities designed for young minds.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="px-8 py-3 bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 pulse-animation group focus:outline-none focus:ring-4 focus:ring-pink-300">
+                            <i class="fas fa-play-circle mr-2 group-hover:rotate-90 transition-transform duration-300" aria-hidden="true"></i>
+                            Start Learning
+                        </a>
+                        <a href="#" class="px-8 py-3 bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                            <i class="fas fa-star mr-2 group-hover:rotate-12 transition-transform duration-300" aria-hidden="true"></i>
+                            Try Free Lesson
+                        </a>
+                    </div>
+                    <div class="mt-8 flex items-center space-x-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 text-xl mr-2" aria-hidden="true"></i>
+                            <span class="text-gray-700">Child-Safe Environment</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 text-xl mr-2" aria-hidden="true"></i>
+                            <span class="text-gray-700">Certified Teachers</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-pink-300 to-indigo-400 flex items-center justify-center shadow-2xl float-animation">
+                            <div class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-white flex flex-col items-center justify-center p-6 text-center border-4 border-white shadow-inner">
+                                <div class="arabic-font text-5xl md:text-6xl text-indigo-800 mb-4 transform hover:scale-110 transition-transform duration-300" id="currentLetter" aria-live="polite">ب</div>
+                                <h3 class="text-2xl font-bold text-fuchsia-700">Arabic Alphabet</h3>
+                                <p class="text-gray-600 mt-2">Learn with interactive games</p>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gradient-to-r from-pink-400 to-violet-400 flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                            <i class="fas fa-gamepad text-white text-3xl"></i>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-gradient-to-r from-indigo-400 to-fuchsia-400 flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                            <i class="fas fa-star text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute -top-2 left-1/4 w-16 h-16 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                            <i class="fas fa-book text-white text-xl"></i>
+                        </div>
+
+                        <!-- Floating photo card -->
+                        <figure class="absolute -bottom-10 -right-10 md:-bottom-12 md:-right-14 bg-white rounded-xl shadow-2xl border border-indigo-100 rotate-3 hover:rotate-0 transition-transform duration-300 overflow-hidden w-36 md:w-44">
+                            <img src="https://images.unsplash.com/photo-1759655058313-3f29dbf686ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtdXNsaW0lMjBraWRzJTIwbGVhcm5pbmclMjBxdXJhbiUyMGlsbHVzdHJhdGlvbnxlbnwwfDB8fHwxNzY0OTA3NzQ2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=XOvNsILkVCo" alt="Kids learning Quran with joy" class="w-full h-28 md:h-32 object-cover" loading="lazy">
+                            <figcaption class="text-xs text-indigo-700 font-bold p-2 flex items-center justify-center">
+                                <i class="fas fa-heart text-pink-500 mr-1"></i> Learning is Fun!
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gradient-to-b from-white to-indigo-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-4">What Will Your Child <span class="text-fuchsia-600">Learn</span>?</h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Our comprehensive curriculum is designed to make Islamic education engaging and memorable for children of all ages.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-xl border-t-4 border-indigo-500 hover-lift group reveal">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-book-quran text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">Quranic Reading</h3>
+                    <p class="text-gray-700 text-center">Step-by-step lessons to help children read Quranic Arabic with proper pronunciation (Tajweed).</p>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-1 bg-indigo-100 text-indigo-700 font-bold rounded-full group-hover:bg-indigo-200 transition-colors duration-300">Ages 5+</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-xl border-t-4 border-fuchsia-500 hover-lift group reveal">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-puzzle-piece text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">Interactive Games</h3>
+                    <p class="text-gray-700 text-center">Educational games that make learning Arabic letters and Quranic verses fun and engaging.</p>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-1 bg-pink-100 text-fuchsia-700 font-bold rounded-full group-hover:bg-pink-200 transition-colors duration-300">Ages 4+</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-xl border-t-4 border-violet-500 hover-lift group reveal">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-book-open text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">Islamic Stories</h3>
+                    <p class="text-gray-700 text-center">Animated stories of prophets and Islamic values to teach morals and ethics in an engaging way.</p>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-1 bg-violet-100 text-violet-700 font-bold rounded-full group-hover:bg-violet-200 transition-colors duration-300">All Ages</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Learning Section -->
+    <section class="py-16 bg-gradient-to-b from-indigo-50 to-white" x-data="{ activeTab: 'alphabet' }">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-4">Interactive <span class="text-violet-600">Learning</span> Zone</h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Explore different learning modules designed to make education interactive and fun</p>
+            
+            <!-- Tab Navigation -->
+            <div class="flex justify-center mb-10">
+                <div class="inline-flex rounded-full bg-gradient-to-r from-indigo-100 to-pink-100 p-1 shadow-inner">
+                    <button 
+                        @click="activeTab = 'alphabet'" 
+                        :class="activeTab === 'alphabet' ? 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-lg' : 'text-indigo-700 hover:bg-white/50'"
+                        class="px-6 py-2 rounded-full font-bold transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                        <i class="fas fa-font mr-2" aria-hidden="true"></i>
+                        Arabic Alphabet
+                    </button>
+                    <button 
+                        @click="activeTab = 'surahs'" 
+                        :class="activeTab === 'surahs' ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white shadow-lg' : 'text-indigo-700 hover:bg-white/50'"
+                        class="px-6 py-2 rounded-full font-bold transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300">
+                        <i class="fas fa-book-quran mr-2" aria-hidden="true"></i>
+                        Short Surahs
+                    </button>
+                    <button 
+                        @click="activeTab = 'duas'" 
+                        :class="activeTab === 'duas' ? 'bg-gradient-to-r from-violet-500 to-indigo-500 text-white shadow-lg' : 'text-indigo-700 hover:bg-white/50'"
+                        class="px-6 py-2 rounded-full font-bold transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-violet-300">
+                        <i class="fas fa-hands-praying mr-2" aria-hidden="true"></i>
+                        Daily Duas
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 hover-lift">
+                <!-- Alphabet Tab -->
+                <div x-show="activeTab === 'alphabet'" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/3 mb-8 md:mb-0">
+                            <div class="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-indigo-300 to-pink-300 flex items-center justify-center shadow-2xl">
+                                <div class="w-40 h-40 rounded-full bg-white flex items-center justify-center border-4 border-white shadow-inner">
+                                    <div class="arabic-font text-8xl text-indigo-700 transform transition-transform duration-300" id="currentLetterCircle">ب</div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-6 space-x-4">
+                                <button onclick="changeLetter()" class="px-6 py-2 bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-bold rounded-full shadow hover:shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-300">
+                                    <i class="fas fa-arrow-right mr-2" aria-hidden="true"></i>Next Letter
+                                </button>
+                                <button onclick="playLetterSound()" class="px-6 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-bold rounded-full shadow hover:shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                                    <i class="fas fa-volume-up mr-2" aria-hidden="true"></i>Listen
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-2/3 md:pl-10">
+                            <h3 class="text-2xl font-bold text-indigo-800 mb-4">Learn Arabic Letters</h3>
+                            <p class="text-gray-700 mb-6">Each Arabic letter comes with pronunciation audio, fun examples, and interactive writing practice.</p>
+                            
+                            <div id="lettersGrid" class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-8">
+                                <div role="button" tabindex="0" data-letter="ا" class="h-16 rounded-lg bg-gradient-to-br from-indigo-100 to-pink-100 flex items-center justify-center arabic-font text-3xl text-indigo-700 hover:scale-110 transition-transform duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300">ا</div>
+                                <div role="button" tabindex="0" data-letter="ب" class="h-16 rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 flex items-center justify-center arabic-font text-3xl text-violet-700 hover:scale-110 transition-transform duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-violet-300">ب</div>
+                                <div role="button" tabindex="0" data-letter="ت" class="h-16 rounded-lg bg-gradient-to-br from-pink-100 to-indigo-100 flex items-center justify-center arabic-font text-3xl text-pink-700 hover:scale-110 transition-transform duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-300">ت</div>
+                                <div role="button" tabindex="0" data-letter="ث" class="h-16 rounded-lg bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center arabic-font text-3xl text-indigo-700 hover:scale-110 transition-transform duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300">ث</div>
+                                <div role="button" tabindex="0" data-letter="ج" class="h-16 rounded-lg bg-gradient-to-br from-fuchsia-100 to-pink-100 flex items-center justify-center arabic-font text-3xl text-fuchsia-700 hover:scale-110 transition-transform duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-fuchsia-300">ج</div>
+                                <div role="button" tabindex="0" data-letter="ح" class="h-16 rounded-lg bg-gradient-to-br from-violet-100 to-indigo-100 flex items-center justify-center arabic-font text-3xl text-violet-700 hover:scale-110 transition-transform duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-violet-300">ح</div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-indigo-50 to-pink-50 rounded-xl p-4">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 flex items-center justify-center mr-4">
+                                        <i class="fas fa-lightbulb text-white text-xl" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-700">Learning Tip</h4>
+                                        <p class="text-gray-600 text-sm">Practice writing each letter while saying its sound aloud for better retention!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Surahs Tab -->
+                <div x-show="activeTab === 'surahs'" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-indigo-800 mb-6">Learn Short Surahs</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="p-6 rounded-xl bg-gradient-to-br from-indigo-50 to-violet-50 border-2 border-indigo-200 hover-lift group reveal">
+                                <div class="arabic-font text-4xl text-indigo-800 mb-4 group-hover:scale-110 transition-transform duration-300">الْفَاتِحَة</div>
+                                <h4 class="font-bold text-lg text-indigo-700 mb-2">Al-Fatihah</h4>
+                                <p class="text-gray-600 mb-4">The Opening - 7 verses</p>
+                                <button class="px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-bold rounded-full text-sm hover:scale-105 transition-transform duration-300 group-hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                                    <i class="fas fa-play mr-1" aria-hidden="true"></i> Learn Now
+                                </button>
+                            </div>
+                            <div class="p-6 rounded-xl bg-gradient-to-br from-pink-50 to-fuchsia-50 border-2 border-pink-200 hover-lift group reveal">
+                                <div class="arabic-font text-4xl text-fuchsia-800 mb-4 group-hover:scale-110 transition-transform duration-300">الإِخْلَاص</div>
+                                <h4 class="font-bold text-lg text-fuchsia-700 mb-2">Al-Ikhlas</h4>
+                                <p class="text-gray-600 mb-4">The Sincerity - 4 verses</p>
+                                <button class="px-4 py-2 bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-bold rounded-full text-sm hover:scale-105 transition-transform duration-300 group-hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-300">
+                                    <i class="fas fa-play mr-1" aria-hidden="true"></i> Learn Now
+                                </button>
+                            </div>
+                            <div class="p-6 rounded-xl bg-gradient-to-br from-violet-50 to-indigo-50 border-2 border-violet-200 hover-lift group reveal">
+                                <div class="arabic-font text-4xl text-violet-800 mb-4 group-hover:scale-110 transition-transform duration-300">الْفَلَق</div>
+                                <h4 class="font-bold text-lg text-violet-700 mb-2">Al-Falaq</h4>
+                                <p class="text-gray-600 mb-4">The Daybreak - 5 verses</p>
+                                <button class="px-4 py-2 bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold rounded-full text-sm hover:scale-105 transition-transform duration-300 group-hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-violet-300">
+                                    <i class="fas fa-play mr-1" aria-hidden="true"></i> Learn Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Duas Tab -->
+                <div x-show="activeTab === 'duas'" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-indigo-800 mb-6">Daily Duas for Kids</h3>
+                        <div class="max-w-2xl mx-auto">
+                            <div class="p-6 rounded-xl bg-gradient-to-r from-indigo-100 to-pink-100 mb-6 hover-lift group reveal">
+                                <div class="arabic-font text-2xl text-indigo-800 mb-4 group-hover:scale-105 transition-transform duration-300">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+                                <p class="text-gray-700 mb-2">"In the name of Allah, the Most Gracious, the Most Merciful."</p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <span class="text-sm text-gray-600">Dua before starting anything</span>
+                                    <button class="px-3 py-1 bg-indigo-500 text-white text-sm rounded-full hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                                        <i class="fas fa-volume-up mr-1" aria-hidden="true"></i> Listen
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-6 rounded-xl bg-gradient-to-r from-violet-100 to-fuchsia-100 hover-lift group reveal">
+                                <div class="arabic-font text-2xl text-violet-800 mb-4 group-hover:scale-105 transition-transform duration-300">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ</div>
+                                <p class="text-gray-700 mb-2">"All praise is for Allah who fed us and gave us drink, and made us Muslims."</p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <span class="text-sm text-gray-600">Dua after eating</span>
+                                    <button class="px-3 py-1 bg-violet-500 text-white text-sm rounded-full hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-violet-300">
+                                        <i class="fas fa-volume-up mr-1" aria-hidden="true"></i> Listen
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Tracking -->
+    <section id="progress-section" class="py-16 bg-gradient-to-b from-white to-indigo-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-4">Track Your <span class="text-fuchsia-600">Progress</span></h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Monitor your child's learning journey with detailed progress reports and achievements</p>
+            
+            <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto hover-lift">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+                    <div>
+                        <h3 class="text-2xl font-bold text-indigo-800">Ahmad's Learning Journey</h3>
+                        <p class="text-gray-600 flex items-center">
+                            <i class="fas fa-calendar-alt mr-2 text-fuchsia-500" aria-hidden="true"></i>
+                            Started 30 days ago
+                        </p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <span class="px-6 py-2 bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold rounded-full shadow-lg">
+                            <i class="fas fa-trophy mr-2" aria-hidden="true"></i>85% Complete
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 flex items-center justify-center mr-3">
+                                    <i class="fas fa-font text-white text-sm" aria-hidden="true"></i>
+                                </div>
+                                <span class="font-bold text-indigo-700">Arabic Alphabet</span>
+                            </div>
+                            <span class="font-bold text-fuchsia-700">24/28 letters</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-1000 ease-out progress-bar" style="width: 0%" data-progress="85"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 flex items-center justify-center mr-3">
+                                    <i class="fas fa-book-quran text-white text-sm" aria-hidden="true"></i>
+                                </div>
+                                <span class="font-bold text-indigo-700">Short Surahs Memorized</span>
+                            </div>
+                            <span class="font-bold text-fuchsia-700">5/10 surahs</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full transition-all duration-1000 ease-out progress-bar" style="width: 0%" data-progress="50"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 flex items-center justify-center mr-3">
+                                    <i class="fas fa-book-open text-white text-sm" aria-hidden="true"></i>
+                                </div>
+                                <span class="font-bold text-indigo-700">Islamic Stories Completed</span>
+                            </div>
+                            <span class="font-bold text-fuchsia-700">12/15 stories</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out progress-bar" style="width: 0%" data-progress="80"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <button class="px-8 py-3 bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group focus:outline-none focus:ring-2 focus:ring-pink-300">
+                        <i class="fas fa-trophy mr-2 group-hover:rotate-12 transition-transform duration-300" aria-hidden="true"></i> View All Achievements
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-16 bg-gradient-to-b from-indigo-50 to-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-4">What <span class="text-fuchsia-600">Parents</span> Say</h2>
+            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Hear from parents who have seen their children thrive with Little Muslims</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift reveal">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-400 to-violet-400 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-indigo-800">Fatima A.</h4>
+                            <div class="flex text-yellow-400" aria-label="Rating: 5 out of 5">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"My 6-year-old now looks forward to Quran lessons! The games make learning so much fun."</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-500">Parent of Aisha, age 6</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift reveal">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-fuchsia-400 to-pink-400 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-indigo-800">Omar K.</h4>
+                            <div class="flex text-yellow-400" aria-label="Rating: 4.5 out of 5">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The progress tracking feature is amazing. I can see exactly what my children are learning."</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-500">Parent of Yusuf, age 7 & Maryam, age 5</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover-lift reveal">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-violet-400 to-indigo-400 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-indigo-800">Sarah M.</h4>
+                            <div class="flex text-yellow-400" aria-label="Rating: 5 out of 5">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Finally, an Islamic learning platform that kids actually enjoy using. Highly recommended!"</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-500">Parent of Adam, age 8</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-indigo-600 to-violet-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Start Your Child's Islamic Learning Journey Today!</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-indigo-100">Join thousands of Muslim families who have made Little Muslims their trusted learning partner.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                <a href="#" class="px-8 py-3 bg-white text-indigo-700 font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-indigo-50 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                    <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>Sign Up Free
+                </a>
+                <a href="#" class="px-8 py-3 bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-300">
+                    <i class="fas fa-play-circle mr-2" aria-hidden="true"></i>Watch Demo
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-pink-300">10,000+</div>
+                    <div class="text-indigo-200">Happy Children</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-pink-300">50+</div>
+                    <div class="text-indigo-200">Learning Games</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-pink-300">100%</div>
+                    <div class="text-indigo-200">Child Safe</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-pink-300">24/7</div>
+                    <div class="text-indigo-200">Parent Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-indigo-900 to-violet-900 text-white pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start">
+                <div class="mb-8 md:mb-0 md:w-1/3">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-mosque text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Little<span class="text-pink-300">Muslims</span></h2>
+                    </div>
+                    <p class="text-indigo-200 mb-6">Making Quran learning fun and engaging for children worldwide. Our mission is to nurture love for Islam in young hearts through interactive education.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="TikTok">
+                            <i class="fab fa-tiktok" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:w-2/3">
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-pink-300">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Home
+                            </a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Courses
+                            </a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Games
+                            </a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Stories
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-pink-300">Parents</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Progress Reports
+                            </a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Account Settings
+                            </a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>Safety & Privacy
+                            </a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-pink-300 rounded">
+                                <i class="fas fa-chevron-right text-xs mr-2" aria-hidden="true"></i>FAQ
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-pink-300">Contact Us</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-pink-300 mr-2" aria-hidden="true"></i>
+                                <span>support@littlemuslims.com</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-pink-300 mr-2" aria-hidden="true"></i>
+                                <span>+1 (800) 123-4567</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-pink-300 mr-2" aria-hidden="true"></i>
+                                <span>Mon-Fri: 9AM-6PM EST</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-indigo-700 mt-10 pt-6 text-center text-indigo-300">
+                <p>&copy; 2023 LittleMuslims.com - All rights reserved. Designed with <i class="fas fa-heart text-pink-400" aria-hidden="true"></i> for Muslim children worldwide.</p>
+                <div class="mt-2 text-sm">
+                    <a href="#" class="hover:text-pink-200 transition-colors duration-300 mx-2">Privacy Policy</a> | 
+                    <a href="#" class="hover:text-pink-200 transition-colors duration-300 mx-2">Terms of Service</a> | 
+                    <a href="#" class="hover:text-pink-200 transition-colors duration-300 mx-2">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Arabic letters list
+        const arabicLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي'];
+        let currentIndex = 1;
+
+        // Update both hero and circle letters for consistency
+        function updateLetterDisplays(letter) {
+            const heroLetter = document.getElementById('currentLetter');
+            const circleLetter = document.getElementById('currentLetterCircle');
+            if (heroLetter) {
+                heroLetter.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    heroLetter.textContent = letter;
+                    heroLetter.style.transform = 'scale(1)';
+                }, 150);
+            }
+            if (circleLetter) {
+                circleLetter.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    circleLetter.textContent = letter;
+                    circleLetter.style.transform = 'scale(1)';
+                }, 150);
+            }
+        }
+        
+        function changeLetter() {
+            currentIndex = (currentIndex + 1) % arabicLetters.length;
+            updateLetterDisplays(arabicLetters[currentIndex]);
+        }
+        
+        function playLetterSound() {
+            const circleLetter = document.getElementById('currentLetterCircle');
+            if (!circleLetter) return;
+
+            circleLetter.classList.add('text-fuchsia-500');
+            setTimeout(() => {
+                circleLetter.classList.remove('text-fuchsia-500');
+            }, 500);
+            
+            // In a real app, this would play audio
+            console.log('Playing sound for letter:', arabicLetters[currentIndex]);
+        }
+
+        // Handle grid click and keyboard
+        function setupLettersGrid() {
+            const grid = document.getElementById('lettersGrid');
+            if (!grid) return;
+            grid.addEventListener('click', (e) => {
+                const item = e.target.closest('[data-letter]');
+                if (item) {
+                    const l = item.getAttribute('data-letter');
+                    const idx = arabicLetters.indexOf(l);
+                    if (idx > -1) currentIndex = idx;
+                    updateLetterDisplays(l);
+                }
+            });
+            grid.addEventListener('keydown', (e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && e.target?.getAttribute?.('data-letter')) {
+                    e.preventDefault();
+                    const l = e.target.getAttribute('data-letter');
+                    const idx = arabicLetters.indexOf(l);
+                    if (idx > -1) currentIndex = idx;
+                    updateLetterDisplays(l);
+                }
+            });
+        }
+        
+        // Reveal on scroll
+        function setupRevealObserver() {
+            const reveals = document.querySelectorAll('.reveal');
+            const obs = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            reveals.forEach(el => obs.observe(el));
+        }
+
+        // Animate progress bars
+        function setupProgressBars() {
+            const progressSection = document.getElementById('progress-section');
+            if (!progressSection) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bars = entry.target.querySelectorAll('.progress-bar');
+                        bars.forEach(bar => {
+                            const target = parseInt(bar.dataset.progress || '0', 10);
+                            requestAnimationFrame(() => {
+                                bar.style.width = target + '%';
+                            });
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+            observer.observe(progressSection);
+        }
+        
+        // Initialize with a random letter
+        document.addEventListener('DOMContentLoaded', function() {
+            currentIndex = Math.floor(Math.random() * arabicLetters.length);
+            updateLetterDisplays(arabicLetters[currentIndex]);
+            setupLettersGrid();
+            setupRevealObserver();
+            setupProgressBars();
+        });
+    </script>
+</body>
+</html>

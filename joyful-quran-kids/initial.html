@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Muslims - Learn Al-Quran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+        }
+        .arabic-font {
+            font-family: 'Amiri', serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0abfc 0%, #c084fc 25%, #a855f7 50%, #7c3aed 75%, #4f46e5 100%);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-indigo-50 min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="sticky top-0 z-50 shadow-lg">
+        <nav class="bg-white border-b-4 border-fuchsia-500">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center">
+                            <i class="fas fa-mosque text-white text-xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold text-indigo-800">Little<span class="text-fuchsia-600">Muslims</span></h1>
+                    </div>
+                    
+                    <div class="hidden md:flex space-x-8">
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors">Home</a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors">Learn Quran</a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors">Islamic Stories</a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors">Games</a>
+                        <a href="#" class="font-bold text-indigo-700 hover:text-violet-600 transition-colors">Parents</a>
+                    </div>
+                    
+                    <button class="md:hidden text-indigo-700 text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-12 md:py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-4xl md:text-5xl font-bold text-indigo-900 mb-4">Learn <span class="text-fuchsia-600">Al-Quran</span> with <span class="text-violet-600">Fun</span>!</h2>
+                    <p class="text-lg text-gray-700 mb-8">An interactive platform where children can learn Quranic verses, Arabic letters, and Islamic values through engaging games, stories, and activities.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="px-8 py-3 bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-shadow pulse-animation">Start Learning</a>
+                        <a href="#" class="px-8 py-3 bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-shadow">Try Free Lesson</a>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-pink-300 to-indigo-400 flex items-center justify-center shadow-2xl">
+                            <div class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-white flex flex-col items-center justify-center p-6 text-center">
+                                <div class="arabic-font text-5xl md:text-6xl text-indigo-800 mb-4">ب</div>
+                                <h3 class="text-2xl font-bold text-fuchsia-700">Arabic Alphabet</h3>
+                                <p class="text-gray-600 mt-2">Learn with interactive games</p>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gradient-to-r from-pink-400 to-violet-400 flex items-center justify-center shadow-xl">
+                            <i class="fas fa-gamepad text-white text-3xl"></i>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-gradient-to-r from-indigo-400 to-fuchsia-400 flex items-center justify-center shadow-xl">
+                            <i class="fas fa-star text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gradient-to-r from-indigo-50 to-pink-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-12">What Will Your Child <span class="text-fuchsia-600">Learn</span>?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-xl border-t-4 border-indigo-500 transform hover:-translate-y-2 transition-transform">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-book-quran text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">Quranic Reading</h3>
+                    <p class="text-gray-700 text-center">Step-by-step lessons to help children read Quranic Arabic with proper pronunciation (Tajweed).</p>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-1 bg-indigo-100 text-indigo-700 font-bold rounded-full">Ages 5+</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-xl border-t-4 border-fuchsia-500 transform hover:-translate-y-2 transition-transform">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-puzzle-piece text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">Interactive Games</h3>
+                    <p class="text-gray-700 text-center">Educational games that make learning Arabic letters and Quranic verses fun and engaging.</p>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-1 bg-pink-100 text-fuchsia-700 font-bold rounded-full">Ages 4+</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-xl border-t-4 border-violet-500 transform hover:-translate-y-2 transition-transform">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-book-open text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">Islamic Stories</h3>
+                    <p class="text-gray-700 text-center">Animated stories of prophets and Islamic values to teach morals and ethics in an engaging way.</p>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-1 bg-violet-100 text-violet-700 font-bold rounded-full">All Ages</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Learning Section -->
+    <section class="py-16" x-data="{ activeTab: 'alphabet' }">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-12">Interactive <span class="text-violet-600">Learning</span> Zone</h2>
+            
+            <!-- Tab Navigation -->
+            <div class="flex justify-center mb-10">
+                <div class="inline-flex rounded-full bg-gradient-to-r from-indigo-100 to-pink-100 p-1">
+                    <button 
+                        @click="activeTab = 'alphabet'" 
+                        :class="activeTab === 'alphabet' ? 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white' : 'text-indigo-700'"
+                        class="px-6 py-2 rounded-full font-bold transition-colors">
+                        Arabic Alphabet
+                    </button>
+                    <button 
+                        @click="activeTab = 'surahs'" 
+                        :class="activeTab === 'surahs' ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white' : 'text-indigo-700'"
+                        class="px-6 py-2 rounded-full font-bold transition-colors">
+                        Short Surahs
+                    </button>
+                    <button 
+                        @click="activeTab = 'duas'" 
+                        :class="activeTab === 'duas' ? 'bg-gradient-to-r from-violet-500 to-indigo-500 text-white' : 'text-indigo-700'"
+                        class="px-6 py-2 rounded-full font-bold transition-colors">
+                        Daily Duas
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                <!-- Alphabet Tab -->
+                <div x-show="activeTab === 'alphabet'" x-transition>
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/3 mb-8 md:mb-0">
+                            <div class="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-indigo-300 to-pink-300 flex items-center justify-center">
+                                <div class="w-40 h-40 rounded-full bg-white flex items-center justify-center">
+                                    <div class="arabic-font text-8xl text-indigo-700" id="currentLetter">ب</div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-6">
+                                <button onclick="changeLetter()" class="px-6 py-2 bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-bold rounded-full shadow hover:shadow-lg transition-shadow">Next Letter</button>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-2/3 md:pl-10">
+                            <h3 class="text-2xl font-bold text-indigo-800 mb-4">Learn Arabic Letters</h3>
+                            <p class="text-gray-700 mb-6">Each Arabic letter comes with pronunciation audio, fun examples, and interactive writing practice.</p>
+                            
+                            <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
+                                <div class="h-16 rounded-lg bg-gradient-to-br from-indigo-100 to-pink-100 flex items-center justify-center arabic-font text-3xl text-indigo-700">ا</div>
+                                <div class="h-16 rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 flex items-center justify-center arabic-font text-3xl text-violet-700">ب</div>
+                                <div class="h-16 rounded-lg bg-gradient-to-br from-pink-100 to-indigo-100 flex items-center justify-center arabic-font text-3xl text-pink-700">ت</div>
+                                <div class="h-16 rounded-lg bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center arabic-font text-3xl text-indigo-700">ث</div>
+                                <div class="h-16 rounded-lg bg-gradient-to-br from-fuchsia-100 to-pink-100 flex items-center justify-center arabic-font text-3xl text-fuchsia-700">ج</div>
+                                <div class="h-16 rounded-lg bg-gradient-to-br from-violet-100 to-indigo-100 flex items-center justify-center arabic-font text-3xl text-violet-700">ح</div>
+                            </div>
+                            
+                            <div class="mt-8 flex items-center">
+                                <i class="fas fa-volume-up text-fuchsia-500 text-2xl mr-3"></i>
+                                <p class="text-gray-700">Click the speaker icon to hear pronunciation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Surahs Tab -->
+                <div x-show="activeTab === 'surahs'" x-transition>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-indigo-800 mb-6">Learn Short Surahs</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="p-6 rounded-xl bg-gradient-to-br from-indigo-50 to-violet-50 border-2 border-indigo-200">
+                                <div class="arabic-font text-4xl text-indigo-800 mb-4">الْفَاتِحَة</div>
+                                <h4 class="font-bold text-lg text-indigo-700 mb-2">Al-Fatihah</h4>
+                                <p class="text-gray-600 mb-4">The Opening</p>
+                                <button class="px-4 py-2 bg-indigo-500 text-white font-bold rounded-full text-sm">Learn Now</button>
+                            </div>
+                            <div class="p-6 rounded-xl bg-gradient-to-br from-pink-50 to-fuchsia-50 border-2 border-pink-200">
+                                <div class="arabic-font text-4xl text-fuchsia-800 mb-4">الْإِخْلَاص</div>
+                                <h4 class="font-bold text-lg text-fuchsia-700 mb-2">Al-Ikhlas</h4>
+                                <p class="text-gray-600 mb-4">The Sincerity</p>
+                                <button class="px-4 py-2 bg-fuchsia-500 text-white font-bold rounded-full text-sm">Learn Now</button>
+                            </div>
+                            <div class="p-6 rounded-xl bg-gradient-to-br from-violet-50 to-indigo-50 border-2 border-violet-200">
+                                <div class="arabic-font text-4xl text-violet-800 mb-4">الْفَلَق</div>
+                                <h4 class="font-bold text-lg text-violet-700 mb-2">Al-Falaq</h4>
+                                <p class="text-gray-600 mb-4">The Daybreak</p>
+                                <button class="px-4 py-2 bg-violet-500 text-white font-bold rounded-full text-sm">Learn Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Duas Tab -->
+                <div x-show="activeTab === 'duas'" x-transition>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-indigo-800 mb-6">Daily Duas for Kids</h3>
+                        <div class="max-w-2xl mx-auto">
+                            <div class="p-6 rounded-xl bg-gradient-to-r from-indigo-100 to-pink-100 mb-6">
+                                <div class="arabic-font text-2xl text-indigo-800 mb-4">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+                                <p class="text-gray-700 mb-2">"In the name of Allah, the Most Gracious, the Most Merciful."</p>
+                                <p class="text-sm text-gray-600">Dua before starting anything</p>
+                            </div>
+                            <div class="p-6 rounded-xl bg-gradient-to-r from-violet-100 to-fuchsia-100">
+                                <div class="arabic-font text-2xl text-violet-800 mb-4">الْحَمْدُ لِلَّهِ الَّذأَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ</div>
+                                <p class="text-gray-700 mb-2">"All praise is for Allah who fed us and gave us drink, and made us Muslims."</p>
+                                <p class="text-sm text-gray-600">Dua after eating</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Tracking -->
+    <section class="py-16 bg-gradient-to-r from-indigo-50 to-pink-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-indigo-900 mb-12">Track Your <span class="text-fuchsia-600">Progress</span></h2>
+            
+            <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+                    <div>
+                        <h3 class="text-2xl font-bold text-indigo-800">Ahmad's Learning Journey</h3>
+                        <p class="text-gray-600">Started 30 days ago</p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <span class="px-6 py-2 bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold rounded-full">85% Complete</span>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-bold text-indigo-700">Arabic Alphabet</span>
+                            <span class="font-bold text-fuchsia-700">24/28 letters</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-bold text-indigo-700">Short Surahs Memorized</span>
+                            <span class="font-bold text-fuchsia-700">5/10 surahs</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-bold text-indigo-700">Islamic Stories Completed</span>
+                            <span class="font-bold text-fuchsia-700">12/15 stories</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <button class="px-8 py-3 bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-shadow">
+                        <i class="fas fa-trophy mr-2"></i> View All Achievements
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-indigo-900 to-violet-900 text-white pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-fuchsia-500 flex items-center justify-center">
+                            <i class="fas fa-mosque text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">Little<span class="text-pink-300">Muslims</span></h2>
+                    </div>
+                    <p class="text-indigo-200 max-w-md">Making Quran learning fun and engaging for children worldwide. Our mission is to nurture love for Islam in young hearts.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-pink-300">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Home</a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Courses</a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Games</a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Stories</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-pink-300">Parents</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Progress Reports</a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Account Settings</a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">Safety & Privacy</a></li>
+                            <li><a href="#" class="hover:text-pink-200 transition-colors">FAQ</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-pink-300">Connect</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-fuchsia-600 transition-colors">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-indigo-700 mt-10 pt-6 text-center text-indigo-300">
+                <p>&copy; 2023 LittleMuslims.com - All rights reserved. Designed with ❤️ for Muslim children worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple function to change Arabic letter in the interactive section
+        const arabicLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي'];
+        let currentIndex = 1;
+        
+        function changeLetter() {
+            currentIndex = (currentIndex + 1) % arabicLetters.length;
+            document.getElementById('currentLetter').textContent = arabicLetters[currentIndex];
+            
+            // Add a little animation
+            const letterElement = document.getElementById('currentLetter');
+            letterElement.classList.add('scale-125');
+            setTimeout(() => {
+                letterElement.classList.remove('scale-125');
+            }, 300);
+        }
+        
+        // Initialize with a random letter
+        document.addEventListener('DOMContentLoaded', function() {
+            currentIndex = Math.floor(Math.random() * arabicLetters.length);
+            document.getElementById('currentLetter').textContent = arabicLetters[currentIndex];
+        });
+    </script>
+</body>
+</html>
