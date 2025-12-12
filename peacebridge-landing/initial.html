@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouthPeace Alliance | Building Peace Through Youth Empowerment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #fefce8 0%, #f0f9ff 50%, #f7fee7 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(163, 230, 53, 0.08) 50%, rgba(251, 191, 36, 0.08) 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .stat-counter {
+            transition: all 1.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-white text-zinc-800">
+    <div id="app" class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-zinc-200">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-lime-400 flex items-center justify-center">
+                            <i class="fas fa-dove text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold text-zinc-900">YouthPeace<span class="text-blue-600">Alliance</span></span>
+                    </div>
+                    
+                    <div class="hidden md:flex space-x-8">
+                        <a href="#home" class="text-zinc-700 hover:text-blue-600 font-medium transition">Home</a>
+                        <a href="#about" class="text-zinc-700 hover:text-blue-600 font-medium transition">About</a>
+                        <a href="#programs" class="text-zinc-700 hover:text-blue-600 font-medium transition">Programs</a>
+                        <a href="#blog" class="text-zinc-700 hover:text-blue-600 font-medium transition">Blog</a>
+                        <a href="#contact" class="text-zinc-700 hover:text-blue-600 font-medium transition">Contact</a>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-full hover:shadow-lg transition">Donate</button>
+                        <button class="md:hidden text-zinc-700" @click="mobileMenuOpen = !mobileMenuOpen">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu -->
+                <div v-if="mobileMenuOpen" class="md:hidden mt-4 py-4 border-t border-zinc-200">
+                    <div class="flex flex-col space-y-4">
+                        <a href="#home" class="text-zinc-700 hover:text-blue-600 font-medium transition">Home</a>
+                        <a href="#about" class="text-zinc-700 hover:text-blue-600 font-medium transition">About</a>
+                        <a href="#programs" class="text-zinc-700 hover:text-blue-600 font-medium transition">Programs</a>
+                        <a href="#blog" class="text-zinc-700 hover:text-blue-600 font-medium transition">Blog</a>
+                        <a href="#contact" class="text-zinc-700 hover:text-blue-600 font-medium transition">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-gradient py-16 md:py-24">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <div class="lg:w-1/2 mb-12 lg:mb-0">
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-amber-100 text-amber-800 font-medium mb-6">
+                            <i class="fas fa-star mr-2"></i> Empowering Youth for Peace Since 2010
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-6">
+                            Building Bridges of <span class="text-blue-600">Peace</span> Through Youth <span class="text-lime-500">Empowerment</span>
+                        </h1>
+                        <p class="text-lg text-zinc-600 mb-8">
+                            We unite young leaders across communities to foster dialogue, resolve conflicts, and build sustainable peace for future generations.
+                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <button class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-full hover:shadow-lg transition flex items-center justify-center">
+                                <i class="fas fa-hands-helping mr-2"></i> Join Our Movement
+                            </button>
+                            <button class="px-8 py-3 bg-gradient-to-r from-lime-500 to-lime-400 text-white font-medium rounded-full hover:shadow-lg transition flex items-center justify-center">
+                                <i class="fas fa-play-circle mr-2"></i> Watch Our Story
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2">
+                        <div class="relative">
+                            <div class="bg-gradient-to-r from-blue-500 to-lime-400 rounded-2xl p-1 shadow-2xl">
+                                <div class="bg-white rounded-2xl p-6">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-blue-50 p-4 rounded-xl">
+                                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-3">
+                                                <i class="fas fa-users text-blue-600 text-xl"></i>
+                                            </div>
+                                            <h3 class="font-bold text-lg text-zinc-900">Youth Leaders</h3>
+                                            <p class="text-zinc-600 text-sm">Trained over 5,000 young peacebuilders</p>
+                                        </div>
+                                        <div class="bg-lime-50 p-4 rounded-xl">
+                                            <div class="w-12 h-12 rounded-full bg-lime-100 flex items-center justify-center mb-3">
+                                                <i class="fas fa-globe-americas text-lime-600 text-xl"></i>
+                                            </div>
+                                            <h3 class="font-bold text-lg text-zinc-900">Global Reach</h3>
+                                            <p class="text-zinc-600 text-sm">Active in 12 countries across 3 continents</p>
+                                        </div>
+                                        <div class="bg-amber-50 p-4 rounded-xl">
+                                            <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-3">
+                                                <i class="fas fa-handshake text-amber-600 text-xl"></i>
+                                            </div>
+                                            <h3 class="font-bold text-lg text-zinc-900">Peace Dialogues</h3>
+                                            <p class="text-zinc-600 text-sm">Facilitated 200+ community dialogues</p>
+                                        </div>
+                                        <div class="bg-yellow-50 p-4 rounded-xl">
+                                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mb-3">
+                                                <i class="fas fa-graduation-cap text-yellow-600 text-xl"></i>
+                                            </div>
+                                            <h3 class="font-bold text-lg text-zinc-900">Education</h3>
+                                            <p class="text-zinc-600 text-sm">Peace curriculum in 45 schools</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating elements -->
+                            <div class="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-yellow-400/20 flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center">
+                                    <i class="fas fa-peace text-white text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-blue-400/20 flex items-center justify-center">
+                                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
+                                    <i class="fas fa-heart text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-gradient-to-r from-blue-50 to-lime-50">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-blue-600 mb-2 stat-counter" :data-target="12500">{{ animatedStats.youthReached }}</div>
+                        <p class="text-zinc-600">Youth Reached</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-lime-500 mb-2 stat-counter" :data-target="320">{{ animatedStats.programs }}</div>
+                        <p class="text-zinc-600">Peace Programs</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-amber-500 mb-2 stat-counter" :data-target="45">{{ animatedStats.countries }}</div>
+                        <p class="text-zinc-600">Countries</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-yellow-500 mb-2 stat-counter" :data-target="98">{{ animatedStats.satisfaction }}%</div>
+                        <p class="text-zinc-600">Satisfaction Rate</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section id="programs" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-zinc-900 mb-4">Our <span class="text-blue-600">Peacebuilding</span> Programs</h2>
+                    <p class="text-lg text-zinc-600 max-w-2xl mx-auto">We design transformative programs that equip young people with the skills to become agents of peace in their communities.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-blue-500">
+                        <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
+                            <i class="fas fa-comments text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-3">Dialogue & Mediation</h3>
+                        <p class="text-zinc-600 mb-4">Facilitating constructive conversations between youth from diverse backgrounds to resolve conflicts peacefully.</p>
+                        <a href="#" class="text-blue-600 font-medium flex items-center">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-lime-500">
+                        <div class="w-14 h-14 rounded-full bg-lime-100 flex items-center justify-center mb-6">
+                            <i class="fas fa-brain text-lime-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-3">Leadership Training</h3>
+                        <p class="text-zinc-600 mb-4">Developing the next generation of ethical leaders with skills in conflict resolution and community building.</p>
+                        <a href="#" class="text-lime-600 font-medium flex items-center">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-amber-500">
+                        <div class="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center mb-6">
+                            <i class="fas fa-hands-helping text-amber-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-3">Community Projects</h3>
+                        <p class="text-zinc-600 mb-4">Supporting youth-led initiatives that address local challenges and promote social cohesion.</p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="py-16 bg-gradient-to-b from-white to-blue-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-12">
+                    <div>
+                        <h2 class="text-3xl font-bold text-zinc-900 mb-2">Latest <span class="text-blue-600">Insights</span></h2>
+                        <p class="text-zinc-600">Stories, research, and perspectives from the peacebuilding field</p>
+                    </div>
+                    <a href="#" class="text-blue-600 font-medium flex items-center">View All <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-r from-blue-500 to-lime-400 relative">
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 rounded-full text-sm font-medium text-blue-700">Research</div>
+                            <div class="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                <i class="fas fa-book-open text-blue-600"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-zinc-500 mb-3">
+                                <span class="mr-4"><i class="far fa-calendar mr-1"></i> May 15, 2023</span>
+                                <span><i class="far fa-clock mr-1"></i> 5 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-zinc-900 mb-3">Youth-Led Peace Initiatives in Conflict Zones</h3>
+                            <p class="text-zinc-600 mb-4">Exploring how young people are creating innovative solutions to longstanding conflicts in their communities.</p>
+                            <a href="#" class="text-blue-600 font-medium flex items-center">Read Article <i class="fas fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-r from-amber-500 to-yellow-400 relative">
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 rounded-full text-sm font-medium text-amber-700">Story</div>
+                            <div class="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                <i class="fas fa-user-friends text-amber-600"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-zinc-500 mb-3">
+                                <span class="mr-4"><i class="far fa-calendar mr-1"></i> April 28, 2023</span>
+                                <span><i class="far fa-clock mr-1"></i> 7 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-zinc-900 mb-3">From Adversariesto Allies: A Youth Dialogue Success Story</h3>
+                            <p class="text-zinc-600 mb-4">How our mediation program transformed relationships between youth from opposing communities in the region.</p>
+                            <a href="#" class="text-blue-600 font-medium flex items-center">Read Article <i class="fas fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-r from-lime-500 to-amber-400 relative">
+                            <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 rounded-full text-sm font-medium text-lime-700">Event</div>
+                            <div class="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-lime-600"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-zinc-500 mb-3">
+                                <span class="mr-4"><i class="far fa-calendar mr-1"></i> June 5, 2023</span>
+                                <span><i class="far fa-clock mr-1"></i> 4 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-zinc-900 mb-3">Global Youth Peace Summit 2023: What to Expect</h3>
+                            <p class="text-zinc-600 mb-4">A preview of our upcoming international gathering of young peacebuilders from around the world.</p>
+                            <a href="#" class="text-blue-600 font-medium flex items-center">Read Article <i class="fas fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flashy CTA Section -->
+        <section class="py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-lime-500 opacity-90"></div>
+            <div class="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-1/3 translate-y-1/3"></div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-4xl font-bold text-white mb-6">Join the Movement for <span class="text-yellow-300">Peaceful Change</span></h2>
+                    <p class="text-xl text-blue-100 mb-10">Your support enables us to train more youth peacebuilders, facilitate critical dialogues, and create lasting impact in communities worldwide.</p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-full hover:bg-blue-50 hover:shadow-xl transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-hand-holding-heart mr-3"></i> Become a Partner
+                        </button>
+                        <button class="px-8 py-4 bg-yellow-400 text-blue-900 font-bold rounded-full hover:bg-yellow-300 hover:shadow-xl transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-user-graduate mr-3"></i> Join as Youth Ambassador
+                        </button>
+                    </div>
+                    
+                    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">24/7</div>
+                            <div class="text-blue-100 text-sm">Support Line</div>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">100%</div>
+                            <div class="text-blue-100 text-sm">Transparent</div>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">UN</div>
+                            <div class="text-blue-100 text-sm">Affiliated</div>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">A+</div>
+                            <div class="text-blue-100 text-sm">Accountability</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-zinc-900 text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-lime-400 flex items-center justify-center">
+                                <i class="fas fa-dove text-white text-lg"></i>
+                            </div>
+                            <span class="text-xl font-bold">YouthPeace<span class="text-blue-400">Alliance</span></span>
+                        </div>
+                        <p class="text-zinc-400 mb-6">Empowering youth to become architects of peace in their communities and beyond.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-blue-600 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-blue-600 transition">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-pink-600 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-blue-400 transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#home" class="text-zinc-400 hover:text-blue-400 transition">Home</a></li>
+                            <li><a href="#about" class="text-zinc-400 hover:text-blue-400 transition">About Us</a></li>
+                            <li><a href="#programs" class="text-zinc-400 hover:text-blue-400 transition">Our Programs</a></li>
+                            <li><a href="#blog" class="text-zinc-400 hover:text-blue-400 transition">Blog & Resources</a></li>
+                            <li><a href="#" class="text-zinc-400 hover:text-blue-400 transition">Get Involved</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-6">Contact Us</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-zinc-400">123 Peace Avenue, Global City 10001</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-blue-400 mr-3"></i>
+                                <span class="text-zinc-400">+1 (555) 123-4567</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                                <span class="text-zinc-400">info@youthpeace.org</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-6">Stay Updated</h3>
+                        <p class="text-zinc-400 mb-4">Subscribe to our newsletter for the latest updates on peacebuilding initiatives.</p>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="flex-grow px-4 py-3 rounded-l-lg bg-zinc-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button class="px-5 bg-gradient-to-r from-blue-500 to-lime-400 text-white font-medium rounded-r-lg hover:opacity-90 transition">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t border-zinc-800 mt-12 pt-8 text-center text-zinc-500">
+                    <p>&copy; 2023 YouthPeace Alliance. All rights reserved. | <a href="#" class="hover:text-blue-400 transition">Privacy Policy</a> | <a href="#" class="hover:text-blue-400 transition">Terms of Service</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    mobileMenuOpen: false,
+                    animatedStats: {
+                        youthReached: 0,
+                        programs: 0,
+                        countries: 0,
+                        satisfaction: 0
+                    },
+                    statsTargets: {
+                        youthReached: 12500,
+                        programs: 320,
+                        countries: 45,
+                        satisfaction: 98
+                    }
+                };
+            },
+            mounted() {
+                // Animate stats counters
+                this.animateStats();
+                
+                // Add scroll event listener for stats animation
+                window.addEventListener('scroll', this.checkStatsVisibility);
+                this.checkStatsVisibility();
+            },
+            methods: {
+                animateStats() {
+                    const duration = 2000; // 2 seconds
+                    const steps = 60;
+                    const interval = duration / steps;
+                    
+                    Object.keys(this.statsTargets).forEach(stat => {
+                        const target = this.statsTargets[stat];
+                        const stepValue = target / steps;
+                        let current = 0;
+                        
+                        const timer = setInterval(() => {
+                            current += stepValue;
+                            if (current >= target) {
+                                this.animatedStats[stat] = target;
+                                clearInterval(timer);
+                            } else {
+                                this.animatedStats[stat] = Math.floor(current);
+                            }
+                        }, interval);
+                    });
+                },
+                checkStatsVisibility() {
+                    // Simplified visibility check - in a real implementation
+                    // you would check if the stats section is in viewport
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
