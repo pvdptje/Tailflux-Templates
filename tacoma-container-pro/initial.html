@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northwest Container Mods | Tacoma, WA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#3b82f6',
+                        'primary-indigo': '#6366f1',
+                        'primary-amber': '#f59e0b',
+                        'primary-rose': '#f43f5e',
+                        'primary-violet': '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            transition: transform 0.3s ease;
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-blue to-primary-violet flex items-center justify-center">
+                        <i class="fas fa-box text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">Northwest<span class="text-primary-blue">Container</span>Mods</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-primary-amber transition-colors">Home</a>
+                    <a href="#" class="hover:text-primary-amber transition-colors">Services</a>
+                    <a href="#" class="hover:text-primary-amber transition-colors">Gallery</a>
+                    <a href="#" class="hover:text-primary-amber transition-colors">About</a>
+                    <a href="#" class="hover:text-primary-amber transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="tel:12535551234" class="hidden md:inline-block bg-primary-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-phone mr-2"></i>(253) 555-1234
+                    </a>
+                    <button class="md:hidden text-gray-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        <span class="block">Custom Shipping Container</span>
+                        <span class="text-gradient">Modifications in Tacoma, WA</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 max-w-2xl">
+                        We transform standard shipping containers into functional spaces with professional installations of man doors, windows, roll-up doors, and custom office builds.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#contact" class="bg-primary-amber hover:bg-amber-600 text-gray-900 font-semibold py-3 px-8 rounded-lg text-center transition-colors">
+                            <i class="fas fa-calendar-check mr-2"></i> Get a Free Quote
+                        </a>
+                        <a href="#services" class="border border-primary-indigo text-primary-indigo hover:bg-primary-indigo hover:text-white font-semibold py-3 px-8 rounded-lg text-center transition-colors">
+                            <i class="fas fa-tools mr-2"></i> View Our Services
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-full h-64 md:h-80 bg-gradient-to-r from-primary-blue/20 to-primary-violet/20 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-box-open text-6xl md:text-8xl text-primary-blue/40"></i>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-gradient-to-r from-primary-rose/20 to-primary-violet/20 rounded-2xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Our <span class="text-primary-amber">Specialized Services</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">We provide professional shipping container modifications for residential, commercial, and industrial applications throughout the Tacoma area.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-primary-blue transition-all">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-r from-primary-blue to-primary-indigo flex items-center justify-center mb-6">
+                        <i class="fas fa-door-open text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Man Door Installation</h3>
+                    <p class="text-gray-300 mb-4">Secure, weatherproof man doors installed to your specifications for easy access to your container space.</p>
+                    <a href="#" class="text-primary-blue hover:text-blue-400 font-medium inline-flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-primary-violet transition-all">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-r from-primary-violet to-primary-rose flex items-center justify-center mb-6">
+                        <i class="fas fa-window-maximize text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Window Installation</h3>
+                    <p class="text-gray-300 mb-4">Natural light solutions with secure, insulated windows in various sizes and styles for your container.</p>
+                    <a href="#" class="text-primary-violet hover:text-violet-400 font-medium inline-flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-primary-amber transition-all">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-r from-primary-amber to-yellow-500 flex items-center justify-center mb-6">
+                        <i class="fas fa-warehouse text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Roll-Up Doors</h3>
+                    <p class="text-gray-300 mb-4">Durable roll-up doors for easy loading and unloading, perfect for storage and workshop containers.</p>
+                    <a href="#" class="text-primary-amber hover:text-amber-400 font-medium inline-flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-primary-rose transition-all">
+                    <div class="w-14 h-14 rounded-lg bg-gradient-to-r from-primary-rose to-pink-500 flex items-center justify-center mb-6">
+                        <i class="fas fa-building text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Office Space Conversion</h3>
+                    <p class="text-gray-300 mb-4">Complete office builds with insulation, electrical, HVAC, and interior finishes for a professional workspace.</p>
+                    <a href="#" class="text-primary-rose hover:text-rose-400 font-medium inline-flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h2 class="text-3xl font-bold mb-8">Why Choose <span class="text-primary-indigo">Northwest Container Mods</span></h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary-indigo/20 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-primary-indigo"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-1">Local Tacoma Expertise</h3>
+                                <p class="text-gray-300">We understand the unique climate and building requirements in the Pacific Northwest.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary-blue/20 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-award text-primary-blue"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-1">Quality Craftsmanship</h3>
+                                <p class="text-gray-300">All modifications are performed with precision and attention to detail for lasting results.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary-amber/20 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-clock text-primary-amber"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-1">Timely Completion</h3>
+                                <p class="text-gray-300">We respect your time and complete projects on schedule with clear communication throughout.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 lg:pl-12">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-800 rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Serving <span class="text-primary-amber">Tacoma & Surrounding Areas</span></h3>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-gray-300">Container Modification</span>
+                                <span class="font-bold text-primary-blue">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-to-r from-primary-blue to-primary-indigo h-3 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-gray-300">Customer Satisfaction</span>
+                                <span class="font-bold text-primary-violet">98%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-to-r from-primary-violet to-primary-rose h-3 rounded-full" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-gray-300">On-Time Completion</span>
+                                <span class="font-bold text-primary-amber">96%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-to-r from-primary-amber to-yellow-500 h-3 rounded-full" style="width: 96%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-8">
+                            <p class="text-gray-300 italic">"Transforming containers into functional spaces since 2015"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="contact" class="py-16 bg-gradient-to-r from-gray-800 to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-gray-900 border border-gray-800 rounded-2xl p-8 md:p-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-4">Ready to Transform Your <span class="text-gradient">Shipping Container?</span></h2>
+                    <p class="text-gray-300 text-lg">Contact us today for a free consultation and quote on your container modification project.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-primary-amber">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-lg bg-primary-blue/20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-primary-blue"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Our Location</h4>
+                                    <p class="text-gray-300">Tacoma, WA 98402</p>
+                                    <p class="text-gray-300 text-sm">Serving the greater Puget Sound area</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-lg bg-primary-indigo/20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-primary-indigo"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Call Us</h4>
+                                    <p class="text-gray-300">(253) 555-1234</p>
+                                    <p class="text-gray-300 text-sm">Mon-Fri 8am-6pm, Sat 9am-2pm</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-lg bg-primary-rose/20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-primary-rose"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Email Us</h4>
+                                    <p class="text-gray-300">info@nwcontainermods.com</p>
+                                    <p class="text-gray-300 text-sm">We respond within 24 hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-gray-300 mb-2">Full Name</label>
+                                <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-blue" placeholder="Your Name">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-300 mb-2">Email Address</label>
+                                <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-violet" placeholder="you@example.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-300 mb-2">Phone Number</label>
+                                <input type="tel" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-amber" placeholder="(253) 555-1234">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-300 mb-2">Project Details</label>
+                                <textarea class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-rose h-32" placeholder="Tell us about your container modification needs..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-gradient-to-r from-primary-blue to-primary-violet hover:from-blue-600 hover:to-violet-600 text-white font-semibold py-3 px-6 rounded-lg transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-blue to-primary-violet flex items-center justify-center">
+                            <i class="fas fa-box text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">Northwest<span class="text-primary-blue">Container</span>Mods</span>
+                    </div>
+                    <p class="text-gray-400 max-w-md">Professional shipping container modifications in Tacoma, WA. Specializing in man doors, windows, roll-up doors, and office space conversions.</p>
+                </div>
+                
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary-blue flex items-center justify-center transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary-indigo flex items-center justify-center transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary-rose flex items-center justify-center transition-colors">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary-amber flex items-center justify-center transition-colors">
+                        <i class="fab fa-yelp"></i>
+                    </a>
+                </div>
+                
+                <div class="text-center md:text-right">
+                    <h4 class="font-bold text-lg mb-4">Contact Us</h4>
+                    <p class="text-gray-400">Tacoma, WA 98402</p>
+                    <p class="text-gray-400">(253) 555-1234</p>
+                    <p class="text-gray-400">info@nwcontainermods.com</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Northwest Container Mods. All rights reserved. | Serving Tacoma and the greater Puget Sound area.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-primary-blue hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Form submission
+            const contactForm = document.querySelector('form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your inquiry! We will contact you within 24 hours.');
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northwest Container Mods | Tacoma, WA</title>
+    <meta name="description" content="Northwest Container Mods provides expert shipping container modifications in Tacoma, WA. Doors, windows, roll-up doors, office conversions, electrical, HVAC, and more. Free quotes.">
+    <meta property="og:title" content="Northwest Container Mods | Tacoma, WA">
+    <meta property="og:description" content="Custom shipping container solutions in the Pacific Northwest. Doors, windows, roll-up doors, office conversions, and more.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1725100609268-c7f383e6b4e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNvbnRhaW5lciUyMG1vZGlmaWNhdGlvbiUyMHdvcmtzaG9wfGVufDB8MHx8fDE3NjU5NDQxNjZ8MA&ixlib=rb-4.1.0&q=80&w=1200">
+    <meta name="theme-color" content="#0f172a">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#3b82f6',
+                        'primary-indigo': '#6366f1',
+                        'primary-amber': '#f59e0b',
+                        'primary-rose': '#f43f5e',
+                        'primary-violet': '#8b5cf6',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .service-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-image {
+            mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .stat-bar {
+            transition: width 1.5s ease-out;
+        }
+        .mobile-menu {
+            transition: all 0.3s ease-out;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body id="top" class="bg-gray-900 text-gray-100 font-sans overflow-x-hidden">
+    <!-- Navigation -->
+    <nav x-data="{ mobileMenuOpen: false }" class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-xl" role="navigation" aria-label="Main navigation">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#top" class="flex items-center space-x-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-xl">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-blue to-primary-violet flex items-center justify-center shadow-lg animate-pulse-glow" aria-hidden="true">
+                        <i class="fas fa-boxes text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold tracking-tight">Northwest<span class="text-primary-blue">Container</span>Mods</span>
+                        <p class="text-xs text-gray-400 -mt-1">Tacoma, WA</p>
+                    </div>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex space-x-10">
+                    <a href="#top" class="group relative py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                        <span class="text-gray-300 group-hover:text-primary-amber transition-colors duration-300">Home</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-amber group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#services" class="group relative py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                        <span class="text-gray-300 group-hover:text-primary-amber transition-colors duration-300">Services</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-amber group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#gallery" class="group relative py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                        <span class="text-gray-300 group-hover:text-primary-amber transition-colors duration-300">Gallery</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-amber group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#about" class="group relative py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                        <span class="text-gray-300 group-hover:text-primary-amber transition-colors duration-300">About</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-amber group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#contact" class="group relative py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                        <span class="text-gray-300 group-hover:text-primary-amber transition-colors duration-300">Contact</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-amber group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="tel:12535551234" class="hidden lg:inline-flex items-center bg-gradient-to-r from-primary-blue to-primary-violet hover:from-blue-600 hover:to-violet-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900">
+                        <i class="fas fa-phone mr-3" aria-hidden="true"></i>(253) 555-1234
+                    </a>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-gray-300 hover:text-primary-amber transition-colors p-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900" aria-label="Toggle menu" :aria-expanded="mobileMenuOpen">
+                        <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="lg:hidden mt-4 pb-4 mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="#top" class="text-gray-300 hover:text-primary-amber py-3 px-4 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900">Home</a>
+                    <a href="#services" class="text-gray-300 hover:text-primary-amber py-3 px-4 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900">Services</a>
+                    <a href="#gallery" class="text-gray-300 hover:text-primary-amber py-3 px-4 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900">Gallery</a>
+                    <a href="#about" class="text-gray-300 hover:text-primary-amber py-3 px-4 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900">About</a>
+                    <a href="#contact" class="text-gray-300 hover:text-primary-amber py-3 px-4 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900">Contact</a>
+                    <a href="tel:12535551234" class="bg-gradient-to-r from-primary-blue to-primary-violet text-white py-3 px-4 rounded-lg font-semibold text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900">
+                        <i class="fas fa-phone mr-2" aria-hidden="true"></i>Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg overflow-hidden scroll-mt-24">
+        <div class="container mx-auto px-4 py-20 md:py-32">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-16 lg:mb-0 animate-fade-in">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-blue/20 border border-primary-blue/30 mb-6">
+                        <span class="w-2 h-2 rounded-full bg-primary-blue mr-2 animate-pulse"></span>
+                        <span class="text-sm font-medium text-primary-blue">Serving Tacoma Since 2015</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+                        <span class="block">Custom Container</span>
+                        <span class="text-gradient">Solutions</span>
+                        <span class="block text-4xl md:text-5xl mt-4">For The Pacific Northwest</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
+                        Professional shipping container modifications in Tacoma, WA. We transform standard containers into functional spaces with expert installations of doors, windows, and complete office conversions.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#contact" class="group bg-gradient-to-r from-primary-amber to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-gray-900 font-bold py-4 px-10 rounded-xl text-center transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900">
+                            <i class="fas fa-calendar-check mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i> Get Free Quote
+                        </a>
+                        <a href="#services" class="group border-2 border-primary-indigo text-primary-indigo hover:bg-primary-indigo hover:text-white font-bold py-4 px-10 rounded-xl text-center transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-indigo ring-offset-2 ring-offset-gray-900">
+                            <i class="fas fa-play-circle mr-3 group-hover:animate-spin" aria-hidden="true"></i> View Services
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center mt-12 space-x-8">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-primary-blue/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-primary-blue" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-lg">500+</p>
+                                <p class="text-gray-400 text-sm">Projects Completed</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-primary-violet/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-star text-primary-violet" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-lg">98%</p>
+                                <p class="text-gray-400 text-sm">Satisfaction Rate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="relative animate-float">
+                        <img src="https://images.unsplash.com/photo-1725100609268-c7f383e6b4e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNvbnRhaW5lciUyMG1vZGlmaWNhdGlvbiUyMHdvcmtzaG9wfGVufDB8MHx8fDE3NjU5NDQxNjZ8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                             alt="Shipping container modification workshop in Tacoma"
+                             class="w-full h-[500px] object-cover rounded-3xl shadow-2xl hero-image"
+                             fetchpriority="high" loading="eager" decoding="async">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent rounded-3xl"></div>
+                        
+                        <div class="absolute -bottom-6 -right-6 w-64 h-64 bg-gradient-to-r from-primary-rose/20 to-primary-violet/20 rounded-3xl blur-xl" aria-hidden="true"></div>
+                        <div class="absolute -top-6 -left-6 w-48 h-48 bg-gradient-to-r from-primary-blue/20 to-primary-indigo/20 rounded-3xl blur-xl" aria-hidden="true"></div>
+                    </div>
+                    
+                    <div class="absolute -bottom-8 left-8 glass-effect rounded-2xl p-6 shadow-2xl max-w-xs">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-primary-amber/20 flex items-center justify-center mr-3" aria-hidden="true">
+                                <i class="fas fa-tools text-primary-amber" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">Expert Craftsmanship</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm">Precision modifications with industry-leading quality standards</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-gray-800/50 scroll-mt-24">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-indigo/20 border border-primary-indigo/30 mb-4">
+                    <span class="w-2 h-2 rounded-full bg-primary-indigo mr-2"></span>
+                    <span class="text-sm font-medium text-primary-indigo">Our Specialties</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Professional Container <span class="text-gradient">Modifications</span></h2>
+                <p class="text-gray-300 text-lg max-w-3xl mx-auto">We provide expert shipping container modifications for residential, commercial, and industrial applications throughout Tacoma and the Puget Sound region.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card group glass-effect rounded-2xl p-8 hover:border-primary-blue border border-gray-800">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-primary-blue to-primary-indigo flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform" aria-hidden="true">
+                        <i class="fas fa-door-closed text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Door Installations</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">Secure, weatherproof man doors and roll-up doors installed to your exact specifications for optimal access and security.</p>
+                    <div class="flex items-center justify-between">
+                        <a href="#gallery" class="text-primary-blue hover:text-blue-400 font-semibold inline-flex items-center group-hover:translate-x-2 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue ring-offset-2 ring-offset-gray-900">
+                            View Projects <i class="fas fa-arrow-right ml-3" aria-hidden="true"></i>
+                        </a>
+                        <div class="w-10 h-10 rounded-full bg-primary-blue/20 flex items-center justify-center" aria-hidden="true">
+                            <i class="fas fa-plus text-primary-blue"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card group glass-effect rounded-2xl p-8 hover:border-primary-violet border border-gray-800">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-primary-violet to-primary-rose flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform" aria-hidden="true">
+                        <i class="fas fa-window-maximize text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Window Solutions</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">Natural light with secure, insulated windows in various sizes and styles to brighten your container space.</p>
+                    <div class="flex items-center justify-between">
+                        <a href="#gallery" class="text-primary-violet hover:text-violet-400 font-semibold inline-flex items-center group-hover:translate-x-2 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-violet ring-offset-2 ring-offset-gray-900">
+                            View Gallery <i class="fas fa-arrow-right ml-3" aria-hidden="true"></i>
+                        </a>
+                        <div class="w-10 h-10 rounded-full bg-primary-violet/20 flex items-center justify-center" aria-hidden="true">
+                            <i class="fas fa-plus text-primary-violet"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card group glass-effect rounded-2xl p-8 hover:border-primary-amber border border-gray-800">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-primary-amber to-yellow-500 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform" aria-hidden="true">
+                        <i class="fas fa-warehouse text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Roll-Up Doors</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">Durable roll-up doors for easy loading and unloading, perfect for storage units and workshop containers.</p>
+                    <div class="flex items-center justify-between">
+                        <a href="#gallery" class="text-primary-amber hover:text-amber-400 font-semibold inline-flex items-center group-hover:translate-x-2 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900">
+                            Learn More <i class="fas fa-arrow-right ml-3" aria-hidden="true"></i>
+                        </a>
+                        <div class="w-10 h-10 rounded-full bg-primary-amber/20 flex items-center justify-center" aria-hidden="true">
+                            <i class="fas fa-plus text-primary-amber"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card group glass-effect rounded-2xl p-8 hover:border-primary-rose border border-gray-800">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-primary-rose to-pink-500 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform" aria-hidden="true">
+                        <i class="fas fa-building text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Office Conversions</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">Complete office builds with insulation, electrical, HVAC, and premium interior finishes for professional workspaces.</p>
+                    <div class="flex items-center justify-between">
+                        <a href="#gallery" class="text-primary-rose hover:text-rose-400 font-semibold inline-flex items-center group-hover:translate-x-2 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-rose ring-offset-2 ring-offset-gray-900">
+                            See Examples <i class="fas fa-arrow-right ml-3" aria-hidden="true"></i>
+                        </a>
+                        <div class="w-10 h-10 rounded-full bg-primary-rose/20 flex items-center justify-center" aria-hidden="true">
+                            <i class="fas fa-plus text-primary-rose"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-gray-900 scroll-mt-24">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-amber/20 border border-primary-amber/30 mb-4">
+                    <span class="w-2 h-2 rounded-full bg-primary-amber mr-2"></span>
+                    <span class="text-sm font-medium text-primary-amber">Our Work</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Recent <span class="text-gradient">Projects</span></h2>
+                <p class="text-gray-300 text-lg max-w-3xl mx-auto">Browse our portfolio of completed container modifications in the Tacoma area.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <figure class="group relative overflow-hidden rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1759462703446-0dfa3b745c51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjb250YWluZXIlMjBvZmZpY2UlMjBpbnRlcmlvciUyMG1vZGVybiUyMHdvcmtzcGFjZXxlbnwwfDB8fHwxNzY1OTQ0NTAyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=2lGMNhdPrBQ" 
+                         alt="Modern shipping container office interior workspace"
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                         loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <figcaption class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Modern Office Conversion</h3>
+                        <p class="text-gray-300">Complete office build with electrical and HVAC</p>
+                    </figcaption>
+                </figure>
+                
+                <figure class="group relative overflow-hidden rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1607944623540-960b1f5b4991?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNvbnRhaW5lciUyMHdpbmRvd3MlMjBhbmQlMjBkb29ycyUyMGluc3RhbGxhdGlvbnxlbnwwfDB8fHwxNzY1OTQ0NTAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=AQruw6tTZlg" 
+                         alt="Shipping container with custom window and door installations"
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                         loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <figcaption class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Window & Door Installation</h3>
+                        <p class="text-gray-300">Residential container with custom windows</p>
+                    </figcaption>
+                </figure>
+                
+                <figure class="group relative overflow-hidden rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1715885882474-8b9ce96e930d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUYWNvbWElMjBpbmR1c3RyaWFsJTIwcG9ydCUyMHdhdGVyZnJvbnR8ZW58MHwwfHx8MTc2NTk0NDUwM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=7wrKEqA2qu8" 
+                         alt="Tacoma industrial port waterfront with container storage"
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                         loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <figcaption class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Industrial Storage Solutions</h3>
+                        <p class="text-gray-300">Multiple containers for Tacoma businesses</p>
+                    </figcaption>
+                </figure>
+            </div>
+            
+            <div class="text-center">
+                <a href="#gallery" class="inline-flex items-center text-primary-blue hover:text-blue-400 font-bold text-lg group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue ring-offset-2 ring-offset-gray-900">
+                    View Full Gallery <i class="fas fa-arrow-right ml-3 text-2xl group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-gray-800/50 scroll-mt-24">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-blue/20 border border-primary-blue/30 mb-5">
+                        <span class="w-2 h-2 rounded-full bg-primary-blue mr-2"></span>
+                        <span class="text-sm font-medium text-primary-blue">Why Choose Us</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Tacoma’s Trusted Container Specialists</h2>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                        From simple openings to full office conversions, we deliver durable, code-compliant builds that stand up to Pacific Northwest conditions. Our team manages everything in‑house: design, fabrication, electrical, insulation, and finishes.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <i class="fas fa-shield-alt text-primary-amber mt-1 mr-3" aria-hidden="true"></i>
+                            <span>Licensed and insured workmanship with industry-standard warranties</span>
+                        </li>
+                        <li class="flex">
+                            <i class="fas fa-screwdriver-wrench text-primary-indigo mt-1 mr-3" aria-hidden="true"></i>
+                            <span>Precision fabrication for doors, windows, roll-up systems, and custom framing</span>
+                        </li>
+                        <li class="flex">
+                            <i class="fas fa-seedling text-primary-rose mt-1 mr-3" aria-hidden="true"></i>
+                            <span>Energy-efficient options including insulation, HVAC, and LED lighting</span>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                        <a href="#contact" class="inline-flex items-center px-6 py-3 rounded-xl bg-primary-blue hover:bg-blue-600 font-semibold text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900">
+                            Get a Free Consultation <i class="fas fa-arrow-right ml-3" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1696324535687-6bb987f50e96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNvbnRhaW5lciUyMHJvbGwtdXAlMjBkb29yfGVufDB8MHx8fDE3NjU5NDQ1MDR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=TailFlux&photo_id=-BXq7U-Yuxw" 
+                             alt="Roll-up door installed on a shipping container"
+                             class="w-full h-[420px] object-cover"
+                             loading="lazy" decoding="async">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" aria-hidden="true"></div>
+                        <div class="absolute bottom-4 left-4 bg-gray-900/70 backdrop-blur-md px-4 py-2 rounded-lg text-sm border border-white/10">
+                            <i class="fas fa-location-dot text-primary-amber mr-2" aria-hidden="true"></i> Tacoma, WA
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-24 bg-gradient-to-r from-gray-800 to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-primary-blue mb-4">
+                        <span class="stat-num" data-target="500" data-suffix="+">0</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Projects Completed</h3>
+                    <p class="text-gray-300">Successful container modifications</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-primary-violet mb-4">
+                        <span class="stat-num" data-target="98" data-suffix="%">0</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Client Satisfaction</h3>
+                    <p class="text-gray-300">Happy customers in Tacoma</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-primary-amber mb-4">
+                        <span class="stat-num" data-target="8" data-suffix="+">0</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Years Experience</h3>
+                    <p class="text-gray-300">Serving the Pacific Northwest</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-primary-rose mb-4">
+                        <span class="stat-num" data-target="24" data-suffix="h">0</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Response Time</h3>
+                    <p class="text-gray-300">Quick quote turnaround</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-gray-900 scroll-mt-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-rose/20 border border-primary-rose/30 mb-4">
+                        <span class="w-2 h-2 rounded-full bg-primary-rose mr-2"></span>
+                        <span class="text-sm font-medium text-primary-rose">Get In Touch</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Start Your <span class="text-gradient">Container Project</span></h2>
+                    <p class="text-gray-300 text-lg max-w-3xl mx-auto">Contact us today for a free consultation and quote on your shipping container modification in Tacoma, WA.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="space-y-8">
+                        <div class="glass-effect rounded-2xl p-8">
+                            <h3 class="text-2xl font-bold mb-8 text-primary-amber">Contact Information</h3>
+                            
+                            <div class="space-y-8">
+                                <div class="flex items-start group">
+                                    <div class="w-14 h-14 rounded-xl bg-primary-blue/20 flex items-center justify-center mr-6 group-hover:scale-110 transition-transform" aria-hidden="true">
+                                        <i class="fas fa-map-marker-alt text-2xl text-primary-blue"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-2">Our Location</h4>
+                                        <p class="text-gray-300">Tacoma, WA 98402</p>
+                                        <p class="text-gray-400 text-sm mt-1">Serving the greater Puget Sound area</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start group">
+                                    <div class="w-14 h-14 rounded-xl bg-primary-indigo/20 flex items-center justify-center mr-6 group-hover:scale-110 transition-transform" aria-hidden="true">
+                                        <i class="fas fa-phone text-2xl text-primary-indigo"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-2">Call Us</h4>
+                                        <p class="text-gray-300 text-xl font-semibold"><a href="tel:12535551234" class="hover:text-primary-indigo focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-indigo ring-offset-2 ring-offset-gray-900 rounded-md">(253) 555-1234</a></p>
+                                        <p class="text-gray-400 text-sm mt-1">Mon-Fri 8am-6pm, Sat 9am-2pm</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start group">
+                                    <div class="w-14 h-14 rounded-xl bg-primary-rose/20 flex items-center justify-center mr-6 group-hover:scale-110 transition-transform" aria-hidden="true">
+                                        <i class="fas fa-envelope text-2xl text-primary-rose"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-2">Email Us</h4>
+                                        <p class="text-gray-300"><a href="mailto:info@nwcontainermods.com" class="hover:text-primary-rose focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-rose ring-offset-2 ring-offset-gray-900 rounded-md">info@nwcontainermods.com</a></p>
+                                        <p class="text-gray-400 text-sm mt-1">We respond within 24 hours</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-12 pt-8 border-t border-gray-800">
+                                <h4 class="font-bold text-lg mb-6">Business Hours</h4>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-300">Monday - Friday</span>
+                                        <span class="font-semibold">8:00 AM - 6:00 PM</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-300">Saturday</span>
+                                        <span class="font-semibold">9:00 AM - 2:00 PM</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-300">Sunday</span>
+                                        <span class="font-semibold text-primary-rose">By Appointment</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-effect rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-8">Send Us a Message</h3>
+                        
+                        <form class="space-y-6" id="contactForm" novalidate>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="firstName" class="block text-gray-300 mb-3 font-medium">First Name</label>
+                                    <input id="firstName" name="firstName" type="text" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/30 transition-all" placeholder="John" autocomplete="given-name">
+                                </div>
+                                
+                                <div>
+                                    <label for="lastName" class="block text-gray-300 mb-3 font-medium">Last Name</label>
+                                    <input id="lastName" name="lastName" type="text" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-violet focus:ring-2 focus:ring-primary-violet/30 transition-all" placeholder="Doe" autocomplete="family-name">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-300 mb-3 font-medium">Email Address</label>
+                                <input id="email" name="email" type="email" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-indigo focus:ring-2 focus:ring-primary-indigo/30 transition-all" placeholder="john@example.com" autocomplete="email">
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-gray-300 mb-3 font-medium">Phone Number</label>
+                                <input id="phone" name="phone" type="tel" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-amber focus:ring-2 focus:ring-primary-amber/30 transition-all" placeholder="(253) 555-1234" autocomplete="tel">
+                            </div>
+                            
+                            <div>
+                                <label for="projectType" class="block text-gray-300 mb-3 font-medium">Project Type</label>
+                                <select id="projectType" name="projectType" class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-rose focus:ring-2 focus:ring-primary-rose/30 transition-all">
+                                    <option value="">Select a service</option>
+                                    <option value="doors">Door Installation</option>
+                                    <option value="windows">Window Installation</option>
+                                    <option value="rollup">Roll-Up Doors</option>
+                                    <option value="office">Office Conversion</option>
+                                    <option value="other">Other Modification</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="details" class="block text-gray-300 mb-3 font-medium">Project Details</label>
+                                <textarea id="details" name="details" class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/30 transition-all h-40" placeholder="Tell us about your container modification needs, dimensions, timeline, and any specific requirements..." ></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-gradient-to-r from-primary-blue to-primary-violet hover:from-blue-600 hover:to-violet-600 text-white font-bold py-5 px-8 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] group focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900">
+                                <span class="flex items-center justify-center">
+                                    <i class="fas fa-paper-plane mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i>
+                                    Send Message & Get Free Quote
+                                </span>
+                            </button>
+                            
+                            <p class="text-gray-400 text-sm text-center mt-6">
+                                We'll respond within 24 hours with a detailed quote and consultation.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-blue to-primary-violet flex items-center justify-center shadow-lg" aria-hidden="true">
+                            <i class="fas fa-boxes text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-bold">Northwest<span class="text-primary-blue">Container</span>Mods</span>
+                            <p class="text-xs text-gray-400 -mt-1">Tacoma, WA</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Professional shipping container modifications in Tacoma, WA. Specializing in custom doors, windows, roll-up doors, and complete office space conversions.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-primary-blue flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-primary-indigo flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-primary-rose flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900" aria-label="Pinterest">
+                            <i class="fab fa-pinterest" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-primary-amber flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900" aria-label="Yelp">
+                            <i class="fab fa-yelp" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#top" class="text-gray-400 hover:text-primary-amber transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-chevron-right text-xs mr-3" aria-hidden="true"></i> Home
+                        </a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-primary-amber transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-chevron-right text-xs mr-3" aria-hidden="true"></i> Services
+                        </a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-primary-amber transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-chevron-right text-xs mr-3" aria-hidden="true"></i> Gallery
+                        </a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-primary-amber transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-chevron-right text-xs mr-3" aria-hidden="true"></i> About Us
+                        </a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-primary-amber transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-chevron-right text-xs mr-3" aria-hidden="true"></i> Contact
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Our Services</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#services" class="text-gray-400 hover:text-primary-blue transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-door-closed text-xs mr-3" aria-hidden="true"></i> Door Installation
+                        </a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-primary-violet transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-violet ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-window-maximize text-xs mr-3" aria-hidden="true"></i> Window Installation
+                        </a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-primary-amber transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-amber ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-warehouse text-xs mr-3" aria-hidden="true"></i> Roll-Up Doors
+                        </a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-primary-rose transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-rose ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-building text-xs mr-3" aria-hidden="true"></i> Office Conversions
+                        </a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-primary-indigo transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-indigo ring-offset-2 ring-offset-gray-900 rounded-md">
+                            <i class="fas fa-bolt text-xs mr-3" aria-hidden="true"></i> Electrical Work
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Contact Info</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary-blue mt-1 mr-3" aria-hidden="true"></i>
+                            <div>
+                                <p class="text-gray-300 font-medium">Location</p>
+                                <p class="text-gray-400">Tacoma, WA 98402</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-phone text-primary-indigo mt-1 mr-3" aria-hidden="true"></i>
+                            <div>
+                                <p class="text-gray-300 font-medium">Phone</p>
+                                <p class="text-gray-400"><a href="tel:12535551234" class="hover:text-primary-indigo">(253) 555-1234</a></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope text-primary-rose mt-1 mr-3" aria-hidden="true"></i>
+                            <div>
+                                <p class="text-gray-300 font-medium">Email</p>
+                                <p class="text-gray-400"><a href="mailto:info@nwcontainermods.com" class="hover:text-primary-rose">info@nwcontainermods.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-4 bg-gray-800/50 rounded-xl">
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-clock text-primary-amber mr-2" aria-hidden="true"></i>
+                            <span class="font-medium">Hours:</span> Mon-Fri 8am-6pm, Sat 9am-2pm
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                        &copy; <span id="year"></span> Northwest Container Mods. All rights reserved. | Serving Tacoma and the greater Puget Sound area.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-500 hover:text-primary-blue text-sm transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-gray-500 hover:text-primary-blue text-sm transition-colors">Terms of Service</a>
+                        <a href="#" class="text-gray-500 hover:text-primary-blue text-sm transition-colors">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-primary-blue to-primary-violet hover:from-blue-600 hover:to-violet-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 opacity-0 invisible hover:scale-110 z-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900" aria-label="Back to top">
+        <i class="fas fa-arrow-up text-xl" aria-hidden="true"></i>
+    </button>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 opacity-0 invisible transition-all duration-300" role="dialog" aria-modal="true" aria-labelledby="successTitle" aria-describedby="successDesc">
+        <div class="bg-gray-900 rounded-2xl p-8 max-w-md mx-4 transform scale-95 transition-transform duration-300 border border-white/10">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+                <i class="fas fa-check text-white text-3xl"></i>
+            </div>
+            <h3 id="successTitle" class="text-2xl font-bold text-center mb-4">Message Sent!</h3>
+            <p id="successDesc" class="text-gray-300 text-center mb-8">
+                Thank you for your inquiry! We'll contact you within 24 hours with a detailed quote and consultation.
+            </p>
+            <button onclick="closeModal()" class="w-full bg-primary-blue hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white ring-offset-2 ring-offset-gray-900">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Utilities
+        const qs = (sel, ctx = document) => ctx.querySelector(sel);
+        const qsa = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+        // Back to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('backToTop');
+            const successModal = document.getElementById('successModal');
+            const modalPanel = successModal.querySelector('.transform');
+
+            // Current year in footer
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show success modal
+                    successModal.classList.remove('opacity-0', 'invisible');
+                    successModal.classList.add('opacity-100', 'visible');
+                    setTimeout(() => {
+                        modalPanel.classList.remove('scale-95');
+                        modalPanel.classList.add('scale-100');
+                    }, 10);
+                    
+                    // Reset form
+                    setTimeout(() => {
+                        contactForm.reset();
+                    }, 300);
+                });
+            }
+
+            // Modal close interactions
+            successModal.addEventListener('click', (e) => {
+                if (e.target === successModal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && successModal.classList.contains('visible')) {
+                    closeModal();
+                }
+            });
+            
+            // Smooth scrolling for anchor links
+            qsa('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (!targetId || targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        const y = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                        
+                        // Close mobile menu if open (Alpine)
+                        if (window.innerWidth < 1024) {
+                            const nav = document.querySelector('nav[x-data]');
+                            if (nav && nav.__x) {
+                                nav.__x.$data.mobileMenuOpen = false;
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Animate stats on scroll using data attributes
+            const statsSection = document.querySelector('section.bg-gradient-to-r');
+            if (statsSection) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const statNumbers = qsa('.stat-num', entry.target);
+                            statNumbers.forEach(stat => {
+                                const finalValue = Number(stat.dataset.target || 0);
+                                const suffix = stat.dataset.suffix || '';
+                                let currentValue = 0;
+                                const steps = 50;
+                                const increment = finalValue / steps;
+                                const timer = setInterval(() => {
+                                    currentValue += increment;
+                                    if (currentValue >= finalValue) {
+                                        stat.textContent = `${finalValue}${suffix}`;
+                                        clearInterval(timer);
+                                    } else {
+                                        stat.textContent = `${Math.floor(currentValue)}${suffix}`;
+                                    }
+                                }, 30);
+                            });
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.4 });
+                observer.observe(statsSection);
+            }
+        });
+        
+        function closeModal() {
+            const successModal = document.getElementById('successModal');
+            const panel = successModal.querySelector('.transform');
+            panel.classList.remove('scale-100');
+            panel.classList.add('scale-95');
+            setTimeout(() => {
+                successModal.classList.remove('opacity-100', 'visible');
+                successModal.classList.add('opacity-0', 'invisible');
+            }, 200);
+        }
+        
+        // Initialize Alpine.js components (not required for nav but available)
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('mobileMenu', () => ({
+                open: false,
+                toggle() {
+                    this.open = !this.open;
+                }
+            }));
+        });
+    </script>
+    <noscript>
+        <div class="bg-yellow-500 text-gray-900 text-center py-2">
+            For the best experience, please enable JavaScript.
+        </div>
+    </noscript>
+</body>
+</html>
