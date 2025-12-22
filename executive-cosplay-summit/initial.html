@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vertex Summit | Futuristic Cosplay for the Distinguished Gentleman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 50%, #e7e5e4 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(120, 113, 108, 0.3);
+        }
+        .border-glow {
+            box-shadow: 0 0 15px rgba(120, 113, 108, 0.2);
+        }
+    </style>
+</head>
+<body class="font-sans gradient-bg text-stone-800 min-h-screen" x-data="{ menuOpen: false, activeTab: 'overview' }">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-stone-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-stone-600 to-stone-800 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-satellite-dish text-stone-100 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-orbitron text-xl font-bold text-stone-800">VERTEX<span class="text-stone-500">SUMMIT</span></h1>
+                        <p class="text-xs text-stone-500">For the Distinguished Gentleman</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition">Overview</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition">Agenda</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition">Speakers</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition">Exhibitors</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition">Register</a>
+                </nav>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="px-5 py-2 border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition">Login</button>
+                    <button class="px-5 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-900 transition font-medium">Get Tickets</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button @click="menuOpen = !menuOpen" class="md:hidden text-stone-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="menuOpen" x-transition class="md:hidden mt-4 pb-4 border-t border-stone-200 pt-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 py-2">Overview</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 py-2">Agenda</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 py-2">Speakers</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 py-2">Exhibitors</a>
+                    <a href="#" class="font-medium text-stone-700 hover:text-stone-900 py-2">Register</a>
+                    <div class="flex space-x-4 pt-2">
+                        <button class="flex-1 py-2 border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition">Login</button>
+                        <button class="flex-1 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-900 transition font-medium">Get Tickets</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="container mx-auto px-4 py-12 md:py-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-stone-100 text-stone-700 text-sm font-medium mb-6">
+                        <i class="fas fa-crown mr-2 text-stone-500"></i> October 26-28, 2024 | Neo-Tokyo Convention Center
+                    </div>
+                    <h1 class="font-orbitron text-4xl md:text-6xl font-bold text-stone-900 mb-6 leading-tight">
+                        Redefining <span class="text-glow">Cosplay</span> for the <span class="text-stone-500">Modern</span> Man
+                    </h1>
+                    <p class="text-xl text-stone-600 mb-8 max-w-2xl">
+                        The premier corporate event where sophistication meets speculative fiction. Network, innovate, and showcase cutting-edge character design tailored for the distinguished gentleman.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="px-8 py-4 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition font-medium text-lg flex items-center justify-center">
+                            <i class="fas fa-ticket-alt mr-3"></i> Secure Your Corporate Pass
+                        </button>
+                        <button class="px-8 py-4 border-2 border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition font-medium text-lg">
+                            <i class="fas fa-play-circle mr-3"></i> Watch Highlights
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-stone-200 to-stone-300 rounded-2xl p-2 border-glow">
+                        <div class="bg-white rounded-xl overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Futuristic cosplay showcase" class="w-full h-64 md:h-96 object-cover">
+                            <div class="p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-orbitron text-xl font-bold text-stone-800">Featured Presentation</h3>
+                                    <span class="px-3 py-1 bg-stone-100 text-stone-700 text-sm rounded-full">LIVE</span>
+                                </div>
+                                <p class="text-stone-600">"The Aesthetics of Authority: Power Armor for the Boardroom"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-stone-100 rounded-2xl -z-10"></div>
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-stone-200 rounded-full -z-10"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats / Value Proposition -->
+        <section class="bg-white border-y border-stone-200 py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div class="text-5xl font-orbitron font-bold text-stone-800 mb-2">2,000+</div>
+                        <div class="text-stone-600 font-medium">Executive Attendees</div>
+                        <p class="text-stone-500 mt-2">Industry leaders from tech, finance, and creative sectors.</p>
+                    </div>
+                    <div class="text-center p-6 border-l border-r border-stone-200">
+                        <div class="text-5xl font-orbitron font-bold text-stone-800 mb-2">85+</div>
+                        <div class="text-stone-600 font-medium">Corporate Exhibitors</div>
+                        <p class="text-stone-500 mt-2">Showcasing the latest in prosthetics, fabrics, and tech-integrated costumes.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="text-5xl font-orbitron font-bold text-stone-800 mb-2">40+</div>
+                        <div class="text-stone-600 font-medium">Keynote Sessions</div>
+                        <p class="text-stone-500 mt-2">Focused on design, character development, and strategic networking.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="text-center mb-12">
+                <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-stone-900 mb-4">A Curated Corporate Experience</h2>
+                <p class="text-xl text-stone-600 max-w-3xl mx-auto">Vertex Summit is more than a convention; it's a strategic platform for the modern gentleman to explore identity through futuristic narrative.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="border-b border-stone-200 mb-8">
+                    <div class="flex flex-wrap -mb-px">
+                        <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-500 hover:text-stone-700'" class="inline-flex items-center py-4 px-6 border-b-2 font-medium text-lg">
+                            <i class="fas fa-globe mr-3"></i> Overview
+                        </button>
+                        <button @click="activeTab = 'tracks'" :class="activeTab === 'tracks' ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-500 hover:text-stone-700'" class="inline-flex items-center py-4 px-6 border-b-2 font-medium text-lg">
+                            <i class="fas fa-project-diagram mr-3"></i> Program Tracks
+                        </button>
+                        <button @click="activeTab = 'networking'" :class="activeTab === 'networking' ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-500 hover:text-stone-700'" class="inline-flex items-center py-4 px-6 border-b-2 font-medium text-lg">
+                            <i class="fas fa-handshake mr-3"></i> Networking
+                        </button>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'overview'" x-transition class="bg-white rounded-2xl p-8 border border-stone-200">
+                    <h3 class="font-orbitron text-2xl font-bold text-stone-900 mb-4">Executive Summary</h3>
+                    <p class="text-stone-700 mb-6">Vertex Summit is the first event of its kind to merge high-level corporate networking with the creative expression of futuristic cosplay. We provide a sophisticated environment where balding men—often leaders in their fields—can explore character archetypes from cyberpunk executives to galactic emperors without the tropes of traditional conventions.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="flex items-start">
+                            <div class="bg-stone-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-user-tie text-stone-700 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-900 mb-1">Professional-First Environment</h4>
+                                <p class="text-stone-600">No crowded exhibit halls. Think boardroom-style presentations and curated showcases.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-stone-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-tshirt text-stone-700 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-900 mb-1">Tailored Design Focus</h4>
+                                <p class="text-stone-600">Sessions and workshops specifically address costume design for mature, distinguished physiques.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'tracks'" x-transition class="bg-white rounded-2xl p-8 border border-stone-200">
+                    <h3 class="font-orbitron text-2xl font-bold text-stone-900 mb-6">Strategic Program Tracks</h3>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center p-4 border border-stone-200 rounded-xl hover:bg-stone-50 transition">
+                            <div>
+                                <h4 class="font-bold text-stone-900">Cyber-Corporate Aesthetics</h4>
+                                <p class="text-stone-600">Blending sharp tailoring with tech-integrated accessories.</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-stone-500 text-xl"></i>
+                        </div>
+                        <div class="flex justify-between items-center p-4 border border-stone-200 rounded-xl hover:bg-stone-50 transition">
+                            <div>
+                                <h4 class="font-bold text-stone-900">Prosthetics & Practical Effects</h4>
+                                <p class="text-stone-600">High-end, realistic augmentations for character immersion.</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-stone-500 text-xl"></i>
+                        </div>
+                        <div class="flex justify-between items-center p-4 border border-stone-200 rounded-xl hover:bg-stone-50 transition">
+                            <div>
+                                <h4 class="font-bold text-stone-900">Character Narrative Development</h4>
+                                <p class="text-stone-600">Building backstories that reflect leadership and experience.</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-stone-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'networking'" x-transition class="bg-white rounded-2xl p-8 border border-stone-200">
+                    <h3 class="font-orbitron text-2xl font-bold text-stone-900 mb-4">Elite Networking Opportunities</h3>
+                    <p class="text-stone-700 mb-6">Connect with peers in dedicated, structured environments designed for meaningful exchange.</p>
+                    <ul class="space-y-4 text-stone-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-stone-600 mr-3"></i> <span class="font-medium">VIP Roundtables:</span> Moderated discussions with industry pioneers.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-stone-600 mr-3"></i> <span class="font-medium">Exhibitor Showcases:</span> Private viewings of the latest materials and tech.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-stone-600 mr-3"></i> <span class="font-medium">Gala Dinner & Showcase:</span> A black-tie event featuring the best in attendee cosplay.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="bg-gradient-to-r from-stone-800 to-stone-900 rounded-3xl p-8 md:p-12 text-white text-center">
+                <h2 class="font-orbitron text-3xl md:text-4xl font-bold mb-4">Ready to Redefine Your Narrative?</h2>
+                <p class="text-stone-300 text-xl mb-8 max-w-2xl mx-auto">Join a community of forward-thinking leaders. Limited corporate passes available.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="px-8 py-4 bg-white text-stone-900 rounded-lg hover:bg-stone-100 transition font-bold text-lg">
+                        <i class="fas fa-file-contract mr-3"></i> View Prospectus
+                    </button>
+                    <button class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg hover:bg-white/10 transition font-bold text-lg">
+                        <i class="fas fa-headset mr-3"></i> Contact Sales
+                    </button>
+                </div>
+                <p class="text-stone-400 text-sm mt-8"><i class="fas fa-lock mr-2"></i> All transactions secured. Corporate invoicing available.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-stone-900 text-stone-300 pt-12 pb-8">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <div class="w-10 h-10 bg-stone-700 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-satellite-dish text-stone-300 text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="font-orbitron text-xl font-bold text-white">VERTEX<span class="text-stone-400">SUMMIT</span></h1>
+                            </div>
+                        </div>
+                        <p class="text-stone-400">The premier corporate-futuristic cosplay event for distinguished gentlemen.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron text-lg font-bold text-white mb-4">Event</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="hover:text-white transition">Schedule</a></li>
+                            <li><a href="#" class="hover:text-white transition">Speakers</a></li>
+                            <li><a href="#" class="hover:text-white transition">Exhibitors</a></li>
+                            <li><a href="#" class="hover:text-white transition">Venue</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron text-lg font-bold text-white mb-4">Resources</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="hover:text-white transition">Press Kit</a></li>
+                            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+                            <li><a href="#" class="hover:text-white transition">Code of Conduct</a></li>
+                            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron text-lg font-bold text-white mb-4">Connect</h3>
+                        <p class="text-stone-400 mb-4">Stay updated on the latest announcements.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-stone-700 transition"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-stone-700 transition"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-stone-700 transition"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-stone-700 transition"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-stone-800 pt-8 text-center text-stone-500 text-sm">
+                    <p>&copy; 2024 Vertex Summit. All rights reserved. "For the Distinguished Gentleman" is a trademark of Vertex Summit LLC.</p>
+                    <p class="mt-2">Neo-Tokyo Convention Center, 1-1-1 Futuristic Ward, Tokyo, Japan</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Simple Alpine.js for interactivity is already defined in x-data
+    </script>
+</body>
+</html>

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ menuOpen: false, activeTab: 'overview', scrolled: false, videoOpen: false, backToTopVisible: false }" @scroll.window="scrolled = window.scrollY > 50; backToTopVisible = window.scrollY > 400">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vertex Summit | Futuristic Cosplay for the Distinguished Gentleman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.8s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.7 },
+                        },
+                        'slide-up': {
+                            '0%': { transform: 'translateY(20px)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 },
+                        },
+                        'fade-in': {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 50%, #e7e5e4 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(120, 113, 108, 0.4);
+        }
+        .border-glow {
+            box-shadow: 0 0 30px rgba(120, 113, 108, 0.15);
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(120, 113, 108, 0.2), transparent);
+        }
+        .tab-active {
+            position: relative;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: #292524;
+            border-radius: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans gradient-bg text-stone-800 min-h-screen">
+    <a href="#overview" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:bg-white focus:text-stone-900 focus:px-4 focus:py-2 focus:rounded-md focus:shadow">Skip to content</a>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 transition-all duration-300" :class="scrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-white/90 backdrop-blur-sm'">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-stone-600 to-stone-800 rounded-xl flex items-center justify-center shadow-lg hover-lift" aria-hidden="true">
+                        <i class="fas fa-satellite-dish text-stone-100 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-orbitron text-2xl font-bold text-stone-800 tracking-tight">VERTEX<span class="text-stone-500">SUMMIT</span></h1>
+                        <p class="text-xs text-stone-500 font-medium">For the Distinguished Gentleman</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden lg:flex space-x-10">
+                    <a href="#overview" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition-all duration-300 relative group">
+                        Overview
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-stone-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#agenda" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition-all duration-300 relative group">
+                        Agenda
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-stone-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#speakers" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition-all duration-300 relative group">
+                        Speakers
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-stone-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#exhibitors" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition-all duration-300 relative group">
+                        Exhibitors
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-stone-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#register" class="font-medium text-stone-700 hover:text-stone-900 border-b-2 border-transparent hover:border-stone-500 pb-1 transition-all duration-300 relative group">
+                        Register
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-stone-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </nav>
+
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="#login" class="px-6 py-2.5 border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition-all duration-300 hover-lift font-medium">
+                        <i class="fas fa-sign-in-alt mr-2" aria-hidden="true"></i>Login
+                    </a>
+                    <a href="#register" class="px-6 py-2.5 bg-gradient-to-r from-stone-700 to-stone-900 text-white rounded-lg hover:from-stone-800 hover:to-stone-950 transition-all duration-300 hover-lift font-medium shadow-lg">
+                        <i class="fas fa-ticket-alt mr-2" aria-hidden="true"></i>Get Tickets
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button @click="menuOpen = !menuOpen" class="lg:hidden text-stone-700 p-2 rounded-lg hover:bg-stone-100 transition" :aria-expanded="menuOpen.toString()" aria-controls="mobile-menu" aria-label="Toggle navigation">
+                    <i class="fas fa-bars text-xl" :class="menuOpen ? 'hidden' : 'block'"></i>
+                    <i class="fas fa-times text-xl" :class="menuOpen ? 'block' : 'hidden'"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" x-show="menuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="lg:hidden mt-4 pb-4 border-t border-stone-200 pt-4">
+                <div class="flex flex-col space-y-3">
+                    <a @click="menuOpen=false" href="#overview" class="font-medium text-stone-700 hover:text-stone-900 py-3 px-4 rounded-lg hover:bg-stone-100 transition flex items-center">
+                        <i class="fas fa-globe mr-3 text-stone-500" aria-hidden="true"></i>Overview
+                    </a>
+                    <a @click="menuOpen=false" href="#agenda" class="font-medium text-stone-700 hover:text-stone-900 py-3 px-4 rounded-lg hover:bg-stone-100 transition flex items-center">
+                        <i class="fas fa-calendar-alt mr-3 text-stone-500" aria-hidden="true"></i>Agenda
+                    </a>
+                    <a @click="menuOpen=false" href="#speakers" class="font-medium text-stone-700 hover:text-stone-900 py-3 px-4 rounded-lg hover:bg-stone-100 transition flex items-center">
+                        <i class="fas fa-microphone mr-3 text-stone-500" aria-hidden="true"></i>Speakers
+                    </a>
+                    <a @click="menuOpen=false" href="#exhibitors" class="font-medium text-stone-700 hover:text-stone-900 py-3 px-4 rounded-lg hover:bg-stone-100 transition flex items-center">
+                        <i class="fas fa-store mr-3 text-stone-500" aria-hidden="true"></i>Exhibitors
+                    </a>
+                    <a @click="menuOpen=false" href="#register" class="font-medium text-stone-700 hover:text-stone-900 py-3 px-4 rounded-lg hover:bg-stone-100 transition flex items-center">
+                        <i class="fas fa-user-plus mr-3 text-stone-500" aria-hidden="true"></i>Register
+                    </a>
+                    <div class="flex space-x-3 pt-2">
+                        <a href="#login" class="flex-1 py-3 border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition font-medium text-center">
+                            <i class="fas fa-sign-in-alt mr-2" aria-hidden="true"></i>Login
+                        </a>
+                        <a href="#register" class="flex-1 py-3 bg-gradient-to-r from-stone-700 to-stone-900 text-white rounded-lg hover:from-stone-800 hover:to-stone-950 transition font-medium text-center">
+                            <i class="fas fa-ticket-alt mr-2" aria-hidden="true"></i>Get Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="overview">
+        <!-- Hero Section -->
+        <section class="container mx-auto px-4 py-12 md:py-24 animate-fade-in">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="animate-slide-up">
+                    <div class="inline-flex items-center px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm text-stone-700 text-sm font-medium mb-8 border border-stone-200 shadow-sm hover-lift">
+                        <i class="fas fa-crown mr-2 text-stone-500 animate-pulse-glow" aria-hidden="true"></i> October 26-28, 2024 | Neo-Tokyo Convention Center
+                    </div>
+                    <h1 class="font-orbitron text-5xl md:text-7xl font-bold text-stone-900 mb-8 leading-tight tracking-tight">
+                        Redefining <span class="text-glow relative">
+                            Cosplay
+                            <span class="absolute -inset-1 bg-gradient-to-r from-stone-400/20 to-transparent blur-xl -z-10"></span>
+                        </span> for the <span class="text-stone-500">Modern</span> Man
+                    </h1>
+                    <p class="text-xl text-stone-600 mb-10 max-w-2xl leading-relaxed">
+                        The premier corporate event where sophistication meets speculative fiction. Network, innovate, and showcase cutting-edge character design tailored for the distinguished gentleman.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="#register" class="px-10 py-5 bg-gradient-to-r from-stone-800 to-stone-900 text-white rounded-xl hover:from-stone-900 hover:to-stone-950 transition-all duration-300 font-semibold text-lg flex items-center justify-center hover-lift shadow-xl group">
+                            <i class="fas fa-ticket-alt mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i> Secure Your Corporate Pass
+                            <i class="fas fa-arrow-right ml-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" aria-hidden="true"></i>
+                        </a>
+                        <button @click="videoOpen = true" class="px-10 py-5 border-2 border-stone-300 text-stone-700 rounded-xl hover:bg-stone-50 transition-all duration-300 font-semibold text-lg hover-lift group" aria-haspopup="dialog" aria-controls="video-modal">
+                            <i class="fas fa-play-circle mr-3 group-hover:text-stone-900 transition-colors" aria-hidden="true"></i> Watch Highlights
+                        </button>
+                    </div>
+                    <div class="mt-12 flex items-center space-x-8 text-stone-600">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-stone-100 border-2 border-white shadow flex items-center justify-center mr-3" aria-hidden="true">
+                                <i class="fas fa-check text-stone-700"></i>
+                            </div>
+                            <span class="font-medium">VIP Access</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-stone-100 border-2 border-white shadow flex items-center justify-center mr-3" aria-hidden="true">
+                                <i class="fas fa-users text-stone-700"></i>
+                            </div>
+                            <span class="font-medium">Networking</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-stone-100 border-2 border-white shadow flex items-center justify-center mr-3" aria-hidden="true">
+                                <i class="fas fa-star text-stone-700"></i>
+                            </div>
+                            <span class="font-medium">Exclusive</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative animate-float">
+                    <div class="relative rounded-3xl overflow-hidden border-glow hover-lift">
+                        <div class="absolute inset-0 bg-gradient-to-br from-stone-200/50 to-stone-300/50 -z-10"></div>
+                        <div class="glass-effect rounded-3xl overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1650211577950-38abbfe7492e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwY29ycG9yYXRlJTIwZXhlY3V0aXZlJTIwY3liZXJwdW5rJTIwZmFzaGlvbiUyMHBvcnRyYWl0fGVufDB8MHx8fDE3NjYzNzY1NTR8MA&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=bVItrYx6oio" 
+                                 alt="Futuristic corporate executive in cyberpunk style" 
+                                 class="w-full h-80 md:h-[500px] object-cover transition-transform duration-700 hover:scale-105"
+                                 loading="lazy" decoding="async">
+                            <div class="p-8">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="font-orbitron text-2xl font-bold text-stone-800">Featured Presentation</h3>
+                                    <span class="px-4 py-1.5 bg-gradient-to-r from-stone-600 to-stone-700 text-white text-sm font-medium rounded-full animate-pulse-glow">
+                                        <i class="fas fa-circle mr-2 text-xs" aria-hidden="true"></i>LIVE
+                                    </span>
+                                </div>
+                                <p class="text-stone-600 text-lg mb-4">"The Aesthetics of Authority: Power Armor for the Boardroom"</p>
+                                <div class="flex items-center text-stone-500">
+                                    <div class="w-10 h-10 rounded-full bg-stone-200 flex items-center justify-center mr-3" aria-hidden="true">
+                                        <i class="fas fa-user-tie text-stone-700"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-stone-700">Dr. Alexander Vance</p>
+                                        <p class="text-sm">CEO, Aesthetic Dynamics</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-gradient-to-br from-stone-100 to-stone-200 rounded-3xl -z-10 blur-xl opacity-70"></div>
+                    <div class="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-stone-200 to-stone-300 rounded-full -z-10 blur-xl opacity-70"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partner strip -->
+        <section class="py-8 bg-white/70 backdrop-blur">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-center flex-wrap gap-8 opacity-70">
+                    <span class="text-stone-500 font-semibold tracking-widest text-xs uppercase">In partnership with</span>
+                    <div class="h-8 w-28 bg-stone-200 rounded-md"></div>
+                    <div class="h-8 w-28 bg-stone-200 rounded-md"></div>
+                    <div class="h-8 w-28 bg-stone-200 rounded-md"></div>
+                    <div class="h-8 w-28 bg-stone-200 rounded-md"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats / Value Proposition -->
+        <section class="py-20 bg-gradient-to-b from-white to-stone-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="font-orbitron text-4xl md:text-5xl font-bold text-stone-900 mb-6">Why Vertex Summit Stands Apart</h2>
+                    <p class="text-xl text-stone-600 max-w-3xl mx-auto">A curated experience designed for executives who appreciate both sophistication and innovation.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl p-8 border border-stone-200 hover-lift transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-stone-100 to-stone-200 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                            <i class="fas fa-user-tie text-2xl text-stone-700"></i>
+                        </div>
+                        <div class="text-5xl font-orbitron font-bold text-stone-800 mb-2">2,000+</div>
+                        <div class="text-stone-700 font-semibold text-lg mb-3">Executive Attendees</div>
+                        <p class="text-stone-600">Industry leaders from tech, finance, and creative sectors seeking sophisticated character expression.</p>
+                        <div class="mt-6 pt-6 border-t border-stone-100">
+                            <div class="flex items-center text-stone-500 text-sm">
+                                <i class="fas fa-chart-line mr-2" aria-hidden="true"></i>
+                                <span>85% C-level executives</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-stone-200 hover-lift transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-stone-100 to-stone-200 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                            <i class="fas fa-building text-2xl text-stone-700"></i>
+                        </div>
+                        <div class="text-5xl font-orbitron font-bold text-stone-800 mb-2">85+</div>
+                        <div class="text-stone-700 font-semibold text-lg mb-3">Corporate Exhibitors</div>
+                        <p class="text-stone-600">Showcasing the latest in prosthetics, smart fabrics, and tech-integrated costume design.</p>
+                        <div class="mt-6 pt-6 border-t border-stone-100">
+                            <div class="flex items-center text-stone-500 text-sm">
+                                <i class="fas fa-industry mr-2" aria-hidden="true"></i>
+                                <span>40+ Fortune 500 companies</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-stone-200 hover-lift transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-stone-100 to-stone-200 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                            <i class="fas fa-microphone-alt text-2xl text-stone-700"></i>
+                        </div>
+                        <div class="text-5xl font-orbitron font-bold text-stone-800 mb-2">40+</div>
+                        <div class="text-stone-700 font-semibold text-lg mb-3">Keynote Sessions</div>
+                        <p class="text-stone-600">Focused on design psychology, character development, and strategic professional networking.</p>
+                        <div class="mt-6 pt-6 border-t border-stone-100">
+                            <div class="flex items-center text-stone-500 text-sm">
+                                <i class="fas fa-clock mr-2" aria-hidden="true"></i>
+                                <span>Average rating: 4.8/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section id="agenda" class="container mx-auto px-4 py-20">
+            <div class="text-center mb-16">
+                <h2 class="font-orbitron text-4xl md:text-5xl font-bold text-stone-900 mb-6">A Curated Corporate Experience</h2>
+                <p class="text-xl text-stone-600 max-w-3xl mx-auto">Vertex Summit is more than a convention; it's a strategic platform for the modern gentleman to explore identity through futuristic narrative.</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto">
+                <div class="glass-effect rounded-2xl p-2 mb-10">
+                    <div class="flex flex-wrap -m-1">
+                        <button @click="activeTab = 'overview'" 
+                                :class="activeTab === 'overview' ? 'bg-white text-stone-900 shadow-lg' : 'text-stone-600 hover:text-stone-800 hover:bg-white/50'" 
+                                class="flex-1 min-w-[200px] m-1 py-5 px-6 rounded-xl font-semibold text-lg transition-all duration-300 group">
+                            <i class="fas fa-globe-americas mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i> Overview
+                        </button>
+                        <button @click="activeTab = 'tracks'" 
+                                :class="activeTab === 'tracks' ? 'bg-white text-stone-900 shadow-lg' : 'text-stone-600 hover:text-stone-800 hover:bg-white/50'" 
+                                class="flex-1 min-w-[200px] m-1 py-5 px-6 rounded-xl font-semibold text-lg transition-all duration-300 group">
+                            <i class="fas fa-project-diagram mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i> Program Tracks
+                        </button>
+                        <button @click="activeTab = 'networking'" 
+                                :class="activeTab === 'networking' ? 'bg-white text-stone-900 shadow-lg' : 'text-stone-600 hover:text-stone-800 hover:bg-white/50'" 
+                                class="flex-1 min-w-[200px] m-1 py-5 px-6 rounded-xl font-semibold text-lg transition-all duration-300 group">
+                            <i class="fas fa-handshake mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i> Networking
+                        </button>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'overview'" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-4"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-4" class="space-y-8">
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200 hover-lift">
+                        <h3 class="font-orbitron text-3xl font-bold text-stone-900 mb-6">Executive Summary</h3>
+                        <p class="text-stone-700 text-lg mb-8 leading-relaxed">Vertex Summit is the first event of its kind to merge high-level corporate networking with the creative expression of futuristic cosplay. We provide a sophisticated environment where distinguished gentlemen—often leaders in their fields—can explore character archetypes from cyberpunk executives to galactic emperors without the tropes of traditional conventions.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="flex items-start p-6 bg-gradient-to-br from-stone-50 to-white rounded-2xl border border-stone-100 group hover:border-stone-200 transition-all">
+                                <div class="bg-gradient-to-br from-stone-100 to-stone-200 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                                    <i class="fas fa-user-tie text-2xl text-stone-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-stone-900 text-xl mb-3">Professional-First Environment</h4>
+                                    <p class="text-stone-600">No crowded exhibit halls. Experience boardroom-style presentations, curated showcases, and executive lounges designed for meaningful conversation.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-6 bg-gradient-to-br from-stone-50 to-white rounded-2xl border border-stone-100 group hover:border-stone-200 transition-all">
+                                <div class="bg-gradient-to-br from-stone-100 to-stone-200 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                                    <i class="fas fa-tshirt text-2xl text-stone-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-stone-900 text-xl mb-3">Tailored Design Focus</h4>
+                                    <p class="text-stone-600">Sessions and workshops specifically address costume design for mature, distinguished physiques, with emphasis on comfort, mobility, and executive presence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'tracks'" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-4"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-4" class="space-y-8">
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200 hover-lift">
+                        <h3 class="font-orbitron text-3xl font-bold text-stone-900 mb-8">Strategic Program Tracks</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-center p-6 bg-gradient-to-r from-white to-stone-50 border border-stone-200 rounded-2xl hover:border-stone-300 transition-all duration-300 group hover-lift">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-5 group-hover:rotate-12 transition-transform" aria-hidden="true">
+                                        <i class="fas fa-desktop text-stone-700"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-stone-900 text-lg">Cyber-Corporate Aesthetics</h4>
+                                        <p class="text-stone-600">Blending sharp tailoring with tech-integrated accessories for the modern executive.</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-arrow-right text-stone-500 text-xl group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                            </div>
+                            <div class="flex justify-between items-center p-6 bg-gradient-to-r from-white to-stone-50 border border-stone-200 rounded-2xl hover:border-stone-300 transition-all duration-300 group hover-lift">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-5 group-hover:rotate-12 transition-transform" aria-hidden="true">
+                                        <i class="fas fa-robot text-stone-700"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-stone-900 text-lg">Prosthetics & Practical Effects</h4>
+                                        <p class="text-stone-600">High-end, realistic augmentations and tech integration for immersive character portrayal.</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-arrow-right text-stone-500 text-xl group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                            </div>
+                            <div class="flex justify-between items-center p-6 bg-gradient-to-r from-white to-stone-50 border border-stone-200 rounded-2xl hover:border-stone-300 transition-all duration-300 group hover-lift">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-5 group-hover:rotate-12 transition-transform" aria-hidden="true">
+                                        <i class="fas fa-book-open text-stone-700"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-stone-900 text-lg">Character Narrative Development</h4>
+                                        <p class="text-stone-600">Building compelling backstories that reflect leadership, experience, and strategic vision.</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-arrow-right text-stone-500 text-xl group-hover:translate-x-2 transition-transform" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'networking'" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-4"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-4" class="space-y-8">
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200 hover-lift">
+                        <h3 class="font-orbitron text-3xl font-bold text-stone-900 mb-8">Elite Networking Opportunities</h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="p-6 bg-gradient-to-br from-stone-50 to-white rounded-2xl border border-stone-100">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-4" aria-hidden="true">
+                                        <i class="fas fa-users text-stone-700"></i>
+                                    </div>
+                                    <h4 class="font-bold text-stone-900 text-lg">VIP Roundtables</h4>
+                                </div>
+                                <p class="text-stone-600 mb-4">Moderated discussions with industry pioneers in intimate, executive settings.</p>
+                                <div class="flex items-center text-sm text-stone-500">
+                                    <i class="fas fa-clock mr-2" aria-hidden="true"></i>
+                                    <span>Limited to 12 participants each</span>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6 bg-gradient-to-br from-stone-50 to-white rounded-2xl border border-stone-100">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-4" aria-hidden="true">
+                                        <i class="fas fa-store text-stone-700"></i>
+                                    </div>
+                                    <h4 class="font-bold text-stone-900 text-lg">Exhibitor Showcases</h4>
+                                </div>
+                                <p class="text-stone-600 mb-4">Private viewings of the latest materials, fabrics, and integrated technologies.</p>
+                                <div class="flex items-center text-sm text-stone-500">
+                                    <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+                                    <span>By appointment only</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 p-6 bg-gradient-to-r from-stone-50 to-stone-100 rounded-2xl border border-stone-200">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-stone-200 to-stone-300 rounded-lg flex items-center justify-center mr-5" aria-hidden="true">
+                                    <i class="fas fa-glass-cheers text-stone-700 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-stone-900 text-xl">Gala Dinner & Showcase</h4>
+                                    <p class="text-stone-600">A black-tie event featuring the finest in attendee cosplay and executive networking.</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-4 mt-4">
+                                <span class="px-3 py-1 bg-white border border-stone-200 rounded-full text-sm text-stone-700">Black Tie Optional</span>
+                                <span class="px-3 py-1 bg-white border border-stone-200 rounded-full text-sm text-stone-700">Award Ceremony</span>
+                                <span class="px-3 py-1 bg-white border border-stone-200 rounded-full text-sm text-stone-700">Live Entertainment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speakers -->
+        <section id="speakers" class="py-20 bg-gradient-to-b from-stone-50 to-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-14">
+                    <h2 class="font-orbitron text-4xl md:text-5xl font-bold text-stone-900 mb-4">Featured Speakers</h2>
+                    <p class="text-stone-600 text-lg max-w-3xl mx-auto">Meet the visionaries shaping the intersection of executive presence and speculative design.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover-lift">
+                        <img src="https://images.unsplash.com/photo-1611871426033-b517e7a4f1a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkaXN0aW5ndWlzaGVkJTIwZ2VudGxlbWFuJTIwcG9ydHJhaXQlMjBjeWJlcnB1bmt8ZW58MHwwfHx8MTc2NjM3NjU1NXww&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=GXbcXGQHzLA" alt="Distinguished gentleman in futuristic attire" class="w-full h-64 object-cover" loading="lazy" decoding="async">
+                        <div class="p-6">
+                            <h3 class="font-bold text-stone-900 text-lg">Sir Bennett Hale</h3>
+                            <p class="text-stone-500">Chair, Institute of Executive Aesthetics</p>
+                            <div class="mt-4 flex items-center text-sm text-stone-600">
+                                <i class="fas fa-comment-dots mr-2" aria-hidden="true"></i>
+                                Keynote: "Authority Through Attire"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover-lift">
+                        <img src="https://images.unsplash.com/photo-1584940120505-117038d90b05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxleGVjdXRpdmUlMjBwb3J0cmFpdCUyMG1hdHVyZSUyMG1hbnxlbnwwfDB8fHwxNzY2Mzc2NTU2fDA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=S3FoV56-Wbk" alt="Executive speaker portrait of a mature man" class="w-full h-64 object-cover" loading="lazy" decoding="async">
+                        <div class="p-6">
+                            <h3 class="font-bold text-stone-900 text-lg">Dr. Hideo Takahashi</h3>
+                            <p class="text-stone-500">CTO, NeoFabric Labs</p>
+                            <div class="mt-4 flex items-center text-sm text-stone-600">
+                                <i class="fas fa-microchip mr-2" aria-hidden="true"></i>
+                                Talk: "Smart Textiles in Leadership Wear"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover-lift">
+                        <img src="https://images.unsplash.com/photo-1589821913626-ca353e1e4f6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwZmFzaGlvbiUyMHRlY2hub2xvZ3klMjBydW53YXklMjBtYWxlfGVufDB8MHx8fDE3NjYzNzY1NTZ8MA&ixlib=rb-4.1.0&q=80&w=800&utm_source=TailFlux&photo_id=oznZ3FLDCbw" alt="Futuristic fashion runway male look" class="w-full h-64 object-cover" loading="lazy" decoding="async">
+                        <div class="p-6">
+                            <h3 class="font-bold text-stone-900 text-lg">Marco Villiers</h3>
+                            <p class="text-stone-500">Creative Director, Atelier V</p>
+                            <div class="mt-4 flex items-center text-sm text-stone-600">
+                                <i class="fas fa-lightbulb mr-2" aria-hidden="true"></i>
+                                Session: "Silhouette of Power"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue Preview -->
+        <section class="py-20 bg-gradient-to-b from-stone-50 to-white">
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="animate-slide-up">
+                        <h2 class="font-orbitron text-4xl md:text-5xl font-bold text-stone-900 mb-6">The Neo-Tokyo Convention Center</h2>
+                        <p class="text-xl text-stone-600 mb-8 leading-relaxed">Experience our event in one of the world's most architecturally advanced venues, designed specifically for executive gatherings and futuristic showcases.</p>
+                        
+                        <div class="space-y-6 mb-10">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-4 mt-1" aria-hidden="true">
+                                    <i class="fas fa-building text-stone-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-stone-900 text-lg mb-1">Architectural Marvel</h4>
+                                    <p class="text-stone-600">Award-winning design featuring adaptive lighting, holographic displays, and intelligent climate control.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-4 mt-1" aria-hidden="true">
+                                    <i class="fas fa-shield-alt text-stone-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-stone-900 text-lg mb-1">Executive Security</h4>
+                                    <p class="text-stone-600">Discreet, professional security ensuring privacy and comfort for all attendees.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg flex items-center justify-center mr-4 mt-1" aria-hidden="true">
+                                    <i class="fas fa-wifi text-stone-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-stone-900 text-lg mb-1">Advanced Infrastructure</h4>
+                                    <p class="text-stone-600">10Gbps connectivity, AR-ready environments, and smart venue integration.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#venue" class="px-8 py-4 border-2 border-stone-300 text-stone-700 rounded-xl hover:bg-stone-50 transition-all duration-300 font-semibold text-lg hover-lift group">
+                            <i class="fas fa-map-marked-alt mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i> Explore Venue Details
+                        </a>
+                    </div>
+                    
+                    <div class="relative animate-float">
+                        <div class="rounded-3xl overflow-hidden border-glow hover-lift">
+                            <img src="https://images.unsplash.com/photo-1739100795834-680666dcef2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwY29udmVudGlvbiUyMGNlbnRlciUyMHRva3lvJTIwYXJjaGl0ZWN0dXJlJTIwaW50ZXJpb3J8ZW58MHwwfHx8MTc2NjM3NjU1NHww&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=dBIKiWQESjs" 
+                                 alt="Futuristic convention center interior in Tokyo" 
+                                 class="w-full h-80 md:h-[500px] object-cover transition-transform duration-700 hover:scale-105"
+                                 loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 50vw">
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
+                                <div class="text-white">
+                                    <h4 class="font-orbitron text-2xl font-bold mb-2">Neo-Tokyo Convention Center</h4>
+                                    <p class="text-stone-200">1-1-1 Futuristic Ward, Tokyo, Japan</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-gradient-to-br from-stone-200 to-stone-300 rounded-full -z-10 blur-xl opacity-60"></div>
+                        <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-gradient-to-br from-stone-100 to-stone-200 rounded-3xl -z-10 blur-xl opacity-60"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exhibitors -->
+        <section id="exhibitors" class="py-20 bg-gradient-to-b from-white to-stone-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-14">
+                    <h2 class="font-orbitron text-4xl md:text-5xl font-bold text-stone-900 mb-4">Exhibitors & Showcases</h2>
+                    <p class="text-stone-600 text-lg max-w-3xl mx-auto">Discover premium materials, wearable tech, and bespoke fabrication studios.</p>
+                </div>
+
+                <div class="rounded-3xl overflow-hidden border border-stone-200 bg-white hover-lift mb-10">
+                    <img src="https://images.unsplash.com/photo-1589821913626-ca353e1e4f6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwZmFzaGlvbiUyMHRlY2hub2xvZ3klMjBydW53YXklMjBtYWxlfGVufDB8MHx8fDE3NjYzNzY1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1600&utm_source=TailFlux&photo_id=oznZ3FLDCbw" alt="Futuristic fashion technology runway" class="w-full h-60 md:h-80 object-cover" loading="lazy" decoding="async">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1 rounded-full border border-stone-200 text-stone-700 text-sm bg-stone-50">Smart Textiles</span>
+                            <span class="px-3 py-1 rounded-full border border-stone-200 text-stone-700 text-sm bg-stone-50">Holographic Displays</span>
+                            <span class="px-3 py-1 rounded-full border border-stone-200 text-stone-700 text-sm bg-stone-50">Bio-Resin Armor</span>
+                            <span class="px-3 py-1 rounded-full border border-stone-200 text-stone-700 text-sm bg-stone-50">Executive Tailoring</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-2xl border border-stone-200 p-6 hover-lift">
+                        <div class="h-10 w-28 bg-stone-100 rounded mb-4"></div>
+                        <h4 class="font-semibold text-stone-900">NeoFabric Labs</h4>
+                        <p class="text-sm text-stone-600 mt-1">Graphene-weave suits</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-stone-200 p-6 hover-lift">
+                        <div class="h-10 w-28 bg-stone-100 rounded mb-4"></div>
+                        <h4 class="font-semibold text-stone-900">PrismFX Studios</h4>
+                        <p class="text-sm text-stone-600 mt-1">Augmented reality props</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-stone-200 p-6 hover-lift">
+                        <div class="h-10 w-28 bg-stone-100 rounded mb-4"></div>
+                        <h4 class="font-semibold text-stone-900">Atlas Prosthetics</h4>
+                        <p class="text-sm text-stone-600 mt-1">Ultra-light prosthetics</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-stone-200 p-6 hover-lift">
+                        <div class="h-10 w-28 bg-stone-100 rounded mb-4"></div>
+                        <h4 class="font-semibold text-stone-900">Zenith Tailors</h4>
+                        <p class="text-sm text-stone-600 mt-1">Executive silhouettes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="register" class="container mx-auto px-4 py-20">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-800 via-stone-900 to-stone-950 p-12 md:p-16 text-white text-center">
+                <div class="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-white/5 to-transparent rounded-full -translate-x-32 -translate-y-32"></div>
+                <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-white/5 to-transparent rounded-full translate-x-48 translate-y-48"></div>
+                
+                <div class="relative z-10">
+                    <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-6">Ready to Redefine Your Narrative?</h2>
+                    <p class="text-stone-300 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">Join a community of forward-thinking leaders who understand that character development is the ultimate executive skill. Limited corporate passes available.</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+                        <a href="#prospectus" class="px-10 py-5 bg-white text-stone-900 rounded-xl hover:bg-stone-100 transition-all duration-300 font-bold text-lg hover-lift shadow-xl group">
+                            <i class="fas fa-file-contract mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true"></i> View Corporate Prospectus
+                            <i class="fas fa-download ml-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transition-all" aria-hidden="true"></i>
+                        </a>
+                        <a href="mailto:executive@vertexsummit.com" class="px-10 py-5 bg-transparent border-2 border-white text-white rounded-xl hover:bg-white/10 transition-all duration-300 font-bold text-lg hover-lift group">
+                            <i class="fas fa-headset mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i> Contact Executive Sales
+                        </a>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-center gap-8 text-stone-400">
+                        <div class="flex items-center">
+                            <i class="fas fa-lock text-lg mr-3" aria-hidden="true"></i>
+                            <span>All transactions secured with 256-bit encryption</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-file-invoice-dollar text-lg mr-3" aria-hidden="true"></i>
+                            <span>Corporate invoicing available</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-calendar-check text-lg mr-3" aria-hidden="true"></i>
+                            <span>Flexible payment plans</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-stone-900 text-stone-300 pt-16 pb-10">
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-4 gap-10 mb-16">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-8">
+                            <div class="w-12 h-12 bg-gradient-to-br from-stone-700 to-stone-800 rounded-xl flex items-center justify-center shadow-lg" aria-hidden="true">
+                                <i class="fas fa-satellite-dish text-stone-300 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="font-orbitron text-2xl font-bold text-white tracking-tight">VERTEX<span class="text-stone-400">SUMMIT</span></h1>
+                                <p class="text-sm text-stone-400 font-medium">For the Distinguished Gentleman</p>
+                            </div>
+                        </div>
+                        <p class="text-stone-400 mb-6 leading-relaxed">The premier corporate-futuristic cosplay event where executive sophistication meets speculative fiction innovation.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-lg flex items-center justify-center hover:bg-stone-700 transition-all duration-300 hover-lift" aria-label="LinkedIn" rel="noopener">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-lg flex items-center justify-center hover:bg-stone-700 transition-all duration-300 hover-lift" aria-label="Twitter/X" rel="noopener">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-lg flex items-center justify-center hover:bg-stone-700 transition-all duration-300 hover-lift" aria-label="Instagram" rel="noopener">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-stone-800 rounded-lg flex items-center justify-center hover:bg-stone-700 transition-all duration-300 hover-lift" aria-label="YouTube" rel="noopener">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-orbitron text-lg font-bold text-white mb-6 pb-2 border-b border-stone-800">Event</h3>
+                        <ul class="space-y-4">
+                            <li><a href="#agenda" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Schedule & Agenda
+                            </a></li>
+                            <li><a href="#speakers" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Featured Speakers
+                            </a></li>
+                            <li><a href="#exhibitors" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Exhibitor Directory
+                            </a></li>
+                            <li><a href="#venue" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Venue Information
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-orbitron text-lg font-bold text-white mb-6 pb-2 border-b border-stone-800">Resources</h3>
+                        <ul class="space-y-4">
+                            <li><a href="#press" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Press & Media Kit
+                            </a></li>
+                            <li><a href="#faqs" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>FAQs & Support
+                            </a></li>
+                            <li><a href="#conduct" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Code of Conduct
+                            </a></li>
+                            <li><a href="#privacy" class="hover:text-white transition-all duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-stone-500 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Privacy Policy
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-orbitron text-lg font-bold text-white mb-6 pb-2 border-b border-stone-800">Stay Connected</h3>
+                        <p class="text-stone-400 mb-6">Subscribe for exclusive updates and executive insights.</p>
+                        <form class="flex" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                            <label for="email" class="sr-only">Email address</label>
+                            <input id="email" type="email" placeholder="Your email address" class="flex-1 px-4 py-3 bg-stone-800 border border-stone-700 rounded-l-lg focus:outline-none focus:border-stone-500" required>
+                            <button class="px-5 bg-gradient-to-r from-stone-600 to-stone-700 text-white rounded-r-lg hover:from-stone-700 hover:to-stone-800 transition-all duration-300" aria-label="Subscribe">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                        <p class="text-stone-500 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
+                    </div>
+                </div>
+                
+                <div class="border-t border-stone-800 pt-10">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="text-center md:text-left mb-6 md:mb-0">
+                            <p class="text-stone-500 text-sm">&copy; 2024 Vertex Summit. All rights reserved.</p>
+                            <p class="text-stone-500 text-sm mt-2">"For the Distinguished Gentleman" is a trademark of Vertex Summit LLC.</p>
+                        </div>
+                        <div class="text-center md:text-right">
+                            <p class="text-stone-500 text-sm">Neo-Tokyo Convention Center, 1-1-1 Futuristic Ward, Tokyo, Japan</p>
+                            <p class="text-stone-500 text-sm mt-2">Contact: <a href="mailto:executive@vertexsummit.com" class="text-stone-400 hover:text-white transition">executive@vertexsummit.com</a> | +81 3-1234-5678</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Video Modal -->
+        <div x-show="videoOpen" x-transition class="fixed inset-0 z-[60] flex items-center justify-center p-6 bg-black/70" role="dialog" aria-modal="true" id="video-modal">
+            <div @click.away="videoOpen = false" class="w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl">
+                <div class="flex items-center justify-between p-4 border-b border-stone-200">
+                    <h3 class="font-orbitron text-xl font-bold text-stone-900">Vertex Summit Highlights</h3>
+                    <button @click="videoOpen = false" class="p-2 rounded hover:bg-stone-100" aria-label="Close video">
+                        <i class="fas fa-times text-stone-700"></i>
+                    </button>
+                </div>
+                <div class="relative w-full" style="padding-top: 56.25%;">
+                    <iframe class="absolute inset-0 w-full h-full"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
+                        title="Vertex Summit Highlights"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Top -->
+        <button x-show="backToTopVisible" x-transition @click="window.scrollTo({ top: 0, behavior: 'smooth' })" class="fixed bottom-6 right-6 z-[55] bg-stone-900 text-white p-3 rounded-full shadow-lg hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-stone-500" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </main>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if(!targetId || targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    e.preventDefault();
+                    const top = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
