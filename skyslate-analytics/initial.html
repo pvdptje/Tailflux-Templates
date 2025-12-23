@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | Corporate Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .shadow-soft { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
+        .border-light { border-color: rgba(226, 232, 240, 0.5); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700" x-data="dashboard()">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-light shadow-soft">
+            <div class="px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-sky-500 to-sky-600 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-semibold text-slate-800">Analytics Dashboard</h1>
+                        <p class="text-sm text-slate-500">Corporate Performance Insights</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-slate-500 hover:text-sky-600 cursor-pointer"></i>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-r from-slate-300 to-slate-400"></div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-800">Alex Morgan</p>
+                            <p class="text-xs text-slate-500">Admin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-light hidden lg:block">
+                <nav class="p-6 space-y-1">
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg bg-sky-50 text-sky-700 border border-sky-100">
+                        <i class="fas fa-home text-sky-600"></i>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-800">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reports</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-800">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-800">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-800">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Support</span>
+                    </a>
+                </nav>
+                <div class="px-6 py-4 border-t border-light">
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <p class="text-sm font-medium text-slate-800">Upgrade Plan</p>
+                        <p class="text-xs text-slate-500 mt-1">Get advanced analytics features</p>
+                        <button class="mt-3 w-full py-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium rounded-lg transition">Upgrade Now</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6">
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-slate-500">Total Revenue</p>
+                                <p class="text-2xl font-bold text-slate-800 mt-2">$124,580</p>
+                                <p class="text-xs mt-2"><span class="text-green-600 font-medium"><i class="fas fa-arrow-up mr-1"></i>12.5%</span> from last month</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-sky-50 flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-sky-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-slate-500">Active Users</p>
+                                <p class="text-2xl font-bold text-slate-800 mt-2">3,842</p>
+                                <p class="text-xs mt-2"><span class="text-green-600 font-medium"><i class="fas fa-arrow-up mr-1"></i>8.2%</span> from last month</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center">
+                                <i class="fas fa-user-group text-slate-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-slate-500">Conversion Rate</p>
+                                <p class="text-2xl font-bold text-slate-800 mt-2">4.7%</p>
+                                <p class="text-xs mt-2"><span class="text-red-600 font-medium"><i class="fas fa-arrow-down mr-1"></i>1.3%</span> from last month</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center">
+                                <i class="fas fa-percentage text-slate-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-slate-500">Avg. Session Duration</p>
+                                <p class="text-2xl font-bold text-slate-800 mt-2">4m 32s</p>
+                                <p class="text-xs mt-2"><span class="text-green-600 font-medium"><i class="fas fa-arrow-up mr-1"></i>2.1%</span> from last month</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-sky-50 flex items-center justify-center">
+                                <i class="fas fa-clock text-sky-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts & Data -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Revenue Chart -->
+                    <div class="lg:col-span-2 bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h2 class="text-lg font-semibold text-slate-800">Revenue Overview</h2>
+                                <p class="text-sm text-slate-500">Monthly performance metrics</p>
+                            </div>
+                            <select class="text-sm border border-light rounded-lg px-3 py-2 bg-white text-slate-700">
+                                <option>Last 7 days</option>
+                                <option selected>Last 30 days</option>
+                                <option>Last quarter</option>
+                            </select>
+                        </div>
+                        <!-- Chart placeholder -->
+                        <div class="h-64 flex items-center justify-center border border-dashed border-light rounded-lg bg-slate-50">
+                            <div class="text-center">
+                                <i class="fas fa-chart-area text-4xl text-slate-300 mb-3"></i>
+                                <p class="text-slate-500">Interactive chart would appear here</p>
+                                <p class="text-sm text-slate-400 mt-1">Showing revenue trends over time</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Sources -->
+                    <div class="bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <h2 class="text-lg font-semibold text-slate-800 mb-6">Top Traffic Sources</h2>
+                        <div class="space-y-5">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-slate-700">Direct</span>
+                                    <span class="text-sm font-medium text-slate-800">42%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2">
+                                    <div class="bg-sky-600 h-2 rounded-full" style="width: 42%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-slate-700">Organic Search</span>
+                                    <span class="text-sm font-medium text-slate-800">28%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2">
+                                    <div class="bg-sky-500 h-2 rounded-full" style="width: 28%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-slate-700">Social Media</span>
+                                    <span class="text-sm font-medium text-slate-800">18%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2">
+                                    <div class="bg-slate-500 h-2 rounded-full" style="width: 18%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-slate-700">Email Campaigns</span>
+                                    <span class="text-sm font-medium text-slate-800">12%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2">
+                                    <div class="bg-slate-400 h-2 rounded-full" style="width: 12%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Quick Stats -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Recent Activity -->
+                    <div class="lg:col-span-2 bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <h2 class="text-lg font-semibold text-slate-800 mb-6">Recent Activity</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4 p-3 hover:bg-slate-50 rounded-lg">
+                                <div class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center">
+                                    <i class="fas fa-file-invoice-dollar text-sky-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-slate-800">New invoice processed</p>
+                                    <p class="text-sm text-slate-500">Invoice #INV-7842 for $2,500 was approved</p>
+                                    <p class="text-xs text-slate-400 mt-1">2 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-3 hover:bg-slate-50 rounded-lg">
+                                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center">
+                                    <i class="fas fa-user-plus text-slate-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-slate-800">New user registration</p>
+                                    <p class="text-sm text-slate-500">Sarah Johnson joined the platform</p>
+                                    <p class="text-xs text-slate-400 mt-1">5 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-3 hover:bg-slate-50 rounded-lg">
+                                <div class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-sky-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-slate-800">Weekly report generated</p>
+                                    <p class="text-sm text-slate-500">Q3 performance report is ready for review</p>
+                                    <p class="text-xs text-slate-400 mt-1">1 day ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="mt-6 w-full py-3 border border-light rounded-lg text-slate-700 hover:bg-slate-50 font-medium">
+                            View All Activity
+                        </button>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="bg-white rounded-xl border border-light p-6 shadow-soft">
+                        <h2 class="text-lg font-semibold text-slate-800 mb-6">Quick Stats</h2>
+                        <div class="space-y-5">
+                            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                                <div>
+                                    <p class="text-sm text-slate-500">Pending Requests</p>
+                                    <p class="text-xl font-bold text-slate-800">18</p>
+                                </div>
+                                <i class="fas fa-inbox text-slate-500 text-xl"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-sky-50 rounded-lg">
+                                <div>
+                                    <p class="text-sm text-sky-700">Completed Tasks</p>
+                                    <p class="text-xl font-bold text-sky-800">124</p>
+                                </div>
+                                <i class="fas fa-check-circle text-sky-600 text-xl"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                                <div>
+                                    <p class="text-sm text-slate-500">Open Tickets</p>
+                                    <p class="text-xl font-bold text-slate-800">7</p>
+                                </div>
+                                <i class="fas fa-ticket-alt text-slate-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-light">
+                            <p class="text-sm font-medium text-slate-800 mb-3">Data Last Updated</p>
+                            <div class="flex items-center justify-between">
+                                <p class="text-slate-600">Today, 10:42 AM</p>
+                                <button class="text-sm font-medium text-sky-600 hover:text-sky-700">
+                                    <i class="fas fa-sync-alt mr-1"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer        <footer class="bg-white border-t border-light py-4 px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-sm text-slate-500">
+                    <p>&copy; 2023 Analytics Dashboard. All rights reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6 mt-3 md:mt-0">
+                    <a href="#" class="text-sm text-slate-500 hover:text-sky-600">Privacy Policy</a>
+                    <a href="#" class="text-sm text-slate-500 hover:text-sky-600">Terms of Service</a>
+                    <a href="#" class="text-sm text-slate-500 hover:text-sky-600">Help Center</a>
+                    <div class="flex items-center space-x-3">
+                        <a href="#" class="text-slate-400 hover:text-sky-600">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-sky-600">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-sky-600">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function dashboard() {
+            return {
+                // Alpine.js data and methods would go here for interactivity
+                // Example: toggle sidebar, update charts, etc.
+                sidebarOpen: false,
+                toggleSidebar() {
+                    this.sidebarOpen = !this.sidebarOpen;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
