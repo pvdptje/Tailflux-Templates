@@ -1,0 +1,1365 @@
+Now I'll enhance the HTML with better visuals, animations, and modern effects:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodent Rumble - Underground Rat Fighting Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rumble-red': '#dc2626',
+                        'rumble-orange': '#ea580c',
+                        'rumble-dark': '#0a0a0f',
+                        'rumble-gray': '#1a1a2e',
+                        'rumble-accent': '#ff2e2e'
+                    },
+                    fontFamily: {
+                        'display': ['"Bangers"', 'cursive', 'system-ui'],
+                        'body': ['"Rajdhani"', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'bounce-slow': 'bounce-slow 1.5s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'slide-in': 'slide-in 0.5s ease-out',
+                        'fade-in': 'fade-in 0.8s ease-out'
+                    },
+                    keyframes: {
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 5px #dc2626, 0 0 10px rgba(220, 38, 38, 0.3)' },
+                            '50%': { boxShadow: '0 0 20px #ea580c, 0 0 40px rgba(220, 38, 38, 0.5)' }
+                        },
+                        'bounce-slow': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        'shimmer': {
+                            '0%': { backgroundPosition: '-200% center' },
+                            '100%': { backgroundPosition: '200% center' }
+                        },
+                        'slide-in': {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .rat-icon {
+            filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.8));
+        }
+        .rumble-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #0a0a0f 100%);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .rumble-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.1), transparent);
+            transition: left 0.7s;
+        }
+        .rumble-card:hover::before {
+            left: 100%;
+        }
+        .rumble-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #ea580c;
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.2), 0 0 60px rgba(234, 88, 12, 0.1);
+        }
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+            padding: 8px 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #dc2626, #ea580c);
+            transition: width 0.4s ease, left 0.4s ease;
+            border-radius: 2px;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+            transform: translateX(0);
+        }
+        .glow-text {
+            text-shadow: 0 0 15px rgba(220, 38, 38, 0.8), 0 0 30px rgba(234, 88, 12, 0.4);
+        }
+        .shimmer-button {
+            background: linear-gradient(90deg, #dc2626, #ea580c, #dc2626);
+            background-size: 200% auto;
+            animation: shimmer 3s infinite linear;
+        }
+        .blood-splatter {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 70% 70%, rgba(220, 38, 38, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .countdown-timer {
+            font-family: 'Bangers', cursive;
+            text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+        }
+        .ring-glow {
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+        .stat-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc2626, #ea580c);
+            border-radius: 3px;
+            transition: width 1s ease-out;
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        @media (max-width: 768px) {
+            .parallax-bg {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body class="bg-rumble-dark text-gray-200 font-body min-h-screen overflow-x-hidden" x-data="{ mobileMenuOpen: false, countdown: { days: 0, hours: 0, minutes: 0, seconds: 0 } }" x-init="
+    setInterval(() => {
+        const eventDate = new Date('2024-06-27T20:00:00').getTime();
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+        
+        countdown.days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        countdown.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        countdown.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        countdown.seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    }, 1000)
+">
+    <!-- Header/Navigation -->
+    <header class="sticky top-0 z-50 bg-rumble-dark/95 backdrop-blur-lg border-b border-rumble-red/30 shadow-xl">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 group cursor-pointer">
+                    <div class="relative">
+                        <div class="w-14 h-14 bg-gradient-to-br from-rumble-red to-rumble-orange rounded-full flex items-center justify-center animate-pulse-glow ring-2 ring-white/20 ring-offset-2 ring-offset-rumble-dark">
+                            <i class="fas fa-fist-raised text-2xl text-white group-hover:rotate-12 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-rumble-orange rounded-full border-2 border-rumble-dark flex items-center justify-center">
+                            <span class="text-xs font-bold">!</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="font-display text-3xl text-white glow-text tracking-tighter">RODENT<span class="text-rumble-orange">RUMBLE</span></h1>
+                        <p class="text-xs text-gray-400 font-semibold tracking-wider">UNDERGROUND FIGHT CLUB</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-white font-bold text-lg hover:text-rumble-orange transition-colors duration-300">HOME</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white text-lg transition-colors duration-300">EVENTS</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white text-lg transition-colors duration-300">FIGHTERS</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white text-lg transition-colors duration-300">RANKINGS</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white text-lg transition-colors duration-300">BETTING</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <button class="shimmer-button text-white font-bold py-3 px-8 rounded-full hover:shadow-xl hover:shadow-rumble-red/40 transition-all duration-300 transform hover:scale-105 active:scale-95">
+                        <i class="fas fa-skull-crossbones mr-2"></i> JOIN FIGHT
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-rumble-red text-2xl hover:text-rumble-orange transition-colors duration-300">
+                    <i class="fas fa-bars" x-show="!mobileMenuOpen"></i>
+                    <i class="fas fa-times" x-show="mobileMenuOpen" x-transition></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="md:hidden mt-4 pb-4 border-t border-rumble-gray/50 pt-6">
+                <div class="flex flex-col space-y-4">
+                    <a href="#" class="text-white font-bold text-lg py-3 pl-6 bg-gradient-to-r from-rumble-red/10 to-transparent rounded-r-lg border-l-4 border-rumble-red hover:border-rumble-orange transition-all duration-300">
+                        <i class="fas fa-home mr-3"></i> Home
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white text-lg py-3 pl-6 bg-gradient-to-r from-rumble-gray/10 to-transparent rounded-r-lg border-l-4 border-rumble-gray hover:border-rumble-orange transition-all duration-300">
+                        <i class="fas fa-calendar-alt mr-3"></i> Events
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white text-lg py-3 pl-6 bg-gradient-to-r from-rumble-gray/10 to-transparent rounded-r-lg border-l-4 border-rumble-gray hover:border-rumble-orange transition-all duration-300">
+                        <i class="fas fa-users mr-3"></i> Fighters
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white text-lg py-3 pl-6 bg-gradient-to-r from-rumble-gray/10 to-transparent rounded-r-lg border-l-4 border-rumble-gray hover:border-rumble-orange transition-all duration-300">
+                        <i class="fas fa-trophy mr-3"></i> Rankings
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white text-lg py-3 pl-6 bg-gradient-to-r from-rumble-gray/10 to-transparent rounded-r-lg border-l-4 border-rumble-gray hover:border-rumble-orange transition-all duration-300">
+                        <i class="fas fa-coins mr-3"></i> Betting
+                    </a>
+                    <button class="shimmer-button text-white font-bold py-4 px-6 rounded-lg mt-4">
+                        <i class="fas fa-skull-crossbones mr-2"></i> JOIN THE FIGHT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden min-h-[90vh] flex items-center parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1575985977334-ca65c2d8941a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920');">
+        <div class="absolute inset-0 bg-gradient-to-b from-rumble-dark/90 via-rumble-dark/80 to-rumble-dark"></div>
+        <div class="absolute inset-0 blood-splatter"></div>
+        
+        <div class="container mx-auto px-4 py-16 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <div class="inline-block mb-6">
+                        <span class="bg-rumble-red/20 text-rumble-orange font-bold px-4 py-2 rounded-full text-sm tracking-wider border border-rumble-red/30">
+                            <i class="fas fa-fire mr-2"></i> LIVE EVENT TONIGHT
+                        </span>
+                    </div>
+                    
+                    <h2 class="font-display text-5xl md:text-7xl lg:text-8xl text-white mb-6 leading-tight">
+                        BLOOD IN THE <span class="text-rumble-orange">SEWERS</span>
+                    </h2>
+                    
+                    <p class="text-xl text-gray-300 mb-8 max-w-2xl leading-relaxed">
+                        Where only the strongest survive. Witness the most brutal, no-holds-barred rodent combat in the underground circuit. Every fight is a battle for supremacy.
+                    </p>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="mb-8 bg-rumble-gray/50 backdrop-blur-sm rounded-xl p-6 border border-rumble-red/20">
+                        <h3 class="text-xl font-bold text-white mb-4">NEXT MAIN EVENT STARTS IN:</h3>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <div class="countdown-timer text-4xl md:text-5xl text-rumble-orange mb-2" x-text="countdown.days"></div>
+                                <div class="text-gray-400 text-sm font-semibold">DAYS</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="countdown-timer text-4xl md:text-5xl text-rumble-orange mb-2" x-text="countdown.hours"></div>
+                                <div class="text-gray-400 text-sm font-semibold">HOURS</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="countdown-timer text-4xl md:text-5xl text-rumble-orange mb-2" x-text="countdown.minutes"></div>
+                                <div class="text-gray-400 text-sm font-semibold">MINUTES</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="countdown-timer text-4xl md:text-5xl text-rumble-orange mb-2" x-text="countdown.seconds"></div>
+                                <div class="text-gray-400 text-sm font-semibold">SECONDS</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <button class="shimmer-button text-white font-bold py-4 px-10 rounded-full hover:shadow-2xl hover:shadow-rumble-red/50 transition-all duration-300 transform hover:scale-105 active:scale-95">
+                            <i class="fas fa-ticket-alt mr-3"></i> BUY VIP TICKETS
+                        </button>
+                        <button class="bg-rumble-gray/80 backdrop-blur-sm border-2 border-rumble-red text-white font-bold py-4 px-10 rounded-full hover:bg-rumble-red/30 hover:border-rumble-orange transition-all duration-300 group">
+                            <i class="fas fa-play-circle mr-3 group-hover:animate-pulse"></i> WATCH LIVE
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="relative animate-float">
+                    <div class="rumble-card p-3 ring-glow">
+                        <div class="bg-rumble-gray rounded-2xl overflow-hidden">
+                            <div class="h-80 relative bg-gradient-to-br from-rumble-dark to-black">
+                                <!-- Fight Ring -->
+                                <div class="absolute inset-4 ring-4 ring-rumble-red/30 rounded-full flex items-center justify-center">
+                                    <div class="ring-2 ring-rumble-orange/50 rounded-full w-48 h-48 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <div class="text-6xl font-display text-rumble-red mb-2">VS</div>
+                                            <div class="text-sm text-gray-400">MAIN EVENT</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Fighter 1 -->
+                                <div class="absolute left-8 top-1/4 transform -translate-y-1/2">
+                                    <div class="relative">
+                                        <div class="w-24 h-24 bg-gradient-to-br from-rumble-red to-rumble-orange rounded-full flex items-center justify-center ring-4 ring-white/10 shadow-2xl">
+                                            <i class="fas fa-skull text-4xl text-white rat-icon"></i>
+                                        </div>
+                                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-rumble-red text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                            "RAZOR"
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-8">
+                                        <div class="text-sm text-gray-400 mb-1">RECORD</div>
+                                        <div class="text-2xl font-bold text-white">12-2</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Fighter 2 -->
+                                <div class="absolute right-8 top-1/4 transform -translate-y-1/2">
+                                    <div class="relative">
+                                        <div class="w-24 h-24 bg-gradient-to-br from-gray-800 to-black rounded-full flex items-center justify-center ring-4 ring-white/10 shadow-2xl">
+                                            <i class="fas fa-helmet-battle text-4xl text-white rat-icon"></i>
+                                        </div>
+                                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                            "TITAN"
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-8">
+                                        <div class="text-sm text-gray-400 mb-1">RECORD</div>
+                                        <div class="text-2xl font-bold text-white">15-1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-8">
+                                <h3 class="text-2xl font-bold text-white mb-3 flex items-center">
+                                    <i class="fas fa-fire text-rumble-orange mr-3"></i>
+                                    CHAMPIONSHIP BOUT
+                                </h3>
+                                <p class="text-gray-300 mb-6 leading-relaxed">The ultimate showdown for the heavyweight title. Razor's speed vs Titan's power in a 5-round war.</p>
+                                
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center text-rumble-orange">
+                                            <i class="fas fa-calendar-star mr-3"></i>
+                                            <span class="font-semibold">May 27, 2024</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-400">
+                                            <i class="fas fa-clock mr-3"></i>
+                                            <span>8:00 PM EST</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center text-rumble-orange">
+                                            <i class="fas fa-map-marked-alt mr-3"></i>
+                                            <span class="font-semibold">The Sewer Arena</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-400">
+                                            <i class="fas fa-users mr-3"></i>
+                                            <span>Limited Seats</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Fighters -->
+    <section class="py-20 bg-gradient-to-b from-rumble-dark to-rumble-gray">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-in">
+                <div class="inline-block mb-4">
+                    <span class="bg-rumble-red/20 text-rumble-orange font-bold px-6 py-2 rounded-full text-sm tracking-wider border border-rumble-red/30">
+                        <i class="fas fa-trophy mr-2"></i> ELITE WARRIORS
+                    </span>
+                </div>
+                <h2 class="font-display text-5xl md:text-6xl text-white mb-6">TOP <span class="text-rumble-red">FIGHTERS</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">Meet the most feared rodents in the underground circuit. These champions have clawed their way to the top through blood, sweat, and sheer will.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Fighter 1 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.1s">
+                    <div class="h-56 relative overflow-hidden bg-gradient-to-br from-rumble-red/20 to-rumble-orange/10">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-crown text-8xl text-rumble-red/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-rumble-red text-white text-sm font-bold px-4 py-1 rounded-full">
+                                CHAMPION
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white group-hover:text-rumble-orange transition-colors duration-300">"TITAN"</h3>
+                                <p class="text-rumble-orange font-semibold">Heavyweight Champion</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold px-4 py-2 rounded-full text-sm">
+                                15-1
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 leading-relaxed">Undefeated in his last 8 fights. Known for devastating power strikes and relentless forward pressure.</p>
+                        
+                        <!-- Stats -->
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Power</span>
+                                    <span>95%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Stamina</span>
+                                    <span>88%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Aggression</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-rumble-gray border border-rumble-red/30 text-white font-bold py-3 rounded-lg hover:bg-rumble-red/20 hover:border-rumble-orange transition-all duration-300 group">
+                            <span class="group-hover:animate-pulse">VIEW PROFILE</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fighter 2 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="h-56 relative overflow-hidden bg-gradient-to-br from-gray-800/20 to-black/10">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-bolt text-8xl text-gray-600/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-rumble-orange text-white text-sm font-bold px-4 py-1 rounded-full">
+                                LIGHTWEIGHT
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white group-hover:text-rumble-orange transition-colors duration-300">"RAZOR"</h3>
+                                <p class="text-rumble-orange font-semibold">Lightweight Champion</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold px-4 py-2 rounded-full text-sm">
+                                12-2
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 leading-relaxed">Blinding speed and surgical precision. Uses calculated strikes to dismantle opponents systematically.</p>
+                        
+                        <!-- Stats -->
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Speed</span>
+                                    <span>98%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 98%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Accuracy</span>
+                                    <span>94%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 94%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Technique</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-rumble-gray border border-rumble-red/30 text-white font-bold py-3 rounded-lg hover:bg-rumble-red/20 hover:border-rumble-orange transition-all duration-300 group">
+                            <span class="group-hover:animate-pulse">VIEW PROFILE</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fighter 3 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.3s">
+                    <div class="h-56 relative overflow-hidden bg-gradient-to-br from-rumble-red/20 to-rumble-orange/10">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-8xl text-rumble-red/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-rumble-red text-white text-sm font-bold px-4 py-1 rounded-full">
+                                CONTENDER
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white group-hover:text-rumble-orange transition-colors duration-300">"BRUTUS"</h3>
+                                <p class="text-rumble-orange font-semibold">Middleweight Contender</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold px-4 py-2 rounded-full text-sm">
+                                9-3
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 leading-relaxed">Iron chin and incredible durability. Known for absorbing punishment and overwhelming opponents with pressure.</p>
+                        
+                        <!-- Stats -->
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Durability</span>
+                                    <span>96%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 96%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Heart</span>
+                                    <span>99%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 99%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Pressure</span>
+                                    <span>91%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 91%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-rumble-gray border border-rumble-red/30 text-white font-bold py-3 rounded-lg hover:bg-rumble-red/20 hover:border-rumble-orange transition-all duration-300 group">
+                            <span class="group-hover:animate-pulse">VIEW PROFILE</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fighter 4 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.4s">
+                    <div class="h-56 relative overflow-hidden bg-gradient-to-br from-gray-800/20 to-black/10">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-skull-crossbones text-8xl text-gray-600/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-rumble-orange text-white text-sm font-bold px-4 py-1 rounded-full">
+                                ROOKIE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white group-hover:text-rumble-orange transition-colors duration-300">"VENOM"</h3>
+                                <p class="text-rumble-orange font-semibold">Undefeated Prospect</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold px-4 py-2 rounded-full text-sm">
+                                6-0
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 leading-relaxed">Vicious finisher with killer instinct. All 6 wins by early stoppage. The future of the division.</p>
+                        
+                        <!-- Stats -->
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Finishing</span>
+                                    <span>97%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 97%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Instinct</span>
+                                    <span>93%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <div class="stat-fill" style="width: 93%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                                    <span>Potential</span>
+                                    <span>99%</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <divclass="stat-fill" style="width: 99%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-rumble-gray border border-rumble-red/30 text-white font-bold py-3 rounded-lg hover:bg-rumble-red/20 hover:border-rumble-orange transition-all duration-300 group">
+                            <span class="group-hover:animate-pulse">VIEW PROFILE</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-rumble-gray to-rumble-dark border-2 border-rumble-red text-white font-bold py-4 px-12 rounded-full hover:bg-rumble-red/10 hover:border-rumble-orange transition-all duration-300 group">
+                    <i class="fas fa-users mr-3 group-hover:rotate-12 transition-transform duration-300"></i>
+                    VIEW ALL FIGHTERS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="py-20 bg-gradient-to-b from-rumble-gray to-rumble-dark parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1708507172650-e070e3fe6571?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920');">
+        <div class="absolute inset-0 bg-rumble-dark/80"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 animate-slide-in">
+                <div class="inline-block mb-4">
+                    <span class="bg-rumble-red/30 text-white font-bold px-6 py-2 rounded-full text-sm tracking-wider border border-rumble-red">
+                        <i class="fas fa-calendar-star mr-2"></i> DON'T MISS OUT
+                    </span>
+                </div>
+                <h2 class="font-display text-5xl md:text-6xl text-white mb-6">UPCOMING <span class="text-rumble-orange">EVENTS</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">Experience the raw intensity of live rodent combat. Limited seats available for each explosive event.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <!-- Event 1 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.1s">
+                    <div class="h-48 relative overflow-hidden bg-gradient-to-r from-rumble-red/90 to-rumble-orange/90">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-6xl font-display text-white mb-2">27</div>
+                                <div class="text-2xl text-white font-bold tracking-wider">MAY</div>
+                                <div class="text-sm text-white/80 mt-2">FRIDAY NIGHT</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white text-sm font-bold px-4 py-2 rounded-full border border-white/20">
+                            <i class="fas fa-crown mr-2"></i> MAIN EVENT
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
+                                SOLD OUT
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-rumble-orange transition-colors duration-300">CHAMPIONSHIP NIGHT</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">"Titan" defends his heavyweight title against challenger "Brutus" in a 5-round war for supremacy.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-rumble-orange">
+                                    <i class="fas fa-clock mr-3"></i>
+                                    <span class="font-semibold">8:00 PM EST</span>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    <i class="fas fa-users mr-1"></i> 500 Seats
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-3"></i>
+                                <span>The Sewer Arena - VIP Section</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold py-3 rounded-lg hover:shadow-xl hover:shadow-rumble-red/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
+                            <i class="fas fa-ticket-alt mr-2"></i> JOIN WAITLIST
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="h-48 relative overflow-hidden bg-gradient-to-r from-gray-900/90 to-black/90">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-6xl font-display text-white mb-2">03</div>
+                                <div class="text-2xl text-white font-bold tracking-wider">JUN</div>
+                                <div class="text-sm text-white/80 mt-2">FIGHT NIGHT</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-rumble-red/80 backdrop-blur-sm text-white text-sm font-bold px-4 py-2 rounded-full border border-rumble-red/50">
+                            <i class="fas fa-fire mr-2"></i> 8 MATCHES
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-rumble-orange/80 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
+                                40% SOLD
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-rumble-orange transition-colors duration-300">RUMBLE IN THE SEWER</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">8 explosive matches featuring hungry up-and-comers battling for ranking positions and glory.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-rumble-orange">
+                                    <i class="fas fa-clock mr-3"></i>
+                                    <span class="font-semibold">7:30 PM EST</span>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    <i class="fas fa-users mr-1"></i> 300 Seats
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-3"></i>
+                                <span>The Underground Pit</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold py-3 rounded-lg hover:shadow-xl hover:shadow-rumble-red/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
+                            <i class="fas fa-ticket-alt mr-2"></i> GET TICKETS
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="rumble-card group animate-fade-in" style="animation-delay: 0.3s">
+                    <div class="h-48 relative overflow-hidden bg-gradient-to-r from-rumble-red/90 to-rumble-orange/90">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-6xl font-display text-white mb-2">10</div>
+                                <div class="text-2xl text-white font-bold tracking-wider">JUN</div>
+                                <div class="text-sm text-white/80 mt-2">GRUDGE MATCH</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white text-sm font-bold px-4 py-2 rounded-full border border-white/20">
+                            <i class="fas fa-skull-crossbones mr-2"></i> REMATCH
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <div class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
+                                75% SOLD
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-rumble-orange transition-colors duration-300">VENGEANCE NIGHT</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">"Razor" seeks redemption against "Venom" in a highly anticipated grudge match with bad blood.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-rumble-orange">
+                                    <i class="fas fa-clock mr-3"></i>
+                                    <span class="font-semibold">9:00 PM EST</span>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    <i class="fas fa-users mr-1"></i> 250 Seats
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-3"></i>
+                                <span>The Bloody Octagon</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold py-3 rounded-lg hover:shadow-xl hover:shadow-rumble-red/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
+                            <i class="fas fa-ticket-alt mr-2"></i> GET TICKETS
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="shimmer-button text-white font-bold py-4 px-14 rounded-full hover:shadow-2xl hover:shadow-rumble-red/50 transition-all duration-300 transform hover:scale-105 active:scale-95 group">
+                    <i class="fas fa-calendar-alt mr-3 group-hover:rotate-12 transition-transform duration-300"></i>
+                    VIEW FULL EVENT CALENDAR
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Betting Section -->
+    <section class="py-20 bg-gradient-to-b from-rumble-dark to-black">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="animate-slide-in">
+                    <div class="inline-block mb-6">
+                        <span class="bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold px-6 py-2 rounded-full text-sm tracking-wider">
+                            <i class="fas fa-coins mr-2"></i> LIVE BETTING
+                        </span>
+                    </div>
+                    
+                    <h2 class="font-display text-5xl md:text-6xl text-white mb-8">
+                        BET ON <span class="text-rumble-red">BLOOD</span>
+                    </h2>
+                    
+                    <p class="text-xl text-gray-300 mb-10 leading-relaxed">
+                        Feel the adrenaline rush of live betting. Our secure platform offers real-time odds, instant payouts, and exclusive betting markets you won't find anywhere else.
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start group">
+                            <div class="bg-gradient-to-br from-rumble-red to-rumble-orange text-white p-4 rounded-2xl mr-6 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-chart-line text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-rumble-orange transition-colors duration-300">Live Odds & Markets</h4>
+                                <p class="text-gray-300 leading-relaxed">Real-time odds that update dynamically during fights. Bet on round winners, method of victory, and more.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start group">
+                            <div class="bg-gradient-to-br from-rumble-orange to-yellow-500 text-white p-4 rounded-2xl mr-6 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-shield-alt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-rumble-orange transition-colors duration-300">Secure & Transparent</h4>
+                                <p class="text-gray-300 leading-relaxed">Blockchain-verified transactions and provably fair fights. Your security is our top priority.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start group">
+                            <div class="bg-gradient-to-br from-rumble-red to-pink-600 text-white p-4 rounded-2xl mr-6 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-bolt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-rumble-orange transition-colors duration-300">Instant Payouts</h4>
+                                <p class="text-gray-300 leading-relaxed">Get your winnings immediately after fight results are confirmed. No waiting periods, no excuses.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-fade-in">
+                    <div class="rumble-card p-8 border-2 border-rumble-red/30">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-3xl font-bold text-white">TODAY'S TOP BETS</h3>
+                            <div class="flex items-center text-rumble-orange">
+                                <i class="fas fa-sync-alt mr-2 animate-spin"></i>
+                                <span class="text-sm font-semibold">LIVE</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Betting Match 1 -->
+                        <div class="mb-8 p-6 bg-gradient-to-br from-rumble-dark to-black rounded-2xl border border-rumble-red/20 hover:border-rumble-orange/50 transition-all duration-300">
+                            <div class="text-center mb-6">
+                                <div class="inline-block bg-rumble-red/20 text-rumble-orange text-sm font-bold px-4 py-2 rounded-full mb-2">
+                                    HEAVYWEIGHT CHAMPIONSHIP
+                                </div>
+                                <p class="text-gray-400 text-sm">Best of 5 Rounds</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-6 mb-6">
+                                <!-- Fighter 1 -->
+                                <div class="text-center p-4 bg-rumble-gray/50 rounded-xl hover:bg-rumble-gray/80 transition-colors duration-300 cursor-pointer group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-rumble-red to-rumble-orange rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-crown text-2xl text-white"></i>
+                                    </div>
+                                    <p class="font-bold text-white text-xl mb-1">"TITAN"</p>
+                                    <p class="text-gray-400 text-sm mb-3">Champion</p>
+                                    <div class="bg-rumble-red/20 text-rumble-orange font-bold text-lg px-4 py-2 rounded-full">
+                                        -150
+                                    </div>
+                                </div>
+                                
+                                <!-- VS -->
+                                <div class="flex items-center justify-center">
+                                    <div class="bg-rumble-red text-white font-display text-2xl px-6 py-3 rounded-full">
+                                        VS
+                                    </div>
+                                </div>
+                                
+                                <!-- Fighter 2 -->
+                                <div class="text-center p-4 bg-rumble-gray/50 rounded-xl hover:bg-rumble-gray/80 transition-colors duration-300 cursor-pointer group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-helmet-battle text-2xl text-white"></i>
+                                    </div>
+                                    <p class="font-bold text-white text-xl mb-1">"BRUTUS"</p>
+                                    <p class="text-gray-400 text-sm mb-3">Challenger</p>
+                                    <divclass="bg-rumble-orange/20 text-rumble-orange font-bold text-lg px-4 py-2 rounded-full">
+                                        +120
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold py-4 rounded-xl hover:shadow-xl hover:shadow-rumble-red/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group">
+                                <i class="fas fa-coins mr-3 group-hover:rotate-12 transition-transform duration-300"></i>
+                                PLACE BET NOW
+                            </button>
+                        </div>
+
+                        <!-- Betting Match 2 -->
+                        <div class="p-6 bg-gradient-to-br from-rumble-dark to-black rounded-2xl border border-rumble-orange/20 hover:border-rumble-orange/50 transition-all duration-300">
+                            <div class="text-center mb-6">
+                                <div class="inline-block bg-rumble-orange/20 text-rumble-orange text-sm font-bold px-4 py-2 rounded-full mb-2">
+                                    GRUDGE MATCH
+                                </div>
+                                <p class="text-gray-400 text-sm">Lightweight Showdown</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-6 mb-6">
+                                <!-- Fighter 1 -->
+                                <div class="text-center p-4 bg-rumble-gray/50 rounded-xl hover:bg-rumble-gray/80 transition-colors duration-300 cursor-pointer group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-bolt text-2xl text-white"></i>
+                                    </div>
+                                    <p class="font-bold text-white text-xl mb-1">"RAZOR"</p>
+                                    <p class="text-gray-400 text-sm mb-3">Champion</p>
+                                    <div class="bg-rumble-red/20 text-rumble-orange font-bold text-lg px-4 py-2 rounded-full">
+                                        -110
+                                    </div>
+                                </div>
+                                
+                                <!-- VS -->
+                                <div class="flex items-center justify-center">
+                                    <div class="bg-rumble-orange text-white font-display text-2xl px-6 py-3 rounded-full">
+                                        VS
+                                    </div>
+                                </div>
+                                
+                                <!-- Fighter 2 -->
+                                <div class="text-center p-4 bg-rumble-gray/50 rounded-xl hover:bg-rumble-gray/80 transition-colors duration-300 cursor-pointer group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-rumble-orange to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-skull-crossbones text-2xl text-white"></i>
+                                    </div>
+                                    <p class="font-bold text-white text-xl mb-1">"VENOM"</p>
+                                    <p class="text-gray-400 text-sm mb-3">Contender</p>
+                                    <div class="bg-rumble-orange/20 text-rumble-orange font-bold text-lg px-4 py-2 rounded-full">
+                                        -110
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gradient-to-r from-rumble-red to-rumble-orange text-white font-bold py-4 rounded-xl hover:shadow-xl hover:shadow-rumble-red/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group">
+                                <i class="fas fa-coins mr-3 group-hover:rotate-12 transition-transform duration-300"></i>
+                                PLACE BET NOW
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="py-20 bg-gradient-to-r from-rumble-dark via-black to-rumble-dark">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto rumble-card p-12 text-center border-2 border-rumble-red/30">
+                <div class="inline-block mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-rumble-red to-rumble-orange rounded-full flex items-center justify-center mx-auto animate-pulse-glow">
+                        <i class="fas fa-envelope-open-text text-3xl text-white"></i>
+                    </div>
+                </div>
+                
+                <h2 class="font-display text-4xl md:text-5xl text-white mb-6">JOIN THE UNDERGROUND</h2>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Get exclusive fight announcements, betting insights, and VIP access to the most intense rodent combat events.
+                </p>
+                
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <input type="email" placeholder="Enter your email address" class="flex-grow bg-rumble-gray border-2 border-rumble-red/30 text-white py-4 px-6 rounded-xl focus:outline-none focus:border-rumble-orange focus:ring-2 focus:ring-rumble-orange/30 transition-all duration-300">
+                        <button class="shimmer-button text-white font-bold py-4 px-10 rounded-xl hover:shadow-xl hover:shadow-rumble-red/40 transition-all duration-300 transform hover:scale-105 active:scale-95 whitespace-nowrap">
+                            <i class="fas fa-paper-plane mr-3"></i> SUBSCRIBE NOW
+                        </button>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-4">
+                        By subscribing, you agree to our terms and privacy policy. No spam, ever.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black pt-16 pb-8 border-t border-rumble-red/30">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-8">
+                        <div class="w-16 h-16 bg-gradient-to-br from-rumble-red to-rumble-orange rounded-full flex items-center justify-center mr-4 animate-pulse-glow">
+                            <i class="fas fa-fist-raised text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-3xl text-white">RODENT<span class="text-rumble-orange">RUMBLE</span></h3>
+                            <p class="text-gray-400 text-sm font-semibold tracking-wider">UNDERGROUND FIGHT CLUB</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        The premier underground rodent fighting organization. Where champions are forged in blood and legends are born in the darkness. Est. 2023.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-rumble-gray rounded-xl flex items-center justify-center text-rumble-red hover:bg-gradient-to-br hover:from-rumble-red hover:to-rumble-orange hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-rumble-gray rounded-xl flex items-center justify-center text-rumble-red hover:bg-gradient-to-br hover:from-rumble-red hover:to-rumble-orange hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-rumble-gray rounded-xl flex items-center justify-center text-rumble-red hover:bg-gradient-to-br hover:from-rumble-red hover:to-rumble-orange hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-rumble-gray rounded-xl flex items-center justify-center text-rumble-red hover:bg-gradient-to-br hover:from-rumble-red hover:to-rumble-orange hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-6 pb-3 border-b border-rumble-red/30">QUICK LINKS</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-rumble-red group-hover:translate-x-1 transition-transform duration-300"></i>
+                            Upcoming Events
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-rumble-red group-hover:translate-x-1 transition-transform duration-300"></i>
+                            Fighter Rankings
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-rumble-red group-hover:translate-x-1 transition-transform duration-300"></i>
+                            Betting Guide
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-rumble-red group-hover:translate-x-1 transition-transform duration-300"></i>
+                            VIP Membership
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs mr-3 text-rumble-red group-hover:translate-x-1 transition-transform duration-300"></i>
+                            Merchandise
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-6 pb-3 border-b border-rumble-red/30">LEGAL</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-gavel text-xs mr-3 text-rumble-red"></i>
+                            Terms of Service
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-shield-alt text-xs mr-3 text-rumble-red"></i>
+                            Privacy Policy
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-hand-holding-heart text-xs mr-3 text-rumble-red"></i>
+                            Responsible Betting
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-paw text-xs mr-3 text-rumble-red"></i>
+                            Fighter Welfare
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-rumble-orange transition-colors duration-300 flex items-center group">
+                            <i class="fas fa-headset text-xs mr-3 text-rumble-red"></i>
+                            Contact Support
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-6 pb-3 border-b border-rumble-red/30">CONTACT</h4>
+                    <ul class="space-y-4">
+                        <li class="text-gray-400 flex items-center">
+                            <i class="fas fa-map-marker-alt text-rumble-red mr-3"></i>
+                            <span>The Underground Arena<br>Somewhere Dark & Secret</span>
+                        </li>
+                        <li class="text-gray-400 flex items-center">
+                            <i class="fas fa-envelope text-rumble-red mr-3"></i>
+                            <span>fight@rodentrumble.com</span>
+                        </li>
+                        <li class="text-gray-400 flex items-center">
+                            <i class="fas fa-phone text-rumble-red mr-3"></i>
+                            <span>1-800-RAT-FIGHT</span>
+                        </li>
+                        <li class="text-gray-400 flex items-center">
+                            <i class="fas fa-clock text-rumble-red mr-3"></i>
+                            <span>24/7 Support</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-rumble-gray/30 pt-8 text-center">
+                <p class="text-gray-500 mb-4">
+                    &copy; 2024 Rodent Rumble Underground Fighting Club. All rights reserved. | This is a fictional website for demonstration purposes.
+                </p>
+                <p class="text-gray-600 text-sm">
+                    <i class="fas fa-exclamation-triangle mr-2 text-rumble-orange"></i> 
+                    Rat fighting is not a real sport. This website is purely fictional. Please do not harm animals.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-br from-rumble-red to-rumble-orange text-white rounded-full flex items-center justify-center shadow-2xl hover:shadow-rumble-red/40 transition-all duration-300 transform hover:scale-110 active:scale-95 z-50 group">
+        <i class="fas fa-chevron-up group-hover:-translate-y-1 transition-transform duration-300"></i>
+    </button>
+
+    <!-- Live Fight Indicator -->
+    <div class="fixed top-24 right-8 z-40 animate-pulse">
+        <div class="bg-gradient-to-r from-rumble-red to-rumble-orange text-white text-sm font-bold px-4 py-2 rounded-full shadow-xl flex items-center">
+            <div class="w-3 h-3 bg-white rounded-full mr-2 animate-pulse"></div>
+            LIVE FIGHT NOW
+        </div>
+    </div>
+
+    <!-- Audio Player -->
+    <div class="fixed bottom-8 left-8 z-40">
+        <div class="rumble-card p-4 w-64">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <i class="fas fa-music text-rumble-red mr-3"></i>
+                    <span class="text-white font-semibold">FIGHT MUSIC</span>
+                </div>
+                <button class="text-rumble-orange hover:text-white transition-colors">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button class="text-gray-400 hover:text-white">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="w-10 h-10 bg-rumble-red rounded-full flex items-center justify-center text-white hover:bg-rumble-orange">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="text-gray-400 hover:text-white">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                <div class="flex-grow">
+                    <div class="text-xs text-gray-400 mb-1">Now Playing: Fight Theme</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading" class="fixed inset-0 bg-rumble-dark flex items-center justify-center z-50 transition-opacity duration-1000">
+        <div class="text-center">
+            <div class="w-32 h-32 bg-gradient-to-br from-rumble-red to-rumble-orange rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse-glow">
+                <i class="fas fa-fist-raised text-5xl text-white animate-bounce-slow"></i>
+            </div>
+            <h3 class="font-display text-3xl text-white mb-4">ENTERING THE ARENA</h3>
+            <div class="w-64 h-2 bg-rumble-gray rounded-full overflow-hidden mx-auto">
+                <div class="h-full bg-gradient-to-r from-rumble-red to-rumble-orange rounded-full animate-shimmer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loading screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 1000);
+            }, 1500);
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-bg');
+            
+            parallaxElements.forEach(element => {
+                const rate = scrolled * 0.5;
+                element.style.transform = `translate3d(0, ${rate}px, 0)`;
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all rumble cards
+        document.querySelectorAll('.rumble-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Audio player functionality
+        const audioPlayer = {
+            audio: null,
+            isPlaying: false,
+            
+            init() {
+                this.audio = new Audio('https://assets.mixkit.co/music/preview/mixkit-game-show-suspense-waiting-667.mp3');
+                this.audio.volume = 0.3;
+                
+                document.querySelectorAll('[data-audio-action]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const action = e.currentTarget.dataset.audioAction;
+                        this[action]();
+                    });
+                });
+            },
+            
+            play() {
+                if (!this.isPlaying) {
+                    this.audio.play();
+                    this.isPlaying = true;
+                    document.querySelector('[data-audio-action="play"]').innerHTML = '<i class="fas fa-pause"></i>';
+                }
+            },
+            
+            pause() {
+                if (this.isPlaying) {
+                    this.audio.pause();
+                    this.isPlaying = false;
+                    document.querySelector('[data-audio-action="play"]').innerHTML = '<i class="fas fa-play"></i>';
+                }
+            },
+            
+            toggle() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            }
+        };
+
+        // Initialize audio player when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            audioPlayer.init();
+        });
+
+        // Betting odds animation
+        function animateOdds() {
+            const oddsElements = document.querySelectorAll('[data-odds]');
+            oddsElements.forEach(element => {
+                const currentOdds = parseFloat(element.dataset.odds);
+                const change = (Math.random() - 0.5) * 0.1;
+                const newOdds = Math.max(-500, Math.min(500, currentOdds + change));
+                
+                element.dataset.odds = newOdds.toFixed(2);
+                element.textContent = newOdds > 0 ? `+${newOdds.toFixed(0)}` : newOdds.toFixed(0);
+                
+                // Add color animation
+                element.classList.add('text-rumble-orange');
+                setTimeout(() => {
+                    element.classList.remove('text-rumble-orange');
+                }, 500);
+            });
+        }
+
+        // Update odds every 10 seconds
+        setInterval(animateOdds, 10000);
+
+        // Fighter stats hover effect
+        document.querySelectorAll('.stat-bar').forEach(bar => {
+            bar.addEventListener('mouseenter', function() {
+                const fill = this.querySelector('.stat-fill');
+                fill.style.transition = 'width 0.5s ease-out';
+            });
+        });
+
+        // Mobile menu close on click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    mobileMenuOpen = false;
+                }
+            });
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.7);
+                    transform: scale(0);
+                    animation: ripple-animation 0.6s linear;
+                    width: ${size}px;
+                    height: ${size}px;
+                    top: ${y}px;
+                    left: ${x}px;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation to styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
