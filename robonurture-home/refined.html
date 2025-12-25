@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Haven - Futuristic Robotic Nursing Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Comfortaa:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        }
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'comfortaa': ['Comfortaa', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'slide-in': 'slide-in 0.5s ease-out',
+                        'fade-in': 'fade-in 0.8s ease-out',
+                        'bounce-slow': 'bounce-slow 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.7 },
+                        },
+                        'slide-in': {
+                            '0%': { transform: 'translateY(20px)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 },
+                        },
+                        'fade-in': {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        },
+                        'bounce-slow': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            overflow-x: hidden;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.05) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(16, 185, 129, 0.05) 100%);
+        }
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.25);
+        }
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        .card-hover:hover::before {
+            left: 100%;
+        }
+        .game-badge {
+            background: linear-gradient(135deg, #14b8a6, #06b6d4);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+        }
+        .vr-headset {
+            transform: perspective(1000px) rotateY(-15deg);
+            filter: drop-shadow(0 20px 40px rgba(6, 182, 212, 0.3));
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #14b8a6, #06b6d4);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.15);
+        }
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #14b8a6, #06b6d4);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover::after {
+            transform: translateY(0);
+        }
+        .floating-robot {
+            animation: float 6s ease-in-out infinite;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (max-width: 768px) {
+            .vr-headset {
+                transform: none;
+                filter: drop-shadow(0 10px 20px rgba(6, 182, 212, 0.2));
+            }
+            .hero-gradient {
+                background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+            }
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800" x-data="{ mobileMenuOpen: false, stats: { lifeExpectancy: 94.7, points: 4850, rank: 12 } }" @scroll.window="handleScroll">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg animate-pulse-glow">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold font-comfortaa gradient-text">Nexus Haven</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link font-medium text-gray-700 hover:text-teal-600 transition-colors">Home</a>
+                    <a href="#" class="nav-link font-medium text-gray-700 hover:text-teal-600 transition-colors">Experience</a>
+                    <a href="#" class="nav-link font-medium text-gray-700 hover:text-teal-600 transition-colors">Robotics</a>
+                    <a href="#" class="nav-link font-medium text-gray-700 hover:text-teal-600 transition-colors">VR/AR Games</a>
+                    <a href="#" class="nav-link font-medium text-gray-700 hover:text-teal-600 transition-colors">Longevity Stats</a>
+                    <a href="#" class="nav-link font-medium text-gray-700 hover:text-teal-600 transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="hidden md:block bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-6 py-2.5 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 shadow-md">
+                        Virtual Tour
+                    </button>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden">
+                        <i class="fas fa-bars text-2xl text-teal-600"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="md:hidden mt-4 pb-4 border-t border-gray-100 pt-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#" class="font-medium text-gray-700 hover:text-teal-600 transition-colors py-2">Home</a>
+                    <a href="#" class="font-medium text-gray-700 hover:text-teal-600 transition-colors py-2">Experience</a>
+                    <a href="#" class="font-medium text-gray-700 hover:text-teal-600 transition-colors py-2">Robotics</a>
+                    <a href="#" class="font-medium text-gray-700 hover:text-teal-600 transition-colors py-2">VR/AR Games</a>
+                    <a href="#" class="font-medium text-gray-700 hover:text-teal-600 transition-colors py-2">Longevity Stats</a>
+                    <a href="#" class="font-medium text-gray-700 hover:text-teal-600 transition-colors py-2">Contact</a>
+                    <button class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 mt-2">
+                        Virtual Tour
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-16 md:py-28 overflow-hidden relative">
+        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div class="container mx-auto px-4 relative">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
+                    <div class="inline-flex items-center px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-teal-100 text-teal-700 mb-8 shadow-sm animate-slide-in">
+                        <i class="fas fa-heartbeat mr-2 text-teal-500"></i>
+                        <span class="font-semibold">Average Life Expectancy: <span class="text-teal-600">94.7 years</span></span>
+                        <div class="ml-3 w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-comfortaa leading-tight">
+                        <span class="block text-gray-800">Where</span>
+                        <span class="gradient-text">Robotics Meet</span>
+                        <span class="gradient-text">Humanity</span>
+                    </h1>
+                    
+                    <p class="text-lg text-gray-600 mb-10 max-w-2xl leading-relaxed">
+                        Welcome to Nexus Haven, where cutting-edge robotics, immersive VR/AR experiences, and gamified living extend life expectancy while bringing joy to every moment. Our residents don't just live longer—they live better.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <button class="group bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 shadow-lg flex items-center justify-center">
+                            <i class="fas fa-play-circle mr-3 text-xl group-hover:scale-110 transition-transform"></i>
+                            Experience VR Tour
+                        </button>
+                        <button class="group border-2 border-teal-500 text-teal-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-teal-50 transition-all duration-300 hover:scale-105">
+                            Meet Our Robots
+                        </button>
+                    </div>
+                    
+                    <div class="mt-12 flex items-center space-x-8">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-brain text-emerald-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-800">Cognitive Health</p>
+                                <p class="text-sm text-gray-600">+42% improvement</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-users text-cyan-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-800">Social Engagement</p>
+                                <p class="text-sm text-gray-600">+78% higher</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="relative mx-auto max-w-lg">
+                        <!-- Floating elements -->
+                        <div class="absolute -top-8 -right-8 w-40 h-40 bg-cyan-400 rounded-full opacity-10 animate-pulse"></div>
+                        <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-emerald-400 rounded-full opacity-10 animate-pulse"></div>
+                        
+                        <!-- Main image container -->
+                        <div class="relative vr-headset animate-float">
+                            <div class="relative overflow-hidden rounded-3xl shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1609815981938-09544b36475f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx2ciUyMGhlYWRzZXQlMjBlbGRlcmx5JTIwcGVyc29uJTIwc21pbGluZ3xlbnwwfDB8fHwxNzY2NjkyOTg3fDA&ixlib=rb-4.1.0&q=85&w=1080" 
+                                     alt="Elderly person enjoying VR experience" 
+                                     class="w-full h-auto rounded-3xl transform hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating stats card -->
+                        <div class="absolute -bottom-6 -right-6 bg-white rounded-2xl p-6 shadow-2xl animate-bounce-slow">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 flex items-center justify-center shadow-lg">
+                                    <i class="fas fa-gamepad text-white text-2xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="font-bold text-gray-800 text-lg">Daily Game Quest</p>
+                                    <p class="text-sm text-gray-600">Complete today's VR puzzle!</p>
+                                    <div class="mt-2 flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gradient-to-r from-cyan-500 to-teal-500 h-2 rounded-full w-3/4"></div>
+                                        </div>
+                                        <span class="ml-2 text-sm font-medium text-teal-600">75%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                       <!-- Robot companion floating card -->
+                        <div class="absolute -top-6 -left-6 bg-white rounded-2xl p-5 shadow-2xl animate-bounce-slow" style="animation-delay: 1s;">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
+                                    <i class="fas fa-robot text-white text-xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-bold text-gray-800">Robo-Assist</p>
+                                    <p class="text-xs text-gray-600">Available 24/7</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-20 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 font-comfortaa">
+                    <span class="gradient-text">The Future of Elderly Care</span>
+                </h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">Our innovative approach combines advanced robotics with engaging gamification to enhance quality of life and extend longevity.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100 shadow-sm scroll-reveal">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center mb-8 shadow-lg">
+                        <i class="fas fa-robot text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-5 text-gray-800">Robotic Companions</h3>
+                    <p class="text-gray-600 mb-8 leading-relaxed">Our friendly AI-powered robots provide 24/7 assistance, companionship, and health monitoring, ensuring safety and reducing loneliness.</p>
+                    <div class="flex items-center text-teal-600 font-semibold group cursor-pointer">
+                        <span class="group-hover:mr-3 transition-all">Meet our robotic team</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-shield-alt text-teal-500 mr-2"></i>
+                            <span>Real-time health monitoring</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100 shadow-sm scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center mb-8 shadow-lg">
+                        <i class="fas fa-vr-cardboard text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-5 text-gray-800">Immersive VR/AR Games</h3>
+                    <p class="text-gray-600 mb-8 leading-relaxed">Travel the world, solve puzzles, and socialize in virtual environments designed to stimulate both mind and body through gamified experiences.</p>
+                    <div class="flex items-center text-emerald-600 font-semibold group cursor-pointer">
+                        <span class="group-hover:mr-3 transition-all">Explore our VR worlds</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-globe-americas text-emerald-500 mr-2"></i>
+                            <span>100+ virtual destinations</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100 shadow-sm scroll-reveal" style="animation-delay: 0.4s;">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 flex items-center justify-center mb-8 shadow-lg">
+                        <i class="fas fa-chart-line text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-5 text-gray-800">Extended Longevity</h3>
+                    <p class="text-gray-600 mb-8 leading-relaxed">Our residents live an average of 12 years longer than traditional care facilities thanks to our holistic, technology-enhanced approach to wellness.</p>
+                    <div class="flex items-center text-cyan-600 font-semibold group cursor-pointer">
+                        <span class="group-hover:mr-3 transition-all">View longevity stats</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-heart text-cyan-500 mr-2"></i>
+                            <span>94.7 years life expectancy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gamification Section -->
+    <section class="py-20 bg-gradient-to-br from-teal-50/30 to-cyan-50/30">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-16 lg:mb-0 scroll-reveal">
+                    <div class="max-w-xl">
+                        <h2 class="text-4xl md:text-5xl font-bold mb-8 font-comfortaa">
+                            <span class="gradient-text">Life as a Game</span>
+                        </h2>
+                        <p class="text-gray-600 mb-10 text-lg leading-relaxed">
+                            Every day at Nexus Haven is an adventure. Our gamification system turns daily activities, exercises, and social interactions into rewarding quests and challenges.
+                        </p>
+                        
+                        <div class="space-y-8">
+                            <div class="flex items-start group">
+                                <div class="flex-shrink-0 w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-trophy text-emerald-600 text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-xl mb-2">Achievement System</h4>
+                                    <p class="text-gray-600">Earn badges and rewards for completing daily health goals, social activities, and cognitive exercises.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start group">
+                                <div class="flex-shrink-0 w-14 h-14 rounded-full bg-cyan-100 flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-users text-cyan-600 text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-xl mb-2">Social Leaderboards</h4>
+                                    <p class="text-gray-600">Friendly competition with fellow residents in team-based challenges and collaborative VR experiences.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start group">
+                                <div class="flex-shrink-0 w-14 h-14 rounded-full bg-teal-100 flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-brain text-teal-600 text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-xl mb-2">Cognitive Challenges</h4>
+                                    <p class="text-gray-600">Daily puzzles and memory games in augmented reality to keep minds sharp and engaged.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="bg-white rounded-3xl p-8 shadow-2xl max-w-lg mx-auto border border-gray-100">
+                        <div class="flex justify-between items-center mb-10">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800">Today's Game Quests</h3>
+                                <p class="text-gray-600 text-sm mt-1">Complete quests to earn points and climb the leaderboard</p>
+                            </div>
+                            <div class="game-badge text-white px-5 py-2 rounded-full font-semibold animate-pulse-glow">
+                                <i class="fas fa-gamepad mr-2"></i> Active
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between p-5 rounded-2xl bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100 group hover:shadow-md transition-shadow">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center mr-4 shadow-md">
+                                        <i class="fas fa-walking text-white text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Morning Walk</h4>
+                                        <p class="text-sm text-gray-600">Complete 1000 steps in the AR garden</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-teal-600 text-lg">+150 pts</div>
+                                    <div class="text-xs text-gray-500 mt-1">85% completed</div>
+                                    <div class="w-20 bg-gray-200 rounded-full h-1.5 mt-2">
+                                        <div class="bg-gradient-to-r from-teal-500 to-cyan-500 h-1.5 rounded-full w-4/5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-5 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 group hover:shadow-md transition-shadow">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center mr-4 shadow-md">
+                                        <i class="fas fa-puzzle-piece text-white text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Memory Puzzle</h4>
+                                        <p class="text-sm text-gray-600">Solve the VR memory challenge</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-emerald-600 text-lg">+200 pts</div>
+                                    <div class="text-xs text-emerald-600 font-semibold mt-1 flex items-center justify-end">
+                                        <i class="fas fa-check-circle mr-1"></i> Completed!
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-5 rounded-2xl bg-gradient-to-r from-cyan-50 to-teal-50 border border-cyan-100 group hover:shadow-md transition-shadow">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 flex items-center justify-center mr-4 shadow-md">
+                                        <i class="fas fa-video text-white text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Virtual Social</h4>
+                                        <p class="text-sm text-gray-600">Attend the VR tea party at 3 PM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-cyan-600 text-lg">+100 pts</div>
+                                    <div class="text-xs text-gray-500 mt-1 flex items-center justify-end">
+                                        <i class="fas fa-clock mr-1"></i> Starts in 2h
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-10 pt-8 border-t border-gray-200">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-600 text-sm">Your current rank</p>
+                                    <p class="text-3xl font-bold text-gray-800 mt-1">#12 <span class="text-lg font-normal text-gray-600">of 84 residents</span></p>
+                                    <div class="flex items-center mt-2">
+                                        <i class="fas fa-arrow-up text-emerald-500 mr-1"></i>
+                                        <span class="text-sm text-emerald-600 font-medium">Up 3 places this week</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-gray-600 text-sm">Total points</p>
+                                    <p class="text-3xl font-bold text-teal-600 mt-1">4,850</p>
+                                    <button @click="stats.points += 50; if(stats.rank > 1) stats.rank--" 
+                                            class="mt-3 text-sm bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-2 rounded-full font-medium hover:shadow-md transition-all hover:scale-105">
+                                        Complete Quest
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Longevity Stats Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 font-comfortaa">
+                    <span class="gradient-text">Extended Longevity</span>
+                </h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">Our innovative approach to elderly care has resulted in significantly longer, healthier lives for our residents.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div class="stat-card bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm scroll-reveal">
+                    <div class="text-5xl font-bold text-teal-600 mb-3">94.7</div>
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Average Life Expectancy</p>
+                    <p class="text-gray-600">12.3 years above national average</p>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-teal-500 to-cyan-500 h-2 rounded-full w-4/5"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm scroll-reveal" style="animation-delay: 0.1s;">
+                    <div class="text-5xl font-bold text-emerald-600 mb-3">42%</div>
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Reduced Cognitive Decline</p>
+                    <p class="text-gray-600">Through daily VR brain games</p>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full w-2/5"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="text-5xl font-bold text-cyan-600 mb-3">78%</div>
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Higher Social Engagement</p>
+                    <p class="text-gray-600">Via gamified group activities</p>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-cyan-500 to-teal-500 h-2 rounded-full w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="text-5xl font-bold text-teal-600 mb-3">96%</div>
+                    <p class="font-semibold text-gray-800text-lg mb-2">Resident Satisfaction</p>
+                    <p class="text-gray-600">Highest in the industry</p>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-teal-500 to-emerald-500 h-2 rounded-full w-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA Section -->
+            <div class="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-3xl p-10 text-white shadow-2xl overflow-hidden scroll-reveal">
+                <div class="relative">
+                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full"></div>
+                    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full"></div>
+                    
+                    <div class="flex flex-col lg:flex-row items-center justify-between relative z-10">
+                        <div class="mb-8 lg:mb-0 lg:mr-10">
+                            <h3 class="text-3xl font-bold mb-4 font-comfortaa">Ready to Experience the Future?</h3>
+                            <p class="opacity-90 text-lg max-w-2xl">Schedule a virtual tour with one of our robotic guides today and discover how Nexus Haven is redefining elderly care.</p>
+                            <div class="mt-6 flex items-center space-x-6">
+                                <div class="flex items-center">
+                                    <i class="fas fa-calendar-check text-white/80 mr-2"></i>
+                                    <span>30-minute virtual tour</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-robot text-white/80 mr-2"></i>
+                                    <span>Robotic guide included</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="group bg-white text-teal-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 whitespace-nowrap shadow-lg">
+                            <i class="fas fa-calendar-alt mr-3 group-hover:rotate-12 transition-transform"></i>
+                            Book Virtual Tour
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start mb-12">
+                <div class="mb-10 lg:mb-0 lg:w-2/5">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                            <i class="fas fa-robot text-white text-2xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold font-comfortaa gradient-text">Nexus Haven</h2>
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-xl">
+                        Where robotics, VR/AR gamification, and compassionate care come together to extend life and enhance joy for our residents.
+                    </p>
+                    <div class="flex space-x-5 mt-8">
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-teal-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-cyan-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:w-3/5 lg:pl-20">
+                    <div>
+                        <h4 class="font-bold text-xl mb-6 text-teal-300">Quick Links</h4>
+                        <ul class="space-y-4">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-teal-500 group-hover:translate-x-1 transition-transform"></i>
+                                Home
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-teal-500 group-hover:translate-x-1 transition-transform"></i>
+                                Robotic Care
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-teal-500 group-hover:translate-x-1 transition-transform"></i>
+                                VR Experiences
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-teal-500 group-hover:translate-x-1 transition-transform"></i>
+                                Longevity Data
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-xl mb-6 text-emerald-300">Resources</h4>
+                        <ul class="space-y-4">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-emerald-500 group-hover:translate-x-1 transition-transform"></i>
+                                Research Papers
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-emerald-500 group-hover:translate-x-1 transition-transform"></i>
+                                Case Studies
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-emerald-500 group-hover:translate-x-1 transition-transform"></i>
+                                Testimonials
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 text-emerald-500 group-hover:translate-x-1 transition-transform"></i>
+                                Media Coverage
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-xl mb-6 text-cyan-300">Contact</h4>
+                        <ul class="space-y-4">
+                            <li class="text-gray-400 flex items-center">
+                                <i class="fas fa-phone text-cyan-500 mr-3"></i>
+                                (555) 123-ROBO
+                            </li>
+                            <li class="text-gray-400 flex items-center">
+                                <i class="fas fa-envelope text-cyan-500 mr-3"></i>
+                                hello@nexushaven.com
+                            </li>
+                            <li class="text-gray-400 flex items-start">
+                                <i class="fas fa-map-marker-alt text-cyan-500 mr-3 mt-1"></i>
+                                Future Street 42<br>Tech City, TC 10001
+                            </li>
+                            <li class="text-gray-400 flex items-center">
+                                <i class="fas fa-clock text-cyan-500 mr-3"></i>
+                                24/7 Virtual Tours Available
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500">© 2023 Nexus Haven Futuristic Nursing Home. All rights reserved.</p>
+                <div class="flex justify-center space-x-6 mt-4">
+                    <a href="#" class="text-gray-500 hover:text-teal-300 transition-colors">Privacy Policy</a>
+                    <span class="text-gray-700">•</span>
+                    <a href="#" class="text-gray-500 hover:text-teal-300 transition-colors">Terms of Service</a>
+                    <span class="text-gray-700">•</span>
+                    <a href="#" class="text-gray-500 hover:text-teal-300 transition-colors">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Robot Assistant -->
+    <div class="fixed bottom-8 right-8 z-40">
+        <div class="relative">
+            <div class="absolute inset-0 bg-cyan-500 rounded-full animate-ping opacity-20"></div>
+            <button class="floating-robot w-20 h-20 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 flex items-center justify-center text-white text-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group">
+                <i class="fas fa-robot group-hover:rotate-12 transition-transform"></i>
+            </button>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                <span class="text-white text-xs font-bold">3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-8 left-8 w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors shadow-lg z-40 opacity-0 transition-opacity duration-300"
+            id="scrollToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Enhanced Alpine.js interactivity
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('stats', () => ({
+                lifeExpectancy: 94.7,
+                points: 4850,
+                rank: 12,
+                
+                incrementPoints() {
+                    this.points += 50;
+                    if (this.rank > 1) this.rank--;
+                    this.animatePoints();
+                },
+                
+                animatePoints() {
+                    const pointsElement = document.querySelector('.points-animation');
+                    if (pointsElement) {
+                        pointsElement.classList.add('animate-bounce');
+                        setTimeout(() => {
+                            pointsElement.classList.remove('animate-bounce');
+                        }, 1000);
+                    }
+                }
+            }));
+        });
+
+        // Scroll reveal animation
+        function handleScrollReveal() {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Scroll to top button visibility
+        function handleScrollToTop() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove('opacity-0');
+                scrollToTopBtn.classList.add('opacity-100');
+            } else {
+                scrollToTopBtn.classList.remove('opacity-100');
+                scrollToTopBtn.classList.add('opacity-0');
+            }
+        }
+
+        // Initialize scroll events
+        window.addEventListener('scroll', () => {
+            handleScrollReveal();
+            handleScrollToTop();
+        });
+
+        // Initial call
+        document.addEventListener('DOMContentLoaded', () => {
+            handleScrollReveal();
+            handleScrollToTop();
+            
+            // Add some interactive animations
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-12px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
