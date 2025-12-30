@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gomotion | Web Development Agency | Netherlands</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'gomotion-orange': '#FF6B35',
+                        'gomotion-red': '#D7263D',
+                        'gomotion-blue': '#1B9AAA',
+                        'dark-bg': '#0F172A',
+                        'dark-card': '#1E293B',
+                        'dark-border': '#334155'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(90deg, #FF6B35, #D7263D, #1B9AAA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-gray-300 min-h-screen">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-dark-card/90 backdrop-blur-md border-b border-dark-border">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-gomotion-orange to-gomotion-red flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">G</span>
+                    </div>
+                    <span class="text-2xl font-bold text-white">Gomotion</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-gomotion-orange transition-colors">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-gomotion-orange transition-colors">Services</a>
+                    <a href="#" class="text-gray-300 hover:text-gomotion-orange transition-colors">Projects</a>
+                    <a href="#" class="text-gray-300 hover:text-gomotion-orange transition-colors">About</a>
+                    <a href="#" class="text-gray-300 hover:text-gomotion-orange transition-colors">Contact</a>
+                </div>
+                
+                <button class="bg-gradient-to-r from-gomotion-orange to-gomotion-red text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Get Quote
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                    If It Can Be
+                    <span class="gradient-text">Automated</span>
+                    <br>It Should Be
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto mb-10">
+                    Gomotion is a Netherlands-based web development agency specializing in automated portals, payment applications, and automotive systems that drive efficiency and innovation.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-gomotion-orange to-gomotion-red text-white px-8 py-4 rounded-xl font-semibold text-lg hover-lift">
+                        Start Your Project
+                    </button>
+                    <button class="bg-dark-card border border-dark-border text-white px-8 py-4 rounded-xl font-semibold text-lg hover-lift hover:border-gomotion-blue transition-colors">
+                        View Case Studies
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+                <div class="bg-dark-card p-8 rounded-2xl border border-dark-border hover-lift hover:border-gomotion-orange transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-r from-gomotion-orange to-gomotion-red flex items-center justify-center mb-6">
+                        <i class="fas fa-door-open text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Enterprise Portals</h3>
+                    <p class="text-gray-400">Custom portal solutions that streamline operations, enhance collaboration, and automate workflows for maximum productivity.</p>
+                </div>
+                
+                <div class="bg-dark-card p-8 rounded-2xl border border-dark-border hover-lift hover:border-gomotion-red transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-r from-gomotion-red to-gomotion-blue flex items-center justify-center mb-6">
+                        <i class="fas fa-credit-card text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Payment Applications</h3>
+                    <p class="text-gray-400">Secure, scalable payment systems with automated processing, fraud detection, and seamless integration capabilities.</p>
+                </div>
+                
+                <div class="bg-dark-card p-8 rounded-2xl border border-dark-border hover-lift hover:border-gomotion-blue transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-r from-gomotion-blue to-gomotion-orange flex items-center justify-center mb-6">
+                        <i class="fas fa-car text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Automotive Systems</h3>
+                    <p class="text-gray-400">Advanced automotive software solutions for fleet management, diagnostics, and connected vehicle automation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 px-6 bg-dark-card/50">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-white mb-2">150+</div>
+                    <div class="text-gray-400">Projects Delivered</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-white mb-2">98%</div>
+                    <div class="text-gray-400">Client Satisfaction</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-white mb-2">40%</div>
+                    <div class="text-gray-400">Faster Processes</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-white mb-2">24/7</div>
+                    <div class="text-gray-400">Automated Systems</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Project -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Featured <span class="text-gomotion-orange">Automation</span> Project</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">See how we transformed a manual payment processing system into a fully automated solution.</p>
+            </div>
+            
+            <div class="bg-dark-card rounded-2xl overflow-hidden border border-dark-border">
+                <div class="md:flex">
+                    <div class="md:w-2/3 p-10">
+                        <span class="inline-block px-4 py-2 rounded-full bg-gomotion-blue/20 text-gomotion-blue font-semibold mb-4">Payment Systems</span>
+                        <h3 class="text-3xl font-bold text-white mb-6">AutoPay Portal</h3>
+                        <p class="text-gray-400 mb-6">A fully automated payment processing portal that reduced manual intervention by 85% and decreased processing time from 48 hours to just 15 minutes.</p>
+                        
+                        <div class="flex flex-wrap gap-4 mb-8">
+                            <span class="px-4 py-2 rounded-lg bg-dark-bg text-gray-300">Automated Reconciliation</span>
+                            <span class="px-4 py-2 rounded-lg bg-dark-bg text-gray-300">Fraud Detection AI</span>
+                            <span class="px-4 py-2 rounded-lg bg-dark-bg text-gray-300">Real-time Reporting</span>
+                        </div>
+                        
+                        <button class="text-gomotion-orange font-semibold flex items-center">
+                            View Case Study <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="md:w-1/3 bg-gradient-to-br from-gomotion-orange/20 to-gomotion-blue/20 flex items-center justify-center p-10">
+                        <div class="text-center">
+                            <div class="text-6xl font-bold text-white mb-2">85%</div>
+                            <div class="text-xl text-gray-300">Reduction in Manual Work</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <div class="bg-gradient-to-r from-gomotion-orange/10 via-gomotion-red/10 to-gomotion-blue/10 rounded-2xl p-12 border border-dark-border">
+                <h2 class="text-4xl font-bold text-white mb-6">Ready to Automate Your Business?</h2>
+                <p class="text-gray-300 text-xl mb-10">Contact our team in the Netherlands to discuss how we can transform your operations with intelligent automation.</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-gomotion-orange to-gomotion-red text-white px-8 py-4 rounded-xl font-semibold text-lg hover-lift">
+                        <i class="fas fa-calendar-alt mr-3"></i> Schedule Consultation
+                    </button>
+                    <button class="bg-dark-card border border-dark-border text-white px-8 py-4 rounded-xl font-semibold text-lg hover-lift hover:border-gomotion-blue transition-colors">
+                        <i class="fas fa-phone mr-3"></i> +31 20 123 4567
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-card border-t border-dark-border py-12 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-gomotion-orange to-gomotion-red flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">G</span>
+                        </div>
+                        <span class="text-2xl font-bold text-white">Gomotion</span>
+                    </div>
+                    <p class="text-gray-400">Amsterdam, Netherlands</p>
+                    <p class="text-gray-400">If it can be automated, it should be.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="w-12 h-12 rounded-full bg-dark-bg flex items-center justify-center text-gray-400 hover:text-gomotion-orange hover:bg-dark-border transition-colors">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-dark-bg flex items-center justify-center text-gray-400 hover:text-gomotion-orange hover:bg-dark-border transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-dark-bg flex items-center justify-center text-gray-400 hover:text-gomotion-orange hover:bg-dark-border transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-border mt-10 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Gomotion Web Development Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Alpine.js component for any future interactivity
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('gomotion', () => ({
+                init() {
+                    console.log('Gomotion agency homepage loaded');
+                }
+            }));
+        });
+    </script>
+</body>
+</html>
