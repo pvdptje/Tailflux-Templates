@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZestyDash | Food Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Nunito', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'zesty-orange': '#FF8A3D',
+                        'sunny-yellow': '#FFD166',
+                        'light-cream': '#FFF9F0',
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-gentle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .rounded-playful {
+            border-radius: 2rem 0.5rem 2rem 0.5rem;
+        }
+        .shadow-playful {
+            box-shadow: 0 10px 25px -5px rgba(255, 138, 61, 0.15), 0 10px 10px -5px rgba(255, 209, 102, 0.08);
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(#FFD166 1.5px, transparent 1.5px);
+            background-size: 30px 30px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-light-cream text-gray-800 min-h-screen" x-data="{ cartOpen: false, mobileMenuOpen: false }">
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-playful">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-zesty-orange to-sunny-yellow rounded-playful flex items-center justify-center">
+                        <i class="fas fa-utensils text-white text-2xl"></i>
+                    </div>
+                    <span class="text-3xl font-extrabold bg-gradient-to-r from-zesty-orange to-sunny-yellow bg-clip-text text-transparent">ZestyDash</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange transition-colors duration-300">Home</a>
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange transition-colors duration-300">Restaurants</a>
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange transition-colors duration-300">Deals</a>
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange transition-colors duration-300">Track Order</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button @click="cartOpen = !cartOpen" class="relative p-3 bg-sunny-yellow hover:bg-zesty-orange text-gray-800 hover:text-white rounded-playful transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-zesty-orange text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">3</span>
+                    </button>
+                    <button class="hidden md:inline-block px-6 py-3 bg-gradient-to-r from-zesty-orange to-sunny-yellow text-white font-bold rounded-playful hover:shadow-lg transition-all duration-300 hover:scale-105">
+                        Sign In
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-3 bg-sunny-yellow text-gray-800 rounded-playful">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition class="md:hidden mt-4 pb-4 border-t border-orange-100 pt-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange py-2">Home</a>
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange py-2">Restaurants</a>
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange py-2">Deals</a>
+                    <a href="#" class="font-semibold text-gray-700 hover:text-zesty-orange py-2">Track Order</a>
+                    <button class="w-full py-3 bg-gradient-to-r from-zesty-orange to-sunny-yellow text-white font-bold rounded-playful">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-12 md:py-20">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+            <!-- Hero Text -->
+            <div class="lg:w-1/2">
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                    <span class="text-gray-800">Craving something</span>
+                    <span class="block bg-gradient-to-r from-zesty-orange to-sunny-yellow bg-clip-text text-transparent">deliciously fun?</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-10 max-w-2xl">
+                    ZestyDash delivers joy to your doorstep! From sizzling burgers to sweet treats, order from hundreds of local restaurants in minutes.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-grow">
+                        <input type="text" placeholder="Enter your delivery address..." class="w-full pl-14 pr-6 py-4 border-2 border-sunny-yellow rounded-playful focus:outline-none focus:ring-4 focus:ring-orange-200 focus:border-zesty-orange">
+                        <i class="fas fa-map-marker-alt absolute left-5 top-1/2 transform -translate-y-1/2 text-zesty-orange text-xl"></i>
+                    </div>
+                    <button class="px-8 py-4 bg-gradient-to-r from-zesty-orange to-sunny-yellow text-white font-bold text-xl rounded-playful hover:shadow-xl transition-all duration-300 hover:scale-105 whitespace-nowrap">
+                        <i class="fas fa-bolt mr-2"></i> Find Food
+                    </button>
+                </div>
+            </div>
+            <!-- Hero Image/Illustration -->
+            <div class="lg:w-1/2 relative">
+                <div class="relative z-10">
+                    <div class="bg-gradient-to-br from-zesty-orange/20 to-sunny-yellow/20 rounded-playful p-8 shadow-playful">
+                        <div class="bg-white rounded-3xl p-6 shadow-inner">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-zesty-orange to-sunny-yellow rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-pizza-slice text-white text-3xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-2xl">Peppy's Pizza</h3>
+                                        <div class="flex items-center text-amber-600">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <span class="ml-2 text-gray-600">(4.7)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="bg-sunny-yellow text-gray-800 font-bold px-4 py-2 rounded-full">25 min</span>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-orange-50 rounded-2xl">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-zesty-orange rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-hamburger text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold">Zesty Burger Feast</h4>
+                                            <p class="text-sm text-gray-500">Double patty, special sauce</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-bold text-zesty-orange text-xl">$14.99</span>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-2xl">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-sunny-yellow rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-ice-cream text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold">Sunny Sundae</h4>
+                                            <p class="text-sm text-gray-500">Vanilla ice cream, caramel</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-bold text-zesty-orange text-xl">$6.99</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-6 border-t border-dashed border-orange-200 flex justify-between items-center">
+                                <span class="font-bold text-gray-700">Total</span>
+                                <button class="px-6 py-3 bg-gradient-to-r from-zesty-orange to-sunny-yellow text-white font-bold rounded-full hover:shadow-lg transition-all">
+                                    Checkout <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decorative Elements -->
+                <div class="absolute -top-6 -left-6 w-24 h-24 bg-sunny-yellow/30 rounded-full blur-xl"></div>
+                <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-zesty-orange/20 rounded-full blur-xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features / How It Works -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center mb-4">Get food in <span class="bg-gradient-to-r from-zesty-orange to-sunny-yellow bg-clip-text text-transparent">3 easy steps</span></h2>
+            <p class="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">It's as simple as click, choose, and enjoy!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center p-8 bg-gradient-to-b from-light-cream to-white rounded-playful shadow-playful hover:shadow-xl transition-shadow duration-300">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-zesty-orange to-sunny-yellow text-white text-3xl font-bold rounded-full mb-6 animate-bounce-slow">
+                        1
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Pick Your Craving</h3>
+                    <p class="text-gray-600 mb-6">Browse hundreds of menus from local restaurants, cafes, and dessert spots.</p>
+                    <div class="inline-flex p-4 bg-orange-100 rounded-2xl">
+                        <i class="fas fa-search text-zesty-orange text-2xl"></i>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center p-8 bg-gradient-to-b from-light-cream to-white rounded-playful shadow-playful hover:shadow-xl transition-shadow duration-300">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-zesty-orange to-sunny-yellow text-white text-3xl font-bold rounded-full mb-6 animate-bounce-slow" style="animation-delay: 0.2s">
+                        2
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Customize & Order</h3>
+                    <p class="text-gray-600 mb-6">Add extras, specify instructions, and securely pay online in seconds.</p>
+                    <div class="inline-flex p-4 bg-yellow-100 rounded-2xl">
+                        <i class="fas fa-utensils text-zesty-orange text-2xl"></i>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center p-8 bg-gradient-to-b from-light-cream to-white rounded-playful shadow-playful hover:shadow-xl transition-shadow duration-300">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-zesty-orange to-sunny-yellow text-white text-3xl font-bold rounded-full mb-6 animate-bounce-slow" style="animation-delay: 0.4s">
+                        3
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Track & Enjoy</h3>
+                    <p class="text-gray-600 mb-6">Watch your order being prepared and delivered in real-time. Hot & fresh!</p>
+                    <div class="inline-flex p-4 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl">
+                        <i class="fas fa-motorcycle text-zesty-orange text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Dishes Preview -->
+    <section class="container mx-auto px-4 py-16">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-4xl font-extrabold">Today's <span class="bg-gradient-to-r from-zesty-orange to-sunny-yellow bg-clip-text text-transparent">Zesty Picks</span></h2>
+            <a href="#" class="font-bold text-zesty-orange hover:underline flex items-center">
+                See all <i class="fas fa-chevron-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Dish 1 -->
+            <div class="bg-white rounded-playful overflow-hidden shadow-playful hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="h-48 bg-gradient-to-br from-zesty-orange/40 to-sunny-yellow/40 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white/90 text-zesty-orange font-bold px-3 py-1 rounded-full">
+                        <i class="fas fa-fire mr-1"></i> Spicy
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent text-white">
+                        <h3 class="font-bold text-xl">Dragon Noodles</h3>
+                        <p class="text-sm">Noodle House</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-2xl font-bold text-gray-800">$12.50</span>
+                        <button class="w-10 h-10 bg-sunny-yellow hover:bg-zesty-orange text-gray-800 hover:text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 text-sm">Stir-fried noodles with a fiery dragon sauce and fresh veggies.</p>
+                </div>
+            </div>
+
+            <!-- Dish 2 -->
+            <div class="bg-white rounded-playful overflow-hidden shadow-playful hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="h-48 bg-gradient-to-br from-sunny-yellow/40 to-zesty-orange/40 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white/90 text-zesty-orange font-bold px-3 py-1 rounded-full">
+                        <i class="fas fa-leaf mr-1"></i> Veggie
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent text-white">
+                        <h3 class="font-bold text-xl">Rainbow Bowl</h3>
+                       <p class="text-sm">Green Garden</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-2xl font-bold text-gray-800">$10.99</span>
+                        <button class="w-10 h-10 bg-sunny-yellow hover:bg-zesty-orange text-gray-800 hover:text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 text-sm">A vibrant mix of quinoa, roasted veggies, avocado, and tahini dressing.</p>
+                </div>
+            </div>
+
+            <!-- Dish 3 -->
+            <div class="bg-white rounded-playful overflow-hidden shadow-playful hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="h-48 bg-gradient-to-br from-zesty-orange/30 to-yellow-300/40 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white/90 text-zesty-orange font-bold px-3 py-1 rounded-full">
+                        <i class="fas fa-crown mr-1"></i> Popular
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent text-white">
+                        <h3 class="font-bold text-xl">Cheesy Bliss Burger</h3>
+                        <p class="text-sm">Burger Barn</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-2xl font-bold text-gray-800">$15.75</span>
+                        <button class="w-10 h-10 bg-sunny-yellow hover:bg-zesty-orange text-gray-800 hover:text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 text-sm">Double beef, triple cheese, and our secret sauce on a brioche bun.</p>
+                </div>
+            </div>
+
+            <!-- Dish 4 -->
+            <div class="bg-white rounded-playful overflow-hidden shadow-playful hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="h-48 bg-gradient-to-br from-sunny-yellow/30 to-orange-300/40 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white/90 text-zesty-orange font-bold px-3 py-1 rounded-full">
+                        <i class="fas fa-bolt mr-1"></i> Quick
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent text-white">
+                        <h3 class="font-bold text-xl">Citrus Splash Smoothie</h3>
+                        <p class="text-sm">Juice Junction</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-2xl font-bold text-gray-800">$7.25</span>
+                        <button class="w-10 h-10 bg-sunny-yellow hover:bg-zesty-orange text-gray-800 hover:text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 text-sm">Orange, mango, pineapple, and a hint of ginger for a zesty kick.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA & App Download -->
+    <section class="bg-gradient-to-r from-zesty-orange/10 to-sunny-yellow/10 py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white rounded-playful shadow-playful p-8 md:p-12 text-center">
+                <h2 class="text-4xl font-extrabold mb-6">Get the ZestyDash app!</h2>
+                <p class="text-xl text-gray-600 mb-10">Faster ordering, exclusive deals, and live tracking. Download now and get 50% off your first order!</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="#" class="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 px-8 py-4 rounded-playful font-bold text-lg transition-colors">
+                        <i class="fab fa-apple text-3xl mr-4"></i>
+                        <div class="text-left">
+                            <div class="text-sm">Download on the</div>
+                            <div class="text-2xl">App Store</div>
+                        </div>
+                    </a>
+                    <a href="#" class="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 px-8 py-4 rounded-playful font-bold text-lg transition-colors">
+                        <i class="fab fa-google-play text-2xl mr-4"></i>
+                        <div class="text-left">
+                            <div class="text-sm">Get it on</div>
+                            <div class="text-2xl">Google Play</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="mt-12 pt-8 border-t border-dashed border-orange-200">
+                    <p class="text-gray-700 font-bold text-2xl mb-2">Join our foodie community!</p>
+                    <p class="text-gray-600 mb-6">Follow us for mouth-watering content and flash deals.</p>
+                    <div class="flex justify-center space-x-6 text-3xl">
+                        <a href="#" class="text-zesty-orange hover:text-orange-600 transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-zesty-orange hover:text-orange-600 transition-colors"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-zesty-orange hover:text-orange-600 transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-zesty-orange hover:text-orange-600 transition-colors"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+                <div class="mb-8 md:mb-0">
+                    <a href="#" class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-zesty-orange to-sunny-yellow rounded-playful flex items-center justify-center">
+                            <i class="fas fa-utensils text-white text-2xl"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white">ZestyDash</span>
+                    </a>
+                    <p class="mt-4 max-w-md">Delivering happiness, one meal at a time. <br>Because every meal should be an adventure.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4">Company</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">About Us</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Careers</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Press</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4">Support</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Help Center</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Contact Us</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Safety</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Partner Info</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Terms of Service</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Cookie Policy</a></li>
+                            <li><a href="#" class="hover:text-sunny-yellow transition-colors">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 ZestyDash. All rights reserved. Made with <i class="fas fa-heart text-red-500"></i> for food lovers everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar (Alpine.js) -->
+    <div x-show="cartOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-full" x-transition:enter-end="opacity-100 translate-x-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-full" class="fixed inset-y-0 right-0 z-50 w-full md:w-96 bg-white shadow-2xl p-6 overflow-y-auto" @click.away="cartOpen = false">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-bold text-gray-800">Your Cart</h3>
+            <button @click="cartOpen = false" class="p-2 hover:bg-gray-100 rounded-full">
+                <i class="fas fa-times text-2xl text-gray-500"></i>
+            </button>
+        </div>
+
+        <div class="space-y-6 mb-8">
+            <!-- Cart Item 1 -->
+            <div class="flex items-center p-4 bg-orange-50 rounded-2xl">
+                <div class="w-16 h-16 bg-zesty-orange rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                    <i class="fas fa-hamburger"></i>
+                </div>
+                <div class="flex-grow">
+                    <h4 class="font-bold">Zesty Burger Feast</h4>
+                    <p class="text-sm text-gray-600">Double patty, special sauce</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <div class="flex items-center border border-gray-300 rounded-full">
+                            <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-full">-</button>
+                            <span class="px-4 font-bold">1</span>
+                            <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-full">+</button>
+                        </div>
+                        <span class="font-bold text-zesty-orange">$14.99</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Item 2 -->
+            <div class="flex items-center p-4 bg-yellow-50 rounded-2xl">
+                <div class="w-16 h-16 bg-sunny-yellow rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                    <i class="fas fa-ice-cream"></i>
+                </div>
+                <div class="flex-grow">
+                    <h4 class="font-bold">Sunny Sundae</h4>
+                    <p class="text-sm text-gray-600">Vanilla ice cream, caramel</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <div class="flex items-center border border-gray-300 rounded-full">
+                            <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-full">-</button>
+                            <span class="px-4 font-bold">2</span>
+                            <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-full">+</button>
+                        </div>
+                        <span class="font-bold text-zesty-orange">$13.98</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-6">
+            <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Subtotal</span>
+                <span class="font-bold">$28.97</span>
+            </div>
+            <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Delivery Fee</span>
+                <span class="font-bold">$2.99</span>
+            </div>
+            <div class="flex justify-between mb-6 text-lg font-bold">
+                <span>Total</span>
+                <span class="text-zesty-orange">$31.96</span>
+            </div>
+            <button class="w-full py-4 bg-gradient-to-r from-zesty-orange to-sunny-yellow text-white font-bold text-xl rounded-playful hover:shadow-lg transition-all">
+                <i class="fas fa-lock mr-2"></i> Proceed to Checkout
+            </button>
+            <p class="text-center text-gray-500 text-sm mt-4">Free delivery on orders over $25!</p>
+        </div>
+    </div>
+    <!-- Cart Overlay -->
+    <div x-show="cartOpen" x-transition.opacity class="fixed inset-0 z-40 bg-black/50" @click="cartOpen = false"></div>
+
+</body>
+</html>
