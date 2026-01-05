@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solidarité Mondiale - Organisation Humanitaire Internationale</title>
+    <meta name="description" content="Solidarité Mondiale est une ONG internationale dédiée à l'aide humanitaire, au développement durable et à la protection des droits humains à travers le monde.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'amber': {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        'orange': {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-in-left': 'slideInLeft 0.5s ease-out',
+                        'slide-in-right': 'slideInRight 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideInLeft: {
+                            '0%': { transform: 'translateX(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        slideInRight: {
+                            '0%': { transform: 'translateX(20px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .hero-slide {
+            transition: opacity 0.8s ease-in-out;
+        }
+        .carousel-item {
+            transition: transform 0.5s ease;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: translateY(-5px);
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+        }
+        .dropdown-menu {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+        }
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .lazy-load {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .lazy-load.loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans bg-white text-gray-800">
+    <!-- Vue/Nuxt Component Structure -->
+    <div id="app" x-data="ngoApp()" x-init="init()">
+        <!-- Header / Navigation -->
+        <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">SM</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Solidarité Mondiale</h1>
+                            <p class="text-xs text-gray-500">Organisation Humanitaire</p>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="#accueil" class="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-300">Accueil</a>
+                        <a href="#apropos" class="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-300">À propos</a>
+                        <a href="#missions" class="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-300">Nos missions</a>
+                        <a href="#galerie" class="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-300">Galerie</a>
+                        <a href="#contact" class="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-300">Contact</a>
+                        <a href="#don" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Faire un don</a>
+                    </nav>
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Navigation -->
+                <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden mt-4 pb-2 border-t border-gray-100">
+                    <div class="flex flex-col space-y-3 pt-4">
+                        <a href="#accueil" class="text-gray-700 hover:text-amber-600 font-medium py-2">Accueil</a>
+                        <a href="#apropos" class="text-gray-700 hover:text-amber-600 font-medium py-2">À propos</a>
+                        <a href="#missions" class="text-gray-700 hover:text-amber-600 font-medium py-2">Nos missions</a>
+                        <a href="#galerie" class="text-gray-700 hover:text-amber-600 font-medium py-2">Galerie</a>
+                        <a href="#contact" class="text-gray-700 hover:text-amber-600 font-medium py-2">Contact</a>
+                        <a href="#don" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-full font-medium text-center mt-2">Faire un don</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section with Slider -->
+        <section id="accueil" class="relative overflow-hidden">
+            <!-- Hero Slider -->
+            <div class="relative h-[70vh] md:h-[85vh]">
+                <!-- Slide 1 -->
+                <div x-show="currentSlide === 0" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-800" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="hero-slide absolute inset-0 bg-gradient-to-r from-amber-50 to-orange-50">
+                    <div class="absolute inset-0 bg-black/20"></div>
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Aider les communautés vulnérables</h2>
+                            <p class="text-xl text-white/90 mb-8">Notre mission est de fournir une aide humanitaire essentielle et de promouvoir le développement durable dans les régions les plus défavorisées du monde.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Découvrir nos actions</a>
+                                <a href="#don" class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">Soutenir notre cause</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div x-show="currentSlide === 1" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-800" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="hero-slide absolute inset-0 bg-gradient-to-r from-amber-100 to-orange-100">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-900/40 to-orange-900/40"></div>
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Éducation pour tous les enfants</h2>
+                            <p class="text-xl text-white/90 mb-8">Nous construisons des écoles, formons des enseignants et fournissons du matériel éducatif pour offrir un avenir meilleur aux enfants défavorisés.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Voir nos programmes</a>
+                                <a href="#don" class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">Devenir bénévole</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div x-show="currentSlide === 2" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-800" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="hero-slide absolute inset-0 bg-gradient-to-r from-amber-200 to-orange-200">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-800/50 to-orange-800/50"></div>
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Accès à l'eau potable</h2>
+                            <p class="text-xl text-white/90 mb-8">Nous forons des puits et installons des systèmes de filtration d'eau pour fournir de l'eau potable aux communautés qui en ont le plus besoin.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">En savoir plus</a>
+                                <a href="#don" class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">Faire un don</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div x-show="currentSlide === 3" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-800" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="hero-slide absolute inset-0 bg-gradient-to-r from-amber-300 to-orange-300">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-700/60 to-orange-700/60"></div>
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Soins de santé essentiels</h2>
+                            <p class="text-xl text-white/90 mb-8">Nous déployons des cliniques mobiles et formons du personnel médical local pour améliorer l'accès aux soins de santé dans les zones reculées.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Découvrir nos projets</a>
+                                <a href="#don" class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">Nous soutenir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div x-show="currentSlide === 4" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-800" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="hero-slide absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-600/70 to-orange-600/70"></div>
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Développement durable</h2>
+                            <p class="text-xl text-white/90 mb-8">Nous mettons en œuvre des projets agricoles durables et formons les communautés à des pratiques respectueuses de l'environnement.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Voir nos initiatives</a>
+                                <a href="#don" class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">Participer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+                    <template x-for="i in 5" :key="i">
+                        <button @click="currentSlide = i-1" :class="{'bg-white': currentSlide === i-1, 'bg-white/50': currentSlide !== i-1}" class="w-3 h-3 rounded-full transition-all duration-300 hover:scale-125"></button>
+                    </template>
+                </div>
+
+                <!-- Slider Navigation Arrows -->
+                <button @click="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button @click="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- About Us Section with Hierarchical Navigation -->
+        <section id="apropos" class="py-16 bg-gradient-to-b from-white to-amber-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 animate-fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">À propos de nous</h2>
+                    <div class="section-divider w-24 h-1 mx-auto mb-6"></div>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Solidarité Mondiale est une organisation non gouvernementale internationale fondée en 2005, dédiée à l'aide humanitaire et au développement durable dans plus de 30 pays.</p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Desktop Hierarchical Navigation -->
+                    <div class="lg:w-1/4">
+                        <div class="sticky top-24 hidden lg:block">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Navigation</h3>
+                            <nav class="space-y-2">
+                                <a @click="activeAboutSection = 'histoire'" :class="{'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 border-l-4 border-amber-500': activeAboutSection === 'histoire', 'text-gray-700 hover:text-amber-600': activeAboutSection !== 'histoire'}" class="block py-3 px-4 rounded-r-lg transition-all duration-300 cursor-pointer hover:bg-amber-50">
+                                    <span class="font-medium">Notre histoire</span>
+                                </a>
+                                <a @click="activeAboutSection = 'valeurs'" :class="{'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 border-l-4 border-amber-500': activeAboutSection === 'valeurs', 'text-gray-700 hover:text-amber-600': activeAboutSection !== 'valeurs'}" class="block py-3 px-4 rounded-r-lg transition-all duration-300 cursor-pointer hover:bg-amber-50">
+                                    <span class="font-medium">Nos valeurs</span>
+                                </a>
+                                <a @click="activeAboutSection = 'equipe'" :class="{'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 border-l-4 border-amber-500': activeAboutSection === 'equipe', 'text-gray-700 hover:text-amber-600': activeAboutSection !== 'equipe'}" class="block py-3 px-4 rounded-r-lg transition-all duration-300 cursor-pointer hover:bg-amber-50">
+                                    <span class="font-medium">Notre équipe</span>
+                                </a>
+                                <a @click="activeAboutSection = 'chiffres'" :class="{'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 border-l-4 border-amber-500': activeAboutSection === 'chiffres', 'text-gray-700 hover:text-amber-600': activeAboutSection !== 'chiffres'}" class="block py-3 px-4 rounded-r-lg transition-all duration-300 cursor-pointer hover:bg-amber-50">
+                                    <span class="font-medium">Chiffres clés</span>
+                                </a>
+                                <a @click="activeAboutSection = 'partenaires'" :class="{'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 border-l-4 border-amber-500': activeAboutSection === 'partenaires', 'text-gray-700 hover:text-amber-600': activeAboutSection !== 'partenaires'}" class="block py-3 px-4 rounded-r-lg transition-all duration-300 cursor-pointer hover:bg-amber-50">
+                                    <span class="font-medium">Partenaires</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <!-- Mobile Dropdown Navigation -->
+                        <div class="lg:hidden mb-6">
+                            <select @change="activeAboutSection = $event.target.value" class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <option value="histoire">Notre histoire</option>
+                                <option value="valeurs">Nos valeurs</option>
+                                <option value="equipe">Notre équipe</option>
+                                <option value="chiffres">Chiffres clés</option>
+                                <option value="partenaires">Partenaires</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Content Area -->
+                    <div class="lg:w-3/4">
+                        <!-- Histoire Section -->
+                        <div x-show="activeAboutSection === 'histoire'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 hover-scale">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Notre histoire</h3>
+                            <p class="text-gray-700 mb-4">Fondée en 2005 par un groupe de professionnels de la santé et de l'humanitaire, Solidarité Mondiale est née d'une conviction profonde : chaque être humain mérite de vivre dans la dignité, avec accès aux besoins fondamentaux.</p>
+                            <p class="text-gray-700 mb-6">Depuis nos premières missions en Afrique de l'Ouest, nous avons étendu nos opérations à plus de 30 pays, touchant directement la vie de plus de 2 millions de personnes grâce à nos programmes d'aide humanitaire et de développement durable.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                                <div class="text-center p-4 bg-amber-50 rounded-xl">
+                                    <div class="text-3xl font-bold text-amber-600 mb-2">2005</div>
+                                    <div class="text-gray-700">Année de fondation</div>
+                                </div>
+                                <div class="text-center p-4 bg-orange-50 rounded-xl">
+                                    <div class="text-3xl font-bold text-orange-600 mb-2">30+</div>
+                                    <div class="text-gray-700">Pays d'intervention</div>
+                                </div>
+                                <div class="text-center p-4 bg-amber-50 rounded-xl">
+                                    <div class="text-3xl font-bold text-amber-600 mb-2">500+</div>
+                                    <div class="text-gray-700">Bénévoles actifs</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Valeurs Section -->
+                        <div x-show="activeAboutSection === 'valeurs'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 hover-scale">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Nos valeurs fondamentales</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="flex items-start space-x-4 p-4 bg-amber-50 rounded-xl">
+                                    <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                        <span class="text-amber-600 font-bold">I</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-2">Intégrité</h4>
+                                        <p class="text-gray-700">Nous agissons avec transparence et honnêteté dans toutes nos actions et décisions.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 p-4 bg-orange-50 rounded-xl">
+                                    <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                                        <span class="text-orange-600 font-bold">S</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-2">Solidarité</h4>
+                                        <p class="text-gray-700">Nous croyons en la force de l'action collective pour créer un changement durable.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 p-4 bg-amber-50 rounded-xl">
+                                    <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                        <span class="text-amber-600 font-bold">R</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-2">Respect</h4>
+                                        <p class="text-gray-700">Nous respectons la dignité, les cultures et les droits des communautés que nous servons.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 p-4 bg-orange-50 rounded-xl">
+                                    <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                                        <span class="text-orange-600 font-bold">D</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-2">Durabilité</h4>
+                                        <p class="text-gray-700">Nous concevons des solutions qui répondent aux besoins actuels sans compromettre l'avenir.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other sections would follow similar pattern -->
+                        <div x-show="activeAboutSection === 'equipe'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 hover-scale">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Notre équipe</h3>
+                            <p class="text-gray-700">Notre équipe internationale compte plus de 500 bénévoles et 120 employés permanents, répartis dans nos bureaux régionaux et sur le terrain.</p>
+                        </div>
+
+                        <div x-show="activeAboutSection === 'chiffres'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 hover-scale">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Chiffres clés</h3>
+                            <p class="text-gray-700">Depuis 2005, nous avons réalisé plus de 300 projets humanitaires et formé plus de 10 000 personnes aux pratiques durables.</p>
+                        </div>
+
+                        <div x-show="activeAboutSection === 'partenaires'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 hover-scale">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Partenaires</h3>
+                            <p class="text-gray-700">Nous collaborons avec des organisations internationales, des gouvernements locaux et des entreprises engagées pour maximiser notre impact.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Missions Section -->
+        <section id="missions" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 animate-fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nos missions principales</h2>
+                    <div class="section-divider w-24 h-1 mx-auto mb-6"></div>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Nous intervenons dans quatre domaines prioritaires pour répondre aux besoins les plus urgents des populations vulnérables.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 shadow-lg hover-scale animate-slide-up" style="animation-delay: 0.1s">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Aide d'urgence</h3>
+                        <p class="text-gray-700 mb-4">Distribution de nourriture, d'eau et de kits d'hygiène dans les zones touchées par des crises humanitaires.</p>
+                        <a href="#" class="text-amber-600 font-medium hover:text-amber-700 inline-flex items-center">
+                            En savoir plus
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 shadow-lg hover-scale animate-slide-up" style="animation-delay: 0.2s">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Éducation</h3>
+                        <p class="text-gray-700mb-4">Construction d'écoles, formation d'enseignants et programmes d'alphabétisation pour les enfants et adultes.</p>
+                        <a href="#" class="text-amber-600 font-medium hover:text-amber-700 inline-flex items-center">
+                            En savoir plus
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 shadow-lg hover-scale animate-slide-up" style="animation-delay: 0.3s">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Santé</h3>
+                        <p class="text-gray-700 mb-4">Cliniques mobiles, campagnes de vaccination et formation de personnel de santé local dans les zones reculées.</p>
+                        <a href="#" class="text-amber-600 font-medium hover:text-amber-700 inline-flex items-center">
+                            En savoir plus
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 shadow-lg hover-scale animate-slide-up" style="animation-delay: 0.4s">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Développement durable</h3>
+                        <p class="text-gray-700 mb-4">Projets agricoles, accès à l'eau potable et énergies renouvelables pour des communautés autonomes et résilientes.</p>
+                        <a href="#" class="text-amber-600 font-medium hover:text-amber-700 inline-flex items-center">
+                            En savoir plus
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Image Carousel -->
+        <section id="galerie" class="py-16 bg-gradient-to-b from-amber-50 to-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 animate-fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Galerie de nos actions</h2>
+                    <div class="section-divider w-24 h-1 mx-auto mb-6"></div>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Découvrez en images nos projets sur le terrain et l'impact de notre travail auprès des communautés.</p>
+                </div>
+
+                <div class="max-w-6xl mx-auto">
+                    <!-- Main Carousel Image -->
+                    <div class="mb-8">
+                        <div class="relative h-64 md:h-96 rounded-2xl overflow-hidden shadow-2xl">
+                            <img 
+                                :src="carouselImages[activeCarouselIndex].src" 
+                                :alt="carouselImages[activeCarouselIndex].alt"
+                                class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-105 lazy-load"
+                                @load="imageLoaded($event)"
+                                loading="lazy"
+                            />
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                                <h3 class="text-xl font-bold text-white mb-2" x-text="carouselImages[activeCarouselIndex].title"></h3>
+                                <p class="text-white/90" x-text="carouselImages[activeCarouselIndex].description"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thumbnail Navigation -->
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <template x-for="(image, index) in carouselImages" :key="index">
+                            <button 
+                                @click="activeCarouselIndex = index"
+                                :class="{'ring-4 ring-amber-500 ring-offset-2': activeCarouselIndex === index, 'opacity-80 hover:opacity-100': activeCarouselIndex !== index}"
+                                class="relative h-24 rounded-xl overflow-hidden transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                            >
+                                <img 
+                                    :src="image.thumbnail" 
+                                    :alt="image.alt"
+                                    class="w-full h-full object-cover"
+                                    loading="lazy"
+                                />
+                                <div class="absolute inset-0 bg-black/20 hover:bg-transparent transition-colors duration-300"></div>
+                            </button>
+                        </template>
+                    </div>
+
+                    <!-- Carousel Controls -->
+                    <div class="flex justify-center mt-8 space-x-4">
+                        <button @click="prevCarousel()" class="bg-white text-amber-600 p-3 rounded-full shadow-lg hover:shadow-xl hover:bg-amber-50 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <button @click="nextCarousel()" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                        <button @click="openLightbox()" class="bg-white text-amber-600 p-3 rounded-full shadow-lg hover:shadow-xl hover:bg-amber-50 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="animate-slide-in-left" style="animation-delay: 0.1s">
+                        <div class="text-4xl md:text-5xl font-bold mb-2" x-text="animatedStats.projects"></div>
+                        <div class="text-lg">Projets réalisés</div>
+                    </div>
+                    <div class="animate-slide-in-left" style="animation-delay: 0.2s">
+                        <div class="text-4xl md:text-5xl font-bold mb-2" x-text="animatedStats.countries"></div>
+                        <div class="text-lg">Pays d'intervention</div>
+                    </div>
+                    <div class="animate-slide-in-right" style="animation-delay: 0.3s">
+                        <div class="text-4xl md:text-5xl font-bold mb-2" x-text="animatedStats.volunteers"></div>
+                        <div class="text-lg">Bénévoles actifs</div>
+                    </div>
+                    <div class="animate-slide-in-right" style="animation-delay: 0.4s">
+                        <div class="text-4xl md:text-5xl font-bold mb-2" x-text="animatedStats.people"></div>
+                        <div class="text-lg">Personnes aidées</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Donation Section -->
+        <section id="contact" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="animate-fade-in">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">Contactez-nous</h2>
+                        <form class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="firstName" class="block text-gray-700 mb-2">Prénom</label>
+                                    <input type="text" id="firstName" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Votre prénom">
+                                </div>
+                                <div>
+                                    <label for="lastName" class="block text-gray-700 mb-2">Nom</label>
+                                    <input type="text" id="lastName" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Votre nom">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="votre@email.com">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-gray-700 mb-2">Message</label>
+                                <textarea id="message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Votre message..."></textarea>
+                            </div>
+                            <button type="submit" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 w-full md:w-auto">Envoyer le message</button>
+                        </form>
+                    </div>
+
+                    <!-- Donation Section -->
+                    <div id="don" class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 shadow-lg animate-fade-in">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">Faire un don</h2>
+                        <p class="text-gray-700 mb-6">Votre soutien financier nous permet de poursuivre nos missions humanitaires et de sauver des vies. Chaque don, quel que soit son montant, fait la différence.</p>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <button @click="selectDonation(25)" :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white': selectedDonation === 25, 'bg-white text-gray-800': selectedDonation !== 25}" class="p-4 rounded-xl text-center font-medium transition-all duration-300 hover:scale-105">
+                                25€
+                            </button>
+                            <button @click="selectDonation(50)" :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white': selectedDonation === 50, 'bg-white text-gray-800': selectedDonation !== 50}" class="p-4 rounded-xl text-center font-medium transition-all duration-300 hover:scale-105">
+                                50€
+                            </button>
+                            <button @click="selectDonation(100)" :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white': selectedDonation === 100, 'bg-white text-gray-800': selectedDonation !== 100}" class="p-4 rounded-xl text-center font-medium transition-all duration-300 hover:scale-105">
+                                100€
+                            </button>
+                            <button @click="selectDonation(250)" :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white': selectedDonation === 250, 'bg-white text-gray-800': selectedDonation !== 250}" class="p-4 rounded-xl text-center font-medium transition-all duration-300 hover:scale-105">
+                                250€
+                            </button>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="customAmount" class="block text-gray-700 mb-2">Montant personnalisé</label>
+                            <div class="flex">
+                                <input type="number" id="customAmount" x-model="customDonation" @input="selectCustomDonation()" class="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Autre montant">
+                                <span class="bg-gray-100 border border-l-0 border-gray-300 rounded-r-lg px-4 flex items-center">€</span>
+                            </div>
+                        </div>
+
+                        <button @click="processDonation()" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white w-full py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105 mb-4">
+                            Faire un don de <span x-text="selectedDonation"></span>€
+                        </button>
+                        
+                        <p class="text-sm text-gray-600 text-center">Votre don est sécurisé et déductible des impôts à hauteur de 66%.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">SM</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">Solidarité Mondiale</h3>
+                                <p class="text-gray-400 text-sm">ONG Humanitaire</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400">Organisation non gouvernementale dédiée à l'aide humanitaire et au développement durable depuis 2005.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Liens rapides</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#accueil" class="text-gray-400 hover:text-amber-400 transition-colors">Accueil</a></li>
+                            <li><a href="#apropos" class="text-gray-400 hover:text-amber-400 transition-colors">À propos</a></li>
+                            <li><a href="#missions" class="text-gray-400 hover:text-amber-400 transition-colors">Nos missions</a></li>
+                            <li><a href="#galerie" class="text-gray-400 hover:text-amber-400 transition-colors">Galerie</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-amber-400 transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Nos actions</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Aide d'urgence</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Éducation</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Santé</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Développement durable</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Devenir bénévole</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Contact</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span>123 Rue de la Solidarité, 75015 Paris</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <span>contact@solidarite-mondiale.org</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                                <span>+33 1 23 45 67 89</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2023 Solidarité Mondiale. Tous droits réservés. Organisation à but non lucratif enregistrée sous le numéro W123456789.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Lightbox Modal -->
+        <div x-show="lightboxOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" @click.self="lightboxOpen = false">
+            <div class="relative max-w-4xl w-full">
+                <button @click="lightboxOpen = false" class="absolute -top-12 right-0 text-white hover:text-amber-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <img :src="carouselImages[activeCarouselIndex].src" :alt="carouselImages[activeCarouselIndex].alt" class="w-full h-auto rounded-lg">
+                <div class="text-white mt-4">
+                    <h3 class="text-xl font-bold" x-text="carouselImages[activeCarouselIndex].title"></h3>
+                    <p x-text="carouselImages[activeCarouselIndex].description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alpine.js CDN -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script>
+        function ngoApp() {
+            return {
+                // State
+                mobileMenuOpen: false,
+                currentSlide: 0,
+                activeAboutSection: 'histoire',
+                activeCarouselIndex: 0,
+                selectedDonation: 50,
+                customDonation: '',
+                lightboxOpen: false,
+                animatedStats: {
+                    projects: 0,
+                    countries: 0,
+                    volunteers: 0,
+                    people: 0
+                },
+                targetStats: {
+                    projects: 300,
+                    countries: 35,
+                    volunteers: 620,
+                    people: 2500000
+                },
+                
+                // Carousel Images Data
+                carouselImages: [
+                    {
+                        src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        thumbnail: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+                        alt: 'Distribution de nourriture dans un camp de réfugiés',
+                        title: 'Distribution alimentaire',
+                        description: 'Distribution de kits alimentaires dans un camp de réfugiés en Afrique de l\'Est'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        thumbnail: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+                        alt: 'Enfants dans une école construite par l\'ONG',
+                        title: 'École en zone rurale',
+                        description: 'Des enfants dans une école que nous avons construite en Amérique du Sud'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        thumbnail: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+                        alt: 'Clinique mobile dans un village isolé',
+                        title: 'Soins de santé mobile',
+                        description: 'Notre clinique mobile fournit des soins essentiels dans les villages reculés'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        thumbnail: 'https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+                        alt: 'Formation agricole durable',
+                        title: 'Agriculture durable',
+                        description: 'Formation aux techniques agricoles durables pour les communautés locales'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        thumbnail: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+                        alt: 'Accès à l\'eau potable',
+                        title: 'Puits d\'eau potable',
+                        description: 'Installation d\'un puits pour fournir de l\'eau potable à un village entier'
+                    }
+                ],
+                
+                // Methods
+                init() {
+                    // Initialize hero slider autoplay
+                    this.startSlider();
+                    
+                    // Initialize animated stats
+                    this.animateStats();
+                    
+                    // Initialize lazy loading
+                    this.initLazyLoading();
+                    
+                    // Initialize intersection observer for animations
+                    this.initIntersectionObserver();
+                },
+                
+                startSlider() {
+                    setInterval(() => {
+                        this.nextSlide();
+                    }, 5000);
+                },
+                
+                nextSlide() {
+                    this.currentSlide = (this.currentSlide + 1) % 5;
+                },
+                
+                prevSlide() {
+                    this.currentSlide = (this.currentSlide - 1 + 5) % 5;
+                },
+                
+                nextCarousel() {
+                    this.activeCarouselIndex = (this.activeCarouselIndex + 1) % this.carouselImages.length;
+                },
+                
+                prevCarousel() {
+                    this.activeCarouselIndex = (this.activeCarouselIndex - 1 + this.carouselImages.length) % this.carouselImages.length;
+                },
+                
+                selectDonation(amount) {
+                    this.selectedDonation = amount;
+                    this.customDonation = '';
+                },
+                
+                selectCustomDonation() {
+                    if (this.customDonation) {
+                        this.selectedDonation = parseInt(this.customDonation);
+                    }
+                },
+                
+                processDonation() {
+                    alert(`Merci pour votre don de ${this.selectedDonation}€ ! Vous allez être redirigé vers notre plateforme de paiement sécurisée.`);
+                    // In a real implementation, this would redirect to payment gateway
+                },
+                
+                openLightbox() {
+                    this.lightboxOpen = true;
+                },
+                
+                animateStats() {
+                    const duration = 2000; // 2 seconds
+                    const steps = 60;
+                    const stepDuration = duration / steps;
+                    
+                    Object.keys(this.targetStats).forEach(stat => {
+                        let current = 0;
+                        const target = this.targetStats[stat];
+                        const increment = target / steps;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            this.animatedStats[stat] = Math.floor(current).toLocaleString();
+                        }, stepDuration);
+                    });
+                },
+                
+                imageLoaded(event) {
+                    event.target.classList.add('loaded');
+                },
+                
+                initLazyLoading() {
+                    // In a real Nuxt/Vue app, you would use vue-lazyload or similar
+                    // This is a simplified implementation
+                    const lazyImages = document.querySelectorAll('.lazy-load');
+                    
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                img.src = img.dataset.src;
+                                imageObserver.unobserve(img);
+                            }
+                        });
+                    });
+                    
+                    lazyImages.forEach(img => imageObserver.observe(img));
+                },
+                
+                initIntersectionObserver() {
+                    // For animating elements on scroll
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('animate-fade-in');
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    
+                    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+                }
+            }
+        }
+    </script>
+</body>
+</html>

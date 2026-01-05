@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solidarité Mondiale - Organisation Humanitaire Internationale</title>
+    <meta name="description" content="Solidarité Mondiale est une ONG internationale dédiée à l'aide humanitaire, au développement durable et à la protection des droits humains à travers le monde.">
+    <meta property="og:title" content="Solidarité Mondiale - Organisation Humanitaire Internationale">
+    <meta property="og:description" content="Aide humanitaire, éducation, santé et développement durable dans plus de 30 pays. Rejoignez-nous ou faites un don.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1694286068274-1058e6b04dcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodW1hbml0YXJpYW4lMjBhaWQlMjBBZnJpY2ElMjBoZWxwJTIwY2hpbGRyZW4lMjBmaWVsZCUyMGRpc3RyaWJ1dGlvbnxlbnwwfDB8fHwxNzY3NjE1NTYwfDA&ixlib=rb-4.1.0&q=80&w=1200&utm_source=TailFlux&photo_id=Xo27J9RUjK8">
+    <meta name="theme-color" content="#f59e0b">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'amber': {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        'orange': {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-in-left': 'slideInLeft 0.5s ease-out',
+                        'slide-in-right': 'slideInRight 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(30px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        slideInLeft: { '0%': { transform: 'translateX(-30px)', opacity: '0' }, '100%': { transform: 'translateX(0)', opacity: '1' } },
+                        slideInRight: { '0%': { transform: 'translateX(30px)', opacity: '0' }, '100%': { transform: 'translateX(0)', opacity: '1' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        pulseGlow: { '0%, 100%': { boxShadow: '0 0 20px rgba(245, 158, 11, 0.3)' }, '50%': { boxShadow: '0 0 30px rgba(245, 158, 11, 0.6)' } },
+                        shimmer: { '0%': { backgroundPosition: '-200px 0' }, '100%': { backgroundPosition: 'calc(200px + 100%) 0' } }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-fade-in, .animate-slide-up, .animate-slide-in-left, .animate-slide-in-right, .animate-float, .animate-pulse-glow, .animate-shimmer {
+                animation: none !important;
+            }
+            .hero-slide, .carousel-item, .hover-scale {
+                transition: none !important;
+            }
+        }
+        .hero-slide {
+            transition: opacity 0.8s ease-in-out;
+        }
+        .carousel-item {
+            transition: transform 0.5s ease;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+            width: 80px;
+            margin: 0 auto;
+        }
+        .dropdown-menu {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+        }
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .lazy-load {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .lazy-load.loaded {
+            opacity: 1;
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        @media (max-width: 768px) {
+            .parallax-bg {
+                background-attachment: scroll;
+            }
+        }
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .progress-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+            border-radius: 3px;
+            transition: width 1.5s ease-in-out;
+        }
+        .donation-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .donation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s;
+        }
+        .donation-card:hover::before {
+            left: 100%;
+        }
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: -999px;
+        }
+        .skip-link:focus {
+            left: 1rem;
+            top: 1rem;
+            z-index: 9999;
+            background: #111827;
+            color: white;
+            padding: .75rem 1rem;
+            border-radius: .5rem;
+            outline: 2px solid #f59e0b;
+        }
+    </style>
+</head>
+<body class="font-sans bg-white text-gray-800">
+    <a href="#accueil" class="skip-link">Aller au contenu</a>
+
+    <div id="app" x-data="ngoApp()" x-init="init()" @keydown.window.right.prevent="nextSlide()" @keydown.window.left.prevent="prevSlide()">
+        <!-- Header / Navigation -->
+        <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg transition-all duration-300" :class="{'shadow-xl': scrolled}" role="banner">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <a href="#accueil" class="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center shadow-lg animate-float" aria-hidden="true">
+                            <i class="fas fa-hands-helping text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Solidarité Mondiale</h1>
+                            <p class="text-xs text-gray-500 font-medium">Organisation Humanitaire Internationale</p>
+                        </div>
+                    </a>
+
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden lg:flex items-center space-x-8" aria-label="Navigation principale">
+                        <a href="#accueil" class="text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 relative group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            Accueil
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#apropos" class="text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 relative group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            À propos
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#missions" class="text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 relative group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            Nos missions
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#galerie" class="text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 relative group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            Galerie
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#contact" class="text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 relative group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            Contact
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="#don" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse-glow focus:outline-none focus:ring-2 focus:ring-white/60">
+                            <i class="fas fa-heart mr-2" aria-hidden="true"></i>Faire un don
+                        </a>
+                    </nav>
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen.toString()" aria-controls="mobileMenu" aria-label="Ouvrir le menu" class="lg:hidden text-gray-700 p-2 rounded-lg hover:bg-amber-50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen" aria-hidden="true"></i>
+                        <i class="fas fa-times text-xl" x-show="mobileMenuOpen" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Navigation -->
+                <div id="mobileMenu" x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" 
+                     x-transition:enter-start="opacity-0 -translate-y-2" 
+                     x-transition:enter-end="opacity-100 translate-y-0" 
+                     x-transition:leave="transition ease-in duration-200" 
+                     x-transition:leave-start="opacity-100 translate-y-0" 
+                     x-transition:leave-end="opacity-0 -translate-y-2" 
+                     class="lg:hidden mt-4 pb-4 border-t border-gray-100" @click.outside="mobileMenuOpen=false">
+                    <div class="flex flex-col space-y-3 pt-4">
+                        <a href="#accueil" class="flex items-center text-gray-700 hover:text-amber-600 font-medium py-2 px-4 rounded-lg hover:bg-amber-50 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <i class="fas fa-home mr-3 w-5" aria-hidden="true"></i>Accueil
+                        </a>
+                        <a href="#apropos" class="flex items-center text-gray-700 hover:text-amber-600 font-medium py-2 px-4 rounded-lg hover:bg-amber-50 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <i class="fas fa-info-circle mr-3 w-5" aria-hidden="true"></i>À propos
+                        </a>
+                        <a href="#missions" class="flex items-center text-gray-700 hover:text-amber-600 font-medium py-2 px-4 rounded-lg hover:bg-amber-50 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <i class="fas fa-tasks mr-3 w-5" aria-hidden="true"></i>Nos missions
+                        </a>
+                        <a href="#galerie" class="flex items-center text-gray-700 hover:text-amber-600 font-medium py-2 px-4 rounded-lg hover:bg-amber-50 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <i class="fas fa-images mr-3 w-5" aria-hidden="true"></i>Galerie
+                        </a>
+                        <a href="#contact" class="flex items-center text-gray-700 hover:text-amber-600 font-medium py-2 px-4 rounded-lg hover:bg-amber-50 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <i class="fas fa-envelope mr-3 w-5" aria-hidden="true"></i>Contact
+                        </a>
+                        <a href="#don" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-full font-semibold text-center mt-2 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                            <i class="fas fa-heart mr-2" aria-hidden="true"></i>Faire un don
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section with Slider -->
+        <section id="accueil" class="relative overflow-hidden" role="region" aria-label="Bannière d'introduction">
+            <!-- Hero Slider -->
+            <div class="relative h-[70vh] md:h-[85vh]">
+                <!-- Slide 1 - Humanitarian Aid -->
+                <div x-show="currentSlide === 0" x-transition:enter="transition ease-out duration-1000" 
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" 
+                     x-transition:leave="transition ease-in duration-800" 
+                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
+                     class="hero-slide absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+                    <img src="https://images.unsplash.com/photo-1694286068274-1058e6b04dcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodW1hbml0YXJpYW4lMjBhaWQlMjBBZnJpY2ElMjBoZWxwJTIwY2hpbGRyZW4lMjBmaWVsZCUyMGRpc3RyaWJ1dGlvbnxlbnwwfDB8fHwxNzY3NjE1NTYwfDA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=Xo27J9RUjK8" 
+                         alt="Bénévoles distribuant de l'aide à des enfants sur le terrain" 
+                         class="w-full h-full object-cover parallax-bg" fetchpriority="high" decoding="async">
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">Aider les communautés vulnérables</h2>
+                            <p class="text-xl text-white/90 mb-8 leading-relaxed">Notre mission est de fournir une aide humanitaire essentielle et de promouvoir le développement durable dans les régions les plus défavorisées du monde.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-8 py-3.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <i class="fas fa-hands mr-2" aria-hidden="true"></i>Découvrir nos actions
+                                </a>
+                                <a href="#don" class="glass-effect border-2 border-white text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                                    <i class="fas fa-heart mr-2" aria-hidden="true"></i>Soutenir notre cause
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 - Education -->
+                <div x-show="currentSlide === 1" x-transition:enter="transition ease-out duration-1000" 
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" 
+                     x-transition:leave="transition ease-in duration-800" 
+                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
+                     class="hero-slide absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-900/60 via-amber-800/50 to-amber-700/40"></div>
+                    <img src="https://images.unsplash.com/photo-1744809495173-217ca4faa8bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb24lMjBjbGFzc3Jvb20lMjBBZnJpY2ElMjBjaGlsZHJlbiUyMHN0dWR5aW5nJTIwc2Nob29sfGVufDB8MHx8fDE3Njc2MTU1NjF8MA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=zzcHmwBaG0w" 
+                         alt="Enfants apprenant dans une salle de classe en Afrique" 
+                         class="w-full h-full object-cover parallax-bg" decoding="async">
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">Éducation pour tous les enfants</h2>
+                            <p class="text-xl text-white/90 mb-8 leading-relaxed">Nous construisons des écoles, formons des enseignants et fournissons du matériel éducatif pour offrir un avenir meilleur aux enfants défavorisés.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-8 py-3.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <i class="fas fa-graduation-cap mr-2" aria-hidden="true"></i>Voir nos programmes
+                                </a>
+                                <a href="#don" class="glass-effect border-2 border-white text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                                    <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>Devenir bénévole
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 - Clean Water -->
+                <div x-show="currentSlide === 2" x-transition:enter="transition ease-out duration-1000" 
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" 
+                     x-transition:leave="transition ease-in duration-800" 
+                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
+                     class="hero-slide absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-blue-800/50 to-blue-700/40"></div>
+                    <img src="https://images.unsplash.com/photo-1662094248953-0507066d675d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMHdhdGVyJTIwd2VsbCUyMEFmcmljYSUyMGNvbW11bml0eSUyMHB1bXB8ZW58MHwwfHx8MTc2NzYxNTU2MXww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=jyUmqELvD5o" 
+                         alt="Communauté utilisant une pompe à eau potable" 
+                         class="w-full h-full object-cover parallax-bg" decoding="async">
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">Accès à l'eau potable</h2>
+                            <p class="text-xl text-white/90 mb-8 leading-relaxed">Nous forons des puits et installons des systèmes de filtration d'eau pour fournir de l'eau potable aux communautés qui en ont le plus besoin.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-8 py-3.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <i class="fas fa-tint mr-2" aria-hidden="true"></i>En savoir plus
+                                </a>
+                                <a href="#don" class="glass-effect border-2 border-white text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                                    <i class="fas fa-heart mr-2" aria-hidden="true"></i>Faire un don
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 - Healthcare -->
+                <div x-show="currentSlide === 3" x-transition:enter="transition ease-out duration-1000" 
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" 
+                     x-transition:leave="transition ease-in duration-800" 
+                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
+                     class="hero-slide absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-900/60 via-emerald-800/50 to-emerald-700/40"></div>
+                    <img src="https://images.unsplash.com/photo-1579977855519-a2924fcd011e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBtZWRpY2FsJTIwY2xpbmljJTIwaHVtYW5pdGFyaWFuJTIwaGVhbHRoY2FyZSUyMEFmcmljYXxlbnwwfDB8fHwxNzY3NjE1NTYyfDA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=-NM7N_07guI" 
+                         alt="Clinique médicale mobile fournissant des soins" 
+                         class="w-full h-full object-cover parallax-bg" decoding="async">
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">Soins de santé essentiels</h2>
+                            <p class="text-xl text-white/90 mb-8 leading-relaxed">Nous déployons des cliniques mobiles et formons du personnel médical local pour améliorer l'accès aux soins de santé dans les zones reculées.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-8 py-3.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <i class="fas fa-medkit mr-2" aria-hidden="true"></i>Découvrir nos projets
+                                </a>
+                                <a href="#don" class="glass-effect border-2 border-white text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                                    <i class="fas fa-hand-holding-heart mr-2" aria-hidden="true"></i>Nous soutenir
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5 - Sustainable Development -->
+                <div x-show="currentSlide === 4" x-transition:enter="transition ease-out duration-1000" 
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" 
+                     x-transition:leave="transition ease-in duration-800" 
+                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
+                     class="hero-slide absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-r from-green-900/60 via-green-800/50 to-green-700/40"></div>
+                    <img src="https://images.unsplash.com/photo-1746014929708-fcb859fd3185?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXN0YWluYWJsZSUyMGFncmljdWx0dXJlJTIwQWZyaWNhJTIwdHJhaW5pbmclMjBmYXJtaW5nJTIwY29tbXVuaXR5fGVufDB8MHx8fDE3Njc2MTU1NjN8MA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=HzdCcbUDCbo" 
+                         alt="Formation à l'agriculture durable en communauté" 
+                         class="w-full h-full object-cover parallax-bg" decoding="async">
+                    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+                        <div class="max-w-2xl animate-slide-up">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">Développement durable</h2>
+                            <p class="text-xl text-white/90 mb-8 leading-relaxed">Nous mettons en œuvre des projets agricoles durables et formons les communautés à des pratiques respectueuses de l'environnement.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#missions" class="bg-white text-amber-700 px-8 py-3.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <i class="fas fa-leaf mr-2" aria-hidden="true"></i>Voir nos initiatives
+                                </a>
+                                <a href="#don" class="glass-effect border-2 border-white text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-all duration-300 flex items-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                                    <i class="fas fa-users mr-2" aria-hidden="true"></i>Participer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20" role="tablist" aria-label="Navigation du carrousel">
+                    <template x-for="i in 5" :key="i">
+                        <button @click="currentSlide = i-1" 
+                                :aria-label="'Aller à la diapositive ' + i" 
+                                :class="{'bg-white w-4 h-4': currentSlide === i-1, 'bg-white/50 w-3 h-3': currentSlide !== i-1}" 
+                                class="rounded-full transition-all duration-300 hover:scale-125 hover:bg-white focus:outline-none focus:ring-2 focus:ring-white"></button>
+                    </template>
+                </div>
+
+                <!-- Slider Navigation Arrows -->
+                <button @click="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 glass-effect text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 z-20 hover:scale-110 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Diapositive précédente">
+                    <i class="fas fa-chevron-left text-xl" aria-hidden="true"></i>
+                </button>
+                <button @click="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 glass-effect text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 z-20 hover:scale-110 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Diapositive suivante">
+                    <i class="fas fa-chevron-right text-xl" aria-hidden="true"></i>
+                </button>
+
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 hidden md:block">
+                    <a href="#apropos" class="text-white/80 hover:text-white transition-colors animate-bounce focus:outline-none focus:ring-2 focus:ring-white rounded-full p-2" aria-label="Faites défiler vers À propos">
+                        <i class="fas fa-chevron-down text-2xl" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section with Hierarchical Navigation -->
+        <section id="apropos" class="py-20 bg-gradient-to-b from-white via-amber-50/30 to-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 animate-fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">À propos de nous</h2>
+                    <div class="section-divider"></div>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-8 leading-relaxed">Solidarité Mondiale est une organisation non gouvernementale internationale fondée en 2005, dédiée à l'aide humanitaire et au développement durable dans plus de 30 pays à travers le monde.</p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <!-- Desktop Hierarchical Navigation -->
+                    <div class="lg:w-1/4">
+                        <div class="sticky top-24 hidden lg:block">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                                <i class="fas fa-compass mr-3 text-amber-500" aria-hidden="true"></i>Navigation
+                            </h3>
+                            <nav class="space-y-2" aria-label="Navigation À propos">
+                                <a @click="activeAboutSection = 'histoire'" 
+                                   :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg': activeAboutSection === 'histoire', 'text-gray-700 hover:bg-amber-50': activeAboutSection !== 'histoire'}" 
+                                   class="block py-4 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500" role="button">
+                                    <i class="fas fa-history mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                                    <span class="font-semibold">Notre histoire</span>
+                                </a>
+                                <a @click="activeAboutSection = 'valeurs'" 
+                                   :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg': activeAboutSection === 'valeurs', 'text-gray-700 hover:bg-amber-50': activeAboutSection !== 'valeurs'}" 
+                                   class="block py-4 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500" role="button">
+                                    <i class="fas fa-heart mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                                    <span class="font-semibold">Nos valeurs</span>
+                                </a>
+                                <a @click="activeAboutSection = 'equipe'" 
+                                   :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg': activeAboutSection === 'equipe', 'text-gray-700 hover:bg-amber-50': activeAboutSection !== 'equipe'}" 
+                                   class="block py-4 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500" role="button">
+                                    <i class="fas fa-users mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                                    <span class="font-semibold">Notre équipe</span>
+                                </a>
+                                <a @click="activeAboutSection = 'chiffres'" 
+                                   :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg': activeAboutSection === 'chiffres', 'text-gray-700 hover:bg-amber-50': activeAboutSection !== 'chiffres'}" 
+                                   class="block py-4 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500" role="button">
+                                    <i class="fas fa-chart-line mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                                    <span class="font-semibold">Chiffres clés</span>
+                                </a>
+                                <a @click="activeAboutSection = 'partenaires'" 
+                                   :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg': activeAboutSection === 'partenaires', 'text-gray-700 hover:bg-amber-50': activeAboutSection !== 'partenaires'}" 
+                                   class="block py-4 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500" role="button">
+                                    <i class="fas fa-handshake mr-3 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                                    <span class="font-semibold">Partenaires</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <!-- Mobile Dropdown Navigation -->
+                        <div class="lg:hidden mb-8">
+                            <div class="relative">
+                                <label for="navApropos" class="sr-only">Navigation à propos</label>
+                                <select id="navApropos" @change="activeAboutSection = $event.target.value" 
+                                        class="w-full p-4 border-2 border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent appearance-none">
+                                    <option value="histoire">Notre histoire</option>
+                                    <option value="valeurs">Nos valeurs</option>
+                                    <option value="equipe">Notre équipe</option>
+                                    <option value="chiffres">Chiffres clés</option>
+                                    <option value="partenaires">Partenaires</option>
+                                </select>
+                                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Area -->
+                    <div class="lg:w-3/4">
+                        <!-- Histoire Section -->
+                        <div x-show="activeAboutSection === 'histoire'" 
+                             x-transition:enter="transition ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 translate-x-4" 
+                             x-transition:enter-end="opacity-100 translate-x-0" 
+                             class="bg-white rounded-2xl shadow-xl p-8 hover-scale">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-4" aria-hidden="true">
+                                    <i class="fas fa-history text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">Notre histoire</h3>
+                            </div>
+                            <p class="text-gray-700 mb-6 leading-relaxed">Fondée en 2005 par un groupe de professionnels de la santé et de l'humanitaire, Solidarité Mondiale est née d'une conviction profonde : chaque être humain mérite de vivre dans la dignité, avec accès aux besoins fondamentaux.</p>
+                            <p class="text-gray-700 mb-8 leading-relaxed">Depuis nos premières missions en Afrique de l'Ouest, nous avons étendu nos opérations à plus de 30 pays, touchant directement la vie de plus de 2 millions de personnes grâce à nos programmes d'aide humanitaire et de développement durable.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                                <div class="text-center p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-100 hover-scale">
+                                    <div class="text-4xl font-bold text-amber-600 mb-3">2005</div>
+                                    <div class="text-gray-700 font-medium">Année de fondation</div>
+                                </div>
+                                <div class="text-center p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-scale">
+                                    <div class="text-4xl font-bold text-orange-600 mb-3">30+</div>
+                                    <div class="text-gray-700 font-medium">Pays d'intervention</div>
+                                </div>
+                                <div class="text-center p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-100 hover-scale">
+                                    <div class="text-4xl font-bold text-amber-600 mb-3">500+</div>
+                                    <div class="text-gray-700 font-medium">Bénévoles actifs</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Valeurs Section -->
+                        <div x-show="activeAboutSection === 'valeurs'" 
+                             x-transition:enter="transition ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 translate-x-4" 
+                             x-transition:enter-end="opacity-100 translate-x-0" 
+                             class="bg-white rounded-2xl shadow-xl p-8 hover-scale">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-4" aria-hidden="true">
+                                    <i class="fas fa-heart text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">Nos valeurs fondamentales</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="flex items-start space-x-4 p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-100 hover-scale">
+                                    <div class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg" aria-hidden="true">
+                                        <i class="fas fa-shield-alt text-white text-xl" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-3 text-lg">Intégrité</h4>
+                                        <p class="text-gray-700">Nous agissons avec transparence et honnêteté dans toutes nos actions et décisions, en rendant compte de chaque euro dépensé.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-scale">
+                                    <div class="w-14 h-14 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0 shadow-lg" aria-hidden="true">
+                                        <i class="fas fa-hands-helping text-white text-xl" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-3 text-lg">Solidarité</h4>
+                                        <p class="text-gray-700">Nous croyons en la force de l'action collective pour créer un changement durable et transformer des vies.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-100 hover-scale">
+                                    <div class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg" aria-hidden="true">
+                                        <i class="fas fa-hand-peace text-white text-xl" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-3 text-lg">Respect</h4>
+                                        <p class="text-gray-700">Nous respectons la dignité, les cultures et les droits des communautés que nous servons, en travaillant main dans la main avec elles.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-scale">
+                                    <div class="w-14 h-14 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0 shadow-lg" aria-hidden="true">
+                                        <i class="fas fa-leaf text-white text-xl" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-3 text-lg">Durabilité</h4>
+                                        <p class="text-gray-700">Nous concevons des solutions qui répondent aux besoins actuels sans compromettre l'avenir des générations futures.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipe Section -->
+                        <div x-show="activeAboutSection === 'equipe'" 
+                             x-transition:enter="transition ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 translate-x-4" 
+                             x-transition:enter-end="opacity-100 translate-x-0" 
+                             class="bg-white rounded-2xl shadow-xl p-8 hover-scale">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-4" aria-hidden="true">
+                                    <i class="fas fa-users text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">Notre équipe</h3>
+                            </div>
+                            <p class="text-gray-700 mb-8 leading-relaxed">Notre équipe internationale compte plus de 500 bénévoles dévoués et 120 employés permanents, répartis dans nos bureaux régionaux et sur le terrain. Chaque membre apporte son expertise unique pour maximiser notre impact.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="text-center p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl">
+                                    <i class="fas fa-user-md text-4xl text-amber-600 mb-4" aria-hidden="true"></i>
+                                    <h4 class="font-bold text-gray-900 mb-2">Experts Santé</h4>
+                                    <p class="text-gray-700 text-sm">Médecins, infirmiers et spécialistes</p>
+                                </div>
+                                <div class="text-center p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl">
+                                    <i class="fas fa-graduation-cap text-4xl text-orange-600 mb-4" aria-hidden="true"></i>
+                                    <h4 class="font-bold text-gray-900 mb-2">Éducateurs</h4>
+                                    <p class="text-gray-700 text-sm">Enseignants et formateurs</p>
+                                </div>
+                                <div class="text-center p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl">
+                                    <i class="fas fa-tools text-4xl text-amber-600 mb-4" aria-hidden="true"></i>
+                                    <h4 class="font-bold text-gray-900 mb-2">Ingénieurs</h4>
+                                    <p class="text-gray-700 text-sm">Spécialistes en eau et construction</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chiffres Section -->
+                        <div x-show="activeAboutSection === 'chiffres'" 
+                             x-transition:enter="transition ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 translate-x-4" 
+                             x-transition:enter-end="opacity-100 translate-x-0" 
+                             class="bg-white rounded-2xl shadow-xl p-8 hover-scale">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-4" aria-hidden="true">
+                                    <i class="fas fa-chart-line text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">Chiffres clés</h3>
+                            </div>
+                            <p class="text-gray-700 mb-8 leading-relaxed">Depuis 2005, nous avons réalisé des centaines de projets humanitaires et formé des milliers de personnes aux pratiques durables. Voici quelques chiffres qui témoignent de notre impact.</p>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="font-semibold text-gray-700">Projets réalisés</span>
+                                        <span class="font-bold text-amber-600">300+</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2" aria-hidden="true">
+                                        <div class="progress-bar rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="font-semibold text-gray-700">Personnes formées</span>
+                                        <span class="font-bold text-orange-600">10,000+</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2" aria-hidden="true">
+                                        <div class="progress-bar rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="font-semibold text-gray-700">Écoles construites</span>
+                                        <span class="font-bold text-amber-600">45</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2" aria-hidden="true">
+                                        <div class="progress-bar rounded-full" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Partenaires Section -->
+                        <div x-show="activeAboutSection === 'partenaires'" 
+                             x-transition:enter="transition ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 translate-x-4" 
+                             x-transition:enter-end="opacity-100 translate-x-0" 
+                             class="bg-white rounded-2xl shadow-xl p-8 hover-scale">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-4" aria-hidden="true">
+                                    <i class="fas fa-handshake text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">Partenaires</h3>
+                            </div>
+                            <p class="text-gray-700 mb-8 leading-relaxed">Nous collaborons avec des organisations internationales, des gouvernements locaux et des entreprises engagées pour maximiser notre impact et assurer la durabilité de nos actions.</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                <div class="bg-gray-50 p-6 rounded-xl flex items-center justify-center hover:bg-amber-50 transition-colors">
+                                    <i class="fas fa-globe-europe text-3xl text-gray-400" aria-hidden="true"></i>
+                                </div>
+                                <div class="bg-gray-50 p-6 rounded-xl flex items-center justify-center hover:bg-orange-50 transition-colors">
+                                    <i class="fas fa-university text-3xl text-gray-400" aria-hidden="true"></i>
+                                </div>
+                                <div class="bg-gray-50 p-6 rounded-xl flex items-center justify-center hover:bg-amber-50 transition-colors">
+                                    <i class="fas fa-building text-3xl text-gray-400" aria-hidden="true"></i>
+                                </div>
+                                <div class="bg-gray-50 p-6 rounded-xl flex items-center justify-center hover:bg-orange-50 transition-colors">
+                                    <i class="fas fa-hand-holding-heart text-3xl text-gray-400" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Missions Section -->
+        <section id="missions" class="py-20 bg-gradient-to-b from-white via-amber-50/20 to-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 animate-fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Nos missions principales</h2>
+                    <div class="section-divider"></div>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-8 leading-relaxed">Nous intervenons dans quatre domaines prioritaires pour répondre aux besoins les plus urgents des populations vulnérables à travers le monde.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover-scale animate-slide-up border border-amber-100" style="animation-delay: 0.1s">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mb-6 shadow-lg" aria-hidden="true">
+                            <i class="fas fa-first-aid text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Aide d'urgence</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">Distribution de nourriture, d'eau et de kits d'hygiène dans les zones touchées par des crises humanitaires, conflits ou catastrophes naturelles.</p>
+                        <a href="#" class="text-amber-600 font-semibold hover:text-amber-700 inline-flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            En savoir plus
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover-scale animate-slide-up border border-orange-100" style="animation-delay: 0.2s">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center mb-6 shadow-lg" aria-hidden="true">
+                            <i class="fas fa-graduation-cap text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Éducation</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">Construction d'écoles, formation d'enseignants et programmes d'alphabétisation pour les enfants et adultes dans les zones défavorisées.</p>
+                        <a href="#" class="text-orange-600 font-semibold hover:text-orange-700 inline-flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            En savoir plus
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover-scale animate-slide-up border border-amber-100" style="animation-delay: 0.3s">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mb-6 shadow-lg" aria-hidden="true">
+                            <i class="fas fa-heartbeat text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Santé</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">Cliniques mobiles, campagnes de vaccination et formation de personnel de santé local dans les zones reculées et isolées.</p>
+                        <a href="#" class="text-amber-600 font-semibold hover:text-amber-700 inline-flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            En savoir plus
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover-scale animate-slide-up border border-orange-100" style="animation-delay: 0.4s">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center mb-6 shadow-lg" aria-hidden="true">
+                            <i class="fas fa-leaf text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Développement durable</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">Projets agricoles, accès à l'eau potable et énergies renouvelables pour des communautés autonomes et résilientes.</p>
+                        <a href="#" class="text-orange-600 font-semibold hover:text-orange-700 inline-flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                            En savoir plus
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Image Carousel -->
+        <section id="galerie" class="py-20 bg-gradient-to-b from-amber-50/30 to-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 animate-fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Galerie de nos actions</h2>
+                    <div class="section-divider"></div>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-8 leading-relaxed">Découvrez en images nos projets sur le terrain et l'impact concret de notre travail auprès des communautés que nous servons.</p>
+                </div>
+
+                <div class="max-w-6xl mx-auto">
+                    <!-- Main Carousel Image -->
+                    <div class="mb-10">
+                        <div class="relative h-72 md:h-[500px] rounded-3xl overflow-hidden shadow-2xl group">
+                            <img 
+                                :src="carouselImages[activeCarouselIndex].src" 
+                                :alt="carouselImages[activeCarouselIndex].alt"
+                                class="w-full h-full object-cover transition-transform duration-700 transform group-hover:scale-105 lazy-load"
+                                @load="imageLoaded($event)"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-8">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-3" x-text="carouselImages[activeCarouselIndex].title"></h3>
+                                <p class="text-white/90 text-lg" x-text="carouselImages[activeCarouselIndex].description"></p>
+                            </div>
+                            <div class="absolute top-4 left-4 glass-effect text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                <i class="fas fa-camera mr-2" aria-hidden="true"></i><span x-text="(activeCarouselIndex+1) + ' / ' + carouselImages.length"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thumbnail Navigation -->
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+                        <template x-for="(image, index) in carouselImages" :key="index">
+                            <button 
+                                @click="activeCarouselIndex = index"
+                                :class="{'ring-4 ring-amber-500 ring-offset-2 scale-105': activeCarouselIndex === index, 'opacity-80 hover:opacity-100': activeCarouselIndex !== index}"
+                                class="relative h-28 rounded-xl overflow-hidden transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500 group"
+                                :aria-label="'Voir l\\'image ' + (index + 1)"
+                            >
+                                <img 
+                                    :src="image.thumbnail" 
+                                    :alt="image.alt"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i class="fas fa-search text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+
+                    <!-- Carousel Controls -->
+                    <div class="flex justify-center space-x-4" aria-label="Contrôles de la galerie">
+                        <button @click="prevCarousel()" class="bg-white text-amber-600 p-4 rounded-full shadow-xl hover:shadow-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="Image précédente">
+                            <i class="fas fa-chevron-left text-xl" aria-hidden="true"></i>
+                        </button>
+                        <button @click="nextCarousel()" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/60" aria-label="Image suivante">
+                            <i class="fas fa-chevron-right text-xl" aria-hidden="true"></i>
+                        </button>
+                        <button @click="openLightbox()" class="bg-white text-amber-600 p-4 rounded-full shadow-xl hover:shadow-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="Ouvrir l'agrandissement">
+                            <i class="fas fa-expand text-xl" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-shimmer animate-shimmer pointer-events-none" aria-hidden="true"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="animate-slide-in-left" style="animation-delay: 0.1s">
+                        <div class="text-5xl md:text-6xl font-bold mb-3" x-text="animatedStats.projects"></div>
+                        <div class="text-lg font-semibold">Projets réalisés</div>
+                    </div>
+                    <div class="animate-slide-in-left" style="animation-delay: 0.2s">
+                        <div class="text-5xl md:text-6xl font-bold mb-3" x-text="animatedStats.countries"></div>
+                        <div class="text-lg font-semibold">Pays d'intervention</div>
+                    </div>
+                    <div class="animate-slide-in-right" style="animation-delay: 0.3s">
+                        <div class="text-5xl md:text-6xl font-bold mb-3" x-text="animatedStats.volunteers"></div>
+                        <div class="text-lg font-semibold">Bénévoles actifs</div>
+                    </div>
+                    <div class="animate-slide-in-right" style="animation-delay: 0.4s">
+                        <div class="text-5xl md:text-6xl font-bold mb-3" x-text="animatedStats.people"></div>
+                        <div class="text-lg font-semibold">Personnes aidées</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Donation Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="animate-fade-in">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                            <i class="fas fa-envelope mr-4 text-amber-500" aria-hidden="true"></i>Contactez-nous
+                        </h2>
+                        <form class="space-y-6" @submit.prevent="submitContact">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="firstName" class="block text-gray-700 mb-2 font-medium">Prénom</label>
+                                    <input type="text" id="firstName" x-model="contact.firstName" required class="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="Votre prénom" autocomplete="given-name">
+                                </div>
+                                <div>
+                                    <label for="lastName" class="block text-gray-700 mb-2 font-medium">Nom</label>
+                                    <input type="text" id="lastName" x-model="contact.lastName" required class="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="Votre nom" autocomplete="family-name">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2 font-medium">Email</label>
+                                <input type="email" id="email" x-model="contact.email" required class="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="votre@email.com" autocomplete="email">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-gray-700 mb-2 font-medium">Message</label>
+                                <textarea id="message" x-model="contact.message" rows="5" required class="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="Votre message..."></textarea>
+                            </div>
+                            <button type="submit" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 w-full md:w-auto flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                                <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>Envoyer le message
+                            </button>
+                            <p x-show="contactSubmitted" class="text-emerald-600 font-medium" x-transition>Merci, votre message a été envoyé !</p>
+                        </form>
+                    </div>
+
+                    <!-- Donation Section -->
+                    <div id="don" class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 shadow-xl animate-fade-in donation-card border border-amber-100">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                            <i class="fas fa-heart mr-4 text-amber-500" aria-hidden="true"></i>Faire un don
+                        </h2>
+                        <p class="text-gray-700 mb-6 leading-relaxed text-lg">Votre soutien financier nous permet de poursuivre nos missions humanitaires et de sauver des vies. Chaque don, quel que soit son montant, fait la différence.</p>
+
+                        <!-- Frequency Toggle -->
+                        <div class="flex items-center bg-white rounded-xl p-2 w-full md:w-max mb-6 shadow-sm border border-amber-100">
+                            <button @click="donationFrequency = 'unique'" :class="donationFrequency === 'unique' ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md' : 'text-gray-700'" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200">Ponctuel</button>
+                            <button @click="donationFrequency = 'mensuel'" :class="donationFrequency === 'mensuel' ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md' : 'text-gray-700'" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200">Mensuel</button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <button @click="selectDonation(25)" 
+                                    :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg scale-105': selectedDonation === 25, 'bg-white text-gray-800 hover:bg-amber-50': selectedDonation !== 25}" 
+                                    class="p-5 rounded-xl text-center font-semibold transition-all duration-300 hover:scale-105">
+                                25€
+                            </button>
+                            <button @click="selectDonation(50)" 
+                                    :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg scale-105': selectedDonation === 50, 'bg-white text-gray-800 hover:bg-orange-50': selectedDonation !== 50}" 
+                                    class="p-5 rounded-xl text-center font-semibold transition-all duration-300 hover:scale-105">
+                                50€
+                            </button>
+                            <button @click="selectDonation(100)" 
+                                    :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg scale-105': selectedDonation === 100, 'bg-white text-gray-800 hover:bg-amber-50': selectedDonation !== 100}" 
+                                    class="p-5 rounded-xl text-center font-semibold transition-all duration-300 hover:scale-105">
+                                100€
+                            </button>
+                            <button @click="selectDonation(250)" 
+                                    :class="{'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg scale-105': selectedDonation === 250, 'bg-white text-gray-800 hover:bg-orange-50': selectedDonation !== 250}" 
+                                    class="p-5 rounded-xl text-center font-semibold transition-all duration-300 hover:scale-105">
+                                250€
+                            </button>
+                        </div>
+
+                        <div class="mb-8">
+                            <label for="customAmount" class="block text-gray-700 mb-3 font-medium">Montant personnalisé</label>
+                            <div class="flex">
+                                <input type="number" id="customAmount" x-model="customDonation" @input="selectCustomDonation()" 
+                                       class="flex-1 p-4 border-2 border-gray-200 rounded-l-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" 
+                                       placeholder="Autre montant" min="1" inputmode="numeric">
+                                <span class="bg-gray-100 border-2 border-l-0 border-gray-200 rounded-r-xl px-6 flex items-center font-medium">€</span>
+                            </div>
+                        </div>
+
+                        <button @click="processDonation()" 
+                                class="bg-gradient-to-r from-amber-500 to-orange-500 text-white w-full py-5 rounded-xl font-bold text-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 mb-4 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/60">
+                            <i class="fas fa-heart mr-3" aria-hidden="true"></i>
+                            <span x-text="donationFrequency === 'mensuel' ? 'Faire un don mensuel de ' : 'Faire un don de '"></span><span x-text="selectedDonation" class="mx-1"></span>€
+                        </button>
+                        
+                        <div class="flex items-center justify-center text-sm text-gray-600">
+                            <i class="fas fa-lock mr-2 text-amber-500" aria-hidden="true"></i>
+                            <span>Votre don est sécurisé et déductible des impôts à hauteur de 66%.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-16">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center shadow-lg" aria-hidden="true">
+                                <i class="fas fa-hands-helping text-white text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">Solidarité Mondiale</h3>
+                                <p class="text-gray-400 text-sm font-medium">ONG Humanitaire Internationale</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed">Organisation non gouvernementale dédiée à l'aide humanitaire et au développement durable depuis 2005. Nous œuvrons pour un monde plus juste et solidaire.</p>
+                        <div class="flex space-x-4 mt-6">
+                            <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 rounded" aria-label="Facebook" rel="noopener">
+                                <i class="fab fa-facebook-f text-xl" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 rounded" aria-label="Twitter" rel="noopener">
+                                <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 rounded" aria-label="Instagram" rel="noopener">
+                                <i class="fab fa-instagram text-xl" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 rounded" aria-label="LinkedIn" rel="noopener">
+                                <i class="fab fa-linkedin-in text-xl" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 flex items-center">
+                            <i class="fas fa-link mr-3 text-amber-400" aria-hidden="true"></i>Liens rapides
+                        </h4>
+                        <ul class="space-y-3">
+                            <li><a href="#accueil" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Accueil
+                            </a></li>
+                            <li><a href="#apropos" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>À propos
+                            </a></li>
+                            <li><a href="#missions" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Nos missions
+                            </a></li>
+                            <li><a href="#galerie" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Galerie
+                            </a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>Contact
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 flex items-center">
+                            <i class="fas fa-tasks mr-3 text-amber-400" aria-hidden="true"></i>Nos actions
+                        </h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-first-aid mr-2 text-sm" aria-hidden="true"></i>Aide d'urgence
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-graduation-cap mr-2 text-sm" aria-hidden="true"></i>Éducation
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-heartbeat mr-2 text-sm" aria-hidden="true"></i>Santé
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-leaf mr-2 text-sm" aria-hidden="true"></i>Développement durable
+                            </a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors flex items-center group focus:outline-none focus:ring-2 focus:ring-amber-500 rounded">
+                                <i class="fas fa-user-plus mr-2 text-sm" aria-hidden="true"></i>Devenir bénévole
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 flex items-center">
+                            <i class="fas fa-envelope-open-text mr-3 text-amber-400" aria-hidden="true"></i>Newsletter
+                        </h4>
+                        <p class="text-gray-400 mb-4">Recevez nos actualités et histoires du terrain.</p>
+                        <form class="flex items-center space-x-2" @submit.prevent="subscribeNewsletter">
+                            <label for="newsletterEmail" class="sr-only">Email</label>
+                            <input id="newsletterEmail" type="email" x-model="newsletterEmail" required placeholder="Votre email" class="flex-1 p-3 rounded-lg bg-gray-800 text-gray-200 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <button type="submit" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-3 rounded-lg font-semibold hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-white/60">
+                                S'abonner
+                            </button>
+                        </form>
+                        <p x-show="newsletterSubmitted" class="text-emerald-400 text-sm mt-3" x-transition>Merci pour votre abonnement !</p>
+
+                        <h4 class="text-lg font-bold mt-10 mb-4 flex items-center">
+                            <i class="fas fa-address-card mr-3 text-amber-400" aria-hidden="true"></i>Contact
+                        </h4>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-map-marker-alt text-amber-400 mt-1" aria-hidden="true"></i>
+                                <span>123 Rue de la Solidarité<br>75015 Paris, France</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-envelope text-amber-400" aria-hidden="true"></i>
+                                <span>contact@solidarite-mondiale.org</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-phone text-amber-400" aria-hidden="true"></i>
+                                <span>+33 1 23 45 67 89</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                    <p>&copy; <span x-text="new Date().getFullYear()"></span> Solidarité Mondiale. Tous droits réservés. Organisation à but non lucratif enregistrée sous le numéro W123456789.</p>
+                    <p class="mt-2 text-sm">Transparence financière certifiée - 92% des dons sont directement affectés aux missions sur le terrain.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Lightbox Modal -->
+        <div x-show="lightboxOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" 
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" 
+             x-transition:leave-end="opacity-0" 
+             class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4" 
+             role="dialog" aria-modal="true" aria-label="Agrandissement d'image"
+             @click.self="lightboxOpen = false" @keydown.escape.window="lightboxOpen = false">
+            <div class="relative max-w-5xl w-full">
+                <button @click="lightboxOpen = false" 
+                        class="absolute -top-12 right-0 text-white hover:text-amber-400 transition-colors p-2 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded" aria-label="Fermer">
+                    <i class="fas fa-times text-3xl" aria-hidden="true"></i>
+                </button>
+                <img :src="carouselImages[activeCarouselIndex].src" 
+                     :alt="carouselImages[activeCarouselIndex].alt" 
+                     class="w-full h-auto rounded-2xl shadow-2xl" loading="lazy" decoding="async">
+                <div class="text-white mt-6">
+                    <h3 class="text-2xl font-bold mb-2" x-text="carouselImages[activeCarouselIndex].title"></h3>
+                    <p class="text-gray-300" x-text="carouselImages[activeCarouselIndex].description"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button x-show="scrolled" @click="scrollToTop()" 
+                class="fixed bottom-8 right-8 bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 z-40 focus:outline-none focus:ring-2 focus:ring-white/60" aria-label="Retour en haut">
+            <i class="fas fa-chevron-up text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Alpine.js CDN -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script>
+        function ngoApp() {
+            return {
+                // State
+                mobileMenuOpen: false,
+                currentSlide: 0,
+                activeAboutSection: 'histoire',
+                activeCarouselIndex: 0,
+                selectedDonation: 50,
+                customDonation: '',
+                donationFrequency: 'unique',
+                lightboxOpen: false,
+                scrolled: false,
+                contact: { firstName: '', lastName: '', email: '', message: '' },
+                contactSubmitted: false,
+                newsletterEmail: '',
+                newsletterSubmitted: false,
+                animatedStats: {
+                    projects: 0,
+                    countries: 0,
+                    volunteers: 0,
+                    people: 0
+                },
+                targetStats: {
+                    projects: 300,
+                    countries: 35,
+                    volunteers: 620,
+                    people: 2500000
+                },
+                
+                // Carousel Images Data (sourced)
+                carouselImages: [
+                    {
+                        src: 'https://images.unsplash.com/photo-1694286068274-1058e6b04dcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodW1hbml0YXJpYW4lMjBhaWQlMjBBZnJpY2ElMjBoZWxwJTIwY2hpbGRyZW4lMjBmaWVsZCUyMGRpc3RyaWJ1dGlvbnxlbnwwfDB8fHwxNzY3NjE1NTYwfDA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=Xo27J9RUjK8',
+                        thumbnail: 'https://images.unsplash.com/photo-1694286068274-1058e6b04dcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodW1hbml0YXJpYW4lMjBhaWQlMjBBZnJpY2ElMjBoZWxwJTIwY2hpbGRyZW4lMjBmaWVsZCUyMGRpc3RyaWJ1dGlvbnxlbnwwfDB8fHwxNzY3NjE1NTYwfDA&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=Xo27J9RUjK8',
+                        alt: 'Distribution d’aide humanitaire aux enfants',
+                        title: 'Aide humanitaire sur le terrain',
+                        description: 'Nos équipes distribuent des kits alimentaires et médicaux dans les zones les plus reculées.'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1744809495173-217ca4faa8bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb24lMjBjbGFzc3Jvb20lMjBBZnJpY2ElMjBjaGlsZHJlbiUyMHN0dWR5aW5nJTIwc2Nob29sfGVufDB8MHx8fDE3Njc2MTU1NjF8MA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=zzcHmwBaG0w',
+                        thumbnail: 'https://images.unsplash.com/photo-1744809495173-217ca4faa8bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb24lMjBjbGFzc3Jvb20lMjBBZnJpY2ElMjBjaGlsZHJlbiUyMHN0dWR5aW5nJTIwc2Nob29sfGVufDB8MHx8fDE3Njc2MTU1NjF8MA&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=zzcHmwBaG0w',
+                        alt: 'Enfants en classe dans une école rurale',
+                        title: 'Éducation pour tous',
+                        description: 'Des enfants apprennent dans une école que nous avons construite en zone rurale.'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1662094248953-0507066d675d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMHdhdGVyJTIwd2VsbCUyMEFmcmljYSUyMGNvbW11bml0eSUyMHB1bXB8ZW58MHwwfHx8MTc2NzYxNTU2MXww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=jyUmqELvD5o',
+                        thumbnail: 'https://images.unsplash.com/photo-1662094248953-0507066d675d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMHdhdGVyJTIwd2VsbCUyMEFmcmljYSUyMGNvbW11bml0eSUyMHB1bXB8ZW58MHwwfHx8MTc2NzYxNTU2MXww&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=jyUmqELvD5o',
+                        alt: 'Pompe fournissant de l’eau potable à une communauté',
+                        title: 'Accès à l\'eau potable',
+                        description: 'Installation d\'un puits et de systèmes de filtration pour une eau saine.'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1579977855519-a2924fcd011e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBtZWRpY2FsJTIwY2xpbmljJTIwaHVtYW5pdGFyaWFuJTIwaGVhbHRoY2FyZSUyMEFmcmljYXxlbnwwfDB8fHwxNzY3NjE1NTYyfDA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=-NM7N_07guI',
+                        thumbnail: 'https://images.unsplash.com/photo-1579977855519-a2924fcd011e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBtZWRpY2FsJTIwY2xpbmljJTIwaHVtYW5pdGFyaWFuJTIwaGVhbHRoY2FyZSUyMEFmcmljYXxlbnwwfDB8fHwxNzY3NjE1NTYyfDA&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=-NM7N_07guI',
+                        alt: 'Clinique mobile apportant des soins essentiels',
+                        title: 'Soins de santé mobile',
+                        description: 'Notre clinique mobile fournit des soins essentiels dans les villages isolés.'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1746014929708-fcb859fd3185?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXN0YWluYWJsZSUyMGFncmljdWx0dXJlJTIwQWZyaWNhJTIwdHJhaW5pbmclMjBmYXJtaW5nJTIwY29tbXVuaXR5fGVufDB8MHx8fDE3Njc2MTU1NjN8MA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=HzdCcbUDCbo',
+                        thumbnail: 'https://images.unsplash.com/photo-1746014929708-fcb859fd3185?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdXN0YWluYWJsZSUyMGFncmljdWx0dXJlJTIwQWZyaWNhJTIwdHJhaW5pbmclMjBmYXJtaW5nJTIwY29tbXVuaXR5fGVufDB8MHx8fDE3Njc2MTU1NjN8MA&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=HzdCcbUDCbo',
+                        alt: 'Formation en agriculture durable',
+                        title: 'Agriculture durable',
+                        description: 'Techniques agricoles durables pour l\'autonomie alimentaire des familles.'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1633169830088-7c07c436ab4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodW1hbml0YXJpYW4lMjB2b2x1bnRlZXIlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MHwwfHx8MTc2NzYxNTU2NHww&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=sdWDdEEigXw',
+                        thumbnail: 'https://images.unsplash.com/photo-1633169830088-7c07c436ab4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxodW1hbml0YXJpYW4lMjB2b2x1bnRlZXIlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MHwwfHx8MTc2NzYxNTU2NHww&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=sdWDdEEigXw',
+                        alt: 'Portrait d’un bénévole souriant',
+                        title: 'Portrait de bénévole',
+                        description: 'Rencontrez celles et ceux qui rendent nos actions possibles.'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1647188098584-6609fa237329?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXIlMjB0ZWFtJTIwZ3JvdXAlMjBOR08lMjBmaWVsZHxlbnwwfDB8fHwxNzY3NjE1NTY0fDA&ixlib=rb-4.1.0&q=80&w=1920&utm_source=TailFlux&photo_id=zF9jfGe1Vf4',
+                        thumbnail: 'https://images.unsplash.com/photo-1647188098584-6609fa237329?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXIlMjB0ZWFtJTIwZ3JvdXAlMjBOR08lMjBmaWVsZHxlbnwwfDB8fHwxNzY3NjE1NTY0fDA&ixlib=rb-4.1.0&q=80&w=400&utm_source=TailFlux&photo_id=zF9jfGe1Vf4',
+                        alt: 'Équipe de bénévoles sur le terrain',
+                        title: 'Équipe sur le terrain',
+                        description: 'Une équipe de terrain engagée auprès des communautés locales.'
+                    }
+                ],
+                
+                // Methods
+                init() {
+                    this.startSlider();
+                    this.animateStats();
+                    this.initScrollDetection();
+                    this.initLazyLoading();
+                },
+                
+                startSlider() {
+                    // Save interval so we could pause/resume if needed
+                    this._sliderInterval = setInterval(() => {
+                        this.nextSlide();
+                    }, 6000);
+                    // Pause on visibility change
+                    document.addEventListener('visibilitychange', () => {
+                        if (document.hidden && this._sliderInterval) {
+                            clearInterval(this._sliderInterval);
+                            this._sliderInterval = null;
+                        } else if (!document.hidden && !this._sliderInterval) {
+                            this.startSlider();
+                        }
+                    });
+                },
+                
+                nextSlide() {
+                    this.currentSlide = (this.currentSlide + 1) % 5;
+                },
+                
+                prevSlide() {
+                    this.currentSlide = (this.currentSlide - 1 + 5) % 5;
+                },
+                
+                nextCarousel() {
+                    this.activeCarouselIndex = (this.activeCarouselIndex + 1) % this.carouselImages.length;
+                },
+                
+                prevCarousel() {
+                    this.activeCarouselIndex = (this.activeCarouselIndex - 1 + this.carouselImages.length) % this.carouselImages.length;
+                },
+                
+                selectDonation(amount) {
+                    this.selectedDonation = amount;
+                    this.customDonation = '';
+                },
+                
+                selectCustomDonation() {
+                    if (this.customDonation) {
+                        const parsed = parseInt(this.customDonation);
+                        this.selectedDonation = Number.isFinite(parsed) ? parsed : 0;
+                    }
+                },
+                
+                processDonation() {
+                    const freqText = this.donationFrequency === 'mensuel' ? 'mensuel' : 'ponctuel';
+                    if (!this.selectedDonation || this.selectedDonation <= 0) {
+                        alert('Veuillez saisir un montant valide.');
+                        return;
+                    }
+                    alert(`Merci pour votre généreux don ${freqText} de ${this.selectedDonation}€ ! Vous allez être redirigé vers notre plateforme de paiement sécurisée.`);
+                    // Redirection vers la page de paiement à implémenter ici
+                },
+
+                submitContact() {
+                    if (!this.contact.firstName || !this.contact.lastName || !this.contact.email || !this.contact.message) return;
+                    this.contactSubmitted = true;
+                    setTimeout(() => this.contactSubmitted = false, 4000);
+                    this.contact = { firstName: '', lastName: '', email: '', message: '' };
+                },
+
+                subscribeNewsletter() {
+                    if (!this.newsletterEmail) return;
+                    this.newsletterSubmitted = true;
+                    setTimeout(() => this.newsletterSubmitted = false, 4000);
+                    this.newsletterEmail = '';
+                },
+                
+                openLightbox() {
+                    this.lightboxOpen = true;
+                },
+                
+                animateStats() {
+                    const duration = 2000;
+                    const steps = 60;
+                    const stepDuration = duration / steps;
+                    
+                    Object.keys(this.targetStats).forEach(stat => {
+                        let current = 0;
+                        const target = this.targetStats[stat];
+                        const increment = target / steps;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            this.animatedStats[stat] = Math.floor(current).toLocaleString();
+                        }, stepDuration);
+                    });
+                },
+                
+                imageLoaded(event) {
+                    event.target.classList.add('loaded');
+                },
+                
+                initLazyLoading() {
+                    const lazyImages = document.querySelectorAll('.lazy-load');
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                if (img.dataset && img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                }
+                                imageObserver.unobserve(img);
+                            }
+                        });
+                    }, { rootMargin: '100px' });
+                    lazyImages.forEach(img => imageObserver.observe(img));
+                },
+                
+                initScrollDetection() {
+                    const onScroll = () => { this.scrolled = window.scrollY > 300; };
+                    window.addEventListener('scroll', onScroll, { passive: true });
+                    onScroll();
+                },
+                
+                scrollToTop() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
