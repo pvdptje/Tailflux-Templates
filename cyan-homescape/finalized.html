@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunnySide Properties | Playful Real Estate</title>
+    <meta name="theme-color" content="#00bcd4">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyan-light': '#e0f7fa',
+                        'cyan-primary': '#00bcd4',
+                        'cyan-dark': '#00838f',
+                        'cyan-hover': '#00acc1',
+                    },
+                    fontFamily: {
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'scale-up': 'scaleUp 0.3s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        [x-cloak] { display: none !important; }
+
+        .property-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+        .property-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.15);
+        }
+
+        .playful-btn {
+            border-radius: 20px 5px 20px 5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .playful-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 5px; height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0; border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .playful-btn:focus:not(:active)::after { animation: ripple 1s ease-out; }
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 0.5; }
+            100% { transform: scale(40, 40); opacity: 0; }
+        }
+
+        .playful-section { border-radius: 30px 10px 30px 10px; }
+        .house-icon {
+            filter: drop-shadow(0 4px 12px rgba(0, 188, 212, 0.4));
+            animation: float 6s ease-in-out infinite;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00bcd4 0%, #00838f 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-shadow { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+
+        .hover-lift { transition: transform 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); }
+
+        .stagger-animation > * { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+
+        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+        @media (max-width: 768px) { .parallax-bg { background-attachment: scroll; } }
+
+        /* Progressive image reveal */
+        .fade-in-img { opacity: 0; transition: opacity 600ms ease; }
+        .fade-in-img.loaded { opacity: 1; }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .animate__animated, .animate-bounce, .animate-pulse, .animate-fade-in, .house-icon, .property-card, .hover-lift, .stagger-animation > * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-nunito bg-gradient-to-br from-cyan-50 via-white to-cyan-50/30 text-gray-800">
+    <a href="#home" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-white text-cyan-dark font-bold px-4 py-2 rounded-lg shadow-lg">Skip to content</a>
+
+    <!-- Navigation -->
+    <header x-data="{ mobileMenuOpen: false }" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg animate__animated animate__fadeInDown">
+        <nav class="container max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#home" class="flex items-center space-x-3 hover-lift focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-xl">
+                <div class="bg-gradient-to-br from-cyan-primary to-cyan-dark p-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl">
+                    <i class="fas fa-home text-white text-xl" aria-hidden="true"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold text-gray-800">SunnySide<span class="gradient-text">Properties</span></h1>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="font-semibold text-cyan-dark hover:text-cyan-primary transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg">
+                    <i class="fas fa-home text-sm" aria-hidden="true"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#featured" class="font-semibold text-gray-600 hover:text-cyan-primary transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg">
+                    <i class="fas fa-list text-sm" aria-hidden="true"></i>
+                    <span>Listings</span>
+                </a>
+                <a href="#how" class="font-semibold text-gray-600 hover:text-cyan-primary transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg">
+                    <i class="fas fa-users text-sm" aria-hidden="true"></i>
+                    <span>Agents</span>
+                </a>
+                <a href="#testimonials" class="font-semibold text-gray-600 hover:text-cyan-primary transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg">
+                    <i class="fas fa-info-circle text-sm" aria-hidden="true"></i>
+                    <span>About</span>
+                </a>
+                <a href="#contact" class="font-semibold text-gray-600 hover:text-cyan-primary transition-all duration-300 hover:scale-105 flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg">
+                    <i class="fas fa-envelope text-sm" aria-hidden="true"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+            
+            <a href="tel:5551234567" aria-label="Call SunnySide Properties" class="bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn px-6 py-3 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 shadow-lg hover:shadow-xl hidden sm:inline-flex items-center space-x-2 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30">
+                <i class="fas fa-phone-alt group-hover:animate-pulse" aria-hidden="true"></i>
+                <span>Get In Touch</span>
+            </a>
+            
+            <!-- Mobile menu button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen" aria-controls="mobileNav" class="md:hidden text-cyan-dark hover:text-cyan-primary transition-colors duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg p-2">
+                <i class="fas text-2xl" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'" aria-hidden="true"></i>
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+        </nav>
+        
+        <!-- Mobile menu -->
+        <div id="mobileNav" x-cloak x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-4"
+             class="md:hidden bg-white shadow-xl border-t">
+            <div class="container max-w-7xl mx-auto px-4 py-4 flex flex-col space-y-3">
+                <a href="#home" @click="mobileMenuOpen=false" class="font-semibold text-cyan-dark py-3 px-4 rounded-lg hover:bg-cyan-50 transition-all duration-300 flex items-center space-x-3">
+                    <i class="fas fa-home w-5" aria-hidden="true"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#featured" @click="mobileMenuOpen=false" class="font-semibold text-gray-600 py-3 px-4 rounded-lg hover:bg-cyan-50 transition-all duration-300 flex items-center space-x-3">
+                    <i class="fas fa-list w-5" aria-hidden="true"></i>
+                    <span>Listings</span>
+                </a>
+                <a href="#how" @click="mobileMenuOpen=false" class="font-semibold text-gray-600 py-3 px-4 rounded-lg hover:bg-cyan-50 transition-all duration-300 flex items-center space-x-3">
+                    <i class="fas fa-users w-5" aria-hidden="true"></i>
+                    <span>Agents</span>
+                </a>
+                <a href="#testimonials" @click="mobileMenuOpen=false" class="font-semibold text-gray-600 py-3 px-4 rounded-lg hover:bg-cyan-50 transition-all duration-300 flex items-center space-x-3">
+                    <i class="fas fa-info-circle w-5" aria-hidden="true"></i>
+                    <span>About</span>
+                </a>
+                <a href="#contact" @click="mobileMenuOpen=false" class="font-semibold text-gray-600 py-3 px-4 rounded-lg hover:bg-cyan-50 transition-all duration-300 flex items-center space-x-3">
+                    <i class="fas fa-envelope w-5" aria-hidden="true"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main x-data="realEstateApp()" x-init="init()" class="animate-fade-in">
+        <!-- Hero Section -->
+        <section id="home" class="container max-w-7xl mx-auto px-4 py-12 md:py-24 scroll-mt-24">
+            <div class="flex flex-col md:flex-row items-center stagger-animation">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <div class="inline-block bg-gradient-to-r from-cyan-light to-cyan-50 playful-btn px-5 py-3 mb-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <span class="text-cyan-primary font-bold flex items-center space-x-2">
+                            <i class="fas fa-star animate-pulse-slow" aria-hidden="true"></i>
+                            <span>Find Your Dream Home</span>
+                        </span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-6 leading-tight text-shadow">
+                        Discover <span class="gradient-text">Playful</span> Living Spaces
+                    </h1>
+                    <p class="text-gray-600 text-lg md:text-xl mb-10 leading-relaxed">
+                        We make finding your perfect home a fun and exciting journey. Browse our curated selection of vibrant properties that match your lifestyle.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#featured" class="bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn px-8 py-4 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30">
+                            <i class="fas fa-search group-hover:animate-bounce" aria-hidden="true"></i>
+                            <span>Explore Properties</span>
+                        </a>
+                        <button class="bg-white text-cyan-primary border-2 border-cyan-primary playful-btn px-8 py-4 font-bold hover:bg-cyan-50 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center space-x-3 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30">
+                            <i class="fas fa-play-circle group-hover:animate-pulse" aria-hidden="true"></i>
+                            <span>Watch Tour</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-12 grid grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold text-cyan-dark">500+</div>
+                            <div class="text-gray-600">Happy Clients</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold text-cyan-dark">250+</div>
+                            <div class="text-gray-600">Properties Sold</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-extrabold text-cyan-dark">98%</div>
+                            <div class="text-gray-600">Satisfaction Rate</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 relative">
+                    <div class="bg-gradient-to-r from-cyan-primary to-cyan-dark playful-section p-2 shadow-2xl animate__animated animate__pulse animate__slower">
+                        <div class="bg-white playful-section p-6">
+                            <div class="relative overflow-hidden rounded-2xl group">
+                                <img src="https://images.unsplash.com/photo-1766073429152-db192082c9f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBob21lJTIwZXh0ZXJpb3IlMjBtaW5pbWFsaXN0JTIwd2hpdGUlMjBzdW5zaGluZSUyMHJlYWwlMjBlc3RhdGV8ZW58MHwwfHx8MTc3MTAxMzQwM3ww&ixlib=rb-4.1.0&q=80&w=1200"
+                                     alt="Modern luxury home exterior in sunshine" class="fade-in-img w-full h-72 object-cover rounded-2xl group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            </div>
+                            <div class="mt-6 flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-bold text-xl text-gray-800">Modern Luxury Villa</h3>
+                                    <p class="text-gray-600 flex items-center space-x-2">
+                                        <i class="fas fa-map-marker-alt text-cyan-primary" aria-hidden="true"></i>
+                                        <span>Sunny Valley, CA</span>
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-extrabold text-cyan-dark">$789,000</p>
+                                    <p class="text-gray-600">4 bd | 3 ba | 2,200 sqft</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative elements -->
+                    <div class="absolute -top-6 -right-6 bg-gradient-to-br from-yellow-400 to-orange-400 w-20 h-20 rounded-full flex items-center justify-center house-icon shadow-2xl">
+                        <i class="fas fa-home text-white text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-gradient-to-br from-pink-400 to-rose-400 w-16 h-16 rounded-full flex items-center justify-center house-icon shadow-2xl">
+                        <i class="fas fa-heart text-white text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <div class="absolute top-1/2 -right-12 bg-gradient-to-br from-blue-400 to-cyan-400 w-14 h-14 rounded-full flex items-center justify-center house-icon shadow-2xl">
+                        <i class="fas fa-sun text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll cue -->
+            <div class="mt-10 md:mt-16 flex justify-center">
+                <a href="#featured" class="flex items-center space-x-2 text-cyan-dark hover:text-cyan-primary transition-colors duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-full px-4 py-2">
+                    <i class="fas fa-angle-down animate-bounce-slow" aria-hidden="true"></i>
+                    <span>Scroll to explore</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured Properties -->
+        <section id="featured" class="py-20 bg-gradient-to-b from-white to-cyan-50/30 scroll-mt-24">
+            <div class="container max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16 animate__animated animate__fadeIn">
+                    <div class="inline-block mb-4">
+                        <span class="text-cyan-primary font-bold text-sm uppercase tracking-wider">Premium Selection</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6">Featured <span class="gradient-text">Properties</span></h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg">Discover our handpicked selection of homes that combine comfort, style, and playful design.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-animation">
+                    <!-- Property 1 -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden property-card group animate__animated animate__fadeInUp">
+                        <div class="relative overflow-hidden">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1767782842473-c3c5f8de86db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiZWFjaGZyb250JTIwbHV4dXJ5JTIwdmlsbGElMjBleHRlcmlvciUyMHR1cnF1b2lzZSUyMHdhdGVyJTIwcGFsbSUyMHRyZWVzfGVufDB8MHx8fDE3NzEwMTM0MDV8MA&ixlib=rb-4.1.0&q=80&w=1200"
+                                     alt="Beachfront luxury villa with turquoise water and palm trees" class="fade-in-img w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                            </div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-cyan-primary to-cyan-dark text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                                <i class="fas fa-crown mr-2" aria-hidden="true"></i>Featured
+                            </div>
+                            <div class="absolute bottom-4 left-4 flex space-x-2">
+                                <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                                    <i class="fas fa-swimming-pool text-cyan-primary mr-1" aria-hidden="true"></i>Pool
+                                </span>
+                                <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                                    <i class="fas fa-umbrella-beach text-cyan-primary mr-1" aria-hidden="true"></i>Beach
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800 group-hover:text-cyan-dark transition-colors duration-300">Beachfront Paradise Villa</h3>
+                            <p class="text-gray-600 mb-4 flex items-center space-x-2">
+                                <i class="fas fa-map-marker-alt text-cyan-primary" aria-hidden="true"></i>
+                                <span>Ocean View, FL</span>
+                            </p>
+                            <p class="text-gray-700 mb-6 leading-relaxed">Stunning beachfront property with panoramic ocean views, infinity pool, and direct beach access.</p>
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                                <div>
+                                    <p class="text-2xl font-extrabold text-cyan-dark">$1,450,000</p>
+                                    <p class="text-gray-600">4 bd | 3 ba | 2,400 sqft</p>
+                                </div>
+                                <button @click="showPropertyDetails(1)" class="bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn px-6 py-3 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 shadow-md hover:shadow-lg group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30" aria-label="View Beachfront Paradise Villa details">
+                                    <i class="fas fa-eye group-hover:animate-pulse" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property 2 -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden property-card group animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="relative overflow-hidden">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1732298286181-12bae2624d77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsb2Z0JTIwYXBhcnRtZW50JTIwaW50ZXJpb3IlMjBza3lsaW5lJTIwdmlldyUyMGZsb29yJTIwdG8lMjBjZWlsaW5nJTIwd2luZG93c3xlbnwwfDB8fHwxNzcxMDEzNDA1fDA&ixlib=rb-4.1.0&q=80&w=1200"
+                                     alt="Modern loft apartment interior with skyline view" class="fade-in-img w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                            </div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                                <i class="fas fa-bolt mr-2" aria-hidden="true"></i>New
+                            </div>
+                            <div class="absolute bottom-4 left-4 flex space-x-2">
+                                <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                                    <i class="fas fa-city text-cyan-primary mr-1" aria-hidden="true"></i>City View
+                                </span>
+                                <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                                    <i class="fas fa-wifi text-cyan-primary mr-1" aria-hidden="true"></i>Smart Home
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800 group-hover:text-cyan-dark transition-colors duration-300">Urban Skyline Loft</h3>
+                            <p class="text-gray-600 mb-4 flex items-center space-x-2">
+                                <i class="fas fa-map-marker-alt text-cyan-primary" aria-hidden="true"></i>
+                                <span>Downtown, NY</span>
+                            </p>
+                            <p class="text-gray-700 mb-6 leading-relaxed">Modern loft with high ceilings, smart home features, and breathtaking city skyline views.</p>
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                                <div>
+                                    <p class="text-2xl font-extrabold text-cyan-dark">$850,000</p>
+                                    <p class="text-gray-600">2 bd | 2 ba | 1,200 sqft</p>
+                                </div>
+                                <button @click="showPropertyDetails(2)" class="bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn px-6 py-3 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 shadow-md hover:shadow-lg group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30" aria-label="View Urban Skyline Loft details">
+                                    <i class="fas fa-eye group-hover:animate-pulse" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property 3 -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden property-card group animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="relative overflow-hidden">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1768889828432-66e66768d53d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdWJ1cmJhbiUyMGZhbWlseSUyMGhvbWUlMjBnYXJkZW4lMjBiYWNreWFyZCUyMHN3aW5nfGVufDB8MHx8fDE3NzEwMTM0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1200"
+                                     alt="Suburban family home with garden and backyard swing" class="fade-in-img w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                            </div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                                <i class="fas fa-fire mr-2" aria-hidden="true"></i>Popular
+                            </div>
+                            <div class="absolute bottom-4 left-4 flex space-x-2">
+                                <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                                    <i class="fas fa-tree text-cyan-primary mr-1" aria-hidden="true"></i>Garden
+                                </span>
+                                <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                                    <i class="fas fa-child text-cyan-primary mr-1" aria-hidden="true"></i>Play Area
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800 group-hover:text-cyan-dark transition-colors duration-300">Family Garden Home</h3>
+                            <p class="text-gray-600 mb-4 flex items-center space-x-2">
+                                <i class="fas fa-map-marker-alt text-cyan-primary" aria-hidden="true"></i>
+                                <span>Green Meadows, TX</span>
+                            </p>
+                            <p class="text-gray-700 mb-6 leading-relaxed">Spacious family home with large backyard, play area, garden, and excellent schools nearby.</p>
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                                <div>
+                                    <p class="text-2xl font-extrabold text-cyan-dark">$525,000</p>
+                                    <p class="text-gray-600">3 bd | 2 ba | 1,800 sqft</p>
+                                </div>
+                                <button @click="showPropertyDetails(3)" class="bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn px-6 py-3 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 shadow-md hover:shadow-lg group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30" aria-label="View Family Garden Home details">
+                                    <i class="fas fa-eye group-hover:animate-pulse" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-16 animate__animated animate__fadeIn">
+                    <a href="#featured" class="bg-white text-cyan-primary border-2 border-cyan-primary playful-btn px-10 py-4 font-bold hover:bg-cyan-50 transition-all duration-300 shadow-lg hover:shadow-xl text-lg inline-flex items-center group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30">
+                        <i class="fas fa-list mr-3 group-hover:animate-bounce" aria-hidden="true"></i>View All Properties
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how" class="py-20 bg-gradient-to-b from-cyan-50/30 to-white scroll-mt-24">
+            <div class="container max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16 animate__animated animate__fadeIn">
+                    <div class="inline-block mb-4">
+                        <span class="text-cyan-primary font-bold text-sm uppercase tracking-wider">Simple Process</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6">How It <span class="gradient-text">Works</span></h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg">Our playful process makes finding your dream home simple and enjoyable.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-animation">
+                    <div class="text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift group">
+                        <div class="relative">
+                            <div class="bg-gradient-to-br from-cyan-light to-cyan-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                                <i class="fas fa-search text-cyan-primary text-4xl" aria-hidden="true"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 bg-cyan-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-lg">
+                                1
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-2xl mb-6 text-gray-800 group-hover:text-cyan-dark transition-colors duration-300">Explore & Discover</h3>
+                        <p class="text-gray-700 leading-relaxed">Browse our playful property listings with interactive 3D tours, virtual walkthroughs, and detailed neighborhood insights.</p>
+                    </div>
+                    
+                    <div class="text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift group">
+                        <div class="relative">
+                            <div class="bg-gradient-to-br from-cyan-light to-cyan-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                                <i class="fas fa-calendar-alt text-cyan-primary text-4xl" aria-hidden="true"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 bg-cyan-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-lg">
+                                2
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-2xl mb-6 text-gray-800 group-hover:text-cyan-dark transition-colors duration-300">Schedule a Visit</h3>
+                        <p class="text-gray-700 leading-relaxed">Book a fun, no-pressure tour with one of our friendly agents. Experience the property with our interactive viewing tools.</p>
+                    </div>
+                    
+                    <div class="text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift group">
+                        <div class="relative">
+                            <div class="bg-gradient-to-br from-cyan-light to-cyan-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                                <i class="fas fa-key text-cyan-primary text-4xl" aria-hidden="true"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 bg-cyan-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-lg">
+                                3
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-2xl mb-6 text-gray-800 group-hover:text-cyan-dark transition-colors duration-300">Move In & Celebrate</h3>
+                        <p class="text-gray-700 leading-relaxed">Complete the process with our help and celebrate your new playful home! We handle all paperwork and moving coordination.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="py-20 bg-gradient-to-r from-cyan-primary via-cyan-hover to-cyan-dark text-white relative overflow-hidden scroll-mt-24">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+            <div class="container max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-16 animate__animated animate__fadeIn">
+                    <div class="inline-block mb-4">
+                        <span class="text-cyan-light font-bold text-sm uppercase tracking-wider">Client Stories</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Happy <span class="text-yellow-300">Homeowners</span></h2>
+                    <p class="text-cyan-light/80 max-w-2xl mx-auto text-lg">See what our clients say about their playful home-buying experience.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 stagger-animation">
+                    <div class="glass-effect rounded-3xl p-8 backdrop-blur-sm hover:backdrop-blur-md transition-all duration-500 group">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 flex items-center justify-center mr-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                                <span class="font-bold text-cyan-dark text-2xl">SJ</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-2">Sarah Johnson</h4>
+                                <div class="flex text-yellow-300" aria-label="5 star rating">
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                </div>
+                                <p class="text-cyan-light/80 text-sm mt-1">Beachfront Paradise Owner</p>
+                            </div>
+                        </div>
+                        <p class="italic text-lg leading-relaxed">"The team at SunnySide made finding our home so much fun! They understood exactly what we were looking for and found us the perfect playful space for our family. The virtual tours were amazing!"</p>
+                        <div class="mt-6 pt-6 border-t border-white/20">
+                            <div class="flex items-center text-cyan-light/80">
+                                <i class="fas fa-clock mr-2" aria-hidden="true"></i>
+                                <span>Closed: 2 months ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-effect rounded-3xl p-8 backdrop-blur-sm hover:backdrop-blur-md transition-all duration-500 group">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-300 to-rose-400 flex items-center justify-center mr-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                                <span class="font-bold text-cyan-dark text-2xl">MR</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-2">Michael Rodriguez</h4>
+                                <div class="flex text-yellow-300" aria-label="5 star rating">
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                </div>
+                                <p class="text-cyan-light/80 text-sm mt-1">Urban Loft Owner</p>
+                            </div>
+                        </div>
+                        <p class="italic text-lg leading-relaxed">"I never thought buying a home could be this enjoyable! The playful approach made the entire process stress-free. The 3D virtual tours saved us so much time. I love my new urban loft!"</p>
+                        <div class="mt-6 pt-6 border-t border-white/20">
+                            <div class="flex items-center text-cyan-light/80">
+                                <i class="fas fa-clock mr-2" aria-hidden="true"></i>
+                                <span>Closed: 1 month ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <div class="inline-flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
+                        <div class="flex text-yellow-300" aria-label="4.5 star average rating">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                        </div>
+                        <span class="font-bold">4.8/5 Average Rating</span>
+                        <span class="text-cyan-light/80" aria-hidden="true">•</span>
+                        <span>Based on 247 reviews</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="contact" class="py-20 scroll-mt-24">
+            <div class="container max-w-7xl mx-auto px-4">
+                <div class="bg-gradient-to-br from-cyan-light via-white to-cyan-50 rounded-[28px] p-8 md:p-16 text-center playful-section shadow-2xl relative overflow-hidden animate__animated animate__pulse animate__slower">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-primary/5 rounded-full -translate-y-32 translate-x-32"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-cyan-primary/5 rounded-full translate-y-24 -translate-x-24"></div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8">Ready for a <span class="gradient-text">Playful</span> Home Search?</h2>
+                        <p class="text-gray-700 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">Join hundreds of happy homeowners who found their perfect match with our fun and effective approach.</p>
+                        
+                        <div class="max-w-2xl mx-auto">
+                            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                                <div class="flex-1 relative">
+                                    <input type="email" placeholder="Your email address" aria-label="Your email address"
+                                           class="w-full px-8 py-4 rounded-full border-2 border-gray-200 focus:border-cyan-primary focus:outline-none focus:ring-4 focus:ring-cyan-primary/20 transition-all duration-300 text-lg shadow-lg" />
+                                    <i class="fas fa-envelope absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                                </div>
+                                <button id="newsletter-submit" class="bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn px-10 py-4 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 shadow-xl hover:shadow-2xl text-lg group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30">
+                                    <i class="fas fa-rocket mr-3 group-hover:animate-bounce" aria-hidden="true"></i>Get Started
+                                </button>
+                            </div>
+                            <p class="text-gray-600 text-sm">
+                                <i class="fas fa-lock mr-2" aria-hidden="true"></i>We respect your privacy. No spam, ever.
+                            </p>
+                        </div>
+                        
+                        <div class="mt-12 pt-8 border-t border-gray-200">
+                            <div class="flex flex-wrap justify-center gap-8 text-gray-600">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-shield-alt text-cyan-primary text-xl" aria-hidden="true"></i>
+                                    <span>Secure Process</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-clock text-cyan-primary text-xl" aria-hidden="true"></i>
+                                    <span>24/7 Support</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check-circle text-cyan-primary text-xl" aria-hidden="true"></i>
+                                    <span>No Hidden Fees</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-cyan-dark to-cyan-900 text-white py-16">
+        <div class="container max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start gap-12 mb-12">
+                <div class="lg:w-1/3">
+                    <div class="flex items-center space-x-4 mb-6 hover-lift">
+                        <div class="bg-white p-3 rounded-full shadow-lg">
+                            <i class="fas fa-home text-cyan-primary text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h2 class="text-3xl font-extrabold">SunnySide<span class="text-cyan-light">Properties</span></h2>
+                    </div>
+                    <p class="text-cyan-light/80 mb-8 leading-relaxed">Making real estate fun and accessible since 2015. We believe finding your dream home should be an exciting journey, not a stressful chore.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" aria-label="Pinterest">
+                            <i class="fab fa-pinterest" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-cyan-light">Quick Links</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#featured" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Featured Properties</span>
+                            </a></li>
+                            <li><a href="#featured" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>New Listings</span>
+                            </a></li>
+                            <li><a href="#featured" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Luxury Homes</span>
+                            </a></li>
+                            <li><a href="#featured" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Investment Properties</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-cyan-light">Services</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#how" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Home Buying</span>
+                            </a></li>
+                            <li><a href="#how" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Home Selling</span>
+                            </a></li>
+                            <li><a href="#how" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Property Management</span>
+                            </a></li>
+                            <li><a href="#how" class="text-cyan-light/80 hover:text-white transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-chevron-right text-xs" aria-hidden="true"></i>
+                                <span>Virtual Tours</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-cyan-light">Contact Info</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-map-marker-alt text-cyan-light mt-1" aria-hidden="true"></i>
+                                <span class="text-cyan-light/80">123 Sunny Street,<br>Sunny Valley, CA 90210</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-phone-alt text-cyan-light" aria-hidden="true"></i>
+                                <a href="tel:5551234567" class="text-cyan-light/80 hover:text-white transition-colors duration-300">(555) 123-4567</a>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-envelope text-cyan-light" aria-hidden="true"></i>
+                                <a href="mailto:hello@sunnysideproperties.com" class="text-cyan-light/80 hover:text-white transition-colors duration-300">hello@sunnysideproperties.com</a>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-clock text-cyan-light" aria-hidden="true"></i>
+                                <span class="text-cyan-light/80">Mon-Fri: 9AM-7PM<br>Sat-Sun: 10AM-5PM</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-cyan-700 pt-8 text-center">
+                <p class="text-cyan-light/60 mb-4">&copy; 2023 SunnySide Properties. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <a href="#" class="text-cyan-light/60 hover:text-white transition-colors duration-300">Privacy Policy</a>
+                    <span class="text-cyan-light/40" aria-hidden="true">•</span>
+                    <a href="#" class="text-cyan-light/60 hover:text-white transition-colors duration-300">Terms of Service</a>
+                    <span class="text-cyan-light/40" aria-hidden="true">•</span>
+                    <a href="#" class="text-cyan-light/60 hover:text-white transition-colors duration-300">Cookie Policy</a>
+                    <span class="text-cyan-light/40" aria-hidden="true">•</span>
+                    <a href="#" class="text-cyan-light/60 hover:text-white transition-colors duration-300">Accessibility</a>
+                    <span class="text-cyan-light/40" aria-hidden="true">•</span>
+                    <a href="#" class="text-cyan-light/60 hover:text-white transition-colors duration-300">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button x-data="{show:false}" @scroll.window="show = window.scrollY > 300" x-show="show" x-cloak
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="fixed bottom-5 right-5 z-50 bg-cyan-primary hover:bg-cyan-hover text-white shadow-xl rounded-full w-12 h-12 flex items-center justify-center transition-colors duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30"
+            aria-label="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script>
+        function realEstateApp() {
+            return {
+                featuredProperties: [
+                    {
+                        id: 1,
+                        title: "Beachfront Paradise Villa",
+                        location: "Ocean View, FL",
+                        price: "$1,450,000",
+                        beds: 4,
+                        baths: 3,
+                        sqft: "2,400",
+                        image: "https://images.unsplash.com/photo-1767782842473-c3c5f8de86db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxiZWFjaGZyb250JTIwbHV4dXJ5JTIwdmlsbGElMjBleHRlcmlvciUyMHR1cnF1b2lzZSUyMHdhdGVyJTIwcGFsbSUyMHRyZWVzfGVufDB8MHx8fDE3NzEwMTM0MDV8MA&ixlib=rb-4.1.0&q=80&w=1200",
+                        tag: "Featured",
+                        tagColor: "cyan"
+                    },
+                    {
+                        id: 2,
+                        title: "Urban Skyline Loft",
+                        location: "Downtown, NY",
+                        price: "$850,000",
+                        beds: 2,
+                        baths: 2,
+                        sqft: "1,200",
+                        image: "https://images.unsplash.com/photo-1732298286181-12bae2624d77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsb2Z0JTIwYXBhcnRtZW50JTIwaW50ZXJpb3IlMjBza3lsaW5lJTIwdmlldyUyMGZsb29yJTIwdG8lMjBjZWlsaW5nJTIwd2luZG93c3xlbnwwfDB8fHwxNzcxMDEzNDA1fDA&ixlib=rb-4.1.0&q=80&w=1200",
+                        tag: "New",
+                        tagColor: "pink"
+                    },
+                    {
+                        id: 3,
+                        title: "Family Garden Home",
+                        location: "Green Meadows, TX",
+                        price: "$525,000",
+                        beds: 3,
+                        baths: 2,
+                        sqft: "1,800",
+                        image: "https://images.unsplash.com/photo-1768889828432-66e66768d53d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzdWJ1cmJhbiUyMGZhbWlseSUyMGhvbWUlMjBnYXJkZW4lMjBiYWNreWFyZCUyMHN3aW5nfGVufDB8MHx8fDE3NzEwMTM0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1200",
+                        tag: "Popular",
+                        tagColor: "green"
+                    }
+                ],
+                showPropertyDetails(id) {
+                    const property = this.featuredProperties.find(p => p.id === id);
+                    const modal = `
+                        <div class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title-${property.id}" @click.self="$el.remove()" @keydown.escape.window="$el.remove()" tabindex="-1">
+                            <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-up shadow-2xl">
+                                <div class="p-8">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <h3 id="modal-title-${property.id}" class="text-2xl font-extrabold text-gray-800">${property.title}</h3>
+                                        <button @click="$el.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30 rounded-lg p-1" aria-label="Close">
+                                            <i class="fas fa-times text-2xl" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <img src="${property.image}" alt="${property.title} image" class="fade-in-img w-full h-64 object-cover rounded-2xl mb-6" loading="lazy" decoding="async">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                                        <div class="bg-cyan-50 p-4 rounded-xl">
+                                            <div class="text-cyan-primary font-bold mb-1">Price</div>
+                                            <div class="text-2xl font-extrabold text-gray-800">${property.price}</div>
+                                        </div>
+                                        <div class="bg-cyan-50 p-4 rounded-xl">
+                                            <div class="text-cyan-primary font-bold mb-1">Location</div>
+                                            <div class="text-lg font-semibold text-gray-800">${property.location}</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-gray-700 mb-6">
+                                        This beautiful property features ${property.beds} bedrooms, ${property.baths} bathrooms, and ${property.sqft} square feet of living space. Perfect for those seeking comfort and style.
+                                    </div>
+                                    <button class="w-full bg-gradient-to-r from-cyan-primary to-cyan-hover text-white playful-btn py-4 font-bold hover:from-cyan-hover hover:to-cyan-dark transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-primary/30">
+                                        Schedule a Tour
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    const div = document.createElement('div');
+                    div.innerHTML = modal;
+                    div.setAttribute('x-data', '{}');
+                    Alpine.initTree(div);
+                    document.body.appendChild(div);
+                    // Focus the modal for accessibility
+                    const overlay = div.querySelector('.fixed');
+                    overlay && overlay.focus();
+                },
+                init() {
+                    // Add scroll animations
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+                    
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+                    
+                    // Observe all sections
+                    document.querySelectorAll('section').forEach(section => {
+                        observer.observe(section);
+                    });
+                }
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (!targetId || targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Add hover effect to property cards (progressive, already in CSS)
+            const propertyCards = document.querySelectorAll('.property-card');
+            propertyCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-12px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Progressive loading animation for images
+            const images = document.querySelectorAll('img.fade-in-img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                    });
+                }
+            });
+            
+            // Newsletter form submission
+            const emailInput = document.querySelector('input[type="email"]');
+            const submitButton = document.getElementById('newsletter-submit');
+            
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            if (emailInput && submitButton) {
+                submitButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const email = emailInput.value.trim();
+                    
+                    if (isValidEmail(email)) {
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check mr-3"></i>Subscribed!';
+                        this.classList.remove('from-cyan-primary', 'to-cyan-hover');
+                        this.classList.add('from-green-500', 'to-emerald-500');
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.classList.remove('from-green-500', 'to-emerald-500');
+                            this.classList.add('from-cyan-primary', 'to-cyan-hover');
+                            emailInput.value = '';
+                        }, 3000);
+                    } else {
+                        emailInput.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
+                        emailInput.focus();
+                        setTimeout(() => {
+                            emailInput.classList.remove('border-red-500', 'ring-4', 'ring-red-500/10');
+                        }, 1500);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

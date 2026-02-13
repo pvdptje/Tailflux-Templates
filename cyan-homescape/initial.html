@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunnySide Properties | Playful Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyan-light': '#e0f7fa',
+                        'cyan-primary': '#00bcd4',
+                        'cyan-dark': '#00838f',
+                    },
+                    fontFamily: {
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .property-card:hover {
+            transform: translateY(-8px);
+            transition: transform 0.3s ease;
+        }
+        .playful-btn {
+            border-radius: 20px 5px 20px 5px;
+        }
+        .playful-section {
+            border-radius: 30px 10px 30px 10px;
+        }
+        .house-icon {
+            filter: drop-shadow(0 4px 6px rgba(0, 188, 212, 0.3));
+        }
+    </style>
+</head>
+<body class="font-nunito bg-gradient-to-br from-cyan-50 to-white text-gray-800">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-sm shadow-sm">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-cyan-primary p-2 rounded-full">
+                    <i class="fas fa-home text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-cyan-dark">SunnySide<span class="text-cyan-primary">Properties</span></h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="font-semibold text-cyan-dark hover:text-cyan-primary transition">Home</a>
+                <a href="#" class="font-semibold text-gray-600 hover:text-cyan-primary transition">Listings</a>
+                <a href="#" class="font-semibold text-gray-600 hover:text-cyan-primary transition">Agents</a>
+                <a href="#" class="font-semibold text-gray-600 hover:text-cyan-primary transition">About</a>
+                <a href="#" class="font-semibold text-gray-600 hover:text-cyan-primary transition">Contact</a>
+            </div>
+            
+            <button class="bg-cyan-primary text-white playful-btn px-6 py-2 font-bold hover:bg-cyan-dark transition">
+                <i class="fas fa-phone-alt mr-2"></i>Get In Touch
+            </button>
+            
+            <!-- Mobile menu button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-cyan-dark">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Mobile menu -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#" class="font-semibold text-cyan-dark py-2">Home</a>
+                <a href="#" class="font-semibold text-gray-600 py-2">Listings</a>
+                <a href="#" class="font-semibold text-gray-600 py-2">Agents</a>
+                <a href="#" class="font-semibold text-gray-600 py-2">About</a>
+                <a href="#" class="font-semibold text-gray-600 py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <main x-data="realEstateApp()">
+        <!-- Hero Section -->
+        <section class="container mx-auto px-4 py-12 md:py-20">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="inline-block bg-cyan-light playful-btn px-4 py-2 mb-4">
+                        <span class="text-cyan-primary font-bold"><i class="fas fa-star mr-2"></i>Find Your Dream Home</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                        Discover <span class="text-cyan-primary">Playful</span> Living Spaces
+                    </h1>
+                    <p class="text-gray-600 text-lg mb-8">
+                        We make finding your perfect home a fun and exciting journey. Browse our curated selection of vibrant properties that match your lifestyle.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button class="bg-cyan-primary text-white playful-btn px-8 py-3 font-bold hover:bg-cyan-dark transition flex items-center justify-center">
+                            <i class="fas fa-search mr-2"></i>Explore Properties
+                        </button>
+                        <button class="bg-white text-cyan-primary border-2 border-cyan-primary playful-btn px-8 py-3 font-bold hover:bg-cyan-50 transition flex items-center justify-center">
+                            <i class="fas fa-play-circle mr-2"></i>Watch Tour
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 relative">
+                    <div class="bg-gradient-to-r from-cyan-primary to-cyan-dark playful-section p-1">
+                        <div class="bg-white playful-section p-6">
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Modern home exterior" class="w-full h-64 object-cover rounded-2xl">
+                            <div class="mt-6 flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-bold text-xl">Modern Family Home</h3>
+                                    <p class="text-gray-600"><i class="fas fa-map-marker-alt text-cyan-primary mr-2"></i>Sunny Valley, CA</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-cyan-dark">$489,000</p>
+                                    <p class="text-gray-600">3 bd | 2 ba | 1,850 sqft</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative elements -->
+                    <div class="absolute -top-4 -right-4 bg-yellow-400 w-16 h-16 rounded-full flex items-center justify-center house-icon">
+                        <i class="fas fa-home text-white text-2xl"></i>
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 bg-pink-400 w-12 h-12 rounded-full flex items-center justify-center house-icon">
+                        <i class="fas fa-heart text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Properties -->
+        <section class="bg-cyan-light/50 py-16 playful-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Featured <span class="text-cyan-primary">Properties</span></h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Discover our handpicked selection of homes that combine comfort, style, and playful design.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Property 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden property-card">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Beachfront property" class="w-full h-56 object-cover">
+                            <div class="absolute top-4 right-4 bg-cyan-primary text-white px-3 py-1 rounded-full font-bold">
+                                Featured
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">Beachfront Paradise</h3>
+                            <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt text-cyan-primary mr-2"></i>Ocean View, FL</p>
+                            <p class="text-gray-700 mb-6">Stunning beachfront property with panoramic ocean views and direct beach access.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-2xl font-bold text-cyan-dark">$1,250,000</p>
+                                    <p class="text-gray-600">4 bd | 3 ba | 2,400 sqft</p>
+                                </div>
+                                <button class="bg-cyan-primary text-white playful-btn px-6 py-2 font-bold hover:bg-cyan-dark transition">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden property-card">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Modern apartment" class="w-full h-56 object-cover">
+                            <div class="absolute top-4 right-4 bg-pink-500 text-white px-3 py-1 rounded-full font-bold">
+                                New
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">Urban Loft Apartment</h3>
+                            <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt text-cyan-primary mr-2"></i>Downtown, NY</p>
+                            <p class="text-gray-700 mb-6">Modern loft with high ceilings, industrial design, and city skyline views.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-2xl font-bold text-cyan-dark">$750,000</p>
+                                    <p class="text-gray-600">2 bd | 2 ba | 1,200 sqft</p>
+                                </div>
+                                <button class="bg-cyan-primary text-white playful-btn px-6 py-2 font-bold hover:bg-cyan-dark transition">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden property-card">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Family suburban home" class="w-full h-56 object-cover">
+                            <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full font-bold">
+                                Popular
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">Family Suburban Home</h3>
+                            <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt text-cyan-primary mr-2"></i>Green Meadows, TX</p>
+                            <p class="text-gray-700 mb-6">Spacious family home with large backyard, play area, and excellent schools nearby.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-2xl font-bold text-cyan-dark">$425,000</p>
+                                    <p class="text-gray-600">3 bd | 2 ba | 1,800 sqft</p>
+                                </div>
+                                <button class="bg-cyan-primary text-white playful-btn px-6 py-2 font-bold hover:bg-cyan-dark transition">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <button class="bg-white text-cyan-primary border-2 border-cyan-primary playful-btn px-8 py-3 font-bold hover:bg-cyan-50 transition">
+                        <i class="fas fa-list mr-2"></i>View All Properties
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How It <span class="text-cyan-primary">Works</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our playful process makes finding your dream home simple and enjoyable.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="bg-cyan-light w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-search text-cyan-primary text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4">1. Explore & Discover</h3>
+                    <p class="text-gray-700">Browse our playful property listings with interactive tours and detailed information.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="bg-cyan-light w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-calendar-alt text-cyan-primary text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4">2. Schedule a Visit</h3>
+                    <p class="text-gray-700">Book a fun, no-pressure tour with one of our friendly agents.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="bg-cyan-light w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-key text-cyan-primary text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4">3. Move In & Celebrate</h3>
+                    <p class="text-gray-700">Complete the process with our help and celebrate your new playful home!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="bg-gradient-to-r from-cyan-primary to-cyan-dark text-white py-16 playful-section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Happy <span class="text-yellow-300">Homeowners</span></h2>
+                    <p class="text-cyan-light max-w-2xl mx-auto">See what our clients say about their playful home-buying experience.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-yellow-300 flex items-center justify-center mr-4">
+                                <span class="font-bold text-cyan-dark text-xl">SJ</span>
+                            </div>
+                            <div>
+                               <h4 class="font-bold">Sarah Johnson</h4>
+                            <div class="flex text-yellow-300">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="italic">"The team at SunnySide made finding our home so much fun! They understood exactly what we were looking for and found us the perfect playful space for our family."</p>
+                    </div>
+                    
+                    <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-pink-300 flex items-center justify-center mr-4">
+                                <span class="font-bold text-cyan-dark text-xl">MR</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Michael Rodriguez</h4>
+                                <div class="flex text-yellow-300">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="italic">"I never thought buying a home could be this enjoyable! The playful approach made the entire process stress-free. I love my new urban loft!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="bg-gradient-to-r from-cyan-light to-cyan-100 rounded-3xl p-8 md:p-12 text-center playful-section">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Ready for a <span class="text-cyan-primary">Playful</span> Home Search?</h2>
+                <p class="text-gray-700 text-lg mb-8 max-w-2xl mx-auto">Join hundreds of happy homeowners who found their perfect match with our fun and effective approach.</p>
+                
+                <div class="max-w-md mx-auto">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="Your email address" class="flex-grow px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-primary">
+                        <button class="bg-cyan-primary text-white playful-btn px-8 py-3 font-bold hover:bg-cyan-dark transition">
+                            Get Started
+                        </button>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-4">We respect your privacy. No spam, ever.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-cyan-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="bg-white p-2 rounded-full">
+                            <i class="fas fa-home text-cyan-primary text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">SunnySide<span class="text-cyan-light">Properties</span></h2>
+                    </div>
+                    <p class="text-cyan-light">Making real estate fun since 2015</p>
+                </div>
+                
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <a href="#" class="text-cyan-light hover:text-white text-2xl">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-cyan-light hover:text-white text-2xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-cyan-light hover:text-white text-2xl">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-cyan-light hover:text-white text-2xl">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+                
+                <div class="text-center md:text-right">
+                    <p class="text-cyan-light mb-2"><i class="fas fa-phone-alt mr-2"></i>(555) 123-4567</p>
+                    <p class="text-cyan-light"><i class="fas fa-envelope mr-2"></i>hello@sunnysideproperties.com</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-cyan-700 mt-8 pt-8 text-center text-cyan-light">
+                <p>&copy; 2023 SunnySide Properties. All rights reserved. | <a href="#" class="hover:text-white">Privacy Policy</a> | <a href="#" class="hover:text-white">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function realEstateApp() {
+            return {
+                mobileMenuOpen: false,
+                featuredProperties: [
+                    {
+                        id: 1,
+                        title: "Beachfront Paradise",
+                        location: "Ocean View, FL",
+                        price: "$1,250,000",
+                        beds: 4,
+                        baths: 3,
+                        sqft: "2,400",
+                        image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                        tag: "Featured",
+                        tagColor: "cyan"
+                    },
+                    {
+                        id: 2,
+                        title: "Urban Loft Apartment",
+                        location: "Downtown, NY",
+                        price: "$750,000",
+                        beds: 2,
+                        baths: 2,
+                        sqft: "1,200",
+                        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                        tag: "New",
+                        tagColor: "pink"
+                    },
+                    {
+                        id: 3,
+                        title: "Family Suburban Home",
+                        location: "Green Meadows, TX",
+                        price: "$425,000",
+                        beds: 3,
+                        baths: 2,
+                        sqft: "1,800",
+                        image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                        tag: "Popular",
+                        tagColor: "green"
+                    }
+                ],
+                showPropertyDetails(id) {
+                    alert(`Showing details for property #${id}. In a real application, this would open a modal or navigate to a detailed view.`);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
