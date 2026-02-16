@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPlay | Generative Art Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .font-fredoka {
+            font-family: 'Fredoka One', cursive;
+        }
+        .font-nunito {
+            font-family: 'Nunito', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+        }
+        .playful-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+        .playful-border {
+            border-radius: 20px 5px 20px 5px;
+        }
+        .art-card-hover {
+            transition: all 0.3s ease;
+        }
+        .art-card-hover:hover {
+            transform: translateY(-8px);
+        }
+        .pixel-grid {
+            background-image: 
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="gradient-bg font-nunito text-slate-800">
+    <div x-data="{ mobileMenuOpen: false, searchOpen: false }">
+        <!-- Header -->
+        <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm playful-shadow">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full playful-border flex items-center justify-center">
+                            <i class="fas fa-palette text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-fredoka text-slate-800">Pixel<span class="text-emerald-500">Play</span></h1>
+                    </div>
+                    
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#" class="text-slate-700 hover:text-emerald-500 font-semibold transition-colors">Home</a>
+                        <a href="#" class="text-slate-700 hover:text-blue-500 font-semibold transition-colors">Gallery</a>
+                        <a href="#" class="text-slate-700 hover:text-green-500 font-semibold transition-colors">Tutorials</a>
+                        <a href="#" class="text-slate-700 hover:text-red-500 font-semibold transition-colors">Tools</a>
+                        <a href="#" class="text-slate-700 hover:text-slate-900 font-semibold transition-colors">Community</a>
+                    </nav>
+                    
+                    <!-- Right side icons -->
+                    <div class="flex items-center space-x-4">
+                        <button @click="searchOpen = !searchOpen" class="text-slate-600 hover:text-emerald-500">
+                            <i class="fas fa-search text-lg"></i>
+                        </button>
+                        <button class="hidden md:block bg-gradient-to-r from-emerald-400 to-blue-400 text-white px-5 py-2 rounded-full playful-border font-semibold hover:shadow-lg transition-shadow">
+                            Create Art
+                        </button>
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-slate-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Search Bar -->
+                <div x-show="searchOpen" x-transition class="mt-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search for generative art, tutorials, artists..." class="w-full p-4 pl-12 rounded-xl playful-border border-2 border-emerald-200 focus:border-emerald-400 focus:outline-none">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t border-slate-100">
+                <div class="container mx-auto px-4 py-6 flex flex-col space-y-4">
+                    <a href="#" class="text-slate-700 hover:text-emerald-500 font-semibold py-2">Home</a>
+                    <a href="#" class="text-slate-700 hover:text-blue-500 font-semibold py-2">Gallery</a>
+                    <a href="#" class="text-slate-700 hover:text-green-500 font-semibold py-2">Tutorials</a>
+                    <a href="#" class="text-slate-700 hover:text-red-500 font-semibold py-2">Tools</a>
+                    <a href="#" class="text-slate-700 hover:text-slate-900 font-semibold py-2">Community</a>
+                    <button class="bg-gradient-to-r from-emerald-400 to-blue-400 text-white px-5 py-3 rounded-full playful-border font-semibold mt-2">
+                        Create Art
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Hero Section -->
+            <section class="mb-12">
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="lg:w-1/2">
+                        <h2 class="text-4xl md:text-5xl font-fredoka text-slate-800 mb-4">Where <span class="text-emerald-500">Code</span> Meets <span class="text-blue-500">Creativity</span></h2>
+                        <p class="text-lg text-slate-600 mb-6">Explore the fascinating world of generative art. Discover tutorials, tools, and inspiration from artists who blend algorithms with aesthetics.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="bg-gradient-to-r from-emerald-400 to-green-400 text-white px-6 py-3 rounded-full playful-border font-semibold hover:shadow-lg transition-shadow">
+                                Start Creating
+                            </button>
+                            <button class="bg-white text-slate-700 border-2 border-blue-200 px-6 py-3 rounded-full playful-border font-semibold hover:bg-blue-50 transition-colors">
+                                Explore Gallery
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2">
+                        <div class="p-6 bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl playful-border playful-shadow pixel-grid">
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="h-32 bg-gradient-to-br from-emerald-300 to-blue-300 rounded-2xl playful-border"></div>
+                                <div class="h-32 bg-gradient-to-br from-red-300 to-pink-300 rounded-2xl playful-border"></div>
+                                <div class="h-32 bg-gradient-to-br from-blue-300 to-purple-300 rounded-2xl playful-border"></div>
+                                <div class="h-32 bg-gradient-to-br from-green-300 to-emerald-300 rounded-2xl playful-border"></div>
+                                <div class="h-32 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-2xl playful-border"></div>
+                                <div class="h-32 bg-gradient-to-br from-purple-300 to-pink-300 rounded-2xl playful-border"></div>
+                            </div>
+                            <div class="mt-6 flex justify-center">
+                                <div class="flex items-center space-x-2 text-slate-600">
+                                    <i class="fas fa-sync-alt text-emerald-500"></i>
+                                    <span class="font-semibold">Generative art preview - refreshing every 5 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Featured Posts -->
+            <section class="mb-12">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-3xl font-fredoka text-slate-800">Featured <span class="text-blue-500">Artworks</span></h3>
+                    <a href="#" class="text-emerald-500 font-semibold hover:text-emerald-600 flex items-center">
+                        View All <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Post 1 -->
+                    <article class="bg-white rounded-2xl playful-border playful-shadow overflow-hidden art-card-hover">
+                        <div class="h-48 bg-gradient-to-br from-emerald-200 to-blue-200 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-32 h-32 rounded-full bg-gradient-to-r from-emerald-300 to-transparent opacity-70"></div>
+                                <div class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-300 to-transparent opacity-70 absolute right-8 bottom-8"></div>
+                            </div>
+                            <div class="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                Algorithmic
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-slate-500 text-sm mb-3">
+                                <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded mr-3">p5.js</span>
+                                <span><i class="far fa-calendar mr-1"></i> 2 days ago</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-800 mb-3">Creating Organic Patterns with Perlin Noise</h4>
+                            <p class="text-slate-600 mb-4">Learn how to simulate natural textures and patterns using Perlin noise algorithms in p5.js.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full mr-2"></div>
+                                    <span class="font-semibold text-slate-700">Alex Chen</span>
+                                </div>
+                                <a href="#" class="text-blue-500 hover:text-blue-600 font-semibold">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 2 -->
+                    <article class="bg-white rounded-2xl playful-border playful-shadow overflow-hidden art-card-hover">
+                        <div class="h-48 bg-gradient-to-br from-red-100 to-pink-100 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-40 h-40 rounded-full bg-gradient-to-r from-red-300 to-transparent opacity-60"></div>
+                                <div class="w-20 h-20 rounded-full bg-gradient-to-r from-pink-300 to-transparent opacity-60 absolute left-10 top-10"></div>
+                            </div>
+                            <div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                Interactive
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-slate-500 text-sm mb-3">
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded mr-3">Three.js</span>
+                                <span><i class="far fa-calendar mr-1"></i> 1 week ago</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-800 mb-3">3D Generative Art in the Browser</h4>
+                            <p class="text-slate-600 mb-4">Explore the possibilities of creating interactive 3D generative art using Three.js and WebGL.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-gradient-to-r from-red-400 to-pink-400 rounded-full mr-2"></div>
+                                    <span class="font-semibold text-slate-700">Maya Rodriguez</span>
+                                </div>
+                                <a href="#" class="text-blue-500 hover:text-blue-600 font-semibold">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 3 -->
+                    <article class="bg-white rounded-2xl playful-border playful-shadow overflow-hidden art-card-hover">
+                        <div class="h-48 bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-36 h-36 rounded-full bg-gradient-to-r from-blue-300 to-transparent opacity-60"></div>
+                                <div class="w-28 h-28 rounded-full bg-gradient-to-r from-purple-300 to-transparent opacity-60 absolute right-6 bottom-6"></div>
+                            </div>
+                            <div class="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                Tutorial
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-slate-500 text-sm mb-3">
+                                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded mr-3">Processing</span>
+                                <span><i class="far fa-calendar mr-1"></i> 3 weeks ago</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-800 mb-3">Generative Typography Experiments</h4>
+                            <p class="text-slate-600 mb-4">How to create dynamic, algorithmically generated typography that evolves over time.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mr-2"></div>
+                                    <span class="font-semibold text-slate-700">Sam Wilson</span>
+                                </div>
+                                <a href="#" class="text-blue-500 hover:text-blue-600 font-semibold">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            
+            <!-- Tools & Resources -->
+            <section class="mb-12">
+                <h3 class="text-3xl font-fredoka text-slate-800 mb-8">Popular <span class="text-green-500">Tools</span> & <span class="text-red-500">Resources</span></h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gradient-to-br from-emerald-50 to-white p-6 rounded-2xl playful-border playful-shadow">
+                        <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-code text-emerald-500 text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">p5.js</h4>
+                        <p class="text-slate-600 mb-4">A JavaScript library for creative coding, with a focus on making coding accessible for artists.</p>
+                        <a href="#" class="text-emerald-500 font-semibold hover:text-emerald-600">Explore →</a>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl playful-border playful-shadow">
+                        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-cube text-blue-500 text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">Three.js</h4>
+                        <p class="text-slate-600 mb-4">A cross-browser JavaScript library used to create and display animated 3D computer graphics.</p>
+                        <a href="#" class="text-blue-500 font-semibold hover:text-blue-600">Explore →</a>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl playful-border playful-shadow">
+                        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-paint-brush text-green-500 text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">Processing</h4>
+                        <p class="text-slate-600 mb-4">A flexible software sketchbook and language for learning how to code within the context of visual arts.</p>
+                        <a href="#" class="text-green-500 font-semibold hover:text-green-600">Explore →</a>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-red-50 to-white p-6 rounded-2xl playful-border playful-shadow">
+                        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-robot text-red-500 text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">AI Art Tools</h4>
+                        <p class="text-slate-600 mb-4">Explore the intersection of artificial intelligence and generative art with these cutting-edge tools.</p>
+                        <a href="#" class="text-red-500 font-semibold hover:text-red-600">Explore →</a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Newsletter Section -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-emerald-400 to-blue-400 rounded-3xl playful-border playful-shadow overflow-hidden">
+                    <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-between">
+                        <div class="md:w-2/3 mb-6 md:mb-0">
+                            <h3 class="text-3xl font-fredoka text-white mb-4">Stay Inspired & Creative</h3>
+                            <p class="text-white/90 text-lg">Join our community of generative artists. Get weekly tutorials, tool updates, and featured artworks directly in your inbox.</p>
+                        </div>
+                        <div class="md:w-1/3">
+                            <div class="bg-white/20 backdrop-blur-sm p-6 rounded-2xl">
+                                <div class="mb-4">
+                                    <input type="email" placeholder="Your email address" class="w-full p-3 rounded-lg playful-border focus:outline-none focus:ring-2 focus:ring-white">
+                                </div>
+                                <button class="w-full bg-white text-emerald-600 font-bold py-3 rounded-lg playful-border hover:bg-slate-100 transition-colors">
+                                    Subscribe Now
+                                </button>
+                                <p class="text-white/80 text-sm mt-3">No spam, just creative inspiration. Unsubscribe anytime.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Recent Artists -->
+            <section class="mb-12">
+                <h3 class="text-3xl font-fredoka text-slate-800 mb-8">Featured <span class="text-emerald-500">Artists</span></h3>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-emerald-300 to-blue-300 rounded-full mb-3 playful-border"></div>
+                        <h4 class="font-bold text-slate-800">Alex Chen</h4>
+                        <p class="text-sm text-slate-600 text-center">Algorithmic Patterns</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-red-300 to-pink-300 rounded-full mb-3 playful-border"></div>
+                        <h4 class="font-bold text-slate-800">Maya R.</h4>
+                        <p class="text-sm text-slate-600 text-center">3D Generative</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-300 to-purple-300 rounded-full mb-3 playful-border"></div>
+                        <h4 class="font-bold text-slate-800">Sam Wilson</h4>
+                        <p class="text-sm text-slate-600 text-center">Creative Coding</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-green-300 to-emerald-300 rounded-full mb-3 playful-border"></div>
+                        <h4 class="font-bold text-slate-800">Jordan Lee</h4>
+                        <p class="text-sm text-slate-600 text-center">Data Visualization</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-full mb-3 playful-border"></div>
+                        <h4 class="font-bold text-slate-800">Taylor Kim</h4>
+                        <p class="text-sm text-slate-600 text-center">Interactive Art</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-purple-300 to-pink-300 rounded-full mb-3 playful-border"></div>
+                        <h4 class="font-bold text-slate-800">Casey Park</h4>
+                        <p class="text-sm text-slate-600 text-center">Generative Design</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="bg-slate-800 text-white pt-12 pb-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full playful-border flex items-center justify-center">
+                                <i class="fas fa-palette text-white text-lg"></i>
+                            </div>
+                            <h2 class="text-2xl font-fredoka">Pixel<span class="text-emerald-400">Play</span></h2>
+                        </div>
+                        <p class="text-slate-300">A community-driven blog exploring the intersection of code, algorithms, and visual art.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">Explore</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-slate-300 hover:text-emerald-300 transition-colors">Gallery</a></li>
+                            <li><a href="#" class="text-slate-300 hover:text-blue-300 transition-colors">Tutorials</a></li>
+                            <li><a href="#" class="text-slate-300 hover:text-green-300 transition-colors">Tools</a></li>
+                            <li><a href="#" class="text-slate-300 hover:text-red-300 transition-colors">Artists</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-slate-300 hover:text-emerald-300 transition-colors">Getting Started</a></li>
+                            <li><a href="#" class="text-slate-300 hover:text-blue-300 transition-colors">Code Examples</a></li>
+                            <li><a href="#" class="text-slate-300 hover:text-green-300 transition-colors">Free Assets</a></li>
+                            <li><a href="#" class="text-slate-300 hover:text-red-300 transition-colors">Community Forum</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">Connect</h4>
+                        <div class="flex space-x-4 mb-6">
+                            <a href="#" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                                <i class="fab fa-discord"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center hover:bg-red-500 transition-colors">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center hover:bg-green-500 transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                        <p class="text-slate-300 text-sm">Subscribe to our newsletter for weekly inspiration</p>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-slate-400 text-sm mb-4 md:mb-0">© 2023 PixelPlay Generative Art Blog. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-slate-400 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#" class="text-slate-400 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#" class="text-slate-400 hover:text-white text-sm">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Simple interactive color change for the hero section art grid
+        document.addEventListener('DOMContentLoaded', function() {
+            const gridItems = document.querySelectorAll('.pixel-grid > .grid > div');
+            
+            // Change colors periodically to simulate generative art
+            setInterval(() => {
+                gridItems.forEach(item => {
+                    const hue = Math.floor(Math.random() * 360);
+                    const saturation = 70 + Math.floor(Math.random() * 30);
+                    const lightness = 60 + Math.floor(Math.random() * 20);
+                    
+                    item.style.background = `linear-gradient(135deg, hsl(${hue}, ${saturation}%, ${lightness}%), hsl(${(hue + 60) % 360}, ${saturation}%, ${lightness}%))`;
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
