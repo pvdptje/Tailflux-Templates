@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة الاختبارات التعليمية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Cairo', sans-serif; }
+        
+        /* تخصيص ألوان Tailwind */
+        .bg-teal-50 { background-color: #f0fdfa; }
+        .text-teal-600 { color: #0d9488; }
+        .border-teal-200 { border-color: #99f6e4; }
+        
+        /* تأثيرات مخصصة */
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800" x-data="app()">
+    <!-- شريط التنقل -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- الشعار -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="h-10 w-10 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <span class="mr-3 text-xl font-bold text-gray-800">نظام الاختبارات</span>
+                    </div>
+                    
+                    <!-- روابط التنقل -->
+                    <div class="hidden md:flex items-center mr-8 space-x-4 space-x-reverse">
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-teal-600 bg-teal-50">الرئيسية</a>
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50">الاختبارات</a>
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50">الحلول</a>
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50">المساهمون</a>
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50">اتصل بنا</a>
+                    </div>
+                </div>
+                
+                <!-- زر تسجيل الدخول والإعدادات -->
+                <div class="flex items-center">
+                    <button class="p-2 rounded-full text-gray-600 hover:text-teal-600 hover:bg-gray-100">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="mr-2 p-2 rounded-full text-gray-600 hover:text-teal-600 hover:bg-gray-100">
+                        <i class="fas fa-user text-lg"></i>
+                    </button>
+                    <button class="md:hidden p-2 rounded-md text-gray-600 hover:text-teal-600 hover:bg-gray-100">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- عنوان الصفحة -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">الاختبارات التعليمية</h1>
+            <p class="text-gray-600 mt-2">تصفح الاختبارات حسب الطور الدراسي والمادة</p>
+        </div>
+        
+        <!-- أقسام التصفية -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- الشريط الجانبي للتصفية -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-24">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">تصفية الاختبارات</h2>
+                    
+                    <!-- تصفية حسب الطور -->
+                    <div class="mb-8">
+                        <h3 class="font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-layer-group text-teal-500 ml-2"></i>
+                            الطور الدراسي
+                        </h3>
+                        <div class="space-y-2">
+                            <template x-for="stage in stages" :key="stage.id">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="stage" :value="stage.id" x-model="selectedStage" class="hidden peer">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-teal-500 mr-2">
+                                        <div class="w-3 h-3 rounded-full bg-teal-500 hidden peer-checked:block"></div>
+                                    </div>
+                                    <span class="text-gray-700 peer-checked:text-teal-600 peer-checked:font-medium" x-text="stage.name"></span>
+                                </label>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- تصفية حسب السنة -->
+                    <div class="mb-8">
+                        <h3 class="font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-calendar-alt text-cyan-500 ml-2"></i>
+                            السنة الدراسية
+                        </h3>
+                        <div class="space-y-2">
+                            <template x-for="year in filteredYears" :key="year.id">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="year" :value="year.id" x-model="selectedYear" class="hidden peer">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-cyan-500 mr-2">
+                                        <div class="w-3 h-3 rounded-full bg-cyan-500 hidden peer-checked:block"></div>
+                                    </div>
+                                    <span class="text-gray-700 peer-checked:text-cyan-600 peer-checked:font-medium" x-text="year.name"></span>
+                                </label>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- تصفية حسب المادة -->
+                    <div class="mb-8">
+                        <h3 class="font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-book-open text-sky-500 ml-2"></i>
+                            المادة الدراسية
+                        </h3>
+                        <div class="space-y-2 max-h-60 overflow-y-auto pr-2">
+                            <template x-for="subject in filteredSubjects" :key="subject.id">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" :value="subject.id" x-model="selectedSubjects" class="hidden peer">
+                                    <div class="w-5 h-5 rounded border border-gray-300 flex items-center justify-center peer-checked:border-sky-500 peer-checked:bg-sky-50 mr-2">
+                                        <i class="fas fa-check text-sky-500 text-xs hidden peer-checked:block"></i>
+                                    </div>
+                                    <span class="text-gray-700 peer-checked:text-sky-600" x-text="subject.name"></span>
+                                </label>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- زر إعادة التعيين -->
+                    <button @click="resetFilters()" class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-redo-alt ml-2"></i>
+                        إعادة التعيين
+                    </button>
+                </div>
+            </div>
+            
+            <!-- قسم عرض الاختبارات -->
+            <div class="lg:col-span-3">
+                <!-- إحصائيات -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100 rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">إجمالي الاختبارات</p>
+                                <p class="text-2xl font-bold text-gray-800 mt-1" x-text="filteredExams.length"></p>
+                            </div>
+                            <div class="h-12 w-12 rounded-full bg-teal-100 flex items-center justify-center">
+                                <i class="fas fa-file-alt text-teal-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">مع الحلول</p>
+                                <p class="text-2xl font-bold text-gray-800 mt-1" x-text="examsWithSolutions"></p>
+                            </div>
+                            <div class="h-12 w-12 rounded-full bg-sky-100 flex items-center justify-center">
+                                <i class="fas fa-check-circle text-sky-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-gray-50 to-zinc-50 border border-gray-200 rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">آخر تحديث</p>
+                                <p class="text-lg font-bold text-gray-800 mt-1">أسبوع</p>
+                            </div>
+                            <div class="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center">
+                                <i class="fas fa-clock text-gray-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- شريط البحث والإجراءات -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div class="relative w-full md:w-auto mb-4 md:mb-0">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                x-model="searchQuery" 
+                                placeholder="ابحث عن اختبار..." 
+                                class="w-full md:w-80 pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition"
+                            >
+                        </div>
+                        
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors">
+                                <i class="fas fa-download ml-2"></i>
+                                تصدير
+                            </button>
+                            <button class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium transition-colors">
+                                <i class="fas fa-plus ml-2"></i>
+                                رفع اختبار جديد
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- عرض الاختبارات -->
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">الاختبارات المتاحة</h2>
+                        <div class="text-gray-600">
+                            عرض <span class="font-semibold text-teal-600" x-text="filteredExams.length"></span> اختبار
+                        </div>
+                    </div>
+                    
+                    <!-- حالة عدم وجود نتائج -->
+                    <div x-show="filteredExams.length === 0" class="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="text-gray-400 mb-4">
+                            <i class="fas fa-search text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">لا توجد اختبارات</h3>
+                        <p class="text-gray-500">لم يتم العثور على اختبارات تطابق معايير البحث الخاصة بك.</p>
+                        <button @click="resetFilters()" class="mt-4 px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium transition-colors">
+                            عرض جميع الاختبارات
+                        </button>
+                    </div>
+                    
+                    <!-- شبكة الاختبارات -->
+                    <div x-show="filteredExams.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <template x-for="exam in filteredExams" :key="exam.id">
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden card-hover">
+                                <!-- رأس البطاقة -->
+                                <div class="p-5 border-b border-gray-100">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" 
+                                                  :class="exam.stageColor">
+                                                <span x-text="exam.stageName"></span>
+                                            </span>
+                                            <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700 mr-2">
+                                                السنة <span x-text="exam.year"></span>
+                                            </span>
+                                        </div>
+                                        <div class="text-gray-400">
+                                            <i class="far fa-calendar-alt"></i>
+                                            <span class="text-sm mr-1" x-text="exam.date"></span>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-800 mt-3" x-text="exam.title"></h3>
+                                    <p class="text-gray-600 text-sm mt-1" x-text="exam.description"></p>
+                                </div>
+                                
+                                <!-- جسم البطاقة -->
+                                <div class="p-5">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 rounded-full flex items-center justify-center" 
+                                                 :class="exam.subjectColor">
+                                                <i :class="exam.subjectIcon" class="text-white"></i>
+                                            </div>
+                                            <div class="mr-3">
+                                                <p class="font-medium text-gray-800" x-text="exam.subject"></p>
+                                                <p class="text-xs text-gray-500" x-text="exam.teacher"></p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div x-show="exam.hasSolution" class="text-green-600">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span class="text-sm mr-1">مع الحل</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-file-pdf text-red-500 ml-1"></i>
+                                            <span x-text="exam.fileSize"></span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-download text-gray-400 ml-1"></i>
+                                            <span x-text="exam.downloads"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- أزرار الإجراءات -->
+                                    <div class="flex space-x-2 space-x-reverse">
+                                        <button class="flex-1 py-2 bg-teal-50 hover:bg-teal-100 text-teal-700 rounded-lg font-medium transition-colcols text-center">
+                                            <i class="fas fa-eye ml-1"></i>
+                                            معاينة
+                                        </button>
+                                        <button class="flex-1 py-2 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-lg font-medium transition-colors text-center">
+                                            <i class="fas fa-download ml-1"></i>
+                                            تحميل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                
+                <!-- تذييل الصفحة -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div class="text-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">هل تريد رفع اختباراتك؟</h3>
+                        <p class="text-gray-600 mb-6 max-w-2xl mx-auto">يمكنك المساهمة في إثراء المحتوى التعليمي برفع اختباراتك مع الحلول لمساعدة الطلاب في التحضير للامتحانات.</p>
+                        <button class="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+                            <i class="fas fa-cloud-upload-alt ml-2"></i>
+                            ابدأ برفع الاختبارات
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- تذييل الموقع -->
+    <footer class="bg-gray-800 text-gray-300 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="h-10 w-10 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <span class="mr-3 text-xl font-bold text-white">نظام الاختبارات</span>
+                    </div>
+                    <p class="text-gray-400">منصة تعليمية تهدف إلى توفير اختبارات تعليمية مصنفة حسب الطور الدراسي والمادة لمساعدة الطلاب في التحضير للامتحانات.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4">الأطوار الدراسية</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">الطور الابتدائي</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">الطور المتوسط</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">الطور الثانوي</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4">روابط سريعة</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">الاختبارات الجديدة</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">الاختبارات الأكثر تحميلاً</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">كيفية المساهمة</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-300 transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-4">تابعنا</h4>
+                    <div class="flex space-x-3 space-x-reverse">
+                        <a href="#" class="h-10 w-10 rounded-full bg-gray-700 hover:bg-teal-600 flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 rounded-full bg-gray-700 hover:bg-sky-500 flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 rounded-full bg-gray-700 hover:bg-pink-600 flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 rounded-full bg-gray-700 hover:bg-blue-700 flex items-center justify-center transition-colors">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 mt-6 text-sm">© 2023 نظام الاختبارات التعليمية. جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function app() {
+            return {
+                // البيانات
+                stages: [
+                    { id: 'primary', name: 'الابتدائي', years: [1, 2, 3, 4, 5] },
+                    { id: 'middle', name: 'المتوسط', years: [1, 2, 3, 4] },
+                    { id: 'secondary', name: 'الثانوي', years: [1, 2, 3] }
+                ],
+                
+                subjects: [
+                    // مواد الابتدائي
+                    { id: 'math_primary', name: 'رياضيات', stage: 'primary', color: 'bg-red-100', icon: 'fas fa-calculator' },
+                    { id: 'arabic_primary', name: 'لغة عربية', stage: 'primary', color: 'bg-blue-100', icon: 'fas fa-book' },
+                    { id: 'french_primary', name: 'لغة فرنسية', stage: 'primary', color: 'bg-indigo-100', icon: 'fas fa-language' },
+                    { id: 'english_primary', name: 'لغة إنجليزية', stage: 'primary', color: 'bg-purple-100', icon: 'fas fa-globe' },
+                    { id: 'history_primary', name: 'تاريخ وجغرافيا', stage: 'primary', color: 'bg-amber-100', icon: 'fas fa-map' },
+                    { id: 'islamic_primary', name: 'تربية إسلامية', stage: 'primary', color: 'bg-green-100', icon: 'fas fa-mosque' },
+                    { id: 'civics_primary', name: 'تربية مدنية', stage: 'primary', color: 'bg-teal-100', icon: 'fas fa-landmark' },
+                    { id: 'amazigh_primary', name: 'لغة أمازيغية', stage: 'primary', color: 'bg-cyan-100', icon: 'fas fa-font' },
+                    { id: 'science_primary', name: 'تربية علمية تكنولوجية', stage: 'primary', color: 'bg-lime-100', icon: 'fas fa-flask' },
+                    { id: 'art_primary', name: 'تربية فنية', stage: 'primary', color: 'bg-pink-100', icon: 'fas fa-palette' },
+                    { id: 'music_primary', name: 'تربية موسيقية', stage: 'primary', color: 'bg-rose-100', icon: 'fas fa-music' },
+                    
+                    // مواد المتوسط
+                    { id: 'math_middle', name: 'رياضيات', stage: 'middle', color: 'bg-red-100', icon: 'fas fa-calculator' },
+                    { id: 'arabic_middle', name: 'لغة عربية', stage: 'middle', color: 'bg-blue-100', icon: 'fas fa-book' },
+                    { id: 'french_middle', name: 'لغة فرنسية', stage: 'middle', color: 'bg-indigo-100', icon: 'fas fa-language' },
+                    { id: 'english_middle', name: 'لغة إنجليزية', stage: 'middle', color: 'bg-purple-100', icon: 'fas fa-globe' },
+                    { id: 'history_middle', name: 'تاريخ وجغرافيا', stage: 'middle', color: 'bg-amber-100', icon: 'fas fa-map' },
+                    { id: 'physics_middle', name: 'علوم فيزيائية', stage: 'middle', color: 'bg-orange-100', icon: 'fas fa-atom' },
+                    { id: 'biology_middle', name: 'علوم الطبيعة والحياة', stage: 'middle', color: 'bg-emerald-100', icon: 'fas fa-leaf' },
+                    { id: 'islamic_middle', name: 'تربية إسلامية', stage: 'middle', color: 'bg-green-100', icon: 'fas fa-mosque' },
+                    { id: 'civics_middle', name: 'تربية مدنية', stage: 'middle', color: 'bg-teal-100', icon: 'fas fa-landmark' },
+                    { id: 'amazigh_middle', name: 'لغة أمازيغية', stage: 'middle', color: 'bg-cyan-100', icon: 'fas fa-font' },
+                    { id: 'informatics_middle', name: 'إعلام آلي', stage: 'middle', color: 'bg-violet-100', icon: 'fas fa-laptop-code' },
+                    { id: 'art_middle', name: 'تربية فنية', stage: 'middle', color: 'bg-pink-100', icon: 'fas fa-palette' },
+                    { id: 'music_middle', name: 'تربية موسيقية', stage: 'middle', color: 'bg-rose-100', icon: 'fas fa-music' },
+                    
+                    // مواد الثانوي
+                    { id: 'math_secondary', name: 'رياضيات', stage: 'secondary', color: 'bg-red-100', icon: 'fas fa-calculator' },
+                    { id: 'arabic_secondary', name: 'لغة عربية', stage: 'secondary', color: 'bg-blue-100', icon: 'fas fa-book' },
+                    { id: 'french_secondary', name: 'لغة فرنسية', stage: 'secondary', color: 'bg-indigo-100', icon: 'fas fa-language' },
+                    { id: 'english_secondary', name: 'لغة إنجليزية', stage: 'secondary', color: 'bg-purple-100', icon: 'fas fa-globe' },
+                    { id: 'history_secondary', name: 'تاريخ وجغرافيا', stage: 'secondary', color: 'bg-amber-100', icon: 'fas fa-map' },
+                    { id: 'physics_secondary', name: 'علوم فيزيائية', stage: 'secondary', color: 'bg-orange-100', icon: 'fas fa-atom' },
+                    { id: 'biology_secondary', name: 'علوم الطبيعة والحياة', stage: 'secondary', color: 'bg-emerald-100', icon: 'fas fa-leaf' },
+                    { id: 'islamic_secondary', name: 'تربية إسلامية', stage: 'secondary', color: 'bg-green-100', icon: 'fas fa-mosque' },
+                    { id: 'economics_secondary', name: 'اقتصاد وتسيير', stage: 'secondary', color: 'bg-yellow-100', icon: 'fas fa-chart-line' },
+                    { id: 'accounting_secondary', name: 'محاسبي ومالي', stage: 'secondary', color: 'bg-lime-100', icon: 'fas fa-file-invoice-dollar' },
+                    { id: 'law_secondary', name: 'قانون', stage: 'secondary', color: 'bg-gray-100', icon: 'fas fa-gavel' },
+                    { id: 'civil_engineering', name: 'هندسة مدنية', stage: 'secondary', color: 'bg-stone-100', icon: 'fas fa-hard-hat' },
+                    { id: 'mechanical_engineering', name: 'هندسة ميكانيكية', stage: 'secondary', color: 'bg-zinc-100', icon: 'fas fa-cogs' },
+                    { id: 'electrical_engineering', name: 'هندسة كهربائية', stage: 'secondary', color: 'bg-amber-100', icon: 'fas fa-bolt' },
+                    { id: 'german_secondary', name: 'لغة ألمانية', stage: 'secondary', color: 'bg-black bg-opacity-10', icon: 'fas fa-language' },
+                    { id: 'spanish_secondary', name: 'لغة إسبانية', stage: 'secondary', color: 'bg-red-100', icon: 'fas fa-language' },
+                    { id: 'philosophy_secondary', name: 'فلسفة', stage: 'secondary', color: 'bg-purple-100', icon: 'fas fa-brain' },
+                    { id: 'italian_secondary', name: 'لغة إيطالية', stage: 'secondary', color: 'bg-green-100', icon: 'fas fa-language' }
+                ],
+                
+                exams: [
+                    { id: 1, title: 'اختبار الفصل الأول في الرياضيات', stage: 'primary', year: 5, subject: 'رياضيات', description: 'اختبار شامل لجميع دروس الفصل الأول', date: '2023-10-15', hasSolution: true, fileSize: '2.4 MB', downloads: 124, teacher: 'أ. محمد قاسم', stageColor: 'bg-teal-100 text-teal-800', subjectColor: 'bg-red-100' },
+                    { id: 2, title: 'امتحان اللغة العربية', stage: 'primary', year: 3, subject: 'لغة عربية', description: 'اختبار في الإملاء والقواعد', date: '2023-11-02', hasSolution: false, fileSize: '1.8 MB', downloads: 89, teacher: 'أ. فاطمة الزهراء', stageColor: 'bg-teal-100 text-teal-800', subjectColor: 'bg-blue-100' },
+                    { id: 3, title: 'اختبار العلوم الفيزيائية', stage: 'middle', year: 2, subject: 'علوم فيزيائية', description: 'اختبار في المادة والطاقة', date: '2023-09-28', hasSolution: true, fileSize: '3.1 MB', downloads: 156, teacher: 'أ. خالد أمين', stageColor: 'bg-cyan-100 text-cyan-800', subjectColor: 'bg-orange-100' },
+                    { id: 4, title: 'امتحان التاريخ والجغرافيا', stage: 'secondary', year: 1, subject: 'تاريخ وجغرافيا', description: 'اختبار في التاريخ القديم', date: '2023-12-10', hasSolution: true, fileSize: '2.9 MB', downloads: 203, teacher: 'أ. علي حسين', stageColor: 'bg-sky-100 text-sky-800', subjectColor: 'bg-amber-100' },
+                    { id: 5, title: 'اختبار اللغة الفرنسية', stage: 'middle', year: 4, subject: 'لغة فرنسية', description: 'اختبار في القواعد والمفردات', date: '2023-10-30', hasSolution: false, fileSize: '2.1 MB', downloads: 97, teacher: 'أ. سارة بوعزة', stageColor: 'bg-cyan-100 text-cyan-800', subjectColor: 'bg-indigo-100' },
+                    { id: 6, title: 'امتحان التربية الإسلامية', stage: 'primary', year: 4, subject: 'تربية إسلامية', description: 'اختبار في السيرة النبوية', date: '2023-11-18', hasSolution: true, fileSize: '1.5 MB', downloads: 112, teacher: 'أ. عبد الرحمن', stageColor: 'bg-teal-100 text-teal-800', subjectColor: 'bg-green-100' },
+                    { id: 7, title: 'اختبار الهندسة الكهربائية', stage: 'secondary', year: 3, subject: 'هندسة كهربائية', description: 'اختبار في الدوائر الكهربائية', date: '2023-12-05', hasSolution: true, fileSize: '4.2 MB', downloads: 178, teacher: 'أ. يوسف أحمد', stageColor: 'bg-sky-100 text-sky-800', subjectColor: 'bg-amber-100' },
+                    { id: 8, title: 'امتحان اللغة الإنجليزية', stage: 'middle', year: 1, subject: 'لغة إنجليزية', description: 'اختبار في القواعد والمحادثة', date: '2023-11-22', hasSolution: false, fileSize: '2.3 MB', downloads: 134, teacher: 'أ. نادية طه', stageColor: 'bg-cyan-100 text-cyan-800', subjectColor: 'bg-purple-100' }
+                ],
+                
+                // الحالة
+                selectedStage: 'primary',
+                selectedYear: null,
+                selectedSubjects: [],
+                searchQuery: '',
+                
+                // الحسابات
+                get filteredYears() {
+                    const stage = this.stages.find(s => s.id === this.selectedStage);
+                    return stage ? stage.years.map(year => ({ id: year, name: year })) : [];
+                },
+                
+                get filteredSubjects() {
+                    return this.subjects.filter(subject => subject.stage === this.selectedStage);
+                },
+                
+                getfilteredExams() {
+                    let filtered = this.exams;
+                    
+                    // تصفية حسب الطور
+                    filtered = filtered.filter(exam => exam.stage === this.selectedStage);
+                    
+                    // تصفية حسب السنة
+                    if (this.selectedYear) {
+                        filtered = filtered.filter(exam => exam.year === this.selectedYear);
+                    }
+                    
+                    // تصفية حسب المواد
+                    if (this.selectedSubjects.length > 0) {
+                        const subjectNames = this.selectedSubjects.map(subjectId => {
+                            const subject = this.subjects.find(s => s.id === subjectId);
+                            return subject ? subject.name : '';
+                        });
+                        
+                        filtered = filtered.filter(exam => 
+                            subjectNames.includes(exam.subject)
+                        );
+                    }
+                    
+                    // تصفية حسب البحث
+                    if (this.searchQuery) {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(exam => 
+                            exam.title.toLowerCase().includes(query) || 
+                            exam.description.toLowerCase().includes(query) ||
+                            exam.subject.toLowerCase().includes(query) ||
+                            exam.teacher.toLowerCase().includes(query)
+                        );
+                    }
+                    
+                    return filtered;
+                },
+                
+                get examsWithSolutions() {
+                    return this.filteredExams.filter(exam => exam.hasSolution).length;
+                },
+                
+                // طرق
+                resetFilters() {
+                    this.selectedStage = 'primary';
+                    this.selectedYear = null;
+                    this.selectedSubjects = [];
+                    this.searchQuery = '';
+                },
+                
+                // تهيئة أولية
+                init() {
+                    // تعيين أول سنة كقيمة افتراضية
+                    if (this.filteredYears.length > 0 && !this.selectedYear) {
+                        this.selectedYear = this.filteredYears[0].id;
+                    }
+                    
+                    // تعيين أول مادتين كقيمة افتراضية
+                    if (this.filteredSubjects.length > 0 && this.selectedSubjects.length === 0) {
+                        this.selectedSubjects = [
+                            this.filteredSubjects[0].id,
+                            this.filteredSubjects[1]?.id
+                        ].filter(Boolean);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
